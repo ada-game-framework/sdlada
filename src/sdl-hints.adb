@@ -53,24 +53,13 @@ package body SDL.Hints is
       return Hint_Name_Map (H).all;
    end Value;
 
-   function SDL_Get_Hint (C_Str : in C.Strings.chars_ptr) return C.Strings.chars_ptr with
-     Import        => True,
-     Convention    => C,
-     External_Name => "SDL_GetHint";
-
-   function SDL_Set_Hint (Name, Value : in C.Strings.chars_ptr) return C.int with
-     Import        => True,
-     Convention    => C,
-     External_Name => "SDL_SetHint";
-
-   function SDL_Set_Hint (Name, Value : in C.Strings.chars_ptr; P : in Priorities) return C.int with
-     Import        => True,
-     Convention    => C,
-     External_Name => "SDL_SetHintWithPriority";
-
    function Get (Name : in Hint) return String is
-      C_Hint_Str : C.Strings.chars_ptr := C.Strings.New_String (
-                                                                Value (H => Name));
+      function SDL_Get_Hint (C_Str : in C.Strings.chars_ptr) return C.Strings.chars_ptr with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GetHint";
+
+      C_Hint_Str : C.Strings.chars_ptr          := C.Strings.New_String (Value (H => Name));
       C_Str      : constant C.Strings.chars_ptr := SDL_Get_Hint (C_Hint_Str);
    begin
       C.Strings.Free (C_Hint_Str);
@@ -79,9 +68,14 @@ package body SDL.Hints is
    end Get;
 
    function Set (Name : in Hint; Value : in String) return Boolean is
+      function SDL_Set_Hint (Name, Value : in C.Strings.chars_ptr) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_SetHint";
+
       C_Hint_Str  : C.Strings.chars_ptr := C.Strings.New_String (Hints.Value (Name));
       C_Value_Str : C.Strings.chars_ptr := C.Strings.New_String (Value);
-      Success     : C.int := SDL_Set_Hint
+      Success     : C.int               := SDL_Set_Hint
         (Name  => C_Hint_Str,
          Value => C_Value_Str);
    begin
@@ -93,9 +87,14 @@ package body SDL.Hints is
 
    function Set (Name : in Hint; Value : in String; Priority : in Priorities)
                 return Boolean is
+      function SDL_Set_Hint (Name, Value : in C.Strings.chars_ptr; P : in Priorities) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_SetHintWithPriority";
+
       C_Hint_Str  : C.Strings.chars_ptr := C.Strings.New_String (Hints.Value (Name));
       C_Value_Str : C.Strings.chars_ptr := C.Strings.New_String (Value);
-      Success     : C.int := SDL_Set_Hint
+      Success     : C.int               := SDL_Set_Hint
         (Name  => C_Hint_Str,
          Value => C_Value_Str,
          P     => Priority);
