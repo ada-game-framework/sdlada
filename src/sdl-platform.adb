@@ -6,12 +6,12 @@ package body SDL.Platform is
 
    use type C.Strings.chars_ptr;
 
-   function SDL_Get_Platform return C.Strings.chars_Ptr with
-     Import        => True,
-     Convention    => C,
-     External_Name => "SDL_GetPlatform";
-
    function Get return Platforms is
+      function SDL_Get_Platform return C.Strings.chars_Ptr with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GetPlatform";
+
       C_Str : constant C.Strings.chars_Ptr := SDL_Get_Platform;
    begin
       if C.Strings.Value (C_Str) = "Windows" then
