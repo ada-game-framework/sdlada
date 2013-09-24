@@ -2,23 +2,27 @@ with Interfaces.C;
 with Interfaces.C.Strings;
 
 package body SDL.Platform is
-   function SDL_GetPlatform return C.Strings.chars_Ptr with
+   package C renames Interfaces.C;
+
+   use type C.Strings.chars_ptr;
+
+   function SDL_Get_Platform return C.Strings.chars_Ptr with
      Import        => True,
      Convention    => C,
      External_Name => "SDL_GetPlatform";
 
    function Get return Platforms is
-      C_Str : constant C.Strings.chars_Ptr := SDL_GetPlatform;
+      C_Str : constant C.Strings.chars_Ptr := SDL_Get_Platform;
    begin
-      if C_Str = "Windows" then
+      if C.Strings.Value (C_Str) = "Windows" then
          return Windows;
-      elsif C_Str = "Mac OS X" then
+      elsif C.Strings.Value (C_Str) = "Mac OS X" then
          return Mac_OS_X;
-      elsif C_Str = "Linux" then
+      elsif C.Strings.Value (C_Str) = "Linux" then
          return Linux;
-      elsif C_Str = "iOS" then
+      elsif C.Strings.Value (C_Str) = "iOS" then
          return iOS;
-      elsif C_Str = "Android" then
+      elsif C.Strings.Value (C_Str) = "Android" then
          return Android;
       else
          raise Platform_Error with "Unknown SDL platform";
