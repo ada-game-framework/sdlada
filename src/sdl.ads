@@ -6,20 +6,21 @@
 package SDL is
 --  package SDL with is
 --    Linker_Options => "-lSDL2" is
+   pragma Pure;
 
    type Init_Flags is mod 2 ** 32 with
      Convention => C;
 
    Timer           : constant Init_Flags := 16#0000_0001#;
    Audio           : constant Init_Flags := 16#0000_0010#;
-   Video           : constant Init_Flags := 16#0000_0020#;
+   Screen          : constant Init_Flags := 16#0000_0020#;
    Joystick        : constant Init_Flags := 16#0000_0200#;
    Haptic          : constant Init_Flags := 16#0000_1000#;
    Game_Controller : constant Init_Flags := 16#0000_2000#;
    Events          : constant Init_Flags := 16#0000_4000#;
    No_Parachute    : constant Init_Flags := 16#0010_0000#;
    Everything      : constant Init_Flags :=
-     Timer or Audio or Video or Joystick or Haptic or Game_Controller or
+     Timer or Audio or Screen or Joystick or Haptic or Game_Controller or
      Events or No_Parachute;
 
    type Error_Code is range -2 ** 31 .. 0 with
