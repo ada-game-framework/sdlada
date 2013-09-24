@@ -36,10 +36,6 @@ package SDL.Hints is
       Timer_Resolution) with  -- win7 and earlier
      Discard_Names => True;
 
-   -- TODO: make this private.
-   function Value (H : in Hint) return String with
-     Inline => True;
-
    type Priorities is (Default, Normal, Override) with
      Convention => C;
 
@@ -48,8 +44,8 @@ package SDL.Hints is
       Convention    => C,
       External_Name => "SDL_ClearHints";
 
-   function Get (H : in Hint) return String;
-   function Set (H : in Hint; Value : in String) return Boolean;
-   function Set (H : in Hint; Value : in String; Priority : in Priorities)
+   function Get (Name : in Hint) return String;
+   function Set (Name : in Hint; Value : in String) return Boolean;
+   function Set (Name : in Hint; Value : in String; Priority : in Priorities)
                 return Boolean;
 end SDL.Hints;
