@@ -1,0 +1,10 @@
+library project SDL is
+  Version := "1";
+
+  for Source_Dirs  use ("src");
+  for Library_Name use "sdlada";
+  for Object_Dir   use "obj";
+  for Library_Dir  use "lib";
+  for Library_Kind use "static";
+  for Externally_Built use "true";
+end SDL;
