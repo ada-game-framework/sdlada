@@ -1,0 +1,43 @@
+SDLAda
+======
+
+This is a new variable thickness Ada 2012 binding to SDL 2.0. This means that things are wrapped when
+they need to be into a thicker binding and those things that can just be imported, are.
+
+There will still be a need to use conditional compilation for the various platforms as there will be
+some platform specifics which cannot be abstracted out leanly, but this will be reduced as much as possible.
+
+The bindings are only generated for the specific parts of SDL which Ada does not already have support for, i.e.
+threads are not bound as Ada has tasking support built in.
+
+Usage, Licence & Attribution
+============================
+
+SDLAda is distributed under the same zlib licence as the SDL libary is. You may use this library as in any way
+you like whether free or commercial. I would add that whilst you don't have to state that your game uses this
+library, I would prefer it if you did, in fact, I'm asking you to.
+
+Why?
+
+1) Ada has an unfounded bad reputation and one of the reasons for writing this binding is to make it clear
+   that Ada is not just for the military, and has not been ever since it's inception.
+
+2.a) I am trying to advertise the use of Ada as an alternative language for games development because I believe
+     it could help the games industry become better at developing games by using a safer language.
+
+2.b) Also, by designing the game from the start (rather than hacking it together) and using Ada, the games
+     industry could also benefit from being able to deliver on time and this will have a beneficial impact on the
+     developers, less-to-no crunch time, which is the main cause of burn-out. This also has the added benefit
+     of a better work/life balance.
+
+Copyright
+=========
+
+Copyright (C) 2013 by Luke A. Guest
+
+Possible TODO's
+===============
+
+Anything listed here is a question of whether it's required.
+
+* Do we need to hook into the Assert module? To raise an exception maybe?
