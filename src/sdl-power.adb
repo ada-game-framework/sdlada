@@ -18,16 +18,16 @@ package body SDL.Power is
       Data.Power_State := SDL_GetPowerInfo (Seconds'Address, Percent'Address);
 
       if Seconds = -1 then
-         Data.Time_Valid := Error;
+         Data.Time_Valid := False;
       else
-         Data.Time_Valid := Valid;
+         Data.Time_Valid := True;
          Data.Time       := SDL.Power.Seconds (Seconds);
       end if;
 
       if Percent = -1 then
-         Data.Percentage_Valid := Error;
+         Data.Percentage_Valid := False;
       else
-         Data.Percentage_Valid := Valid;
+         Data.Percentage_Valid := True;
          Data.Percent          := Percentage (Percent);
       end if;
    end Info;

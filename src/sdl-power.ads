@@ -13,8 +13,6 @@ package SDL.Power is
      ) with
      Convention => C;
 
-   type Battery_Status is (Error, Valid);
-
    type Seconds is range 0 .. Integer'Last;
    type Percentage is range 0 .. 100;
 
@@ -22,10 +20,10 @@ package SDL.Power is
       record
          Power_State      : State;
 
-         Time_Valid       : Battery_Status;
+         Time_Valid       : Boolean;
          Time             : Seconds;
 
-         Percentage_Valid : Battery_Status;
+         Percentage_Valid : Boolean;
          Percent          : Percentage;
       end record;
 
