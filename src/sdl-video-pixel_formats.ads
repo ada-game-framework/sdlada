@@ -669,13 +669,6 @@ package SDL.Video.Pixel_Formats is
      Convention    => C,
      External_Name => "SDL_CalculateGammaRamp";
 private
-   --  SDL_Ada_Pixel_Format_Unknown : constant Interfaces.Unsigned_32 with
-   --    Import        => True,
-   --    Convention    => C,
-   --    External_Name => "SDL_Ada_Pixel_Format_Unknown";
-
---   for Pixel_Format_Names use (Unknown => SDL_Ada_Pixel_Format_Unknown);
-
    --  The following fields are defined as "internal use" in the SDL docs.
    type Private_Pixel_Format is
       record
