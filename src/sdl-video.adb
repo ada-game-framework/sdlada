@@ -89,11 +89,11 @@ package body SDL.Video is
       if Num < 0 then
          Total := Positive'Last;
 
-         return True;
+         return False;
       end if;
 
       Total := Positive (Total);
 
-      return False;
+      return True;
    end Total_Displays;
 end SDL.Video;
