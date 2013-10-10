@@ -19,7 +19,7 @@ package SDL.Video is
      Inline => True;
 
    --  Video drivers.
-   function Initialise (Name : in String) return Error_Code;
+   function Initialise (Name : in String) return Boolean;
 
    procedure Finalise with
      Import        => True,
