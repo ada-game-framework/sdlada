@@ -3,11 +3,9 @@
 --  Description     : Ada 2012 bindings to the SDL 2.0 library.
 --  Author          : Luke A. Guest
 --  Created On      : Sat Sep 21 14:29:46 2013
-package SDL is
---  package SDL with is
---    Linker_Options => "-lSDL2" is
-   pragma Pure;
+with Interfaces.C;
 
+package SDL is
    type Init_Flags is mod 2 ** 32 with
      Convention => C;
 
@@ -23,27 +21,14 @@ package SDL is
      Timer or Audio or Screen or Joystick or Haptic or Game_Controller or
      Events or No_Parachute;
 
-   type Error_Code is range -2 ** 31 .. 0 with
-     Convention => C;
-
-   Success : constant Error_Code := Error_Code'Last;
-
-   function Initialise
-     (Flags : in Init_Flags := Everything) return Error_Code with
-       Import        => True,
-       Convention    => C,
-       External_Name => "SDL_Init";
+   function Initialise (Flags : in Init_Flags := Everything) return Boolean;
 
    procedure Finalise with
        Import        => True,
        Convention    => C,
        External_Name => "SDL_Quit";
 
-   function Initialise_Sub_System
-     (Flags : in Init_Flags) return Error_Code with
-       Import        => True,
-       Convention    => C,
-       External_Name => "SDL_InitSubSystem";
+   function Initialise_Sub_System (Flags : in Init_Flags) return Boolean;
 
    procedure Finalise_Sub_System
      (Flags : in Init_Flags) with
@@ -55,4 +40,6 @@ package SDL is
        Import        => True,
        Convention    => C,
        External_Name => "SDL_WasInit";
+private
+   Success : constant Interfaces.C.int := 0;
 end SDL;
