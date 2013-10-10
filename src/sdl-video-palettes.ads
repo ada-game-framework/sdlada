@@ -34,6 +34,35 @@ package SDL.Video.Palettes is
 
    Null_Colour : constant Colour := Colour'(others => Colour_Component'First);
 
+   --  Cursor type for our iterator.
+   type Cursor is private;
+
+   No_Element : constant Cursor;
+
+   function Element (Position : in Cursor) return Colour;
+
+   function Has_Element (Position : Cursor) return Boolean;
+
+   --  Create the iterator interface package.
+   package Palette_Iterator_Interfaces is new
+     Ada.Iterator_Interfaces (Cursor, Has_Element);
+
+   type Palette is tagged private with
+     Default_Iterator  => Iterate,
+     Iterator_Element  => Colour,
+     Constant_Indexing => Constant_Reference;
+
+   type Palette_Access is access Palette;
+
+   function Constant_Reference
+     (Container : aliased Palette;
+      Position  : Cursor) return Colour;
+
+   function Iterate (Container : Palette)
+      return Palette_Iterator_Interfaces.Forward_Iterator'Class;
+
+   Empty_Palette : constant Palette;
+private
    type Colour_Array is array (C.size_t range <>) of aliased Colour with
      Convention => C;
 
@@ -43,64 +72,41 @@ package SDL.Video.Palettes is
       Element_Array      => Colour_Array,
       Default_Terminator => Null_Colour);
 
-   --  The Palette is not a real container, but a wrapper to a C array pointer, we want to wrap this with a
-   --  new "container" type and an iterator.
-
-   --  TODO: Get this wrapper going at a later date.
-   --  type Palette_Cursor is private;
-
-   --  type Palette_Array is tagged limited private
-   --    with
-   --      Constant_Indexing => Element_Value,
-   --      Default_Iterator  => Iterate,
-   --      Iterator_Element  => Colour_Array_Pointer.Pointer;
-
-   --  function Element_Value (Container : in Palette_Array; Pos : in Palette_Cursor) return Colour;
-
-   --  function Has_Element (Pos : in Palette_Cursor) return Boolean with
-   --    Inline => True;
---  private
-   --  Internal use only.
    type Internal_Palette is
       record
-         Total   : C.int;
-         Colours : Colour_array_Pointer.Pointer;
-         Version : Interfaces.Unsigned_32;
-         Count   : C.int;
+         Total     : C.int;
+         Colours   : Colour_array_Pointer.Pointer;
+         Version   : Interfaces.Unsigned_32;
+         Ref_Count : C.int;
       end record with
         Convention => C;
 
    type Internal_Palette_Access is access Internal_Palette with
      Convention => C;
 
-   --  type Palette_Iterators;
+   type Palette is tagged
+      record
+         Data : Internal_Palette;
+      end record;
 
-   --  type Palette_Array is new Ada.Finalization.Limited_Controlled with
-   --     record
-   --        Internal : Internal_Palette_Access;
-   --     end record;
+   type Palette_Constant_Access is access constant Palette;
 
-   --  function Iterate (Container : not null access Palette_Array) return Palette_Iterators'Class;
+   type Cursor is
+      record
+         Container : Palette_Constant_Access;
+         Index     : Natural;
+         Current   : Colour_array_Pointer.Pointer;
+      end record;
 
-   --  type Palette_Access is access all Palette_Array;
+   No_Element : constant Cursor := Cursor'(Container => null,
+                                           Index     => Natural'First,
+                                           Current   => null);
 
-   --  type Palette_Cursor is
-   --     record
-   --        --  Container : Palette_Access               := null;
-   --        Index     : Positive                     := Positive'First;
-   --        Total     : Positive                     := Positive'First;
-   --        Current   : Colour_Array_Pointer.Pointer := null;
-   --     end record;
-
-   --  package Palette_Iterator_Interfaces is new Ada.Iterator_Interfaces
-   --    (Cursor      => Palette_Cursor,
-   --     Has_Element => Has_Element);
-
-   --  type Palette_Iterators is new Palette_Iterator_Interfaces.Forward_Iterator with
-   --     record
-   --        Container : Palette_Access := null;
-   --     end record;
-
-   --  function First (Object : in Palette_Iterators) return Palette_Cursor;
-   --  function Next (Object : in Palette_Iterators; Position : in Palette_Cursor) return Palette_Cursor;
+   Empty_Palette : constant Palette := Palette'
+     (Data =>
+        Internal_Palette'
+        (Total     => 0,
+         Colours   => null,
+         Version   => 0,
+         Ref_Count => 0));
 end SDL.Video.Palettes;
