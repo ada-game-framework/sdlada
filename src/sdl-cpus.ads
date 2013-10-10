@@ -4,8 +4,6 @@
 --  Author          : Luke A. Guest
 --  Created On      : Thu Sep 26 15:08:09 2013
 package SDL.CPUS is
-   pragma Pure;
-
    --  TODO: Add a subprogram to return CPU architecture as not all platforms will have the same one, i.e.
    --  Android on ARM, MIPS, x86.
 
