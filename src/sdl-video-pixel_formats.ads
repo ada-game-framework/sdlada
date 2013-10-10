@@ -566,7 +566,7 @@ package SDL.Video.Pixel_Formats is
    type Pixel_Format is
       record
          Format       : Pixel_Format_Names;
-         Palette      : Palettes.Internal_Palette_Access;
+         Palette      : Palettes.Palette_Access;
          Bits         : Bits_Per_Pixels;
          Bytes        : Bytes_Per_Pixels;
          Padding      : Interfaces.Unsigned_16;
