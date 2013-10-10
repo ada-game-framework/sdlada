@@ -47,7 +47,7 @@ package SDL.Video.Palettes is
    package Palette_Iterator_Interfaces is new
      Ada.Iterator_Interfaces (Cursor, Has_Element);
 
-   type Palette is tagged private with
+   type Palette is tagged limited private with
      Default_Iterator  => Iterate,
      Iterator_Element  => Colour,
      Constant_Indexing => Constant_Reference;
@@ -60,6 +60,10 @@ package SDL.Video.Palettes is
 
    function Iterate (Container : Palette)
       return Palette_Iterator_Interfaces.Forward_Iterator'Class;
+
+   function Create (Total_Colours : in Positive) return Palette;
+
+   procedure Free (Container : in out Palette);
 
    Empty_Palette : constant Palette;
 private
@@ -84,9 +88,9 @@ private
    type Internal_Palette_Access is access Internal_Palette with
      Convention => C;
 
-   type Palette is tagged
+   type Palette is tagged limited
       record
-         Data : Internal_Palette;
+         Data : Internal_Palette_Access;
       end record;
 
    type Palette_Constant_Access is access constant Palette;
@@ -102,11 +106,5 @@ private
                                            Index     => Natural'First,
                                            Current   => null);
 
-   Empty_Palette : constant Palette := Palette'
-     (Data =>
-        Internal_Palette'
-        (Total     => 0,
-         Colours   => null,
-         Version   => 0,
-         Ref_Count => 0));
+   Empty_Palette : constant Palette := Palette'(Data => null);
 end SDL.Video.Palettes;

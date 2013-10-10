@@ -95,6 +95,30 @@ package body SDL.Video.Palettes is
       end return;
    end Iterate;
 
+   function Create (Total_Colours : in Positive) return Palette is
+      function SDL_Alloc_Palette (Ncolors : in C.int) return Internal_Palette_Access with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_AllocPalette";
+   begin
+      return P : constant Palette :=
+        (Data => SDL_Alloc_Palette (C.int (Total_Colours)))
+      do
+        null;
+      end return;
+   end Create;
+
+   procedure Free (Container : in out Palette) is
+      procedure SDL_Free_Palette (Self : in Internal_Palette_Access) with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_FreePalette";
+   begin
+      SDL_Free_Palette (Container.Data);
+
+      Container.Data := null;
+   end Free;
+
    function First (Object : Iterator) return Cursor is
    begin
       --Put_Line ("First -> Index = " & Natural'Image (Object.Index));
