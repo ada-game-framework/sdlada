@@ -4,6 +4,8 @@
 --  Author          : Luke A. Guest
 --  Created On      : Tue Sep 24 13:45:56 2013
 package SDL.Video is
+   Video_Error : exception;
+
    --  Screen saver information.
    procedure Enable_Screen_Saver with
      Import        => True,
@@ -26,12 +28,12 @@ package SDL.Video is
      Convention    => C,
      External_Name => "SDL_VideoQuit";
 
-   function Total_Drivers (Total : out Positive) return Boolean;
+   function Total_Drivers return Positive;
 
-   function Driver_Name (Index : in Natural) return String;
+   function Driver_Name (Index : in Positive) return String;
 
    function Current_Driver_Name return String;
 
    --  Videe displays.
-   function Total_Displays (Total : out Positive) return Boolean;
+   function Total_Displays return Positive;
 end SDL.Video;

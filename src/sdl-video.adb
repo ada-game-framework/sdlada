@@ -1,5 +1,7 @@
 with Interfaces.C;
 with Interfaces.C.Strings;
+with Ada.Text_IO; use Ada.Text_IO;
+with SDL.Error;
 
 package body SDL.Video is
    package C renames Interfaces.C;
@@ -37,7 +39,7 @@ package body SDL.Video is
       return (Result = Success);
    end Initialise;
 
-   function Total_Drivers (Total : out Positive) return Boolean is
+   function Total_Drivers return Positive is
       function SDL_Get_Num_Video_Drivers return C.int with
         Import        => True,
         Convention    => C,
@@ -46,23 +48,20 @@ package body SDL.Video is
       Num : constant C.int := SDL_Get_Num_Video_Drivers;
    begin
       if Num < 0 then
-         Total := Positive'Last;
-
-         return True;
+         raise Video_Error with "Cannot get number of video drivers.";
       end if;
 
-      Total := Positive (Total);
-
-      return False;
+      return Positive (Num);
    end Total_Drivers;
 
-   function Driver_Name (Index : in Natural) return String is
+   function Driver_Name (Index : in Positive) return String is
       function SDL_Get_Video_Driver (I : in C.int) return C.Strings.chars_ptr with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetVideoDriver";
 
-      C_Str : C.Strings.chars_Ptr := SDL_Get_Video_Driver (C.int (Index));
+      --  Index is zero based, so need to subtract 1 to correct it.
+      C_Str : C.Strings.chars_Ptr := SDL_Get_Video_Driver (C.int (Index) - 1);
    begin
       return C.Strings.Value (C_Str);
    end Driver_Name;
@@ -73,12 +72,18 @@ package body SDL.Video is
         Convention    => C,
         External_Name => "SDL_GetCurrentVideoDriver";
 
-      C_Str : C.Strings.chars_ptr := SDL_Get_Current_Video_Driver;
+      C_Str : constant C.Strings.chars_ptr := SDL_Get_Current_Video_Driver;
+
+      use type C.Strings.chars_Ptr;
    begin
+      if C_Str = C.Strings.Null_ptr then
+         raise Video_Error with SDL.Error.Get;
+      end if;
+
       return C.Strings.Value (C_Str);
    end Current_Driver_Name;
 
-   function Total_Displays (Total : out Positive) return Boolean is
+   function Total_Displays return Positive is
       function SDL_Get_Num_Video_Displays return C.int with
         Import        => True,
         Convention    => C,
@@ -86,14 +91,10 @@ package body SDL.Video is
 
       Num : constant C.int := SDL_Get_Num_Video_Displays;
    begin
-      if Num < 0 then
-         Total := Positive'Last;
-
-         return False;
+      if Num <= 0 then
+         raise Video_Error with SDL.Error.Get;
       end if;
 
-      Total := Positive (Total);
-
-      return True;
+      return Positive (Num);
    end Total_Displays;
 end SDL.Video;
