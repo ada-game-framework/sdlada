@@ -1,11 +1,13 @@
 with Ada.Unchecked_Conversion;
 with Interfaces.C;
 with Interfaces.C.Strings;
+with SDL.Error;
 
 package body SDL.Video.Windows is
    package C renames Interfaces.C;
 
    use type C.int;
+   use type System.Address;
 
    procedure Create
      (Self   : in out Window;
