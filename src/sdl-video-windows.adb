@@ -27,10 +27,13 @@ package body SDL.Video.Windows is
 
       C_Title_Str : C.Strings.chars_ptr := C.Strings.New_String (Title);
    begin
-      Self.Internal := SDL_Create
-        (C_Title_Str, C.int (X), C.int (Y), C.int (Width), C.int (Height), Flags);
+      Self.Internal := SDL_Create (C_Title_Str, C.int (X), C.int (Y), C.int (Width), C.int (Height), Flags);
 
       C.Strings.Free (C_Title_Str);
+
+      if Self.Internal = System.Null_Address then
+         raise Window_Error with SDL.Error.Get;
+      end if;
    end Create;
 
    procedure Create (Self : in out Window; Native : in Native_Window) is
@@ -40,6 +43,10 @@ package body SDL.Video.Windows is
         External_Name => "SDL_CreateWindowFrom";
    begin
       Self.Internal := SDL_Create_Window_From (Native);
+
+      if Self.Internal = System.Null_Address then
+         raise Window_Error with SDL.Error.Get;
+      end if;
    end Create;
 
    procedure Finalize (Object : in out Window) is
@@ -71,7 +78,7 @@ package body SDL.Video.Windows is
       Result : C.int := SDL_Set_Brightness (Self.Internal, C.C_float (How_Bright));
    begin
       if Result /= Success then
-         raise Window_Error with "Unable to set brightness.";
+         raise Window_Error with SDL.Error.Get;
       end if;
    end Set_Brightness;
 
@@ -116,7 +123,7 @@ package body SDL.Video.Windows is
       Total : C.int := SDL_Get_Window_Display_Index (Self.Internal);
    begin
       if Total < 0 then
-         raise Window_Error with "Cannot get display index";
+         raise Window_Error with SDL.Error.Get;
       end if;
 
       return Positive (Total);
