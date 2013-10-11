@@ -48,7 +48,7 @@ package body SDL.Video is
       Num : constant C.int := SDL_Get_Num_Video_Drivers;
    begin
       if Num < 0 then
-         raise Video_Error with "Cannot get number of video drivers.";
+         raise Video_Error with SDL.Error.Get;
       end if;
 
       return Positive (Num);
