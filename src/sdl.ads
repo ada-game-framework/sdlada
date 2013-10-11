@@ -41,5 +41,7 @@ package SDL is
        Convention    => C,
        External_Name => "SDL_WasInit";
 private
-   Success : constant Interfaces.C.int := 0;
+   Success   : constant Interfaces.C.int := 0;
+   SDL_True  : constant Interfaces.C.int := 1;
+   SDL_False : constant Interfaces.C.int := 0;
 end SDL;
