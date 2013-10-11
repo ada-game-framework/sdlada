@@ -45,7 +45,6 @@ package SDL.Hints is
       External_Name => "SDL_ClearHints";
 
    function Get (Name : in Hint) return String;
-   function Set (Name : in Hint; Value : in String) return Boolean;
-   function Set (Name : in Hint; Value : in String; Priority : in Priorities)
-                return Boolean;
+   procedure Set (Name : in Hint; Value : in String);
+   procedure Set (Name : in Hint; Value : in String; Priority : in Priorities);
 end SDL.Hints;

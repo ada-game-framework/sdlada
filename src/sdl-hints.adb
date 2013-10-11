@@ -67,7 +67,7 @@ package body SDL.Hints is
       return C.Strings.Value (C_Str);
    end Get;
 
-   function Set (Name : in Hint; Value : in String) return Boolean is
+   procedure Set (Name : in Hint; Value : in String) is
       function SDL_Set_Hint (Name, Value : in C.Strings.chars_ptr) return C.int with
         Import        => True,
         Convention    => C,
@@ -75,18 +75,19 @@ package body SDL.Hints is
 
       C_Hint_Str  : C.Strings.chars_ptr := C.Strings.New_String (Hints.Value (Name));
       C_Value_Str : C.Strings.chars_ptr := C.Strings.New_String (Value);
-      Success     : C.int               := SDL_Set_Hint
+      Result      : C.int               := SDL_Set_Hint
         (Name  => C_Hint_Str,
          Value => C_Value_Str);
    begin
       C.Strings.Free (C_Hint_Str);
       C.Strings.Free (C_Value_Str);
 
-      return (if Success = 1 then True else False);
+      if Result = 0 then
+         raise Hint_Error with "Could not set hint";
+      end if;
    end Set;
 
-   function Set (Name : in Hint; Value : in String; Priority : in Priorities)
-                return Boolean is
+   procedure Set (Name : in Hint; Value : in String; Priority : in Priorities) is
       function SDL_Set_Hint (Name, Value : in C.Strings.chars_ptr; P : in Priorities) return C.int with
         Import        => True,
         Convention    => C,
@@ -94,7 +95,7 @@ package body SDL.Hints is
 
       C_Hint_Str  : C.Strings.chars_ptr := C.Strings.New_String (Hints.Value (Name));
       C_Value_Str : C.Strings.chars_ptr := C.Strings.New_String (Value);
-      Success     : C.int               := SDL_Set_Hint
+      Result      : C.int               := SDL_Set_Hint
         (Name  => C_Hint_Str,
          Value => C_Value_Str,
          P     => Priority);
@@ -102,6 +103,8 @@ package body SDL.Hints is
       C.Strings.Free (C_Hint_Str);
       C.Strings.Free (C_Value_Str);
 
-      return (if Success = 1 then True else False);
+      if Result = 0 then
+         raise Hint_Error with "Could not set hint";
+      end if;
    end Set;
 end SDL.Hints;
