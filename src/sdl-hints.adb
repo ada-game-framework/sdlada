@@ -62,6 +62,10 @@ package body SDL.Hints is
       C_Hint_Str : C.Strings.chars_ptr          := C.Strings.New_String (Value (H => Name));
       C_Str      : constant C.Strings.chars_ptr := SDL_Get_Hint (C_Hint_Str);
    begin
+      if C_Str = C.Strings.Null_Ptr then
+         return "";
+      end if;
+
       C.Strings.Free (C_Hint_Str);
 
       return C.Strings.Value (C_Str);
@@ -82,8 +86,8 @@ package body SDL.Hints is
       C.Strings.Free (C_Hint_Str);
       C.Strings.Free (C_Value_Str);
 
-      if Result = 0 then
-         raise Hint_Error with "Could not set hint";
+      if Result = SDL_False then
+         raise Hint_Error with SDL.Error.Get;
       end if;
    end Set;
 
@@ -103,8 +107,8 @@ package body SDL.Hints is
       C.Strings.Free (C_Hint_Str);
       C.Strings.Free (C_Value_Str);
 
-      if Result = 0 then
-         raise Hint_Error with "Could not set hint";
+      if Result = SDL_False then
+         raise Hint_Error with SDL.Error.Get;
       end if;
    end Set;
 end SDL.Hints;
