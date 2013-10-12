@@ -1,0 +1,470 @@
+with Interfaces.C;
+with SDL.Error;
+
+package body SDL.Video.GL is
+   package C renames Interfaces.C;
+
+   use type C.int;
+
+   type Attributes is
+     (Attribute_Red_Size,
+      Attribute_Green_Size,
+      Attribute_Blue_Size,
+      Attribute_Alpha_Size,
+      Attribute_Buffer_Size,
+      Attribute_Double_Buffer,
+      Attribute_Depth_Buffer_Size,
+      Attribute_Stencil_Size,
+      Attribute_Accumulator_Red_Size,
+      Attribute_Accumulator_Green_Size,
+      Attribute_Accumulator_Blue_Size,
+      Attribute_Accumulator_Alpha_Size,
+      Attribute_Stereo,
+      Attribute_Multisample_Buffers,
+      Attribute_Multisample_Samples,
+      Attribute_Accelerated,
+      Attribute_Retained_Backing,
+      Attribute_Context_Major_Version,
+      Attribute_Context_Minor_Version,
+      Attribute_Context_EGL,
+      Attribute_Context_Flags,
+      Attribute_Context_Profile,
+      Attribute_Share_With_Current_Context) with
+     Convention => C;
+
+   Profile_Values : constant array (Profiles) of Interfaces.Unsigned_32 := (16#0000_0001#, 16#0000_0002#, 16#0000_0004#);
+
+   function SDL_GL_Set_Attribute (Attr : in Attributes; Value : in C.int) return C.int with
+     Import        => True,
+     Convention    => C,
+     External_Name => "SDL_GL_SetAttribute";
+
+   function SDL_GL_Get_Attribute (Attr : in Attributes; Value : out C.int) return C.int with
+     Import        => True,
+     Convention    => C,
+     External_Name => "SDL_GL_GetAttribute";
+
+   function Red_Size return Colour_Bit_Size is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Red_Size, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return Colour_Bit_Size (Data);
+   end Red_Size;
+
+   procedure Set_Red_Size (Size : in Colour_Bit_Size) is
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Red_Size, C.int (Size));
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Red_Size;
+
+   function Green_Size return Colour_Bit_Size is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Green_Size, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return Colour_Bit_Size (Data);
+   end Green_Size;
+
+   procedure Set_Green_Size (Size : in Colour_Bit_Size) is
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Green_Size, C.int (Size));
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Green_Size;
+
+   function Blue_Size return Colour_Bit_Size is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Blue_Size, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return Colour_Bit_Size (Data);
+   end Blue_Size;
+
+   procedure Set_Blue_Size (Size : in Colour_Bit_Size) is
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Blue_Size, C.int (Size));
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Blue_Size;
+
+   function Alpha_Size return Colour_Bit_Size is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Alpha_Size, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return Colour_Bit_Size (Data);
+   end Alpha_Size;
+
+   procedure Set_Alpha_Size (Size : in Colour_Bit_Size) is
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Alpha_Size, C.int (Size));
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Alpha_Size;
+
+   function Buffer_Size return Buffer_Sizes is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Buffer_Size, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return Buffer_Sizes (Data);
+   end Buffer_Size;
+
+   procedure Set_Buffer_Size (Size : in Buffer_Sizes) is
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Buffer_Size, C.int (Size));
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Buffer_Size;
+
+   function Is_Double_Buffered return Boolean is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Double_Buffer, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return (Data = 1);
+   end Is_Double_Buffered;
+
+   procedure Set_Double_Buffer (On : in Boolean) is
+      Data   : C.int := (if On = True then 1 else 0);
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Double_Buffer, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Double_Buffer;
+
+   function Depth_Buffer_Size return Depth_Buffer_Sizes is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Depth_Buffer_Size, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return Depth_Buffer_Sizes (Data);
+   end Depth_Buffer_Size;
+
+   procedure Set_Depth_Buffer_Size (Size : in Depth_Buffer_Sizes) is
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Depth_Buffer_Size, C.int (Size));
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Depth_Buffer_Size;
+
+   function Stencil_Buffer_Size return Stencil_Buffer_Sizes is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Stencil_Size, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return Stencil_Buffer_Sizes (Data);
+   end Stencil_Buffer_Size;
+
+   procedure Set_Stencil_Buffer_Size (Size : in Stencil_Buffer_Sizes) is
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Stencil_Size, C.int (Size));
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Stencil_Buffer_Size;
+
+   function Accumulator_Red_Size return Colour_Bit_Size is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Accumulator_Red_Size, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return Colour_Bit_Size (Data);
+   end Accumulator_Red_Size;
+
+   procedure Set_Accumulator_Red_Size (Size : in Colour_Bit_Size)is
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Accumulator_Red_Size, C.int (Size));
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Accumulator_Red_Size;
+
+   function Accumulator_Green_Size return Colour_Bit_Size is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Accumulator_Green_Size, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return Colour_Bit_Size (Data);
+   end Accumulator_Green_Size;
+
+   procedure Set_Accumulator_Green_Size (Size : in Colour_Bit_Size) is
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Accumulator_Green_Size, C.int (Size));
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Accumulator_Green_Size;
+
+   function Accumulator_Blue_Size return Colour_Bit_Size is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Accumulator_Blue_Size, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return Colour_Bit_Size (Data);
+   end Accumulator_Blue_Size;
+
+   procedure Set_Accumulator_Blue_Size (Size : in Colour_Bit_Size) is
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Accumulator_Blue_Size, C.int (Size));
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Accumulator_Blue_Size;
+
+   function Accumulator_Alpha_Size return Colour_Bit_Size is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Accumulator_Alpha_Size, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return Colour_Bit_Size (Data);
+   end Accumulator_Alpha_Size;
+
+   procedure Set_Accumulator_Alpha_Size (Size : in Colour_Bit_Size) is
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Accumulator_Alpha_Size, C.int (Size));
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Accumulator_Alpha_Size;
+
+   function Is_Stereo return Boolean is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Stereo, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return (Data = 1);
+   end Is_Stereo;
+
+   procedure Set_Stereo (On : in Boolean) is
+      Data   : C.int := (if On = True then 1 else 0);
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Stereo, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Stereo;
+
+   function Is_Multisampled return Boolean is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Multisample_Buffers, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return (Data = 1);
+   end Is_Multisampled;
+
+   procedure Set_Multisampling (On : in Boolean) is
+      Data   : C.int := (if On = True then 1 else 0);
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Multisample_Buffers, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Multisampling;
+
+   function Multisampling_Samples return Multisample_Samples is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Multisample_Samples, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return Multisample_Samples (Data);
+   end Multisampling_Samples;
+
+   procedure Set_Multisampling_Samples (Samples : in Multisample_Samples) is
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Multisample_Samples, C.int (Samples));
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Multisampling_Samples;
+
+   function Is_Accelerated return Boolean is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Accelerated, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return (Result = 1);
+   end Is_Accelerated;
+
+   procedure Set_Accelerated (On : in Boolean) is
+      Data   : C.int := (if On = True then 1 else 0);
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Accelerated, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Accelerated;
+
+   function Context_Major_Version return Major_Versions is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Context_Major_Version, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return Major_Versions (Data);
+   end Context_Major_Version;
+
+   procedure Set_Context_Major_Version (Version : Major_Versions) is
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Context_Major_Version, C.int (Version));
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Context_Major_Version;
+
+   function Context_Minor_Version return Minor_Versions is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Context_Minor_Version, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return Minor_Versions (Data);
+   end Context_Minor_Version;
+
+   procedure Set_Context_Minor_Version (Version : Minor_Versions) is
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Context_Minor_Version, C.int (Version));
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Context_Minor_Version;
+
+   function Is_Context_EGL return Boolean is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Context_EGL, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return (Data = 1);
+   end Is_Context_EGL;
+
+   procedure Set_Context_EGL (On : in Boolean) is
+      Data   : C.int := (if On = True then 1 else 0);
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Context_EGL, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Context_EGL;
+
+   function Context_Flags return Flags is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Context_Flags, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return Flags (Data);
+   end Context_Flags;
+
+   procedure Set_Context_Flags (Context_Flags : in Flags) is
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Context_Flags, C.int (Context_Flags));
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Context_Flags;
+
+   function Context_Profile return Profiles is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Context_Profile, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return Profiles'Val (Data);
+   end Context_Profile;
+
+   procedure Set_Context_Profile (Profile : in Profiles) is
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Context_Profile, C.int (Profile_Values (Profile)));
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Context_Profile;
+
+   function Is_Sharing_With_Current_Context return Boolean is
+      Data   : C.int;
+      Result : C.int := SDL_GL_Get_Attribute (Attribute_Share_With_Current_Context, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      return (Data = 1);
+   end Is_Sharing_With_Current_Context;
+
+   procedure Set_Share_With_Current_Context (On : in Boolean) is
+      Data   : C.int := (if On = True then 1 else 0);
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Share_With_Current_Context, Data);
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Share_With_Current_Context;
+end SDL.Video.GL;
