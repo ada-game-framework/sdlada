@@ -4,6 +4,11 @@
 --  Author          : Luke A. Guest
 --  Created On      : Tue Sep 24 13:46:54 2013
 with Ada.Finalization;
+with Ada.Strings.UTF_Encoding;
+with SDL.Video.Displays;
+with SDL.Video.Pixel_Formats;
+with SDL.Video.Rectangles;
+with SDL.Video.Surfaces;
 with System;
 
 package SDL.Video.Windows is
@@ -12,6 +17,7 @@ package SDL.Video.Windows is
    type Window_Flags is mod 2 ** 32 with
      Convention => C;
 
+   Windowed            : constant Window_Flags := 16#0000_0000#;
    Full_Screen         : constant Window_Flags := 16#0000_0001#;
    OpenGL              : constant Window_Flags := 16#0000_0002#;
    Shown               : constant Window_Flags := 16#0000_0004#;
@@ -26,6 +32,25 @@ package SDL.Video.Windows is
    Full_Screen_Desktop : constant Window_Flags := Full_Screen or 16#0000_1000#;
    Foreign             : constant Window_Flags := 16#0000_0800#; --  TODO: Not implemented yet.
 
+   --  TODO: This isn't raising any exception when I pass a different value for some reason.
+   subtype Full_Screen_Flags is Window_Flags with
+     Static_Predicate => Full_Screen_Flags in Windowed | Full_Screen | Full_Screen_Desktop;
+
+   type ID is mod 2 ** 32 with
+     Convention => C;
+
+   type Positions is
+      record
+         X : Positive;
+         Y : Positive;
+      end record;
+
+   type Sizes is
+      record
+         Width  : Positive;
+         Height : Positive;
+      end record;
+
    type Native_Window is private;
 
    --  Allow users to derive new types from this.
@@ -39,9 +64,11 @@ package SDL.Video.Windows is
    --  type Window is tagged limited Private;
    type Window is new Ada.Finalization.Limited_Controlled with private;
 
+   Null_Window : constant Window;
+
    procedure Create
      (Self   : in out Window;
-      Title  : in String;
+      Title  : in Ada.Strings.UTF_Encoding.UTF_8_String;
       X      : in Integer;
       Y      : in Integer;
       Width  : in Integer;
@@ -64,39 +91,77 @@ package SDL.Video.Windows is
 
    function Display_Index (Self : in Window) return Positive;
 
-   --  SDL_GetWindowDisplayMode
-   --  SDL_GetWindowFlags
-   --  SDL_GetWindowFromID
-   --  SDL_GetWindowGammaRamp
-   --  SDL_GetWindowGrab
-   --  SDL_GetWindowID
-   --  SDL_GetWindowMaximumSize
-   --  SDL_GetWindowMinimumSize
-   --  SDL_GetWindowPixelFormat
-   --  SDL_GetWindowPosition
-   --  SDL_GetWindowSize
-   --  SDL_GetWindowSurface
-   --  SDL_GetWindowTitle
-   --  SDL_GetWindowWMInfo
-   --  SDL_HideWindow
-   --  SDL_MaximizeWindow
-   --  SDL_MinimizeWindow
-   --  SDL_RaiseWindow
-   --  SDL_RestoreWindow
+   procedure Get_Display_Mode (Self : in Window; Mode : out SDL.Video.Displays.Mode);
+   procedure Set_Display_Mode (Self : in out Window; Mode : in SDL.Video.Displays.Mode);
 
-   --  SDL_SetWindowDisplayMode
-   --  SDL_SetWindowFullscreen
-   --  SDL_SetWindowGammaRamp
-   --  SDL_SetWindowGrab
-   --  SDL_SetWindowIcon
-   --  SDL_SetWindowMaximumSize
-   --  SDL_SetWindowMinimumSize
-   --  SDL_SetWindowPosition
-   --  SDL_SetWindowSize
-   --  SDL_SetWindowTitle
-   --  SDL_ShowWindow
-   --  SDL_UpdateWindowSurface
-   --  SDL_UpdateWindowSurfaceRects
+   function Get_Flags (Self : in Window) return Window_Flags;
+
+   function From_ID (Window_ID : in ID) return Window;
+
+   procedure Get_Gamma_Ramp (Self : in Window; Red, Green, Blue : out SDL.Video.Pixel_Formats.Gamma_Ramp);
+   procedure Set_Gamma_Ramp (Self : in out Window; Red, Green, Blue : in SDL.Video.Pixel_Formats.Gamma_Ramp);
+
+   function Is_Grabbed (Self : in Window) return Boolean with
+     Inline => True;
+
+   procedure Set_Grabbed (Self : in out Window; Grabbed : in Boolean := True) with
+     Inline => True;
+
+   function Get_ID (Self : in Window) return ID with
+     Inline => True;
+
+   function Get_Maximum_Size (Self : in Window) return Sizes;
+   procedure Set_Maximum_Size (Self : in out Window; Size : in Sizes) with
+     Inline => True;
+
+   function Get_Minimum_Size (Self : in Window) return Sizes;
+   procedure Set_Minimum_Size (Self : in out Window; Size : in Sizes) with
+     Inline => True;
+
+   function Pixel_Format (Self : in Window) return SDL.Video.Pixel_Formats.Pixel_Format with
+     Inline => True;
+
+   function Get_Position (Self : in Window) return Positions;
+   procedure Set_Position (Self : in out window; Position : Positions) with
+     Inline => True;
+
+   function Get_Size (Self : in Window) return Sizes;
+   procedure Set_Size (Self : in out Window; Size : in Sizes) with
+     Inline => True;
+
+   procedure Get_Surface (Self : in Window; Surface : out SDL.Video.Surfaces.Surface);
+
+   function Get_Title (Self : in Window) return Ada.Strings.UTF_Encoding.UTF_8_String;
+   procedure Set_Title (Self : in Window; Title : in Ada.Strings.UTF_Encoding.UTF_8_String);
+
+   --  SDL_GetWindowWMInfo
+
+   procedure Hide (Self : in Window) with
+     Inline => True;
+
+   procedure Show (Self : in Window) with
+     Inline => True;
+
+   procedure Maximise (Self : in Window) with
+     Inline => True;
+
+   procedure Minimise (Self : in Window) with
+     Inline => True;
+
+   procedure Raise_And_Focus (Self : in Window) with
+     Inline => True;
+
+   procedure Restore (Self : in Window) with
+     Inline => True;
+
+   procedure Set_Mode (Self : in out Window; Flags : in Full_Screen_Flags);
+
+   procedure Set_Icon (Self : in out Window; Icon : in SDL.Video.Surfaces.Surface) with
+     Inline => True;
+
+   procedure Update_Surface (Self : in Window);
+
+   procedure Update_Surface_Rectangles (Self : in Window; Rectangles : SDL.Video.Rectangles.Rectangle_Arrays);
 private
    type Native_Window is new System.Address;
 
@@ -106,4 +171,7 @@ private
       record
          Internal : System.Address := System.Null_Address;
       end record;
+
+   Null_Window : constant Window := (Ada.Finalization.Limited_Controlled with
+                                       Internal => System.Null_Address);
 end SDL.Video.Windows;
