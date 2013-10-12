@@ -16,4 +16,7 @@ package SDL.Video.Rectangles is
          height : C.int;
       end record with
         Convention => C;
+
+   type Rectangle_Arrays is array (C.size_t range <>) of aliased Rectangle with
+     Convention => C;
 end SDL.Video.Rectangles;
