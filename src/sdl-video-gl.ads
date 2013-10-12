@@ -109,4 +109,20 @@ package SDL.Video.GL is
 
    function Is_Sharing_With_Current_Context return Boolean;
    procedure Set_Share_With_Current_Context (On : in Boolean);
+
+   --  TODO: Finish this.
+--  SDL_GL_BindTexture
+--  SDL_GL_CreateContext
+--  SDL_GL_DeleteContext
+--  SDL_GL_ExtensionSupported
+--  SDL_GL_GetAttribute
+--  SDL_GL_GetProcAddress
+--  SDL_GL_GetSwapInterval
+--  SDL_GL_LoadLibrary
+--  SDL_GL_MakeCurrent
+--  SDL_GL_SetAttribute
+--  SDL_GL_SetSwapInterval
+--  SDL_GL_SwapWindow
+--  SDL_GL_UnbindTexture
+--  SDL_GL_UnloadLibrary
 end SDL.Video.GL;
