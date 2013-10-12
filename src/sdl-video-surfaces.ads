@@ -7,15 +7,24 @@ with Ada.Finalization;
 with System;
 
 package SDL.Video.Surfaces is
-   type Surface new Ada.Finalization.Limited_Controlled with private;
+   type Surface is new Ada.Finalization.Limited_Controlled with private;
 
    Null_Surface : constant Surface;
 private
-   type Surface new Ada.Finalization.Limited_Controlled with
+   type Surface is new Ada.Finalization.Limited_Controlled with
       record
          Internal : System.Address := System.Null_Address;
       end record;
 
+   function Get_Address (Self : in Surface) return System.Address with
+     Export     => True,
+     Convention => Ada;
+
+   procedure Set_Address (Self : in out Surface; A : in System.Address) with
+     Export     => True,
+     Convention => Ada;
+
    Null_Surface : constant Surface := (Ada.Finalization.Limited_Controlled with
                                          Internal => System.Null_Address);
+
 end SDL.Video.Surfaces;
