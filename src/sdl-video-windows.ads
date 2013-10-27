@@ -79,6 +79,8 @@ package SDL.Video.Windows is
    procedure Create (Self : in out Window; Native : in Native_Window) with
      Inline => True;
 
+   --  TODO: Normalise the API by adding a destroy sub program and making this one call destroy,
+   --  see textures for more info.
    procedure Finalize (Object : in out Window);
 
    function Get_Brightness (Self : in Window) return Brightness with
