@@ -4,7 +4,11 @@ library project SDL_Build is
   for Languages    use ("Ada", "C");
   for Source_Dirs  use ("src");
   for Library_Name use "sdlada";
-  for Object_Dir   use "obj";
+  for Object_Dir   use "lib/.obj";
   for Library_Dir  use "lib";
   for Library_Kind use "static";
+
+  package Builder is
+     for Default_Switches ("Ada") use ("-gnat2012", "-gnata");
+  end Builder;
 end SDL_Build;
