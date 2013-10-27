@@ -5,6 +5,15 @@ package body SDL.CPUS is
 
    use type C.int;
 
+   function Count return Positive is
+      function SDL_Get_CPU_Count return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GetCPUCount";
+   begin
+      return Positive (SDL_Get_CPU_Count);
+   end Count;
+
    function Has_3DNow return Boolean is
       function SDL_Has_3DNow return C.Int with
         Import        => True,
@@ -36,7 +45,7 @@ package body SDL.CPUS is
       function SDL_Has_RDTSC return C.Int with
         Import        => True,
         Convention    => C,
-        External_Name => "SDL_Has";
+        External_Name => "SDL_HasRDTSC";
    begin
       return (if SDL_Has_RDTSC = 1 then True else False);
    end Has_RDTSC;

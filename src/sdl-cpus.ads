@@ -7,6 +7,8 @@ package SDL.CPUS is
    --  TODO: Add a subprogram to return CPU architecture as not all platforms will have the same one, i.e.
    --  Android on ARM, MIPS, x86.
 
+   function Count return Positive;
+
    function Cache_Line_Size return Positive with
      Import        => True,
      Convention    => C,
