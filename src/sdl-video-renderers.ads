@@ -3,7 +3,11 @@
 --  Description     : Renderer.
 --  Author          : Luke A. Guest
 --  Created On      : Sat Oct 12 21:39:48 2013
+with Ada.Finalization;
+with System;
+
 package SDL.Video.Renderers is
+   type Renderer is new Ada.Finalization.Limited_Controlled with private;
    --  TODO: Finish this.
 
 --  SDL_RendererFlags
@@ -41,4 +45,13 @@ package SDL.Video.Renderers is
 --  SDL_SetRenderDrawBlendMode
 --  SDL_SetRenderDrawColor
 --  SDL_SetRenderTarget
+private
+   type Renderer is new Ada.Finalization.Limited_Controlled with
+      record
+         Internal : System.Address;
+      end record;
+
+   function Get_Address (Self : in Renderer) return System.Address with
+     Export     => True,
+     Convention => Ada;
 end SDL.Video.Renderers;
