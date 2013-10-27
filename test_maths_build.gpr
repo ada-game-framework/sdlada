@@ -1,0 +1,14 @@
+library project Test_Maths_Build is
+  Version := "1";
+
+  for Languages    use ("Ada", "C");
+  for Source_Dirs  use ("test/maths/");
+  for Library_Name use "testmaths";
+  for Object_Dir   use "build_test/.obj";
+  for Library_Dir  use "build_test";
+  for Library_Kind use "dynamic";
+
+  package Builder is
+     for Default_Switches ("Ada") use ("-gnat2012", "-gnata");
+  end Builder;
+end Test_Maths_Build;

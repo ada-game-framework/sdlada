@@ -1,0 +1,10 @@
+library project Test_Maths is
+  Version := "1";
+
+  for Source_Dirs  use ("test/maths/");
+  for Library_Name use "testmaths";
+  for Object_Dir   use "build_test/.obj";
+  for Library_Dir  use "build_test";
+  for Library_Kind use "dynamic";
+  for Externally_Built use "true";
+end Test_Maths;
