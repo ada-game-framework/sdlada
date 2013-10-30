@@ -5,7 +5,7 @@ project Test is
    for Source_Dirs use ("test");
    for Object_Dir use "build_test/.obj";
    for Exec_Dir use "build_test";
-   for Main use ("test.adb", "version.adb", "platform.adb", "error.adb");
+   for Main use ("test.adb", "version.adb", "platform.adb", "error.adb", "libraries.adb");
 
    package Ide is
       for Gnat use "/home/laguest/opt/tinyada/bin/gnat";
