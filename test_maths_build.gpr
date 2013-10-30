@@ -11,4 +11,9 @@ library project Test_Maths_Build is
   package Builder is
      for Default_Switches ("Ada") use ("-gnat2012", "-gnata");
   end Builder;
+
+  package Compiler is
+--     for Default_Switches ("Ada") use ("-O0", "-g", "-ffunction-sections", "-fdata-sections", "-fPIC");
+     for Default_Switches ("Ada") use ("-O0", "-g", "-fPIC");
+  end Compiler;
 end Test_Maths_Build;
