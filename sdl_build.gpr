@@ -8,6 +8,11 @@ library project SDL_Build is
   for Library_Dir  use "lib";
   for Library_Kind use "static";
 
+  package Compiler is
+     for Default_Switches ("C") use ("-O0", "-g", "-ffunction-sections", "-fdata-sections");
+     for Default_Switches ("Ada") use ("-O0", "-g", "-ffunction-sections", "-fdata-sections");
+  end Compiler;
+
   package Builder is
      for Default_Switches ("Ada") use ("-gnat2012", "-gnata");
   end Builder;
