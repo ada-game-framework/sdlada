@@ -24,4 +24,19 @@ package body SDL is
    begin
       return (Result = Success);
    end Initialise_Sub_System;
+
+   function SDL_Was_Initialised (Flags : in Init_Flags := Null_Init_Flags) return Init_Flags with
+     Import        => True,
+     Convention    => C,
+     External_Name => "SDL_WasInit";
+
+   function Was_Initialised return Init_Flags is
+   begin
+      return SDL_Was_Initialised;
+   end Was_Initialised;
+
+   function Was_Initialised (Flags : in Init_Flags) return Boolean is
+   begin
+      return (SDL_Was_Initialised (Flags) = Flags);
+   end Was_Initialised;
 end SDL;

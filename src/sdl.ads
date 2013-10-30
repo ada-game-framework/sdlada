@@ -9,6 +9,7 @@ package SDL is
    type Init_Flags is mod 2 ** 32 with
      Convention => C;
 
+   Null_Init_Flags : constant Init_Flags := 16#0000_0000#;
    Timer           : constant Init_Flags := 16#0000_0001#;
    Audio           : constant Init_Flags := 16#0000_0010#;
    Screen          : constant Init_Flags := 16#0000_0020#;
@@ -36,10 +37,11 @@ package SDL is
        Convention    => C,
        External_Name => "SDL_QuitSubSystem";
 
-   function Was_Initialised return Init_Flags with
-       Import        => True,
-       Convention    => C,
-       External_Name => "SDL_WasInit";
+   --  Get which sub-systems were initialised.
+   function Was_Initialised return Init_Flags;
+
+   --  Check whether a set of sub-systems were initialised.
+   function Was_Initialised (Flags : in Init_Flags) return Boolean;
 private
    Success   : constant Interfaces.C.int := 0;
    SDL_True  : constant Interfaces.C.int := 1;
