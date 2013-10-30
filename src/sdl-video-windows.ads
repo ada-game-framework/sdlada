@@ -164,6 +164,9 @@ package SDL.Video.Windows is
    procedure Update_Surface (Self : in Window);
 
    procedure Update_Surface_Rectangles (Self : in Window; Rectangles : SDL.Video.Rectangles.Rectangle_Arrays);
+
+   --  Determine whether any windows have been created.
+   function Exist return Boolean;
 private
    type Native_Window is new System.Address;
 
@@ -176,4 +179,6 @@ private
 
    Null_Window : constant Window := (Ada.Finalization.Limited_Controlled with
                                        Internal => System.Null_Address);
+
+   Total_Windows_Created : Natural := Natural'First;
 end SDL.Video.Windows;

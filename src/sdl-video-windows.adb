@@ -18,6 +18,16 @@ package body SDL.Video.Windows is
      Import     => True,
      Convention => Ada;
 
+   procedure Increment_Windows is
+   begin
+      Total_Windows_Created := Total_Windows_Created + 1;
+   end Increment_Windows;
+
+   procedure Decrement_Windows is
+   begin
+      Total_Windows_Created := Total_Windows_Created + 1;
+   end Decrement_Windows;
+
    procedure Create
      (Self   : in out Window;
       Title  : in Ada.Strings.UTF_Encoding.UTF_8_String;
@@ -45,6 +55,8 @@ package body SDL.Video.Windows is
       if Self.Internal = System.Null_Address then
          raise Window_Error with SDL.Error.Get;
       end if;
+
+      Increment_Windows;
    end Create;
 
    procedure Create (Self : in out Window; Native : in Native_Window) is
@@ -58,6 +70,8 @@ package body SDL.Video.Windows is
       if Self.Internal = System.Null_Address then
          raise Window_Error with SDL.Error.Get;
       end if;
+
+      Increment_Windows;
    end Create;
 
    procedure Finalize (Object : in out Window) is
@@ -69,6 +83,8 @@ package body SDL.Video.Windows is
       SDL_Destroy (Object.Internal);
 
       Object.Internal := System.Null_Address;
+
+      Decrement_Windows;
    end Finalize;
 
    function Get_Brightness (Self : in Window) return Brightness is
@@ -476,4 +492,13 @@ package body SDL.Video.Windows is
          raise Window_Error with SDL.Error.Get;
       end if;
    end Update_Surface_Rectangles;
+
+   function Exist return Boolean is
+   begin
+      if Total_Windows_Created /= Natural'First then
+         return True;
+      end if;
+
+      return False;
+   end Exist;
 end SDL.Video.Windows;
