@@ -5,7 +5,7 @@ with System;
 
 use type System.Bit_Order;
 
-procedure Platform is
+procedure Error is
 begin
    SDL.Log.Set (Category => SDL.Log.Application, Priority => SDL.Log.Debug);
 
@@ -14,4 +14,4 @@ begin
    SDL.Log.Put_Debug ("Error string : " & SDL.Error.Get);
 
    SDL.Finalise;
-end Platform;
+end Error;
