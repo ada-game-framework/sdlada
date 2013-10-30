@@ -35,7 +35,7 @@ package body SDL.Libraries is
       Self.Internal := System.Null_Address;
    end Unload;
 
-   function Load_Sub_Program return Access_To_Sub_Program is
+   function Load_Sub_Program (From_Library : in Handles) return Access_To_Sub_Program is
       function To_Sub_Program is new Ada.Unchecked_Conversion
         (Source => System.Address, Target => Access_To_Sub_Program);
 

@@ -20,9 +20,8 @@ package SDL.Libraries is
    generic
       type Access_To_Sub_Program is private;
 
-      From_Library : Handles;
-      Name         : String;
-   function Load_Sub_Program return Access_To_Sub_Program;
+      Name : String;
+   function Load_Sub_Program (From_Library : in Handles) return Access_To_Sub_Program;
 private
    type Handles is new Ada.Finalization.Limited_Controlled with
       record
