@@ -14,6 +14,15 @@ package body SDL.CPUS is
       return Positive (SDL_Get_CPU_Count);
    end Count;
 
+   function Cache_Line_Size return Positive is
+      function SDL_Cache_Line_Size return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GetCPUCacheLineSize";
+   begin
+      return Positive (SDL_Cache_Line_Size);
+   end Cache_Line_Size;
+
    function Has_3DNow return Boolean is
       function SDL_Has_3DNow return C.Int with
         Import        => True,

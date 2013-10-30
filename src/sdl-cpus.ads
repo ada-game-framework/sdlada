@@ -10,9 +10,7 @@ package SDL.CPUS is
    function Count return Positive;
 
    function Cache_Line_Size return Positive with
-     Import        => True,
-     Convention    => C,
-     External_Name => "SDL_GetCPUCacheLineSize";
+     Inline => True;
 
    function Has_3DNow return Boolean with
      Inline => True;
