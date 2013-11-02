@@ -501,4 +501,9 @@ package body SDL.Video.Windows is
 
       return False;
    end Exist;
+
+   function Get_Address (Self : in Window) return System.Address is
+   begin
+      return Self.Internal;
+   end Get_Address;
 end SDL.Video.Windows;

@@ -177,6 +177,11 @@ private
          Internal : System.Address := System.Null_Address;
       end record;
 
+   function Get_Address (Self : in Window) return System.Address with
+     Export     => True,
+     Convention => Ada,
+     External_Name => "Get_Window_Address"; -- TODO: If I remove this, I get a duplicate symbol error with the on in Surfaces.
+
    Null_Window : constant Window := (Ada.Finalization.Limited_Controlled with
                                        Internal => System.Null_Address);
 
