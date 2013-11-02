@@ -166,4 +166,9 @@ package body SDL.Video.Textures is
          Destroy (Self);
       end if;
    end Finalize;
+
+   function Get_Address (Self : in Texture) return System.Address is
+   begin
+      return Self.Internal;
+   end Get_Address;
 end SDL.Video.Textures;

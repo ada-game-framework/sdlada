@@ -8,7 +8,7 @@ with System;
 with SDL.Video.Palettes;
 with SDL.Video.Pixel_Formats;
 with SDL.Video.Rectangles;
-with SDL.Video.Renderers;
+limited with SDL.Video.Renderers;
 with SDL.Video.Surfaces;
 with SDL.Video.Windows;
 
@@ -19,6 +19,7 @@ package SDL.Video.Textures is
    type Kinds is (Static, Streaming, Target) with
      Convention => C;
 
+   --  TODO: Get this to be an enum, but SDL_SetRenderDrawBlendMode can return a mask of them.
    type Blend_Modes is range 0 .. 4 with
      Convention => C;
 
@@ -75,6 +76,10 @@ private
 
    overriding
    procedure Finalize (Self : in out Texture);
+
+   function Get_Address (Self : in Texture) return System.Address with
+     Export     => True,
+     Convention => Ada;
 
    Null_Texture : constant Texture := (Ada.Finalization.Limited_Controlled with
                                          Internal => System.Null_Address,
