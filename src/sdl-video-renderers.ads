@@ -108,9 +108,6 @@ package SDL.Video.Renderers is
    procedure Set_Target (Self : in out Renderer; Target : in SDL.Video.Textures.Texture);
 
    function Get_Renderer (Window : in SDL.Video.Windows.Window) return Renderer;
-
---SDL_LockTexture
---SDL_UnlockTexture
 private
    type Renderer is new Ada.Finalization.Limited_Controlled with
       record
