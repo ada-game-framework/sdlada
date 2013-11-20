@@ -28,7 +28,7 @@ package SDL.Video.Textures is
       Additive        => 16#0000_0002#,
       Colour_Modulate => 16#0000_0004#);
 
-   --  Was SDL_TextureModulate
+   --  Was SDL_TextureModulate - Possible doc bug.
 
    type Texture is new Ada.Finalization.Limited_Controlled with private;
 
