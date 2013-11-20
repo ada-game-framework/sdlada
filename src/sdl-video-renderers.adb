@@ -417,7 +417,7 @@ package body SDL.Video.Renderers is
    end Set_Viewport;
 
    procedure Present (Self : in Renderer) is
-      procedure SDL_Render_Get_Viewport (R : in System.Address; Rect : out SDL.Video.Rectangles.Rectangle) with
+      procedure SDL_Render_Present (R : in System.Address) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderPresent";
