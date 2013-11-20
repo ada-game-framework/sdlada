@@ -3,6 +3,8 @@
 --  Description     : Extended OpenGL functionality.
 --  Author          : Luke A. Guest
 --  Created On      : Sat Oct 12 17:22:34 2013
+with System;
+
 package SDL.Video.GL is
    SDL_GL_Error : exception;
 
@@ -27,6 +29,8 @@ package SDL.Video.GL is
    type Major_Versions is range 1 .. 4;
 
    type Minor_Versions is range 0 .. 4;
+
+   type Contexts is limited private;
 
    type Profiles is (Core, Compatibility, ES);
      --  Convention => C;
@@ -110,19 +114,25 @@ package SDL.Video.GL is
    function Is_Sharing_With_Current_Context return Boolean;
    procedure Set_Share_With_Current_Context (On : in Boolean);
 
-   --  TODO: Finish this.
---  SDL_GL_BindTexture
 --  SDL_GL_CreateContext
 --  SDL_GL_DeleteContext
+--  SDL_GL_GetCurrentContext
+--  SDL_GL_MakeCurrent
+   --  TODO: Finish this.
+--  SDL_GL_BindTexture
 --  SDL_GL_ExtensionSupported
 --  SDL_GL_GetAttribute
 --  SDL_GL_GetProcAddress
 --  SDL_GL_GetSwapInterval
 --  SDL_GL_LoadLibrary
---  SDL_GL_MakeCurrent
 --  SDL_GL_SetAttribute
 --  SDL_GL_SetSwapInterval
 --  SDL_GL_SwapWindow
 --  SDL_GL_UnbindTexture
 --  SDL_GL_UnloadLibrary
+private
+   type Contexts is limited
+      record
+         Internal : System.Address;
+      end record;
 end SDL.Video.GL;
