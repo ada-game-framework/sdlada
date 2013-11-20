@@ -19,14 +19,14 @@ package SDL.Video.Textures is
    type Kinds is (Static, Streaming, Target) with
      Convention => C;
 
-   --  TODO: Get this to be an enum, but SDL_SetRenderDrawBlendMode can return a mask of them.
-   type Blend_Modes is range 0 .. 4 with
+   type Blend_Modes is (None, Alpha_Blend, Additive, Colour_Modulate) with
      Convention => C;
 
-   Blend_None     : constant Blend_Modes := 16#0000_0000#;
-   Blend_Alpha    : constant Blend_Modes := 16#0000_0001#;
-   Blend_Additive : constant Blend_Modes := 16#0000_0002#;
-   Blend_Modulate : constant Blend_Modes := 16#0000_0004#;
+   for Blend_Modes use
+     (None            => 16#0000_0000#,
+      Alpha_Blend     => 16#0000_0001#,
+      Additive        => 16#0000_0002#,
+      Colour_Modulate => 16#0000_0004#);
 
    --  Was SDL_TextureModulate
 
