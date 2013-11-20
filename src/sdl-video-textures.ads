@@ -55,8 +55,8 @@ package SDL.Video.Textures is
    function Get_Blend_Mode (Self : in Texture) return Blend_Modes;
    procedure Set_Blend_Mode (Self : in out Texture; Mode : in Blend_Modes);
 
-   function Get_Colour (Self : in Texture) return SDL.Video.Palettes.RGB_Colour;
-   procedure Set_Colour (Self : in out Texture; Colour : in SDL.Video.Palettes.RGB_Colour);
+   function Get_Modulate_Colour (Self : in Texture) return SDL.Video.Palettes.RGB_Colour;
+   procedure Set_Modulate_Colour (Self : in out Texture; Colour : in SDL.Video.Palettes.RGB_Colour);
 
    --  Lock returns access to pixel data as write-only.
    --  function Lock (Self : in out Texture; Pixel_Data : out SDL.Video.Pixels.Pixel) return Boolean with

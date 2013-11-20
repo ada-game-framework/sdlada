@@ -129,7 +129,7 @@ package body SDL.Video.Textures is
       end if;
    end Set_Blend_Mode;
 
-   function Get_Colour (Self : in Texture) return SDL.Video.Palettes.RGB_Colour is
+   function Get_Modulate_Colour (Self : in Texture) return SDL.Video.Palettes.RGB_Colour is
       function SDL_Get_Texture_Color_Mod (T       : in System.Address;
                                           R, G, B : out SDL.Video.Palettes.Colour_Component) return C.int with
         Import        => True,
@@ -144,9 +144,9 @@ package body SDL.Video.Textures is
       end if;
 
       return Data;
-   end Get_Colour;
+   end Get_Modulate_Colour;
 
-   procedure Set_Colour (Self : in out Texture; Colour : in SDL.Video.Palettes.RGB_Colour) is
+   procedure Set_Modulate_Colour (Self : in out Texture; Colour : in SDL.Video.Palettes.RGB_Colour) is
       function SDL_Set_Texture_Color_Mod (T       : in System.Address;
                                           R, G, B : in SDL.Video.Palettes.Colour_Component) return C.int with
         Import        => True,
@@ -158,7 +158,7 @@ package body SDL.Video.Textures is
       if Result /= Success then
          raise Texture_Error with SDL.Error.Get;
       end if;
-   end Set_Colour;
+   end Set_Modulate_Colour;
 
    procedure Finalize (Self : in out Texture) is
    begin
