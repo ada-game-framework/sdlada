@@ -67,6 +67,7 @@ package SDL.Video.Textures is
 --  SDL_UnlockTexture
 --  SDL_QueryTexture
 --  SDL_UpdateTexture
+--  SDL_UpdateYUVTexture
 private
    type Texture is new Ada.Finalization.Limited_Controlled with
       record
