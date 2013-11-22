@@ -3,7 +3,10 @@
 --  Description     : Extended OpenGL functionality.
 --  Author          : Luke A. Guest
 --  Created On      : Sat Oct 12 17:22:34 2013
+with Ada.Finalization;
 with System;
+with SDL.Video.Windows;
+with SDL.Video.Textures;
 
 package SDL.Video.GL is
    SDL_GL_Error : exception;
@@ -30,14 +33,12 @@ package SDL.Video.GL is
 
    type Minor_Versions is range 0 .. 4;
 
-   type Contexts is limited private;
+   type Profiles is (Core, Compatibility, ES) with
+     Convention => C;
 
-   type Profiles is (Core, Compatibility, ES);
-     --  Convention => C;
-
-   --  for Profiles use (Core          => 16#0000_0001#,
-   --                    Compatibility => 16#0000_0002#,
-   --                    ES            => 16#0000_0004#);
+   for Profiles use (Core          => 16#0000_0001#,
+                     Compatibility => 16#0000_0002#,
+                     ES            => 16#0000_0004#);
 
    type Flags is mod 2 ** 8 with
      Convention => C,
@@ -114,25 +115,45 @@ package SDL.Video.GL is
    function Is_Sharing_With_Current_Context return Boolean;
    procedure Set_Share_With_Current_Context (On : in Boolean);
 
---  SDL_GL_CreateContext
---  SDL_GL_DeleteContext
---  SDL_GL_GetCurrentContext
---  SDL_GL_MakeCurrent
+   --  The GL context.
+   type Contexts is new Ada.Finalization.Limited_Controlled with private;
+
+   procedure Create (Self : in out Contexts; From : in SDL.Video.Windows.Window);
+   procedure Finalize (Self : in out Contexts);
+
+   function Get_Current return Contexts;
+   procedure Set_Current (Self : in Contexts; To : in SDL.Video.Windows.Window);
+
    --  TODO: Finish this.
 --  SDL_GL_BindTexture
---  SDL_GL_ExtensionSupported
---  SDL_GL_GetAttribute
---  SDL_GL_GetProcAddress
---  SDL_GL_GetSwapInterval
---  SDL_GL_LoadLibrary
---  SDL_GL_SetAttribute
---  SDL_GL_SetSwapInterval
---  SDL_GL_SwapWindow
 --  SDL_GL_UnbindTexture
+
+   function Supports (Extension : in String) return Boolean;
+
+--  SDL_GL_GetProcAddress
+
+   type Swap_Intervals is (Not_Supported, Not_Synchronised, Synchronised) with
+     Convention => C;
+
+   for Swap_Intervals use (Not_Supported => -1, Not_Synchronised => 0, Synchronised => 1);
+
+   subtype Allowed_Swap_Intervals is Swap_Intervals range Not_Synchronised .. Synchronised;
+
+   function Get_Swap_Interval return Swap_Intervals;
+
+   --  Returns False if setting this is not supported.
+   function Set_Swap_Interval (Interval : in Allowed_Swap_Intervals; Late_Swap_Tear : in Boolean) return Boolean;
+
+   procedure Swap (Window : in out SDL.Video.Windows.Window) with
+     Inline => True;
+
+   --  TODO: Why do we need these?
+--  SDL_GL_LoadLibrary
 --  SDL_GL_UnloadLibrary
 private
-   type Contexts is limited
+   type Contexts is new Ada.Finalization.Limited_Controlled with
       record
          Internal : System.Address;
+         Own      : Boolean;  --  TODO: Move to a base type?
       end record;
 end SDL.Video.GL;

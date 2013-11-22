@@ -1,10 +1,12 @@
 with Interfaces.C;
+with Interfaces.C.Strings;
 with SDL.Error;
 
 package body SDL.Video.GL is
    package C renames Interfaces.C;
 
    use type C.int;
+   use type System.Address;
 
    type Attributes is
      (Attribute_Red_Size,
@@ -467,4 +469,139 @@ package body SDL.Video.GL is
          raise SDL_GL_Error with SDL.Error.Get;
       end if;
    end Set_Share_With_Current_Context;
+
+   --  Some helper functions to get make this type work ok.
+   function Get_Address (Window : in SDL.Video.Windows.Window) return System.Address with
+     Import     => True,
+     Convention => Ada;
+
+   function Get_Address (Texture : in SDL.Video.Textures.Texture) return System.Address with
+     Import     => True,
+     Convention => Ada;
+
+   --  The GL context.
+
+   procedure Create (Self : in out Contexts; From : in SDL.Video.Windows.Window) is
+      function SDL_GL_Create_Context (W : in System.Address) return System.Address with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GL_CreateContext";
+
+      C : System.Address := SDL_GL_Create_Context (Get_Address (Window => From));
+   begin
+      if C = System.Null_Address then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      Self.Internal := C;
+      Self.Own      := True;
+   end Create;
+
+   procedure Finalize (Self : in out Contexts) is
+      procedure SDL_GL_Delete_Context (W : in System.Address) with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GL_DeleteContext";
+   begin
+      --  We have to own this pointer before we go any further...
+      --  and make sure we don't delete this twice if we do!
+      if Self.Own and then Self.Internal /= System.Null_Address then
+         SDL_GL_Delete_Context (Self.Internal);
+
+         Self.Internal := System.Null_Address;
+      end if;
+   end Finalize;
+
+   --  TODO: Make sure we make all similar functions across the API match this pattern.
+   --  Create a temporary Context.
+   function Get_Current return Contexts is
+      function SDL_GL_Get_Current_Context return System.Address with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GL_GetCurrentContext";
+   begin
+      return C : constant Contexts := (Ada.Finalization.Limited_Controlled with
+                                         Internal => SDL_GL_Get_Current_Context,
+                                         Own      => False)
+      do
+        if C.Internal = System.Null_Address then
+           raise SDL_GL_Error with SDL.Error.Get;
+        end if;
+      end return;
+   end Get_Current;
+
+   procedure Set_Current (Self : in Contexts; To : in SDL.Video.Windows.Window) is
+      function SDL_GL_Make_Current (W, Context : in System.Address) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GL_MakeCurrent";
+
+      Result : C.int := SDL_GL_Make_Current (Self.Internal, Get_Address (Window => To));
+   begin
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Current;
+
+   function Supports (Extension : in String) return Boolean is
+      function SDL_GL_Extension_Supported (E : in C.Strings.chars_ptr) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GL_ExtensionSupported";
+
+      C_Name_Str : C.Strings.chars_ptr := C.Strings.New_String (Extension);
+      Result     : C.int               := SDL_GL_Extension_Supported (C_Name_Str);
+   begin
+      C.Strings.Free (C_Name_Str);
+
+      return (Result = SDL_True);
+   end Supports;
+
+   function Get_Swap_Interval return Swap_Intervals is
+      function SDL_GL_Get_Swap_Interval return Swap_Intervals with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GL_GetSwapInterval";
+   begin
+      return SDL_GL_Get_Swap_Interval;
+   end Get_Swap_Interval;
+
+   function Set_Swap_Interval (Interval : in Allowed_Swap_Intervals; Late_Swap_Tear : in Boolean) return Boolean is
+      function SDL_GL_Set_Swap_Interval (Interval : in Swap_Intervals) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GL_SetSwapInterval";
+
+      Late_Tearing : Swap_Intervals Renames Not_Supported;
+      Result       : C.int;
+   begin
+      if Late_Swap_Tear then
+         --  Override the interval passed.
+         Result := SDL_GL_Set_Swap_Interval (Late_Tearing);
+
+         if Result = -1 then
+            --  Try again with synchronised.
+            Result := SDL_GL_Set_Swap_Interval (Synchronised);
+
+            return (if Result = -1 then False else True);
+         elsif Result = Success then
+            return True;
+         else
+            raise SDL_GL_Error with "Something unexpected happend whilst setting swap interval.";
+         end if;
+      end if;
+
+      Result := SDL_GL_Set_Swap_Interval (Synchronised);
+
+      return (if Result = -1 then False else True);
+   end Set_Swap_Interval;
+
+   procedure Swap (Window : in out SDL.Video.Windows.Window) is
+      procedure SDL_GL_Swap_Window (W : in System.Address) with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GL_SwapWindow";
+   begin
+      SDL_GL_Swap_Window (Get_Address (Window));
+   end Swap;
 end SDL.Video.GL;
