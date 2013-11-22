@@ -74,17 +74,20 @@ package body SDL.Video.Windows is
       Increment_Windows;
    end Create;
 
-   procedure Finalize (Object : in out Window) is
+   procedure Finalize (Self : in out Window) is
       procedure SDL_Destroy (W : in System.Address) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_DestroyWindow";
    begin
-      SDL_Destroy (Object.Internal);
+      --  Make sure we don't delete this twice!
+      if Self.Internal /= System.Null_Address then
+         SDL_Destroy (Self.Internal);
 
-      Object.Internal := System.Null_Address;
+         Self.Internal := System.Null_Address;
 
-      Decrement_Windows;
+         Decrement_Windows;
+      end if;
    end Finalize;
 
    function Get_Brightness (Self : in Window) return Brightness is
