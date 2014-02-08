@@ -32,9 +32,9 @@ package body SDL.Clipboard is
    use type C.int;
 
    procedure Check_For_Window is
-      Init_Value : constant SDL.Init_Flags := SDL.Was_Initialised and SDL.Screen;
+      Init_Value : constant SDL.Init_Flags := SDL.Was_Initialised and SDL.Enable_Screen;
    begin
-      if Init_Value /= SDL.Screen then
+      if Init_Value /= SDL.Enable_Screen then
          raise Clipboard_Error with "SDL screen subsystem has not been initialised.";
       end if;
 

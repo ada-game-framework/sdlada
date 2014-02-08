@@ -31,19 +31,19 @@ package SDL is
      Convention => C;
 
    Null_Init_Flags : constant Init_Flags := 16#0000_0000#;
-   Timer           : constant Init_Flags := 16#0000_0001#;
-   Audio           : constant Init_Flags := 16#0000_0010#;
-   Screen          : constant Init_Flags := 16#0000_0020#;
-   Joystick        : constant Init_Flags := 16#0000_0200#;
-   Haptic          : constant Init_Flags := 16#0000_1000#;
-   Game_Controller : constant Init_Flags := 16#0000_2000#;
-   Events          : constant Init_Flags := 16#0000_4000#;
-   No_Parachute    : constant Init_Flags := 16#0010_0000#;
-   Everything      : constant Init_Flags :=
-     Timer or Audio or Screen or Joystick or Haptic or Game_Controller or
-     Events or No_Parachute;
+   Enable_Timer           : constant Init_Flags := 16#0000_0001#;
+   Enable_Audio           : constant Init_Flags := 16#0000_0010#;
+   Enable_Screen          : constant Init_Flags := 16#0000_0020#;
+   Enable_Joystick        : constant Init_Flags := 16#0000_0200#;
+   Enable_Haptic          : constant Init_Flags := 16#0000_1000#;
+   Enable_Game_Controller : constant Init_Flags := 16#0000_2000#;
+   Enable_Events          : constant Init_Flags := 16#0000_4000#;
+   Enable_No_Parachute    : constant Init_Flags := 16#0010_0000#;
+   Enable_Everything      : constant Init_Flags :=
+     Enable_Timer or Enable_Audio or Enable_Screen or Enable_Joystick or Enable_Haptic or
+     Enable_Game_Controller or Enable_Events or Enable_No_Parachute;
 
-   function Initialise (Flags : in Init_Flags := Everything) return Boolean;
+   function Initialise (Flags : in Init_Flags := Enable_Everything) return Boolean;
 
    procedure Finalise with
        Import        => True,
