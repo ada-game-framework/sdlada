@@ -25,9 +25,8 @@
 --  Determine which platform we are running on.
 --------------------------------------------------------------------------------------------------------------------
 package SDL.Platform is
-   Platform_Error : exception;
-
    type Platforms is (Windows, Mac_OS_X, Linux, iOS, Android);
 
-   function Get return Platforms;
+   function Get return Platforms with
+     Inline => True;
 end SDL.Platform;

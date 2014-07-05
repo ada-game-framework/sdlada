@@ -20,6 +20,12 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
-package body SDL.Platform is
-   function Get return Platforms is separate;
-end SDL.Platform;
+--  SDL.Platform.Target
+--
+--  Determine which platform we are running on.
+--------------------------------------------------------------------------------------------------------------------
+separate (SDL.Platform)
+function Get return Platforms is
+begin
+   return Mac_OS_X;
+end Get;
