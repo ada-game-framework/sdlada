@@ -10,10 +10,13 @@ library project SDL_Build is
 
   package Compiler is
      for Default_Switches ("C") use ("-O0", "-g", "-ffunction-sections", "-fdata-sections");
-     for Default_Switches ("Ada") use ("-O0", "-g", "-ffunction-sections", "-fdata-sections");
+     for Default_Switches ("Ada") use ("-O0", "-g",
+                                       "-ffunction-sections", "-fdata-sections",
+                                       "-gnat2012", "-gnata", "-gnato", "-gnatE",
+                                       "-gnaty", "-gnatyO", "-gnatyM120", "-gnatyO");
   end Compiler;
 
-  package Builder is
-     for Default_Switches ("Ada") use ("-gnat2012", "-gnata");
-  end Builder;
+--  package Builder is
+--     for Default_Switches ("Ada") use ("-gnat2012", "-gnata", "-gnato", "-gnatE", "-gnaty", "-gnatyO");
+--  end Builder;
 end SDL_Build;
