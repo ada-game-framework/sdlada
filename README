@@ -17,19 +17,6 @@ SDLAda is distributed under the same zlib licence as the SDL libary is. You may 
 you like whether free or commercial. I would add that whilst you don't have to state that your game uses this
 library, I would prefer it if you did, in fact, I'm asking you to.
 
-Why?
-
-1) Ada has an unfounded bad reputation and one of the reasons for writing this binding is to make it clear
-   that Ada is not just for the military, and has not been ever since it's inception.
-
-2.a) I am trying to advertise the use of Ada as an alternative language for games development because I believe
-     it could help the games industry become better at developing games by using a safer language.
-
-2.b) Also, by designing the game from the start (rather than hacking it together) and using Ada, the games
-     industry could also benefit from being able to deliver on time and this will have a beneficial impact on the
-     developers, less-to-no crunch time, which is the main cause of burn-out. This also has the added benefit
-     of a better work/life balance.
-
 Copyright
 =========
 
