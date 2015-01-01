@@ -30,7 +30,7 @@ PLATFORM=linux STATIC=no make
 Copyright
 =========
 
-Copyright (C) 2013-2014 by Luke A. Guest
+Copyright (C) 2013-2015 by Luke A. Guest
 
 Possible TODO's
 ===============
