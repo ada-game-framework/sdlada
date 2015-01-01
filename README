@@ -17,6 +17,16 @@ SDLAda is distributed under the same zlib licence as the SDL libary is. You may 
 you like whether free or commercial. I would add that whilst you don't have to state that your game uses this
 library, I would prefer it if you did, in fact, I'm asking you to.
 
+Building
+========
+
+There are a number of variables which can be set to control the compilation:
+
+PLATFORM = Can be set to one of the following values: linux, windows, macosx, ios or android
+STATIC   = When set to "no" will build using the shared libraries of the host OS.
+
+PLATFORM=linux STATIC=no make
+
 Copyright
 =========
 
