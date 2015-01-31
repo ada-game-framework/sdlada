@@ -17,7 +17,7 @@ library project SDL_Build is
      for Default_Switches ("Ada") use ("-O0", "-g",
                                        "-ffunction-sections", "-fdata-sections",
                                        "-gnat2012", "-gnata", "-gnato", "-gnatE",
-                                       "-gnaty", "-gnatyO", "-gnatyM120", "-gnatyO");
+                                       "-gnaty", "-gnaty-s", "-gnatyO", "-gnatyM120", "-gnatyO");
   end Compiler;
 
 --  package Builder is
