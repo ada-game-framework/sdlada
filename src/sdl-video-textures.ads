@@ -81,7 +81,8 @@ package SDL.Video.Textures is
 
    --  Lock returns access to pixel data as write-only.
    --  function Lock (Self : in out Texture; Pixel_Data : out SDL.Video.Pixels.Pixel) return Boolean with
-   --  function Lock (Self : in out Texture; Area : in SDL.Video.Rectangles.Rectangle; Pixel_Data : out SDL.Video.Pixels.Pixel) return Boolean with
+   --  function Lock (Self : in out Texture; Area : in SDL.Video.Rectangles.Rectangle;
+   --    Pixel_Data : out SDL.Video.Pixels.Pixel) return Boolean with
    --    Pre  => Self.Locked = False,
    --    Post => Result = True and then Self.Locked = True;
 --  SDL_LockTexture

@@ -30,7 +30,10 @@ package body SDL.Video.Rectangles is
    function To_Address is new Ada.Unchecked_Conversion (Source => Rectangle_Access, Target => System.Address);
 
    function Enclose (Points : in Point_Arrays; Clip : in Rectangle; Enclosed : out Rectangle) return Boolean is
-      function SDL_Enclose_Points (P : in Point_Arrays; L : in C.int; Clip : in Rectangle; R : out Rectangle) return C.int with
+      function SDL_Enclose_Points (P    : in Point_Arrays;
+                                   L    : in C.int;
+                                   Clip : in Rectangle;
+                                   R    : out Rectangle) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_EnclosePoints";
@@ -41,7 +44,10 @@ package body SDL.Video.Rectangles is
    end Enclose;
 
    procedure Enclose (Points : in Point_Arrays; Enclosed : out Rectangle) is
-      function SDL_Enclose_Points (P : in Point_Arrays; L : in C.int; Clip : in System.Address; R : out Rectangle) return C.int with
+      function SDL_Enclose_Points (P    : in Point_Arrays;
+                                   L    : in C.int;
+                                   Clip : in System.Address;
+                                   R    : out Rectangle) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_EnclosePoints";
@@ -81,7 +87,11 @@ package body SDL.Video.Rectangles is
         Convention    => C,
         External_Name => "SDL_IntersectRectAndLine";
 
-      Result : C.int := SDL_Intersect_Rect_And_Line (Clip_Area, Line.Start.X, Line.Start.Y, Line.Finish.X, Line.Finish.Y);
+      Result : C.int := SDL_Intersect_Rect_And_Line (Clip_Area,
+                                                     Line.Start.X,
+                                                     Line.Start.Y,
+                                                     Line.Finish.X,
+                                                     Line.Finish.Y);
    begin
       return (Result = SDL_True);
    end Clip_To;

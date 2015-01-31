@@ -54,7 +54,8 @@ package body SDL.Video.Textures is
         Convention    => C,
         External_Name => "SDL_CreateTexture";
    begin
-      Self.Internal := SDL_Create_Texture (Get_Address (Renderer), Format, Kind, C.int (Size.Width), C.int (Size.Height));
+      Self.Internal := SDL_Create_Texture (Get_Address (Renderer), Format, Kind,
+                                           C.int (Size.Width), C.int (Size.Height));
 
       if Self.Internal = System.Null_Address then
          raise Texture_Error with SDL.Error.Get;
@@ -182,6 +183,7 @@ package body SDL.Video.Textures is
       end if;
    end Set_Modulate_Colour;
 
+   overriding
    procedure Finalize (Self : in out Texture) is
    begin
       if Self.Internal /= System.Null_Address then

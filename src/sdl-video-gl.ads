@@ -140,6 +140,8 @@ package SDL.Video.GL is
    type Contexts is new Ada.Finalization.Limited_Controlled with private;
 
    procedure Create (Self : in out Contexts; From : in SDL.Video.Windows.Window);
+
+   overriding
    procedure Finalize (Self : in out Contexts);
 
    function Get_Current return Contexts;

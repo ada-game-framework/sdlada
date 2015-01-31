@@ -56,7 +56,8 @@ package body SDL.Video.GL is
       Attribute_Share_With_Current_Context) with
      Convention => C;
 
-   Profile_Values : constant array (Profiles) of Interfaces.Unsigned_32 := (16#0000_0001#, 16#0000_0002#, 16#0000_0004#);
+   Profile_Values : constant array (Profiles) of Interfaces.Unsigned_32 :=
+     (16#0000_0001#, 16#0000_0002#, 16#0000_0004#);
 
    function SDL_GL_Set_Attribute (Attr : in Attributes; Value : in C.int) return C.int with
      Import        => True,
@@ -232,7 +233,7 @@ package body SDL.Video.GL is
       return Colour_Bit_Size (Data);
    end Accumulator_Red_Size;
 
-   procedure Set_Accumulator_Red_Size (Size : in Colour_Bit_Size)is
+   procedure Set_Accumulator_Red_Size (Size : in Colour_Bit_Size) is
       Result : C.int := SDL_GL_Set_Attribute (Attribute_Accumulator_Red_Size, C.int (Size));
    begin
       if Result /= Success then
@@ -519,6 +520,7 @@ package body SDL.Video.GL is
       Self.Own      := True;
    end Create;
 
+   overriding
    procedure Finalize (Self : in out Contexts) is
       procedure SDL_GL_Delete_Context (W : in System.Address) with
         Import        => True,
@@ -546,9 +548,9 @@ package body SDL.Video.GL is
                                          Internal => SDL_GL_Get_Current_Context,
                                          Own      => False)
       do
-        if C.Internal = System.Null_Address then
-           raise SDL_GL_Error with SDL.Error.Get;
-        end if;
+         if C.Internal = System.Null_Address then
+            raise SDL_GL_Error with SDL.Error.Get;
+         end if;
       end return;
    end Get_Current;
 
@@ -594,7 +596,7 @@ package body SDL.Video.GL is
         Convention    => C,
         External_Name => "SDL_GL_SetSwapInterval";
 
-      Late_Tearing : Swap_Intervals Renames Not_Supported;
+      Late_Tearing : Swap_Intervals renames Not_Supported;
       Result       : C.int;
    begin
       if Late_Swap_Tear then

@@ -96,6 +96,7 @@ package body SDL.Video.Windows is
       Increment_Windows;
    end Create;
 
+   overriding
    procedure Finalize (Self : in out Window) is
       procedure SDL_Destroy (W : in System.Address) with
         Import        => True,
@@ -113,7 +114,7 @@ package body SDL.Video.Windows is
    end Finalize;
 
    function Get_Brightness (Self : in Window) return Brightness is
-      function SDL_Get_Brightness (W : in System.Address) return C.C_float With
+      function SDL_Get_Brightness (W : in System.Address) return C.C_float with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetWindowBrightness";
@@ -122,7 +123,7 @@ package body SDL.Video.Windows is
    end Get_Brightness;
 
    procedure Set_Brightness (Self : in out Window; How_Bright : in Brightness) is
-      function SDL_Set_Brightness (W : in System.Address; B : in C.C_float) return C.int With
+      function SDL_Set_Brightness (W : in System.Address; B : in C.C_float) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_SetWindowBrightness";
@@ -152,14 +153,17 @@ package body SDL.Video.Windows is
    end Get_Data;
 
    function Set_Data (Self : in out Window; Name : in String; Item : in User_Data_Access) return User_Data_Access is
-      function SDL_Set_Window_Data (W : in System.Address; Name : in C.Strings.chars_ptr; User_Data : in System.address)
-                                   return System.Address with
+      function SDL_Set_Window_Data (W         : in System.Address;
+                                    Name      : in C.Strings.chars_ptr;
+                                    User_Data : in System.Address) return System.Address with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_SetWindowData";
 
       C_Name_Str    : C.Strings.chars_ptr := C.Strings.New_String (Name);
-      Previous_Data : User_Data_Access    := To_Data_Access (SDL_Set_Window_Data (Self.Internal, C_Name_Str, To_Address (Item)));
+      Previous_Data : User_Data_Access    := To_Data_Access (SDL_Set_Window_Data (Self.Internal,
+                                                                                  C_Name_Str,
+                                                                                  To_Address (Item)));
    begin
       C.Strings.Free (C_Name_Str);
 
@@ -225,7 +229,7 @@ package body SDL.Video.Windows is
       return W : constant Window :=
         (Ada.Finalization.Limited_Controlled with Internal => SDL_Get_Window_From_ID (Window_ID))
       do
-        null;
+         null;
       end return;
    end From_ID;
 
@@ -263,7 +267,7 @@ package body SDL.Video.Windows is
         Convention    => C,
         External_Name => "SDL_GetWindowGrab";
    begin
-      return (SDL_Get_Window_Grab(Self.Internal) = SDL_True);
+      return (SDL_Get_Window_Grab (Self.Internal) = SDL_True);
    end Is_Grabbed;
 
    procedure Set_Grabbed (Self : in out Window; Grabbed : in Boolean := True) is
@@ -294,7 +298,7 @@ package body SDL.Video.Windows is
    begin
       SDL_Get_Window_Maximum_Size (Self.Internal, W, H);
 
-      return Sizes'(Width => Positive (W), height => Positive (H));
+      return Sizes'(Width => Positive (W), Height => Positive (H));
    end Get_Maximum_Size;
 
    procedure Set_Maximum_Size (Self : in out Window; Size : in Sizes) is
@@ -316,7 +320,7 @@ package body SDL.Video.Windows is
    begin
       SDL_Get_Window_Minimum_Size (Self.Internal, W, H);
 
-      return Sizes'(Width => Positive (W), height => Positive (H));
+      return Sizes'(Width => Positive (W), Height => Positive (H));
    end Get_Minimum_Size;
 
    procedure Set_Minimum_Size (Self : in out Window; Size : in Sizes) is
@@ -350,7 +354,7 @@ package body SDL.Video.Windows is
       return Positions'(Positive (X), Positive (Y));
    end Get_Position;
 
-   procedure Set_Position (Self : in out window; Position : Positions) is
+   procedure Set_Position (Self : in out Window; Position : Positions) is
       procedure SDL_Set_Window_Position (W : in System.Address; X, Y : in C.int) with
         Import        => True,
         Convention    => C,
@@ -369,7 +373,7 @@ package body SDL.Video.Windows is
    begin
       SDL_Get_Window_Size (Self.Internal, W, H);
 
-      return Sizes'(Width => Positive (W), height => Positive (H));
+      return Sizes'(Width => Positive (W), Height => Positive (H));
    end Get_Size;
 
    procedure Set_Size (Self : in out Window; Size : in Sizes) is
@@ -397,7 +401,7 @@ package body SDL.Video.Windows is
    end Get_Surface;
 
    function Get_Title (Self : in Window) return Ada.Strings.UTF_Encoding.UTF_8_String is
-      function SDL_Get_Window_Title (W : in System.Address) return C.Strings.chars_Ptr with
+      function SDL_Get_Window_Title (W : in System.Address) return C.Strings.chars_ptr with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetWindowTitle";
@@ -406,7 +410,7 @@ package body SDL.Video.Windows is
    end Get_Title;
 
    procedure Set_Title (Self : in Window; Title : in Ada.Strings.UTF_Encoding.UTF_8_String) is
-      procedure SDL_Set_Window_Title (W : in System.Address; C_Str : in C.char_Array) with
+      procedure SDL_Set_Window_Title (W : in System.Address; C_Str : in C.char_array) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_SetWindowTitle";

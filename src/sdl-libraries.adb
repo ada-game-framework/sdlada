@@ -30,7 +30,7 @@ package body SDL.Libraries is
    use type System.Address;
 
    procedure Load (Self : out Handles; Name : in String) is
-      function SDL_Load_Object (C_Str : in C.Strings.chars_Ptr) return System.Address with
+      function SDL_Load_Object (C_Str : in C.Strings.chars_ptr) return System.Address with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_LoadObject";
@@ -78,6 +78,7 @@ package body SDL.Libraries is
       return To_Sub_Program (Func_Ptr);
    end Load_Sub_Program;
 
+   overriding
    procedure Finalize (Self : in out Handles) is
    begin
       --  In case the user has already called Unload or Finalize on a derived type.

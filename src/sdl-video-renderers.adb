@@ -32,7 +32,7 @@ package body SDL.Video.Renderers is
    type Internal_Flip is mod 2 ** 32 with
      Convention => C;
 
-   --type Internal_Flip_Array is array (Renderer_Flip) of Internal_Flip;
+   --  type Internal_Flip_Array is array (Renderer_Flip) of Internal_Flip;
 
    Internal_Flip_None       : constant Internal_Flip := 16#0000_0000#;
    Internal_Flip_Horizontal : constant Internal_Flip := 16#0000_0001#;
@@ -103,6 +103,7 @@ package body SDL.Video.Renderers is
       Self.Internal := SDL_Create_Software_Renderer (Get_Address (Surface));
    end Create_Software;
 
+   overriding
    procedure Finalize (Self : in out Renderer) is
       procedure SDL_Destroy_Renderer (R : in System.Address) with
         Import        => True,
@@ -111,11 +112,12 @@ package body SDL.Video.Renderers is
    begin
       SDL_Destroy_Renderer (Self.Internal);
 
-       Self.Internal := System.Null_Address;
+      Self.Internal := System.Null_Address;
    end Finalize;
 
    function Get_Blend_Mode (Self : in Renderer) return SDL.Video.Textures.Blend_Modes is
-      function SDL_Get_Render_Draw_Blend_Mode (R : in System.Address; M : out SDL.Video.Textures.Blend_Modes) return C.int with
+      function SDL_Get_Render_Draw_Blend_Mode (R : in System.Address;
+                                               M : out SDL.Video.Textures.Blend_Modes) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetRenderDrawBlendMode";
@@ -131,7 +133,8 @@ package body SDL.Video.Renderers is
    end Get_Blend_Mode;
 
    procedure Set_Blend_Mode (Self : in out Renderer; Mode : in SDL.Video.Textures.Blend_Modes) is
-      function SDL_Set_Render_Draw_Blend_Mode (R : in System.Address; M : in SDL.Video.Textures.Blend_Modes) return C.int with
+      function SDL_Set_Render_Draw_Blend_Mode (R : in System.Address;
+                                               M : in SDL.Video.Textures.Blend_Modes) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_SetRenderDrawBlendMode";
@@ -224,7 +227,7 @@ package body SDL.Video.Renderers is
       function SDL_Render_Copy_Ex
         (R, T      : in System.Address;
          Src, Dest : in SDL.Video.Rectangles.Rectangle;
-         A         : in C.Double;
+         A         : in C.double;
          Centre    : in SDL.Video.Rectangles.Point;
          F         : in Internal_Flip) return C.int with
         Import        => True,
@@ -235,7 +238,7 @@ package body SDL.Video.Renderers is
                                             Get_Address (Copy_From),
                                             From,
                                             To,
-                                            C.Double (Angle),
+                                            C.double (Angle),
                                             Centre,
                                             Internal_Flips (Flip));
    begin
@@ -260,7 +263,9 @@ package body SDL.Video.Renderers is
    --  TODO: Check this works!
    procedure Draw (Self : in out Renderer; Lines : in SDL.Video.Rectangles.Line_Arrays) is
       --  As the records and arrays are defined as C types, an array of lines is also an array of points.
-      function SDL_Render_Draw_Lines (R : in System.Address; P : in SDL.Video.Rectangles.Line_Arrays; Count : in C.int) return C.int with
+      function SDL_Render_Draw_Lines (R     : in System.Address;
+                                      P     : in SDL.Video.Rectangles.Line_Arrays;
+                                      Count : in C.int) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderDrawLines";
@@ -286,7 +291,9 @@ package body SDL.Video.Renderers is
    end Draw;
 
    procedure Draw (Self : in out Renderer; Points : in SDL.Video.Rectangles.Point_Arrays) is
-      function SDL_Render_Draw_Points (R : in System.Address; P : in SDL.Video.Rectangles.Point_Arrays; Count : in C.int) return C.int with
+      function SDL_Render_Draw_Points (R     : in System.Address;
+                                       P     : in SDL.Video.Rectangles.Point_Arrays;
+                                       Count : in C.int) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderDrawPoints";
@@ -299,7 +306,8 @@ package body SDL.Video.Renderers is
    end Draw;
 
    procedure Draw (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle) is
-      function SDL_Render_Draw_Rect (R : in System.Address; Rect : in SDL.Video.Rectangles.Rectangle) return C.int with
+      function SDL_Render_Draw_Rect (R    : in System.Address;
+                                     Rect : in SDL.Video.Rectangles.Rectangle) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderDrawRect";
@@ -312,7 +320,9 @@ package body SDL.Video.Renderers is
    end Draw;
 
    procedure Draw (Self : in out Renderer; Rectangles : in SDL.Video.Rectangles.Rectangle_Arrays) is
-      function SDL_Render_Draw_Rects (R : in System.Address; Rect : in SDL.Video.Rectangles.Rectangle_Arrays; Count : in C.int) return C.int with
+      function SDL_Render_Draw_Rects (R     : in System.Address;
+                                      Rect  : in SDL.Video.Rectangles.Rectangle_Arrays;
+                                      Count : in C.int) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderDrawRects";
@@ -338,7 +348,9 @@ package body SDL.Video.Renderers is
    end Fill;
 
    procedure Fill (Self : in out Renderer; Rectangles : in SDL.Video.Rectangles.Rectangle_Arrays) is
-      function SDL_Render_Fill_Rects (R : in System.Address; Rect : in SDL.Video.Rectangles.Rectangle_Arrays; Count : in C.int) return C.int with
+      function SDL_Render_Fill_Rects (R     : in System.Address;
+                                      Rect  : in SDL.Video.Rectangles.Rectangle_Arrays;
+                                      Count : in C.int) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderFillRects";
@@ -360,7 +372,8 @@ package body SDL.Video.Renderers is
    end Get_Clip;
 
    procedure Set_Clip (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle) is
-      function SDL_Render_Set_Clip_Rect (R : in System.Address; Rect : in SDL.Video.Rectangles.Rectangle) return C.int with
+      function SDL_Render_Set_Clip_Rect (R    : in System.Address;
+                                         Rect : in SDL.Video.Rectangles.Rectangle) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderSetClipRect";
@@ -395,21 +408,21 @@ package body SDL.Video.Renderers is
    end Set_Logical_Size;
 
    procedure Get_Scale (Self : in Renderer; X, Y : out Float) is
-      procedure SDL_Render_Get_Scale (R : in System.Address; X, Y : out C.C_Float) with
+      procedure SDL_Render_Get_Scale (R : in System.Address; X, Y : out C.C_float) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderGetScale";
    begin
-      SDL_Render_Get_Scale (Self.Internal, C.C_Float (X), C.C_Float (Y));
+      SDL_Render_Get_Scale (Self.Internal, C.C_float (X), C.C_float (Y));
    end Get_Scale;
 
    procedure Set_Scale (Self : in out Renderer; X, Y : in Float) is
-      function SDL_Render_Set_Logical_Size (R : in System.Address; X, Y : in C.C_Float) return C.int with
+      function SDL_Render_Set_Logical_Size (R : in System.Address; X, Y : in C.C_float) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderGetLogicalSize";
 
-      Result : C.int := SDL_Render_Set_Logical_Size (Self.Internal, C.C_Float (X), C.C_Float (Y));
+      Result : C.int := SDL_Render_Set_Logical_Size (Self.Internal, C.C_float (X), C.C_float (Y));
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -426,7 +439,8 @@ package body SDL.Video.Renderers is
    end Get_Viewport;
 
    procedure Set_Viewport (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle) is
-      function SDL_Render_Set_Viewport (R : in System.Address; Rect : in SDL.Video.Rectangles.Rectangle) return C.int with
+      function SDL_Render_Set_Viewport (R : in System.Address;
+                                        Rect : in SDL.Video.Rectangles.Rectangle) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderSetViewport";
@@ -476,8 +490,8 @@ package body SDL.Video.Renderers is
         External_Name => "SDL_GetRenderer";
    begin
       return Result : constant Renderer := (Ada.Finalization.Limited_Controlled with
-                                              Internal => SDL_Get_Renderer (Get_Address (Window))) do
-        null;
+        Internal => SDL_Get_Renderer (Get_Address (Window))) do
+         null;
       end return;
    end Get_Renderer;
 end SDL.Video.Renderers;

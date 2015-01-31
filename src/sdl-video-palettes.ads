@@ -40,7 +40,7 @@ package SDL.Video.Palettes is
          Red   : Colour_Component;
          Green : Colour_Component;
          Blue  : Colour_Component;
-         alpha : Colour_Component;
+         Alpha : Colour_Component;
       end record with
         Convention => C,
         Size       => Colour_Component'Size * 4;
@@ -109,7 +109,7 @@ private
    type Internal_Palette is
       record
          Total     : C.int;
-         Colours   : Colour_array_Pointer.Pointer;
+         Colours   : Colour_Array_Pointer.Pointer;
          Version   : Interfaces.Unsigned_32;
          Ref_Count : C.int;
       end record with
@@ -129,7 +129,7 @@ private
       record
          Container : Palette_Constant_Access;
          Index     : Natural;
-         Current   : Colour_array_Pointer.Pointer;
+         Current   : Colour_Array_Pointer.Pointer;
       end record;
 
    No_Element : constant Cursor := Cursor'(Container => null,

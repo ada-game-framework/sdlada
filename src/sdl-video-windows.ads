@@ -102,6 +102,7 @@ package SDL.Video.Windows is
 
    --  TODO: Normalise the API by adding a destroy sub program and making this one call destroy,
    --  see textures for more info.
+   overriding
    procedure Finalize (Self : in out Window);
 
    function Get_Brightness (Self : in Window) return Brightness with
@@ -110,7 +111,7 @@ package SDL.Video.Windows is
    procedure Set_Brightness (Self : in out Window; How_Bright : in Brightness);
 
    function Get_Data (Self : in Window; Name : in String) return User_Data_Access;
-   function Set_Data (Self : in out Window; Name : in String; Item : in User_Data_Access) return User_Data_Access ;
+   function Set_Data (Self : in out Window; Name : in String; Item : in User_Data_Access) return User_Data_Access;
 
    function Display_Index (Self : in Window) return Positive;
 
@@ -145,7 +146,7 @@ package SDL.Video.Windows is
      Inline => True;
 
    function Get_Position (Self : in Window) return Positions;
-   procedure Set_Position (Self : in out window; Position : Positions) with
+   procedure Set_Position (Self : in out Window; Position : Positions) with
      Inline => True;
 
    function Get_Size (Self : in Window) return Sizes;
@@ -199,9 +200,10 @@ private
       end record;
 
    function Get_Address (Self : in Window) return System.Address with
-     Export     => True,
-     Convention => Ada,
-     External_Name => "Get_Window_Address"; -- TODO: If I remove this, I get a duplicate symbol error with the on in Surfaces.
+     Export        => True,
+     Convention    => Ada,
+     External_Name => "Get_Window_Address"; --  TODO: If I remove this, I get a duplicate symbol error with the on
+                                            --        in Surfaces.
 
    Null_Window : constant Window := (Ada.Finalization.Limited_Controlled with
                                        Internal => System.Null_Address);

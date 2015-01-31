@@ -34,7 +34,7 @@ package SDL.Video.Rectangles is
    type Size is
       record
          Width  : C.int;
-         Height : C.int ;
+         Height : C.int;
       end record with
         Convention => C;
 
@@ -44,7 +44,7 @@ package SDL.Video.Rectangles is
    type Point is
       record
          X : C.int;
-         Y : C.int ;
+         Y : C.int;
       end record with
         Convention => C;
 
@@ -58,7 +58,7 @@ package SDL.Video.Rectangles is
       end record with
         Convention => C;
 
-   type Line_Arrays is array (C.size_t range <>) of aliased Line_Segment With
+   type Line_Arrays is array (C.size_t range <>) of aliased Line_Segment with
      Convention => C;
 
    type Rectangle is

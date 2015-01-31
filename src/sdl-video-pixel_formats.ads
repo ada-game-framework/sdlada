@@ -187,7 +187,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_Unknown     : Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => True,
                          Planar_Format => Planar_Pixels'
-                           (others => Ada.Characters.Latin_1.nul));
+                           (others => Ada.Characters.Latin_1.NUL));
 
    Pixel_Format_Index_1_LSB : Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,

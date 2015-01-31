@@ -71,6 +71,7 @@ package SDL.Video.Renderers is
 
 --  SDL_CreateWindowAndRenderer
 
+   overriding
    procedure Finalize (Self : in out Renderer);
 
    function Get_Blend_Mode (Self : in Renderer) return SDL.Video.Textures.Blend_Modes;

@@ -97,7 +97,7 @@ package body SDL.Video.Palettes is
      (Container : aliased Palette;
       Position  : Cursor) return Colour is
    begin
-      --Put_Line ("Constant_Reference" & Natural'Image (Position.Index));
+      --  Put_Line ("Constant_Reference" & Natural'Image (Position.Index));
 
       --  return Position.Container.Data.Colours (Position.Index);
       return Colour_Array_Pointer.Value (Position.Current) (0);
@@ -112,8 +112,8 @@ package body SDL.Video.Palettes is
         (Limited_Controlled with
            Container => Container'Access, Index => Natural'First + 1)
       do
-        --Put_Line ("  index = " & Natural'Image(It.Index));
-        null;
+         --  Put_Line ("  index = " & Natural'Image(It.Index));
+         null;
       end return;
    end Iterate;
 
@@ -126,7 +126,7 @@ package body SDL.Video.Palettes is
       return P : constant Palette :=
         (Data => SDL_Alloc_Palette (C.int (Total_Colours)))
       do
-        null;
+         null;
       end return;
    end Create;
 
@@ -141,15 +141,17 @@ package body SDL.Video.Palettes is
       Container.Data := null;
    end Free;
 
+   overriding
    function First (Object : Iterator) return Cursor is
    begin
-      --Put_Line ("First -> Index = " & Natural'Image (Object.Index));
+      --  Put_Line ("First -> Index = " & Natural'Image (Object.Index));
 
       return Cursor'(Container => Object.Container,
                      Index     => Object.Index,
                      Current   => Object.Container.Data.Colours);
    end First;
 
+   overriding
    function Next (Object : Iterator; Position : Cursor) return Cursor is
       Next_Ptr : Colour_Array_Pointer.Pointer := Position.Current;
    begin

@@ -40,12 +40,12 @@ package body SDL.Video is
    end Is_Screen_Saver_Enabled;
 
    function Initialise (Name : in String) return Boolean is
-      function SDL_Video_Init (C_Name : in C.Strings.chars_Ptr) return C.int with
+      function SDL_Video_Init (C_Name : in C.Strings.chars_ptr) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_VideoInit";
 
-      C_Str  : C.Strings.chars_Ptr := C.Strings.Null_Ptr;
+      C_Str  : C.Strings.chars_ptr := C.Strings.Null_Ptr;
       Result : C.int;
    begin
       if Name /= "" then
@@ -83,7 +83,7 @@ package body SDL.Video is
         External_Name => "SDL_GetVideoDriver";
 
       --  Index is zero based, so need to subtract 1 to correct it.
-      C_Str : C.Strings.chars_Ptr := SDL_Get_Video_Driver (C.int (Index) - 1);
+      C_Str : C.Strings.chars_ptr := SDL_Get_Video_Driver (C.int (Index) - 1);
    begin
       return C.Strings.Value (C_Str);
    end Driver_Name;
@@ -96,9 +96,9 @@ package body SDL.Video is
 
       C_Str : constant C.Strings.chars_ptr := SDL_Get_Current_Video_Driver;
 
-      use type C.Strings.chars_Ptr;
+      use type C.Strings.chars_ptr;
    begin
-      if C_Str = C.Strings.Null_ptr then
+      if C_Str = C.Strings.Null_Ptr then
          raise Video_Error with SDL.Error.Get;
       end if;
 

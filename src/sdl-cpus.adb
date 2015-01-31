@@ -46,7 +46,7 @@ package body SDL.CPUS is
    end Cache_Line_Size;
 
    function Has_3DNow return Boolean is
-      function SDL_Has_3DNow return C.Int with
+      function SDL_Has_3DNow return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_Has3DNow";
@@ -55,7 +55,7 @@ package body SDL.CPUS is
    end Has_3DNow;
 
    function Has_AltiVec return Boolean is
-      function SDL_Has_AltiVec return C.Int with
+      function SDL_Has_AltiVec return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_HasAltiVec";
@@ -64,7 +64,7 @@ package body SDL.CPUS is
    end Has_AltiVec;
 
    function Has_MMX return Boolean is
-      function SDL_Has_MMX return C.Int with
+      function SDL_Has_MMX return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_HasMMX";
@@ -73,7 +73,7 @@ package body SDL.CPUS is
    end Has_MMX;
 
    function Has_RDTSC return Boolean is
-      function SDL_Has_RDTSC return C.Int with
+      function SDL_Has_RDTSC return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_HasRDTSC";
@@ -82,7 +82,7 @@ package body SDL.CPUS is
    end Has_RDTSC;
 
    function Has_SSE return Boolean is
-      function SDL_Has_SSE return C.Int with
+      function SDL_Has_SSE return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_HasSSE";
@@ -91,7 +91,7 @@ package body SDL.CPUS is
    end Has_SSE;
 
    function Has_SSE_2 return Boolean is
-      function SDL_Has_SSE_2 return C.Int with
+      function SDL_Has_SSE_2 return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_HasSSE2";
@@ -100,7 +100,7 @@ package body SDL.CPUS is
    end Has_SSE_2;
 
    function Has_SSE_3 return Boolean is
-      function SDL_Has_SSE_3 return C.Int with
+      function SDL_Has_SSE_3 return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_HasSSE3";
@@ -109,7 +109,7 @@ package body SDL.CPUS is
    end Has_SSE_3;
 
    function Has_SSE_4_1 return Boolean is
-      function SDL_Has_SSE_4_1 return C.Int with
+      function SDL_Has_SSE_4_1 return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_HasSSE41";
@@ -118,7 +118,7 @@ package body SDL.CPUS is
    end Has_SSE_4_1;
 
    function Has_SSE_4_2 return Boolean is
-      function SDL_Has_SSE_4_2 return C.Int with
+      function SDL_Has_SSE_4_2 return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_HasSSE42";

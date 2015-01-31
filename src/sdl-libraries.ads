@@ -35,7 +35,7 @@ package SDL.Libraries is
    Null_Handle : constant Handles;
 
    procedure Load (Self : out Handles; Name : in String);
-   procedure Unload (Self : in out Handles);-- with
+   procedure Unload (Self : in out Handles); -- with
 --     Static_Predicate => Handle /= Null_Handle;
 
    generic
