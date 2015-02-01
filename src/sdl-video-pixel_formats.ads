@@ -184,12 +184,12 @@ package SDL.Video.Pixel_Formats is
         Size            => 32,
         Convention      => C;
 
-   Pixel_Format_Unknown     : Pixel_Format_Names :=
+   Pixel_Format_Unknown     : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => True,
                          Planar_Format => Planar_Pixels'
                            (others => Ada.Characters.Latin_1.NUL));
 
-   Pixel_Format_Index_1_LSB : Pixel_Format_Names :=
+   Pixel_Format_Index_1_LSB : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -202,7 +202,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 1,
                             Bytes_Per_Pixel => 0));
 
-   Pixel_Format_Index_1_MSB : Pixel_Format_Names :=
+   Pixel_Format_Index_1_MSB : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -215,20 +215,20 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 1,
                             Bytes_Per_Pixel => 0));
 
-   Pixel_Format_Index_4_LSB : Pixel_Format_Names :=
+   Pixel_Format_Index_4_LSB : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
                             Flag            => True,
-                            Pixel_Type      => Index_1,
+                            Pixel_Type      => Index_4,
                             Pixel_Order     => Pixel_Orders'
-                              (Pixel_Type    => Index_1,
+                              (Pixel_Type    => Index_4,
                                Indexed_Order => Little_Endian),
                             Layout          => None,
                             Bits_Per_Pixel  => 4,
                             Bytes_Per_Pixel => 0));
 
-   Pixel_Format_Index_4_MSB : Pixel_Format_Names :=
+   Pixel_Format_Index_4_MSB : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -241,7 +241,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 4,
                             Bytes_Per_Pixel => 0));
 
-   Pixel_Format_Index_8 : Pixel_Format_Names :=
+   Pixel_Format_Index_8 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -254,7 +254,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 8,
                             Bytes_Per_Pixel => 1));
 
-   Pixel_Format_RGB332 : Pixel_Format_Names :=
+   Pixel_Format_RGB_332 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -267,7 +267,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 8,
                             Bytes_Per_Pixel => 1));
 
-   Pixel_Format_RGB444 : Pixel_Format_Names :=
+   Pixel_Format_RGB_444 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -280,7 +280,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 12,
                             Bytes_Per_Pixel => 2));
 
-   Pixel_Format_RGB555 : Pixel_Format_Names :=
+   Pixel_Format_RGB_555 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -293,7 +293,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 15,
                             Bytes_Per_Pixel => 2));
 
-   Pixel_Format_BGR555 : Pixel_Format_Names :=
+   Pixel_Format_BGR_555 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -306,7 +306,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 15,
                             Bytes_Per_Pixel => 2));
 
-   Pixel_Format_ARGB4444 : Pixel_Format_Names :=
+   Pixel_Format_ARGB_4444 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -319,7 +319,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 16,
                             Bytes_Per_Pixel => 2));
 
-   Pixel_Format_RGBA4444 : Pixel_Format_Names :=
+   Pixel_Format_RGBA_4444 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -332,7 +332,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 16,
                             Bytes_Per_Pixel => 2));
 
-   Pixel_Format_ABGR4444 : Pixel_Format_Names :=
+   Pixel_Format_ABGR_4444 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -345,7 +345,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 16,
                             Bytes_Per_Pixel => 2));
 
-   Pixel_Format_BGRA4444 : Pixel_Format_Names :=
+   Pixel_Format_BGRA_4444 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -358,7 +358,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 16,
                             Bytes_Per_Pixel => 2));
 
-   Pixel_Format_ARGB1555 : Pixel_Format_Names :=
+   Pixel_Format_ARGB_1555 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -371,7 +371,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 16,
                             Bytes_Per_Pixel => 2));
 
-   Pixel_Format_RGBA1555 : Pixel_Format_Names :=
+   Pixel_Format_RGBA_5551 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -384,7 +384,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 16,
                             Bytes_Per_Pixel => 2));
 
-   Pixel_Format_ABGR1555 : Pixel_Format_Names :=
+   Pixel_Format_ABGR_1555 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -397,7 +397,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 16,
                             Bytes_Per_Pixel => 2));
 
-   Pixel_Format_BGRA5551 : Pixel_Format_Names :=
+   Pixel_Format_BGRA_5551 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -410,7 +410,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 16,
                             Bytes_Per_Pixel => 2));
 
-   Pixel_Format_RGB565 : Pixel_Format_Names :=
+   Pixel_Format_RGB_565 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -423,7 +423,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 16,
                             Bytes_Per_Pixel => 2));
 
-   Pixel_Format_BGR565 : Pixel_Format_Names :=
+   Pixel_Format_BGR_565 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -436,7 +436,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 16,
                             Bytes_Per_Pixel => 2));
 
-   Pixel_Format_RGB24 : Pixel_Format_Names :=
+   Pixel_Format_RGB_24 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -449,7 +449,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 24,
                             Bytes_Per_Pixel => 3));
 
-   Pixel_Format_BGR24 : Pixel_Format_Names :=
+   Pixel_Format_BGR_24 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -462,7 +462,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 24,
                             Bytes_Per_Pixel => 3));
 
-   Pixel_Format_RGB888 : Pixel_Format_Names :=
+   Pixel_Format_RGB_888 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -475,7 +475,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 24,
                             Bytes_Per_Pixel => 4));
 
-   Pixel_Format_RGBX8888 : Pixel_Format_Names :=
+   Pixel_Format_RGBX_8888 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -488,7 +488,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 24,
                             Bytes_Per_Pixel => 4));
 
-   Pixel_Format_BGR888 : Pixel_Format_Names :=
+   Pixel_Format_BGR_888 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -501,7 +501,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 24,
                             Bytes_Per_Pixel => 4));
 
-   Pixel_Format_BGRX8888 : Pixel_Format_Names :=
+   Pixel_Format_BGRX_8888 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -514,7 +514,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 24,
                             Bytes_Per_Pixel => 4));
 
-   Pixel_Format_ARGB8888 : Pixel_Format_Names :=
+   Pixel_Format_ARGB_8888 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -527,7 +527,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 32,
                             Bytes_Per_Pixel => 4));
 
-   Pixel_Format_RGBA8888 : Pixel_Format_Names :=
+   Pixel_Format_RGBA_8888 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -540,7 +540,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 32,
                             Bytes_Per_Pixel => 4));
 
-   Pixel_Format_ABGR8888 : Pixel_Format_Names :=
+   Pixel_Format_ABGR_8888 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -553,7 +553,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 32,
                             Bytes_Per_Pixel => 4));
 
-   Pixel_Format_BGRA8888 : Pixel_Format_Names :=
+   Pixel_Format_BGRA_8888 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
@@ -566,7 +566,7 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 32,
                             Bytes_Per_Pixel => 4));
 
-   Pixel_Format_ARGB2101010 : Pixel_Format_Names :=
+   Pixel_Format_ARGB_2101010 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
                            (Padding         => 0,
