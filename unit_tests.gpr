@@ -1,0 +1,26 @@
+with "sdl";
+with "aunit";
+
+project Unit_Tests is
+   for Languages    use ("Ada", "C");
+   for Source_Dirs use ("unit_tests");
+   for Object_Dir use "build_unit_tests/.obj";
+   for Exec_Dir use "build_unit_tests";
+   for Main use ("unit_tests.adb");
+
+   -- package Ide is
+   --    for Gnat use "/home/laguest/opt/tinyada/bin/gnat";
+   --    for Gnatlist use "/home/laguest/opt/tinyada/bin/gnatls";
+   --    for Debugger_Command use "";
+   --    for Compiler_Command ("ada") use "/home/laguest/opt/tinyada/bin/gnatmake";
+   --    for Compiler_Command ("c") use "/home/laguest/opt/tinyada/bin/c++";
+   -- end Ide;
+
+  package Compiler is
+     for Default_Switches ("Ada") use ("-O0", "-g", "-ffunction-sections", "-fdata-sections");
+  end Compiler;
+
+  package Builder is
+     for Default_Switches ("Ada") use ("-gnat2012", "-gnata");
+  end Builder;
+end Unit_Tests;
