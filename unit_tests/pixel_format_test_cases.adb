@@ -55,65 +55,362 @@ package body Pixel_Format_Test_Cases is
    overriding
    procedure Run_Test (Test : in out Pixel_Format_Test_Case) is
    begin
-      Assert (To_int (Pixel_Format_Unknown) = C_Unknown, "Pixel_Format_Unknown /= C_Unknown");
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_Unknown));
+         C_Value   : constant String := To_Binary (C_Unknown);
+         Error     : constant String :=
+           "Pixel_Format_Unknown (" & Ada_Value & ") /= C_Index_Unknown (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_Unknown) = C_Unknown, Error);
+      end;
 
       declare
          Ada_Value : constant String := To_Binary (To_int (Pixel_Format_Index_1_LSB));
          C_Value   : constant String := To_Binary (C_Index_1_LSB);
+         Error     : constant String :=
+           "Pixel_Format_Index_1_LSB (" & Ada_Value & ") /= C_Index_1_LSB (" & C_Value & ")";
       begin
-         Put_Line ("Pixel_Format_Index_1_LSB (" & Ada_Value & ") /= C_Index_1_LSB (" & C_Value & ")");
+         Put_Line (Error);
 
-         Assert (To_int (Pixel_Format_Index_1_LSB) = C_Index_1_LSB, "Pixel_Format_Index_1_LSB /= C_Index_1_LSB");
+         Assert (To_int (Pixel_Format_Index_1_LSB) = C_Index_1_LSB, Error);
       end;
 
       declare
          Ada_Value : constant String := To_Binary (To_int (Pixel_Format_Index_1_MSB));
          C_Value   : constant String := To_Binary (C_Index_1_MSB);
+         Error     : constant String :=
+           "Pixel_Format_Index_1_MSB (" & Ada_Value & ") /= C_Index_1_MSB (" & C_Value & ")";
       begin
-         Put_Line ("Pixel_Format_Index_1_MSB (" & Ada_Value & ") /= C_Index_1_MSB (" & C_Value & ")");
+         Put_Line (Error);
 
-         Assert (To_int (Pixel_Format_Index_1_MSB) = C_Index_1_MSB, "Pixel_Format_Index_1_MSB (" &
-                   Ada_Value & ") /= C_Index_1_MSB (" & C_Value & ")");
-         --  exception
-         --  when others =>
-         --  Put_Line ("shit");
+         Assert (To_int (Pixel_Format_Index_1_MSB) = C_Index_1_MSB, Error);
       end;
 
---      Assert (To_int (Pixel_Format_Index_1_MSB) = C_Index_1_MSB, "Pixel_Format_Index_1_MSB /= C_Index_1_MSB");
-      --  Assert (To_int (Pixel_Format_Index_4_LSB) = C_Index_4_LSB, "Pixel_Format_Index_4_LSB /= C_Index_4_LSB");
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_Index_4_LSB));
+         C_Value   : constant String := To_Binary (C_Index_4_LSB);
+         Error     : constant String :=
+           "Pixel_Format_Index_4_LSB (" & Ada_Value & ") /= C_Index_4_LSB (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_Index_4_LSB) = C_Index_4_LSB, Error);
+      end;
 
       --  Put (To => Ada_Value, Item => To_int (Pixel_Format_Index_4_MSB), Base => 16);
       --  Put (To => C_Value, Item => C_Index_4_MSB, Base => 16);
 
-      --  Assert (To_int (Pixel_Format_Index_4_MSB) = C_Index_4_MSB, "Pixel_Format_Index_4_MSB (" &
-      --            Ada_Value & ") /= C_Index_4_MSB (" & C_Value & ")");
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_Index_4_MSB));
+         C_Value   : constant String := To_Binary (C_Index_4_MSB);
+         Error     : constant String :=
+           "Pixel_Format_Index_4_MSB (" & Ada_Value & ") /= C_Index_4_MSB (" & C_Value & ")";
+      begin
+         Put_Line (Error);
 
-      --  Assert (To_int (Pixel_Format_Index_8) = C_Index_8, "Pixel_Format_Index_8 /= C_Index_8");
-      --  Assert (To_int (Pixel_Format_RGB_332) = C_RGB_332, "Pixel_Format_RGB_332 /= C_RGB_332");
-      --  Assert (To_int (Pixel_Format_RGB_444) = C_RGB_444, "Pixel_Format_RGB_444 /= C_RGB_444");
-      --  Assert (To_int (Pixel_Format_RGB_555) = C_RGB_555, "Pixel_Format_RGB_555 /= C_RGB_555");
-      --  Assert (To_int (Pixel_Format_BGR_555) = C_BGR_555, "Pixel_Format_BGR_555 /= C_BGR_555");
-      --  Assert (To_int (Pixel_Format_ARGB_4444) = C_ARGB_4444, "Pixel_Format_ARGB_4444 /= C_ARGB_4444");
-      --  Assert (To_int (Pixel_Format_RGBA_4444) = C_RGBA_4444, "Pixel_Format_RGBA_4444 /= C_RGBA_4444");
-      --  Assert (To_int (Pixel_Format_ABGR_4444) = C_ABGR_4444, "Pixel_Format_ABGR_4444 /= C_ABGR_4444");
-      --  Assert (To_int (Pixel_Format_BGRA_4444) = C_BGRA_4444, "Pixel_Format_BGRA_4444 /= C_BGRA_4444");
-      --  Assert (To_int (Pixel_Format_ARGB_1555) = C_ARGB_1555, "Pixel_Format_ARGB_1555 /= C_ARGB_1555");
-      --  Assert (To_int (Pixel_Format_RGBA_5551) = C_RGBA_5551, "Pixel_Format_RGBA_5551 /= C_RGBA_5551");
-      --  Assert (To_int (Pixel_Format_ABGR_1555) = C_ABGR_1555, "Pixel_Format_ABGR_1555 /= C_ABGR_1555");
-      --  Assert (To_int (Pixel_Format_BGRA_5551) = C_BGRA_5551, "Pixel_Format_BGRA_5551 /= C_BGRA_5551");
-      --  Assert (To_int (Pixel_Format_RGB_565) = C_RGB_565, "Pixel_Format_RGB_565 /= C_RGB_565");
-      --  Assert (To_int (Pixel_Format_BGR_565) = C_BGR_565, "Pixel_Format_BGR_565 /= C_BGR_565");
-      --  Assert (To_int (Pixel_Format_RGB_24) = C_RGB_24, "Pixel_Format_RGB_24 /= C_RGB_24");
-      --  Assert (To_int (Pixel_Format_BGR_24) = C_BGR_24, "Pixel_Format_BGR_24 /= C_BGR_24");
-      --  Assert (To_int (Pixel_Format_RGB_888) = C_RGB_888, "Pixel_Format_RGB_888 /= C_RGB_888");
-      --  Assert (To_int (Pixel_Format_RGBX_8888) = C_RGBX_8888, "Pixel_Format_RGBX_8888 /= C_RGBX_8888");
-      --  Assert (To_int (Pixel_Format_BGR_888) = C_BGR_888, "Pixel_Format_BGR_888 /= C_BGR_888");
-      --  Assert (To_int (Pixel_Format_BGRX_8888) = C_BGRX_8888, "Pixel_Format_BGRX_8888 /= C_BGRX_8888");
-      --  Assert (To_int (Pixel_Format_ARGB_8888) = C_ARGB_8888, "Pixel_Format_ARGB_8888 /= C_ARGB_8888");
-      --  Assert (To_int (Pixel_Format_RGBA_8888) = C_RGBA_8888, "Pixel_Format_RGBA_8888 /= C_RGBA_8888");
-      --  Assert (To_int (Pixel_Format_ABGR_8888) = C_ABGR_8888, "Pixel_Format_ABGR_8888 /= C_ABGR_8888");
-      --  Assert (To_int (Pixel_Format_BGRA_8888) = C_BGRA_8888, "Pixel_Format_BGRA_8888 /= C_BGRA_8888");
-      --  Assert (To_int (Pixel_Format_ARGB_2101010) = C_ARGB_2101010, "Pixel_Format_ARGB_2101010 /= C_ARGB_2101010");
+         Assert (To_int (Pixel_Format_Index_4_MSB) = C_Index_4_MSB, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_Index_8));
+         C_Value   : constant String := To_Binary (C_Index_8);
+         Error     : constant String :=
+           "Pixel_Format_Index_8 (" & Ada_Value & ") /= C_Index_8 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_Index_8) = C_Index_8, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_RGB_332));
+         C_Value   : constant String := To_Binary (C_RGB_332);
+         Error     : constant String :=
+           "Pixel_Format_RGB_332 (" & Ada_Value & ") /= C_RGB_332 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_RGB_332) = C_RGB_332, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_RGB_444));
+         C_Value   : constant String := To_Binary (C_RGB_444);
+         Error     : constant String :=
+           "Pixel_Format_RGB_444 (" & Ada_Value & ") /= C_RGB_444 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_RGB_444) = C_RGB_444, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_RGB_555));
+         C_Value   : constant String := To_Binary (C_RGB_555);
+         Error     : constant String :=
+           "Pixel_Format_RGB_555 (" & Ada_Value & ") /= C_RGB_555 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_RGB_555) = C_RGB_555, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_BGR_555));
+         C_Value   : constant String := To_Binary (C_BGR_555);
+         Error     : constant String :=
+           "Pixel_Format_BGR_555 (" & Ada_Value & ") /= C_BGR_555 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_BGR_555) = C_BGR_555, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_ARGB_4444));
+         C_Value   : constant String := To_Binary (C_ARGB_4444);
+         Error     : constant String :=
+           "Pixel_Format_ARGB_4444 (" & Ada_Value & ") /= C_ARGB_4444 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_ARGB_4444) = C_ARGB_4444, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_RGBA_4444));
+         C_Value   : constant String := To_Binary (C_RGBA_4444);
+         Error     : constant String :=
+           "Pixel_Format_RGBA_4444 (" & Ada_Value & ") /= C_RGBA_4444 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_RGBA_4444) = C_RGBA_4444, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_ABGR_4444));
+         C_Value   : constant String := To_Binary (C_ABGR_4444);
+         Error     : constant String :=
+           "Pixel_Format_ABGR_4444 (" & Ada_Value & ") /= C_ABGR_4444 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_ABGR_4444) = C_ABGR_4444, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_BGRA_4444));
+         C_Value   : constant String := To_Binary (C_BGRA_4444);
+         Error     : constant String :=
+           "Pixel_Format_BGRA_4444 (" & Ada_Value & ") /= C_BGRA_4444 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_BGRA_4444) = C_BGRA_4444, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_ARGB_1555));
+         C_Value   : constant String := To_Binary (C_ARGB_1555);
+         Error     : constant String :=
+           "Pixel_Format_ARGB_1555 (" & Ada_Value & ") /= C_ARGB_1555 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_ARGB_1555) = C_ARGB_1555, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_RGBA_5551));
+         C_Value   : constant String := To_Binary (C_RGBA_5551);
+         Error     : constant String :=
+           "Pixel_Format_RGBA_5551 (" & Ada_Value & ") /= C_RGBA_5551 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_RGBA_5551) = C_RGBA_5551, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_ABGR_1555));
+         C_Value   : constant String := To_Binary (C_ABGR_1555);
+         Error     : constant String :=
+           "Pixel_Format_ABGR_1555 (" & Ada_Value & ") /= C_ABGR_1555 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_ABGR_1555) = C_ABGR_1555, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_BGRA_5551));
+         C_Value   : constant String := To_Binary (C_BGRA_5551);
+         Error     : constant String :=
+           "Pixel_Format_BGRA_5551 (" & Ada_Value & ") /= C_BGRA_5551 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_BGRA_5551) = C_BGRA_5551, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_RGB_565));
+         C_Value   : constant String := To_Binary (C_RGB_565);
+         Error     : constant String :=
+           "Pixel_Format_RGB_565 (" & Ada_Value & ") /= C_RGB_565 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_RGB_565) = C_RGB_565, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_BGR_565));
+         C_Value   : constant String := To_Binary (C_BGR_565);
+         Error     : constant String :=
+           "Pixel_Format_BGR_565 (" & Ada_Value & ") /= C_BGR_565 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_BGR_565) = C_BGR_565, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_RGB_24));
+         C_Value   : constant String := To_Binary (C_RGB_24);
+         Error     : constant String :=
+           "Pixel_Format_RGB_24 (" & Ada_Value & ") /= C_RGB_24 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_RGB_24) = C_RGB_24, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_BGR_24));
+         C_Value   : constant String := To_Binary (C_BGR_24);
+         Error     : constant String :=
+           "Pixel_Format_BGR_24 (" & Ada_Value & ") /= C_BGR_24 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_BGR_24) = C_BGR_24, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_RGB_888));
+         C_Value   : constant String := To_Binary (C_RGB_888);
+         Error     : constant String :=
+           "Pixel_Format_RGB_888 (" & Ada_Value & ") /= C_RGB_888 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_RGB_888) = C_RGB_888, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_RGBX_8888));
+         C_Value   : constant String := To_Binary (C_RGBX_8888);
+         Error     : constant String :=
+           "Pixel_Format_RGBX_8888 (" & Ada_Value & ") /= C_RGBX_8888 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_RGBX_8888) = C_RGBX_8888, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_BGR_888));
+         C_Value   : constant String := To_Binary (C_BGR_888);
+         Error     : constant String :=
+           "Pixel_Format_BGR_888 (" & Ada_Value & ") /= C_BGR_888 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_BGR_888) = C_BGR_888, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_BGRX_8888));
+         C_Value   : constant String := To_Binary (C_BGRX_8888);
+         Error     : constant String :=
+           "Pixel_Format_BGRX_8888 (" & Ada_Value & ") /= C_BGRX_8888 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_BGRX_8888) = C_BGRX_8888, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_ARGB_8888));
+         C_Value   : constant String := To_Binary (C_ARGB_8888);
+         Error     : constant String :=
+           "Pixel_Format_ARGB_8888 (" & Ada_Value & ") /= C_ARGB_8888 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_ARGB_8888) = C_ARGB_8888, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_RGBA_8888));
+         C_Value   : constant String := To_Binary (C_RGBA_8888);
+         Error     : constant String :=
+           "Pixel_Format_RGBA_8888 (" & Ada_Value & ") /= C_RGBA_8888 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_RGBA_8888) = C_RGBA_8888, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_ABGR_8888));
+         C_Value   : constant String := To_Binary (C_ABGR_8888);
+         Error     : constant String :=
+           "Pixel_Format_ABGR_8888 (" & Ada_Value & ") /= C_ABGR_8888 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_ABGR_8888) = C_ABGR_8888, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_BGRA_8888));
+         C_Value   : constant String := To_Binary (C_BGRA_8888);
+         Error     : constant String :=
+           "Pixel_Format_BGRA_8888 (" & Ada_Value & ") /= C_BGRA_8888 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_BGRA_8888) = C_BGRA_8888, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_ARGB_2101010));
+         C_Value   : constant String := To_Binary (C_ARGB_2101010);
+         Error     : constant String :=
+           "Pixel_Format_ARGB_2101010 (" & Ada_Value & ") /= C_ARGB_2101010 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_ARGB_2101010) = C_ARGB_2101010, Error);
+      end;
+
+      --  declare
+      --     Ada_Value : constant String := To_Binary (To_int (Pixel_Format_));
+      --     C_Value   : constant String := To_Binary (C_);
+      --     Error     : constant String :=
+      --       "Pixel_Format_ (" & Ada_Value & ") /= C_ (" & C_Value & ")";
+      --  begin
+      --     Put_Line (Error);
+
+      --     Assert (To_int (Pixel_Format_) = C_, Error);
+      --  end;
+
       --  Assert (To_int (Pixel_Format_YV_12) = C_YV_12, "Pixel_Format_YV_12 /= C_YV_12");
       --  Assert (To_int (Pixel_Format_IYUV) = C_IYUV, "Pixel_Format_IYUV /= C_IYUV");
       --  Assert (To_int (Pixel_Format_YUY2) = C_YUY2, "Pixel_Format_YUY2 /= C_YUY2");
