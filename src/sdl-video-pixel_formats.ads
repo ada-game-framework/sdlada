@@ -99,11 +99,16 @@ package SDL.Video.Pixel_Formats is
    --
    --        24       16        8        0
    --  DDDDDDDD CCCCCCCC BBBBBBBB AAAAAAAA
+
+   type Index_Order_Padding is range 0 .. 1 with
+     Convention => C;
+
    type Pixel_Orders (Pixel_Type : Pixel_Types := Unknown) is
       record
          case Pixel_Type is
             when Index_1 | Index_4 | Index_8 =>
                Indexed_Order : Bitmap_Pixel_Order;
+               Indexed_Pad   : Index_Order_Padding;
 
             when Packed_8 | Packed_16 | Packed_32 =>
                Packed_Order  : Packed_Component_Order;
@@ -121,7 +126,8 @@ package SDL.Video.Pixel_Formats is
 
    for Pixel_Orders use
       record
-         Indexed_Order at 0 range 0 .. 2;
+         Indexed_Order at 0 range 0 .. 2; --  This was 2 as that is the max size required but it causes a bit set bug!
+         Indexed_Pad   at 0 range 3 .. 3;
          Packed_Order  at 0 range 0 .. 3;
          Array_Order   at 0 range 0 .. 3;
       end record;
@@ -192,12 +198,13 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_Index_1_LSB : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Index_1,
                             Pixel_Order     => Pixel_Orders'
                               (Pixel_Type    => Index_1,
-                               Indexed_Order => Little_Endian),
+                               Indexed_Order => Little_Endian,
+                               Indexed_Pad   => Index_Order_Padding'First),
                             Layout          => None,
                             Bits_Per_Pixel  => 1,
                             Bytes_Per_Pixel => 0));
@@ -205,12 +212,13 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_Index_1_MSB : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Index_1,
                             Pixel_Order     => Pixel_Orders'
                               (Pixel_Type    => Index_1,
-                               Indexed_Order => Big_Endian),
+                               Indexed_Order => Big_Endian,
+                               Indexed_Pad   => Index_Order_Padding'First),
                             Layout          => None,
                             Bits_Per_Pixel  => 1,
                             Bytes_Per_Pixel => 0));
@@ -218,12 +226,13 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_Index_4_LSB : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Index_4,
                             Pixel_Order     => Pixel_Orders'
                               (Pixel_Type    => Index_4,
-                               Indexed_Order => Little_Endian),
+                               Indexed_Order => Little_Endian,
+                               Indexed_Pad   => Index_Order_Padding'First),
                             Layout          => None,
                             Bits_Per_Pixel  => 4,
                             Bytes_Per_Pixel => 0));
@@ -231,12 +240,13 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_Index_4_MSB : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
-                            Pixel_Type      => Index_1,
+                            Pixel_Type      => Index_4,
                             Pixel_Order     => Pixel_Orders'
-                              (Pixel_Type    => Index_1,
-                               Indexed_Order => Big_Endian),
+                              (Pixel_Type    => Index_4,
+                               Indexed_Order => Big_Endian,
+                               Indexed_Pad   => Index_Order_Padding'First),
                             Layout          => None,
                             Bits_Per_Pixel  => 4,
                             Bytes_Per_Pixel => 0));
@@ -244,12 +254,13 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_Index_8 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Index_8,
                             Pixel_Order     => Pixel_Orders'
                               (Pixel_Type    => Index_8,
-                               Indexed_Order => None),
+                               Indexed_Order => None,
+                               Indexed_Pad   => Index_Order_Padding'First),
                             Layout          => None,
                             Bits_Per_Pixel  => 8,
                             Bytes_Per_Pixel => 1));
@@ -257,7 +268,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_RGB_332 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_8,
                             Pixel_Order     => Pixel_Orders'
@@ -270,7 +281,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_RGB_444 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_16,
                             Pixel_Order     => Pixel_Orders'
@@ -283,7 +294,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_RGB_555 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_16,
                             Pixel_Order     => Pixel_Orders'
@@ -296,7 +307,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_BGR_555 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_16,
                             Pixel_Order     => Pixel_Orders'
@@ -309,7 +320,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_ARGB_4444 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_16,
                             Pixel_Order     => Pixel_Orders'
@@ -322,7 +333,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_RGBA_4444 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_16,
                             Pixel_Order     => Pixel_Orders'
@@ -335,7 +346,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_ABGR_4444 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_16,
                             Pixel_Order     => Pixel_Orders'
@@ -348,7 +359,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_BGRA_4444 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_16,
                             Pixel_Order     => Pixel_Orders'
@@ -361,7 +372,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_ARGB_1555 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_16,
                             Pixel_Order     => Pixel_Orders'
@@ -374,20 +385,20 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_RGBA_5551 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_16,
                             Pixel_Order     => Pixel_Orders'
                               (Pixel_Type   => Packed_16,
                                Packed_Order => RGBA),
-                            Layout          => Bits_1555,
+                            Layout          => Bits_5551,
                             Bits_Per_Pixel  => 16,
                             Bytes_Per_Pixel => 2));
 
    Pixel_Format_ABGR_1555 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_16,
                             Pixel_Order     => Pixel_Orders'
@@ -400,7 +411,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_BGRA_5551 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_16,
                             Pixel_Order     => Pixel_Orders'
@@ -413,7 +424,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_RGB_565 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_16,
                             Pixel_Order     => Pixel_Orders'
@@ -426,7 +437,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_BGR_565 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_16,
                             Pixel_Order     => Pixel_Orders'
@@ -439,7 +450,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_RGB_24 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Array_U8,
                             Pixel_Order     => Pixel_Orders'
@@ -452,7 +463,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_BGR_24 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Array_U8,
                             Pixel_Order     => Pixel_Orders'
@@ -465,7 +476,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_RGB_888 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_32,
                             Pixel_Order     => Pixel_Orders'
@@ -478,7 +489,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_RGBX_8888 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_32,
                             Pixel_Order     => Pixel_Orders'
@@ -491,7 +502,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_BGR_888 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_32,
                             Pixel_Order     => Pixel_Orders'
@@ -504,7 +515,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_BGRX_8888 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_32,
                             Pixel_Order     => Pixel_Orders'
@@ -517,7 +528,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_ARGB_8888 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_32,
                             Pixel_Order     => Pixel_Orders'
@@ -530,7 +541,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_RGBA_8888 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_32,
                             Pixel_Order     => Pixel_Orders'
@@ -543,7 +554,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_ABGR_8888 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_32,
                             Pixel_Order     => Pixel_Orders'
@@ -556,7 +567,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_BGRA_8888 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_32,
                             Pixel_Order     => Pixel_Orders'
@@ -569,7 +580,7 @@ package SDL.Video.Pixel_Formats is
    Pixel_Format_ARGB_2101010 : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar => False,
                          Non_Planar_Format => Non_Planar_Pixels'
-                           (Padding         => 0,
+                           (Padding         => Non_Planar_Pixel_Padding'First,
                             Flag            => True,
                             Pixel_Type      => Packed_32,
                             Pixel_Order     => Pixel_Orders'
