@@ -3,7 +3,7 @@ library project SDL_Build is
 
   type Platform_Type is ("linux", "windows", "macosx", "ios", "android");
 
-  Platform : Platform_Type := external ("PLATFORM", "linux");
+  Platform : Platform_Type := external ("SDL_PLATFORM", "linux");
 
   for Languages    use ("Ada", "C");
   for Source_Dirs  use ("src", "src/" & Platform);
