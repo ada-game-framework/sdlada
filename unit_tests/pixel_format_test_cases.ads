@@ -204,7 +204,7 @@ private
      Convention    => C,
      External_Name => "c_iyuv";
 
-   C_YUY2 : constant C.int with
+   C_YUY_2 : constant C.int with
      Import        => True,
      Convention    => C,
      External_Name => "c_yuy2";
