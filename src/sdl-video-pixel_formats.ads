@@ -590,6 +590,46 @@ package SDL.Video.Pixel_Formats is
                             Bits_Per_Pixel  => 32,
                             Bytes_Per_Pixel => 4));
 
+   Pixel_Format_YV_12 : constant Pixel_Format_Names :=
+     Pixel_Format_Names'(Planar => True,
+                         Planar_Format => Planar_Pixels'
+                           (A => 'Y',
+                            B => 'V',
+                            C => '1',
+                            D => '2'));
+
+   Pixel_Format_IYUV : constant Pixel_Format_Names :=
+     Pixel_Format_Names'(Planar => True,
+                         Planar_Format => Planar_Pixels'
+                           (A => 'I',
+                            B => 'Y',
+                            C => 'U',
+                            D => 'V'));
+
+   Pixel_Format_YUY_2 : constant Pixel_Format_Names :=
+     Pixel_Format_Names'(Planar => True,
+                         Planar_Format => Planar_Pixels'
+                           (A => 'Y',
+                            B => 'U',
+                            C => 'Y',
+                            D => '2'));
+
+   Pixel_Format_UYVY : constant Pixel_Format_Names :=
+     Pixel_Format_Names'(Planar => True,
+                         Planar_Format => Planar_Pixels'
+                           (A => 'U',
+                            B => 'Y',
+                            C => 'V',
+                            D => 'Y'));
+
+   Pixel_Format_YVYU : constant Pixel_Format_Names :=
+     Pixel_Format_Names'(Planar => True,
+                         Planar_Format => Planar_Pixels'
+                           (A => 'Y',
+                            B => 'V',
+                            C => 'Y',
+                            D => 'U'));
+
    type Colour_Mask is mod 2 ** 32 with
      Convention => C;
 
