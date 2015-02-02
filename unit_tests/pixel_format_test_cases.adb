@@ -400,21 +400,59 @@ package body Pixel_Format_Test_Cases is
          Assert (To_int (Pixel_Format_ARGB_2101010) = C_ARGB_2101010, Error);
       end;
 
-      --  declare
-      --     Ada_Value : constant String := To_Binary (To_int (Pixel_Format_));
-      --     C_Value   : constant String := To_Binary (C_);
-      --     Error     : constant String :=
-      --       "Pixel_Format_ (" & Ada_Value & ") /= C_ (" & C_Value & ")";
-      --  begin
-      --     Put_Line (Error);
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_YV_12));
+         C_Value   : constant String := To_Binary (C_YV_12);
+         Error     : constant String :=
+           "Pixel_Format_YV_12 (" & Ada_Value & ") /= C_YV_12 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
 
-      --     Assert (To_int (Pixel_Format_) = C_, Error);
-      --  end;
+         Assert (To_int (Pixel_Format_YV_12) = C_YV_12, Error);
+      end;
 
-      --  Assert (To_int (Pixel_Format_YV_12) = C_YV_12, "Pixel_Format_YV_12 /= C_YV_12");
-      --  Assert (To_int (Pixel_Format_IYUV) = C_IYUV, "Pixel_Format_IYUV /= C_IYUV");
-      --  Assert (To_int (Pixel_Format_YUY2) = C_YUY2, "Pixel_Format_YUY2 /= C_YUY2");
-      --  Assert (To_int (Pixel_Format_UYVY) = C_UYVY, "Pixel_Format_UYVY /= C_UYVY");
-      --  Assert (To_int (Pixel_Format_YVYU) = C_YVYU, "Pixel_Format_YVYU /= C_YVYU");
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_IYUV));
+         C_Value   : constant String := To_Binary (C_IYUV);
+         Error     : constant String :=
+           "Pixel_Format_IYUV (" & Ada_Value & ") /= C_IYUV (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_IYUV) = C_IYUV, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_YUY_2));
+         C_Value   : constant String := To_Binary (C_YUY_2);
+         Error     : constant String :=
+           "Pixel_Format_YUY_2 (" & Ada_Value & ") /= C_YUY_2 (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_YUY_2) = C_YUY_2, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_UYVY));
+         C_Value   : constant String := To_Binary (C_UYVY);
+         Error     : constant String :=
+           "Pixel_Format_UYVY (" & Ada_Value & ") /= C_UYVY (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_UYVY) = C_UYVY, Error);
+      end;
+
+      declare
+         Ada_Value : constant String := To_Binary (To_int (Pixel_Format_YVYU));
+         C_Value   : constant String := To_Binary (C_YVYU);
+         Error     : constant String :=
+           "Pixel_Format_YVYU (" & Ada_Value & ") /= C_YVYU (" & C_Value & ")";
+      begin
+         Put_Line (Error);
+
+         Assert (To_int (Pixel_Format_YVYU) = C_YVYU, Error);
+      end;
    end Run_Test;
 end Pixel_Format_Test_Cases;
