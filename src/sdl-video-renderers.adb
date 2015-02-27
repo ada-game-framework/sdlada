@@ -398,7 +398,7 @@ package body SDL.Video.Renderers is
       function SDL_Render_Set_Logical_Size (R : in System.Address; S : in SDL.Video.Rectangles.Size) return C.int with
         Import        => True,
         Convention    => C,
-        External_Name => "SDL_RenderGetLogicalSize";
+        External_Name => "SDL_RenderSetLogicalSize";
 
       Result : C.int := SDL_Render_Set_Logical_Size (Self.Internal, Size);
    begin
@@ -417,12 +417,12 @@ package body SDL.Video.Renderers is
    end Get_Scale;
 
    procedure Set_Scale (Self : in out Renderer; X, Y : in Float) is
-      function SDL_Render_Set_Logical_Size (R : in System.Address; X, Y : in C.C_float) return C.int with
+      function SDL_Render_Set_Scale (R : in System.Address; X, Y : in C.C_float) return C.int with
         Import        => True,
         Convention    => C,
-        External_Name => "SDL_RenderGetLogicalSize";
+        External_Name => "SDL_RenderSetScale";
 
-      Result : C.int := SDL_Render_Set_Logical_Size (Self.Internal, C.C_float (X), C.C_float (Y));
+      Result : C.int := SDL_Render_Set_Scale (Self.Internal, C.C_float (X), C.C_float (Y));
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
