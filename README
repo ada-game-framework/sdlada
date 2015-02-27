@@ -72,7 +72,7 @@ SDL_AudioQuit                         |   n   |
 SDL_BlitScaled                        |   n   |
 SDL_BlitSurface                       |   n   |
 SDL_BuildAudioCVT                     |   n   |
-SDL_COMPILEDVERSION                   |   n   |
+SDL_COMPILEDVERSION                   |   n   |      *
 SDL_CalculateGammaRamp                |   y   |
 SDL_CaptureMouse                      |   n   |
 SDL_ClearError                        |   y   |
@@ -370,7 +370,7 @@ SDL_LogVerbose                        |   y   |
 SDL_LogWarn                           |   y   |
 SDL_LowerBlit                         |   n   |
 SDL_LowerBlitScaled                   |   n   |
-SDL_MUSTLOCK                          |   n   |
+SDL_MUSTLOCK                          |   n   |      *
 SDL_MapRGB                            |   y   |
 SDL_MapRGBA                           |   y   |
 SDL_MasksToPixelFormatEnum            |   y   |
@@ -397,7 +397,7 @@ SDL_QueueAudio                        |   n   |
 SDL_Quit                              |   y   |
 SDL_QuitRequested                     |   n   |
 SDL_QuitSubSystem                     |   y   |
-SDL_REVISION                          |   n   |
+SDL_REVISION                          |   n   |      *
 SDL_RWFromConstMem                    |   n   |
 SDL_RWFromFP                          |   n   |
 SDL_RWFromFile                        |   n   |
@@ -532,9 +532,9 @@ SDL_UpdateTexture                     |   n   |
 SDL_UpdateWindowSurface               |   n   |
 SDL_UpdateWindowSurfaceRects          |   y   |
 SDL_UpdateYUVTexture                  |   n   |
-SDL_VERSION                           |   n   |
-SDL_VERSIONNUM                        |   n   |
-SDL_VERSION_ATLEAST                   |   n   |
+SDL_VERSION                           |   n   |      *
+SDL_VERSIONNUM                        |   n   |      *
+SDL_VERSION_ATLEAST                   |   n   |      *
 SDL_VideoInit                         |   y   |
 SDL_VideoQuit                         |   y   |
 SDL_WaitEvent                         |   n   |
