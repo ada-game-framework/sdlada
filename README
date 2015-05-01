@@ -22,10 +22,10 @@ Building
 
 There are a number of variables which can be set to control the compilation:
 
-PLATFORM = Can be set to one of the following values: linux, windows, macosx, ios or android
-STATIC   = When set to "no" will build using the shared libraries of the host OS.
+SDL_PLATFORM = Can be set to one of the following values: linux, windows, macosx, ios or android
+STATIC       = When set to "no" will build using the shared libraries of the host OS.
 
-PLATFORM=linux STATIC=no make
+SDL_PLATFORM=linux STATIC=no make
 
 Copyright
 =========
