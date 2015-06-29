@@ -352,7 +352,7 @@ SDL_LockAudio                         |   n   |
 SDL_LockAudioDevice                   |   n   |
 SDL_LockMutex                         |   n   |
 SDL_LockSurface                       |   n   |
-SDL_LockTexture                       |   n   |
+SDL_LockTexture                       |   y   |
 SDL_Log                               |   y   |
 SDL_LogCritical                       |   y   |
 SDL_LogDebug                          |   y   |
@@ -527,7 +527,7 @@ SDL_UnlockAudio                       |   n   |
 SDL_UnlockAudioDevice                 |   n   |
 SDL_UnlockMutex                       |   n   |
 SDL_UnlockSurface                     |   n   |
-SDL_UnlockTexture                     |   n   |
+SDL_UnlockTexture                     |   y   |
 SDL_UpdateTexture                     |   n   |
 SDL_UpdateWindowSurface               |   n   |
 SDL_UpdateWindowSurfaceRects          |   y   |
