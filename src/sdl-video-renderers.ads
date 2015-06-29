@@ -48,7 +48,7 @@ package SDL.Video.Renderers is
 
    type Renderer_Flip is (None, Horizontal, Vertical, Both);
 
---  SDL_RendererInfo
+   --  SDL_RendererInfo
 
    function Total_Drivers return Positive with
      Inline => True;
@@ -63,13 +63,19 @@ package SDL.Video.Renderers is
      (Self   : in out Renderer;
       Window : in out SDL.Video.Windows.Window;
       Driver : in Positive;
-      Flags  : in Renderer_Flags);
+      Flags  : in Renderer_Flags := Default_Renderer_Flags);
+
+   --  Specifically create a renderer using the first available driver.
+   procedure Create
+     (Self   : in out Renderer;
+      Window : in out SDL.Video.Windows.Window;
+      Flags  : in Renderer_Flags := Default_Renderer_Flags);
 
    procedure Create_Software
      (Self    : in out Renderer;
       Surface : in SDL.Video.Surfaces.Surface);
 
---  SDL_CreateWindowAndRenderer
+   --  SDL_CreateWindowAndRenderer
 
    overriding
    procedure Finalize (Self : in out Renderer);
@@ -80,9 +86,13 @@ package SDL.Video.Renderers is
    function Get_Draw_Colour (Self : in Renderer) return SDL.Video.Palettes.Colour;
    procedure Set_Draw_Colour (Self : in out Renderer; Colour : in SDL.Video.Palettes.Colour);
 
---  SDL_GetRendererInfo
+   --  SDL_GetRendererInfo
 
    procedure Clear (Self : in out Renderer);
+
+   procedure Copy
+     (Self      : in out Renderer;
+      Copy_From : in SDL.Video.Textures.Texture);
 
    procedure Copy
      (Self      : in out Renderer;
@@ -123,7 +133,7 @@ package SDL.Video.Renderers is
 
    procedure Present (Self : in Renderer);
 
---  SDL_RenderReadPixels
+   --  SDL_RenderReadPixels
 
    function Supports_Targets (Self : in Renderer) return Boolean;
 
@@ -137,9 +147,10 @@ private
       end record;
 
    function Get_Address (Self : in Renderer) return System.Address with
-     Export     => True,
-     Convention => Ada;
+     Export        => True,
+     Convention    => Ada,
+     External_Name => "Get_Renderer_Address";
 
    Null_Renderer : constant Renderer := (Ada.Finalization.Limited_Controlled with
-                                           Internal => System.Null_Address);
+                                         Internal => System.Null_Address);
 end SDL.Video.Renderers;
