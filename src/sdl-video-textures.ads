@@ -28,6 +28,7 @@ with Ada.Finalization;
 with System;
 with SDL.Video.Palettes;
 with SDL.Video.Pixel_Formats;
+with SDL.Video.Pixels;
 with SDL.Video.Rectangles;
 limited with SDL.Video.Renderers;
 with SDL.Video.Surfaces;
@@ -49,8 +50,6 @@ package SDL.Video.Textures is
       Additive        => 16#0000_0002#,
       Colour_Modulate => 16#0000_0004#);
 
-   --  Was SDL_TextureModulate - Possible doc bug.
-
    type Texture is new Ada.Finalization.Limited_Controlled with private;
 
    Null_Texture : constant Texture;
@@ -58,7 +57,7 @@ package SDL.Video.Textures is
    procedure Create
      (Self     : in out Texture;
       Renderer : in SDL.Video.Renderers.Renderer;
-      Format   : in SDL.Video.Pixel_Formats.Pixel_Format;
+      Format   : in SDL.Video.Pixel_Formats.Pixel_Format_Names;
       Kind     : in Kinds;
       Size     : in SDL.Video.Windows.Sizes);
 
@@ -79,32 +78,54 @@ package SDL.Video.Textures is
    function Get_Modulate_Colour (Self : in Texture) return SDL.Video.Palettes.RGB_Colour;
    procedure Set_Modulate_Colour (Self : in out Texture; Colour : in SDL.Video.Palettes.RGB_Colour);
 
+   --  TODO: Fix this.
    --  Lock returns access to pixel data as write-only.
    --  function Lock (Self : in out Texture; Pixel_Data : out SDL.Video.Pixels.Pixel) return Boolean with
    --  function Lock (Self : in out Texture; Area : in SDL.Video.Rectangles.Rectangle;
    --    Pixel_Data : out SDL.Video.Pixels.Pixel) return Boolean with
    --    Pre  => Self.Locked = False,
    --    Post => Result = True and then Self.Locked = True;
---  SDL_LockTexture
---  SDL_UnlockTexture
---  SDL_QueryTexture
---  SDL_UpdateTexture
---  SDL_UpdateYUVTexture
+   --
+   --  Lock should return an object representing the bitmap data. We should be able to access it like an array,
+   --  e.g. (x, y) and also using an iterator, which traverses, top -> bottom, left -> right, 1 pixel at a time. We
+   --  need to be able to do subimage copies using Ada's slices, e.g. bm1 (x .. x2, y .. y2) := bm2 (x .. x2, y .. y2)
+   --
+   --  For YV12 format:
+   --
+
+   --  package ARGB_8888_Array is new SDL.Video.Pixels.Texture_Data (Width => , Height => , Element => );
+   --     procedure Lock_Texture (Self   : in out Texture;
+   --                             Pixels : out SDL.Video.Pixels.Pixel_ARGB_8888_Array_Access);
+   procedure Lock_Texture (Self    : in out Texture;
+                           Pixels  : out SDL.Video.Pixels.ARGB_8888_Access.Pointer;
+                           Pitches : out SDL.Video.Pixels.Pitch_Access.Pointer);
+   procedure Unlock_Texture (Self : in out Texture);
+
+   --  SDL_QueryTexture
+   --  SDL_UpdateTexture
+   --  SDL_UpdateYUVTexture
 private
    type Texture is new Ada.Finalization.Limited_Controlled with
       record
-         Internal : System.Address := System.Null_Address;
-         Locked   : Boolean        := False;
+         --  TODO: Change System.Address to a C convention access type as Address is a different size compared to
+         --        a C pointer.
+         Internal     : System.Address                             := System.Null_Address;
+         Locked       : Boolean                                    := False;
+         Size         : SDL.Video.Windows.Sizes                    := (Positive'First, Positive'First);
+         Pixel_Format : SDL.Video.Pixel_Formats.Pixel_Format_Names := SDL.Video.Pixel_Formats.Pixel_Format_Unknown;
       end record;
 
    overriding
    procedure Finalize (Self : in out Texture);
 
    function Get_Address (Self : in Texture) return System.Address with
-     Export     => True,
-     Convention => Ada;
+     Export        => True,
+     Convention    => Ada,
+     External_Name => "Get_Texture_Address";
 
    Null_Texture : constant Texture := (Ada.Finalization.Limited_Controlled with
-                                         Internal => System.Null_Address,
-                                         Locked   => False);
+                                       Internal     => System.Null_Address,
+                                       Size         => (Positive'First, Positive'First),
+                                       Pixel_Format => Pixel_Formats.Pixel_Format_Unknown,
+                                       Locked       => False);
 end SDL.Video.Textures;

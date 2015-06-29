@@ -21,6 +21,8 @@
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C;
+with Interfaces;
+with Ada.Unchecked_Conversion;
 with SDL.Error;
 
 package body SDL.Video.Textures is
@@ -41,25 +43,34 @@ package body SDL.Video.Textures is
    procedure Create
      (Self     : in out Texture;
       Renderer : in SDL.Video.Renderers.Renderer;
-      Format   : in SDL.Video.Pixel_Formats.Pixel_Format;
+      Format   : in SDL.Video.Pixel_Formats.Pixel_Format_Names;
       Kind     : in Kinds;
       Size     : in SDL.Video.Windows.Sizes) is
 
+      --  Convert the Pixel_Format_Name to an Unsigned_32 because the compiler is changing the value somewhere along
+      --  the lines from the start of this procedure to calling SDL_Create_Texture.
+      function To_Unsigned32 is new Ada.Unchecked_Conversion (Source => SDL.Video.Pixel_Formats.Pixel_Format_Names,
+                                                              Target => Interfaces.Unsigned_32);
+
       function SDL_Create_Texture
         (R      : in System.Address;
-         Format : in SDL.Video.Pixel_Formats.Pixel_Format;
+         Format : in Interfaces.Unsigned_32;
          Kind   : in Kinds;
          W, H   : in C.int) return System.Address with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_CreateTexture";
+
    begin
-      Self.Internal := SDL_Create_Texture (Get_Address (Renderer), Format, Kind,
+      Self.Internal := SDL_Create_Texture (Get_Address (Renderer), To_Unsigned32 (Format), Kind,
                                            C.int (Size.Width), C.int (Size.Height));
 
       if Self.Internal = System.Null_Address then
          raise Texture_Error with SDL.Error.Get;
       end if;
+
+      Self.Size         := Size;
+      Self.Pixel_Format := Format;
    end Create;
 
    procedure Create
@@ -182,6 +193,65 @@ package body SDL.Video.Textures is
          raise Texture_Error with SDL.Error.Get;
       end if;
    end Set_Modulate_Colour;
+
+   --     procedure Lock_Texture (Self   : in out Texture;
+   --                             Pixels : out SDL.Video.Pixels.Pixel_ARGB_8888_Array_Access) is
+   --        type Int_Ptr is access C.int with
+   --          Convention => C;
+   --
+   --        function SDL_Lock_Texture (T      : in System.Address;
+   --                                   Area   : in System.Address;
+   --                                   Pixels : out SDL.Video.Pixels.C_Pixel_Ptr;
+   --                                   Pitch  : out Int_Ptr) return C.int with
+   --          Import        => True,
+   --          Convention    => C,
+   --          External_Name => "SDL_LockTexture";
+   --
+   --        C_Pixels : SDL.Video.Pixels.C_Pixel_Ptr := null;
+   --        C_Pitch  : Int_Ptr        := null;
+   --        Result   : C.int          := SDL_Lock_Texture (Self.Internal, System.Null_Address, C_Pixels, C_Pitch);
+   --     begin
+   --        if Result /= Success then
+   --           raise Texture_Error with SDL.Error.Get;
+   --        end if;
+   --
+   --        Self.Locked := True;
+   --
+   --        Pixels := SDL.Video.Pixels.Create (C_Pixels, C_Pitch.all, Self.Size);
+   --     end Lock_Texture;
+
+   procedure Lock_Texture (Self    : in out Texture;
+                           Pixels  : out SDL.Video.Pixels.ARGB_8888_Access.Pointer;
+                           Pitches : out SDL.Video.Pixels.Pitch_Access.Pointer) is
+      function SDL_Lock_Texture (T       : in System.Address;
+                                 Area    : in System.Address;
+                                 Pixels  : out SDL.Video.Pixels.ARGB_8888_Access.Pointer;
+                                 Pitches : out SDL.Video.Pixels.Pitch_Access.Pointer) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_LockTexture";
+
+      Result : C.int := SDL_Lock_Texture (Self.Internal, System.Null_Address, Pixels, Pitches);
+   begin
+      if Result /= Success then
+         raise Texture_Error with SDL.Error.Get;
+      end if;
+
+      Self.Locked := True;
+   end Lock_Texture;
+
+   procedure Unlock_Texture (Self : in out Texture) is
+      procedure SDL_Unlock_Texture (T : in System.Address) with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_UnlockTexture";
+   begin
+      if Self.Locked then
+         SDL_Unlock_Texture (Self.Internal);
+
+         Self.Locked := False;
+      end if;
+   end Unlock_Texture;
 
    overriding
    procedure Finalize (Self : in out Texture) is
