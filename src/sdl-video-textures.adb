@@ -220,9 +220,9 @@ package body SDL.Video.Textures is
    --        Pixels := SDL.Video.Pixels.Create (C_Pixels, C_Pitch.all, Self.Size);
    --     end Lock_Texture;
 
-   procedure Lock_Texture (Self    : in out Texture;
-                           Pixels  : out SDL.Video.Pixels.ARGB_8888_Access.Pointer;
-                           Pitches : out SDL.Video.Pixels.Pitch_Access.Pointer) is
+   procedure Lock (Self    : in out Texture;
+                   Pixels  : out SDL.Video.Pixels.ARGB_8888_Access.Pointer;
+                   Pitches : out SDL.Video.Pixels.Pitch_Access.Pointer) is
       function SDL_Lock_Texture (T       : in System.Address;
                                  Area    : in System.Address;
                                  Pixels  : out SDL.Video.Pixels.ARGB_8888_Access.Pointer;
@@ -238,9 +238,9 @@ package body SDL.Video.Textures is
       end if;
 
       Self.Locked := True;
-   end Lock_Texture;
+   end Lock;
 
-   procedure Unlock_Texture (Self : in out Texture) is
+   procedure Unlock (Self : in out Texture) is
       procedure SDL_Unlock_Texture (T : in System.Address) with
         Import        => True,
         Convention    => C,
@@ -251,7 +251,7 @@ package body SDL.Video.Textures is
 
          Self.Locked := False;
       end if;
-   end Unlock_Texture;
+   end Unlock;
 
    overriding
    procedure Finalize (Self : in out Texture) is
