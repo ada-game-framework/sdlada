@@ -220,14 +220,14 @@ begin
 
       --  First test.
       for Index in 1 .. 10 loop
-         Texture.Lock_Texture (Pixels, Pitches);
+         Texture.Lock (Pixels, Pitches);
 
          --  The block makes things a bit clearer.
          begin
             Update_Texture_1 (Pixels);
          end;
 
-         Texture.Unlock_Texture;
+         Texture.Unlock;
 
          Renderer.Clear;
          Renderer.Copy (Texture);
@@ -251,14 +251,14 @@ begin
 
       --  Second test.
       for Index in 1 .. 10 loop
-         Texture.Lock_Texture (Pixels, Pitches);
+         Texture.Lock (Pixels, Pitches);
 
          --  The block makes things a bit clearer.
          begin
             Update_Texture_2 (Texture_2D.Pointer (Pixels));
          end;
 
-         Texture.Unlock_Texture;
+         Texture.Unlock;
 
          Renderer.Clear;
          Renderer.Copy (Texture);
@@ -282,7 +282,7 @@ begin
 
       --  Third test.
       for Index in 1 .. 100 loop
-         Texture.Lock_Texture (Pixels, Pitches);
+         Texture.Lock (Pixels, Pitches);
 
          --  The block makes things a bit clearer.
          --           begin
@@ -304,7 +304,7 @@ begin
             SDL.Log.Put_Debug ("Update_Texture_3 took " & Duration'Image (End_time - Start_Time) & " seconds.");
          end;
 
-         Texture.Unlock_Texture;
+         Texture.Unlock;
 
          Renderer.Clear;
          Renderer.Copy (Texture);
