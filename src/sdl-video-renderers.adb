@@ -23,6 +23,7 @@
 --  with Ada.Unchecked_Conversion;
 with Interfaces.C;
 with SDL.Error;
+with System;
 
 package body SDL.Video.Renderers is
    package C renames Interfaces.C;
@@ -80,15 +81,29 @@ package body SDL.Video.Renderers is
      (Self   : in out Renderer;
       Window : in out SDL.Video.Windows.Window;
       Driver : in Positive;
-      Flags  : in Renderer_Flags) is
+      Flags  : in Renderer_Flags := Default_Renderer_Flags) is
 
       function SDL_Create_Renderer (W : in System.Address; Index : in C.int; Flags : in Renderer_Flags)
-                                   return System.Address with
+                                    return System.Address with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_CreateRenderer";
    begin
       Self.Internal := SDL_Create_Renderer (Get_Address (Window), C.int (Driver), Flags);
+   end Create;
+
+   procedure Create
+     (Self   : in out Renderer;
+      Window : in out SDL.Video.Windows.Window;
+      Flags  : in Renderer_Flags := Default_Renderer_Flags) is
+
+      function SDL_Create_Renderer (W : in System.Address; Index : in C.int; Flags : in Renderer_Flags)
+                                    return System.Address with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_CreateRenderer";
+   begin
+      Self.Internal := SDL_Create_Renderer (Get_Address (Window), -1, Flags);
    end Create;
 
    procedure Create_Software
@@ -192,6 +207,24 @@ package body SDL.Video.Renderers is
       end if;
    end Clear;
 
+   procedure Copy
+     (Self      : in out Renderer;
+      Copy_From : in SDL.Video.Textures.Texture) is
+
+      function SDL_Render_Copy
+        (R, T, Src, Dest : in System.Address) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderCopy";
+
+      Result : C.int := SDL_Render_Copy (Self.Internal, Get_Address (Copy_From),
+                                         System.Null_Address, System.Null_Address);
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Copy;
+
    --  TODO: Check to make sure this works, if it does, apply the same logic to CopyEx, see below.
    procedure Copy
      (Self      : in out Renderer;
@@ -200,7 +233,7 @@ package body SDL.Video.Renderers is
       To        : in SDL.Video.Rectangles.Rectangle) is
 
       function SDL_Render_Copy
-        --  (R, T : in System.Address; Src, Dest : in SDL.Video.Rectangles.Rectangle) return C.int with
+      --  (R, T : in System.Address; Src, Dest : in SDL.Video.Rectangles.Rectangle) return C.int with
         (R, T, Src, Dest : in System.Address) return C.int with
         Import        => True,
         Convention    => C,
@@ -439,7 +472,7 @@ package body SDL.Video.Renderers is
    end Get_Viewport;
 
    procedure Set_Viewport (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle) is
-      function SDL_Render_Set_Viewport (R : in System.Address;
+      function SDL_Render_Set_Viewport (R    : in System.Address;
                                         Rect : in SDL.Video.Rectangles.Rectangle) return C.int with
         Import        => True,
         Convention    => C,
@@ -490,7 +523,7 @@ package body SDL.Video.Renderers is
         External_Name => "SDL_GetRenderer";
    begin
       return Result : constant Renderer := (Ada.Finalization.Limited_Controlled with
-        Internal => SDL_Get_Renderer (Get_Address (Window))) do
+                                              Internal => SDL_Get_Renderer (Get_Address (Window))) do
          null;
       end return;
    end Get_Renderer;
