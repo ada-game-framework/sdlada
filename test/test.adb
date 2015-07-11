@@ -1,6 +1,7 @@
 with SDL;
 with SDL.Error;
-with SDL.Events;
+with SDL.Events.Events;
+with SDL.Events.Keyboards;
 with SDL.Log;
 with SDL.Video.Windows;
 with SDL.Versions;
@@ -50,25 +51,25 @@ begin
       --  W.Set_Mode (SDL.Video.Windows.Full_Screen);
 
       declare
-         Event    : SDL.Events.Events;
+         Event    : SDL.Events.Events.Events;
          Finished : Boolean := False;
 
          use type SDL.Events.Event_Types;
-         use type SDL.Events.Key_Codes;
+         use type SDL.Events.Keyboards.Key_Codes;
       begin
          loop
-            while SDL.Events.Poll (Event) loop
+            while SDL.Events.Events.Poll (Event) loop
                case Event.Common.Event_Type is
                   when SDL.Events.Quit =>
                      Finished := True;
 
-                  when SDL.Events.Key_Up =>
+                  when SDL.Events.Keyboards.Key_Up =>
                      SDL.Log.Put_Debug ("Key up event: " &
-                                          SDL.Events.Key_Codes'Image (Event.Keyboard.Key_Sym.Key_Code) &
+                                          SDL.Events.Keyboards.Key_Codes'Image (Event.Keyboard.Key_Sym.Key_Code) &
                                           "    Scan code: " &
-                                          SDL.Events.Scan_Codes'Image (Event.Keyboard.Key_Sym.Scan_Code));
+                                          SDL.Events.Keyboards.Scan_Codes'Image (Event.Keyboard.Key_Sym.Scan_Code));
 
-                     if Event.Keyboard.Key_Sym.Key_Code = SDL.Events.Code_Escape then
+                     if Event.Keyboard.Key_Sym.Key_Code = SDL.Events.Keyboards.Code_Escape then
                         Finished := True;
                      end if;
 

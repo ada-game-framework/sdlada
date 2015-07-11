@@ -20,23 +20,33 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
-with Interfaces.C;
+--  SDL.Events.Controllers
+--
+--  Game controller specific events.
+package SDL.Events.Controllers is
+   type Controller_Axes is (Invalid,
+                            Left_X,
+                            Left_Y,
+                            Right_X,
+                            Right_Y,
+                            Left_Trigger,
+                            Right_Trigger) with
+     Convention => C;
 
-package body SDL.Events is
-   function Poll (Event : out Events) return Boolean is
-      --  int SDL_PollEvent(SDL_Event* event)
+   for Controller_Axes use (Invalid       => -1,
+                            Left_X        => 0,
+                            Left_Y        => 1,
+                            Right_X       => 2,
+                            Right_Y       => 3,
+                            Left_Trigger  => 4,
+                            Right_Trigger => 5);
 
-      use type Interfaces.C.int;
+   type Controller_Events is
+      record
+         Event_Type : Event_Types;           --  Will be set to Controller_Axis_Motion.
+         Time_Stamp : Time_Stamps;
 
-      function SDL_Poll_Event (Event : out Events) return Interfaces.C.int with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_PollEvent";
-   begin
-      if SDL_Poll_Event (Event) = 1 then
-         return True;
-      end if;
-
-      return False;
-   end Poll;
-end SDL.Events;
+      end record with
+     Convention => C;
+   --private
+end SDL.Events.Controllers;
