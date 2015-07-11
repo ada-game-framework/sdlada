@@ -40,769 +40,6 @@ package SDL.Events is
    type Button_State is (Released, Pressed) with
      Convention => C;
 
-   -----------------------------------------------------------------------------------------------------------------
-   --  Event types.
-   -----------------------------------------------------------------------------------------------------------------
-
-   --  Handled via 'First attribute.
-   First_Event                : constant Event_Types;
-
-   --  Application events.
-   Quit                       : constant Event_Types;
-
-   --  Mobile events.
-   App_Terminating            : constant Event_Types;
-   App_Low_Memory             : constant Event_Types;
-   App_Will_Enter_Background  : constant Event_Types;
-   App_Did_Enter_Background   : constant Event_Types;
-   App_Will_Enter_Foreground  : constant Event_Types;
-   App_Did_Enter_Foreground   : constant Event_Types;
-
-   --  Window events.
-   Window                     : constant Event_Types;
-   System_Window_Manager      : constant Event_Types;
-
-   --  Keyboard events.
-   Key_Down                   : constant Event_Types;
-   Key_Up                     : constant Event_Types;
-   Text_Editing               : constant Event_Types;
-   Text_Input                 : constant Event_Types;
-
-   --  Mouse events.
-   Mouse_Motion               : constant Event_Types;
-   Mouse_Button_Down          : constant Event_Types;
-   Mouse_Button_Up            : constant Event_Types;
-   Mouse_Wheel                : constant Event_Types;
-
-   --  Joystick events.
-   Joystick_Axis_Motion       : constant Event_Types;
-   Joystick_Ball_Motion       : constant Event_Types;
-   Joystick_Hat_Motion        : constant Event_Types;
-   Joystick_Button_Down       : constant Event_Types;
-   Joystick_Button_Up         : constant Event_Types;
-   Joystick_Device_Added      : constant Event_Types;
-   Joystick_Device_Removed    : constant Event_Types;
-
-   --  Game controller events.
-   Controller_Axis_Motion     : constant Event_Types;
-   Controller_Button_Down     : constant Event_Types;
-   Controller_Button_Up       : constant Event_Types;
-   Controller_Device_Added    : constant Event_Types;
-   Controller_Device_Removed  : constant Event_Types;
-   Controller_Device_Remapped : constant Event_Types;
-
-   --  Touch events.
-   Finger_Down                : constant Event_Types;
-   Finger_Up                  : constant Event_Types;
-   Finger_Motion              : constant Event_Types;
-
-   --  Gesture events.
-   Dollar_Gesture             : constant Event_Types;
-   Dollar_Record              : constant Event_Types;
-   Dollar_Multi_Gesture       : constant Event_Types;
-
-   --  Clipboard events.
-   Clipboard_Update           : constant Event_Types;
-
-   --  Drag and drop events.
-   Drop_File                  : constant Event_Types;
-
-   --  TODO: Audio hot plug events for 2.0.4
-
-   --  User events.
-   User                       : constant Event_Types;
-
-   Last_Event                 : constant Event_Types;
-
-   type Padding_Type is mod 2 ** 8 with
-     Convention => C,
-     Size       => 8;
-
-   type Time_Stamps is mod 2 ** 32 with
-     Convention => C;
-
-   type Common_Event is
-      record
-         Event_Type : Event_Types;
-         Time_Stamp : Time_Stamps;
-      end record with
-     Convention => C;
-
-   -----------------------------------------------------------------------------------------------------------------
-   --  Window events
-   -----------------------------------------------------------------------------------------------------------------
-   type Window_Event_ID is
-     (None,
-      Shown,
-      Hidden,
-      Exposed,
-      Moved,
-      Resized,
-      Size_Changed,
-      Minimised,
-      Maximised,
-      Restored,
-      Enter,
-      Leave,
-      Focus_Gained,
-      Focus_Lost,
-      Close) with
-     Convention => C;
-
-   type Window_Event is
-      record
-         Event_Type : Event_Types;           --  Will be set to Window.
-         Time_Stamp : Time_Stamps;
-
-         ID         : SDL.Video.Windows.ID;
-         Event_ID   : Window_Event_ID;
-         Padding_1  : Padding_Type;
-         Padding_2  : Padding_Type;
-         Padding_3  : Padding_Type;
-         Data_1     : Interfaces.Integer_32;
-         Data_2     : Interfaces.Integer_32;
-      end record with
-     Convention => C;
-
-   -----------------------------------------------------------------------------------------------------------------
-   --  Keyboard events
-   -----------------------------------------------------------------------------------------------------------------
-
-   -----------------------------------------------------------------------------------------------------------------
-   --  Scan codes.
-   -----------------------------------------------------------------------------------------------------------------
-   type Scan_Codes is range 0 .. 512 with
-     Convention => C,
-     Size       => 32;
-
-   Scan_Code_Unknown                : constant Scan_Codes;
-
-   Scan_Code_A                      : constant Scan_Codes;
-   Scan_Code_B                      : constant Scan_Codes;
-   Scan_Code_C                      : constant Scan_Codes;
-   Scan_Code_D                      : constant Scan_Codes;
-   Scan_Code_E                      : constant Scan_Codes;
-   Scan_Code_F                      : constant Scan_Codes;
-   Scan_Code_G                      : constant Scan_Codes;
-   Scan_Code_H                      : constant Scan_Codes;
-   Scan_Code_I                      : constant Scan_Codes;
-   Scan_Code_J                      : constant Scan_Codes;
-   Scan_Code_K                      : constant Scan_Codes;
-   Scan_Code_L                      : constant Scan_Codes;
-   Scan_Code_M                      : constant Scan_Codes;
-   Scan_Code_N                      : constant Scan_Codes;
-   Scan_Code_O                      : constant Scan_Codes;
-   Scan_Code_P                      : constant Scan_Codes;
-   Scan_Code_Q                      : constant Scan_Codes;
-   Scan_Code_R                      : constant Scan_Codes;
-   Scan_Code_S                      : constant Scan_Codes;
-   Scan_Code_T                      : constant Scan_Codes;
-   Scan_Code_U                      : constant Scan_Codes;
-   Scan_Code_V                      : constant Scan_Codes;
-   Scan_Code_W                      : constant Scan_Codes;
-   Scan_Code_X                      : constant Scan_Codes;
-   Scan_Code_Y                      : constant Scan_Codes;
-   Scan_Code_Z                      : constant Scan_Codes;
-
-   Scan_Code_1                      : constant Scan_Codes;
-   Scan_Code_2                      : constant Scan_Codes;
-   Scan_Code_3                      : constant Scan_Codes;
-   Scan_Code_4                      : constant Scan_Codes;
-   Scan_Code_5                      : constant Scan_Codes;
-   Scan_Code_6                      : constant Scan_Codes;
-   Scan_Code_7                      : constant Scan_Codes;
-   Scan_Code_8                      : constant Scan_Codes;
-   Scan_Code_9                      : constant Scan_Codes;
-   Scan_Code_0                      : constant Scan_Codes;
-
-   Scan_Code_Return                 : constant Scan_Codes;
-   Scan_Code_Escape                 : constant Scan_Codes;
-   Scan_Code_Backspace              : constant Scan_Codes;
-   Scan_Code_Tab                    : constant Scan_Codes;
-   Scan_Code_Space                  : constant Scan_Codes;
-
-   Scan_Code_Minus                  : constant Scan_Codes;
-   Scan_Code_Equals                 : constant Scan_Codes;
-   Scan_Code_Left_Bracket           : constant Scan_Codes;
-   Scan_Code_Right_Bracket          : constant Scan_Codes;
-   Scan_Code_Back_Slash             : constant Scan_Codes;
-   Scan_Code_Non_US_Hash            : constant Scan_Codes;
-   Scan_Code_Semi_Colon             : constant Scan_Codes;
-   Scan_Code_Apostrophe             : constant Scan_Codes;
-   Scan_Code_Grave                  : constant Scan_Codes;
-   Scan_Code_Comma                  : constant Scan_Codes;
-   Scan_Code_Period                 : constant Scan_Codes;
-   Scan_Code_Slash                  : constant Scan_Codes;
-
-   Scan_Code_Caps_Lock              : constant Scan_Codes;
-
-   Scan_Code_F1                     : constant Scan_Codes;
-   Scan_Code_F2                     : constant Scan_Codes;
-   Scan_Code_F3                     : constant Scan_Codes;
-   Scan_Code_F4                     : constant Scan_Codes;
-   Scan_Code_F5                     : constant Scan_Codes;
-   Scan_Code_F6                     : constant Scan_Codes;
-   Scan_Code_F7                     : constant Scan_Codes;
-   Scan_Code_F8                     : constant Scan_Codes;
-   Scan_Code_F9                     : constant Scan_Codes;
-   Scan_Code_F10                    : constant Scan_Codes;
-   Scan_Code_F11                    : constant Scan_Codes;
-   Scan_Code_F12                    : constant Scan_Codes;
-
-   Scan_Code_Print_Screen           : constant Scan_Codes;
-   Scan_Code_Scroll_Lock            : constant Scan_Codes;
-   Scan_Code_Pause                  : constant Scan_Codes;
-   Scan_Code_Insert                 : constant Scan_Codes;
-
-   Scan_Code_Home                   : constant Scan_Codes;
-   Scan_Code_Page_Up                : constant Scan_Codes;
-   Scan_Code_Delete                 : constant Scan_Codes;
-   Scan_Code_End                    : constant Scan_Codes;
-   Scan_Code_Page_Down              : constant Scan_Codes;
-   Scan_Code_Right                  : constant Scan_Codes;
-   Scan_Code_Left                   : constant Scan_Codes;
-   Scan_Code_Down                   : constant Scan_Codes;
-   Scan_Code_Up                     : constant Scan_Codes;
-
-   Scan_Code_Num_Lock_Clear         : constant Scan_Codes;
-
-   Scan_Code_KP_Divide              : constant Scan_Codes;
-   Scan_Code_KP_Multiply            : constant Scan_Codes;
-   Scan_Code_KP_Minus               : constant Scan_Codes;
-   Scan_Code_KP_Plus                : constant Scan_Codes;
-   Scan_Code_KP_Enter               : constant Scan_Codes;
-   Scan_Code_KP_1                   : constant Scan_Codes;
-   Scan_Code_KP_2                   : constant Scan_Codes;
-   Scan_Code_KP_3                   : constant Scan_Codes;
-   Scan_Code_KP_4                   : constant Scan_Codes;
-   Scan_Code_KP_5                   : constant Scan_Codes;
-   Scan_Code_KP_6                   : constant Scan_Codes;
-   Scan_Code_KP_7                   : constant Scan_Codes;
-   Scan_Code_KP_8                   : constant Scan_Codes;
-   Scan_Code_KP_9                   : constant Scan_Codes;
-   Scan_Code_KP_0                   : constant Scan_Codes;
-   Scan_Code_KP_Period              : constant Scan_Codes;
-
-   Scan_Code_Non_US_Back_Slash      : constant Scan_Codes;
-   Scan_Code_Application            : constant Scan_Codes;
-   Scan_Code_Power                  : constant Scan_Codes;
-   Scan_Code_KP_Equals              : constant Scan_Codes;
-   Scan_Code_F13                    : constant Scan_Codes;
-   Scan_Code_F14                    : constant Scan_Codes;
-   Scan_Code_F15                    : constant Scan_Codes;
-   Scan_Code_F16                    : constant Scan_Codes;
-   Scan_Code_F17                    : constant Scan_Codes;
-   Scan_Code_F18                    : constant Scan_Codes;
-   Scan_Code_F19                    : constant Scan_Codes;
-   Scan_Code_F20                    : constant Scan_Codes;
-   Scan_Code_F21                    : constant Scan_Codes;
-   Scan_Code_F22                    : constant Scan_Codes;
-   Scan_Code_F23                    : constant Scan_Codes;
-   Scan_Code_F24                    : constant Scan_Codes;
-   Scan_Code_Execute                : constant Scan_Codes;
-   Scan_Code_Help                   : constant Scan_Codes;
-   Scan_Code_Menu                   : constant Scan_Codes;
-   Scan_Code_Select                 : constant Scan_Codes;
-   Scan_Code_Stop                   : constant Scan_Codes;
-   Scan_Code_Again                  : constant Scan_Codes;
-   Scan_Code_Undo                   : constant Scan_Codes;
-   Scan_Code_Cut                    : constant Scan_Codes;
-   Scan_Code_Copy                   : constant Scan_Codes;
-   Scan_Code_Paste                  : constant Scan_Codes;
-   Scan_Code_Find                   : constant Scan_Codes;
-   Scan_Code_Mute                   : constant Scan_Codes;
-   Scan_Code_Volume_Up              : constant Scan_Codes;
-   Scan_Code_Volume_Down            : constant Scan_Codes;
-   --  Scan_Code_Locking_Caps_Lock   : constant Scan_Codes;
-   --  Scan_Code_Locking_Num_Lock    : constant Scan_Codes;
-   --  Scan_Code_Locking_Scroll_Lock : constant Scan_Codes;
-   Scan_Code_KP_Comma               : constant Scan_Codes;
-   Scan_Code_KP_Equals_AS400        : constant Scan_Codes;
-
-   Scan_Code_International_1        : constant Scan_Codes;  --  Used on Asian keyboards.
-   Scan_Code_International_2        : constant Scan_Codes;
-   Scan_Code_International_3        : constant Scan_Codes;  --  Yen
-   Scan_Code_International_4        : constant Scan_Codes;
-   Scan_Code_International_5        : constant Scan_Codes;
-   Scan_Code_International_6        : constant Scan_Codes;
-   Scan_Code_International_7        : constant Scan_Codes;
-   Scan_Code_International_8        : constant Scan_Codes;
-   Scan_Code_International_9        : constant Scan_Codes;
-   Scan_Code_Language_1             : constant Scan_Codes;  --  Hangul/En
-   Scan_Code_Language_2             : constant Scan_Codes;  --  Hanja con
-   Scan_Code_Language_3             : constant Scan_Codes;  --  Katakana.
-   Scan_Code_Language_4             : constant Scan_Codes;  --  Hiragana.
-   Scan_Code_Language_5             : constant Scan_Codes;  --  Zenkaku/H
-   Scan_Code_Language_6             : constant Scan_Codes;  --  Reserved.
-   Scan_Code_Language_7             : constant Scan_Codes;  --  Reserved.
-   Scan_Code_Language_8             : constant Scan_Codes;  --  Reserved.
-   Scan_Code_Language_9             : constant Scan_Codes;  --  Reserved.
-
-   Scan_Code_Alt_Erase              : constant Scan_Codes;  --  Erase-ease.
-   Scan_Code_Sys_Req                : constant Scan_Codes;
-   Scan_Code_Cancel                 : constant Scan_Codes;
-   Scan_Code_Clear                  : constant Scan_Codes;
-   Scan_Code_Prior                  : constant Scan_Codes;
-   Scan_Code_Return_2               : constant Scan_Codes;
-   Scan_Code_Separator              : constant Scan_Codes;
-   Scan_Code_Out                    : constant Scan_Codes;
-   Scan_Code_Oper                   : constant Scan_Codes;
-   Scan_Code_Clear_Again            : constant Scan_Codes;
-   Scan_Code_CR_Sel                 : constant Scan_Codes;
-   Scan_Code_EX_Sel                 : constant Scan_Codes;
-
-   Scan_Code_KP_00                  : constant Scan_Codes;
-   Scan_Code_KP_000                 : constant Scan_Codes;
-   Scan_Code_Thousands_Separator    : constant Scan_Codes;
-   Scan_Code_Decimal_Separator      : constant Scan_Codes;
-   Scan_Code_Currency_Unit          : constant Scan_Codes;
-   Scan_Code_Currency_Subunit       : constant Scan_Codes;
-   Scan_Code_KP_Left_Parenthesis    : constant Scan_Codes;
-   Scan_Code_KP_Right_Parentheesis  : constant Scan_Codes;
-   Scan_Code_KP_Left_Brace          : constant Scan_Codes;
-   Scan_Code_KP_Right_Brace         : constant Scan_Codes;
-   Scan_Code_KP_Tab                 : constant Scan_Codes;
-   Scan_Code_KP_Backspace           : constant Scan_Codes;
-   Scan_Code_KP_A                   : constant Scan_Codes;
-   Scan_Code_KP_B                   : constant Scan_Codes;
-   Scan_Code_KP_C                   : constant Scan_Codes;
-   Scan_Code_KP_D                   : constant Scan_Codes;
-   Scan_Code_KP_E                   : constant Scan_Codes;
-   Scan_Code_KP_F                   : constant Scan_Codes;
-   Scan_Code_KP_XOR                 : constant Scan_Codes;
-   Scan_Code_KP_Power               : constant Scan_Codes;
-   Scan_Code_KP_Percent             : constant Scan_Codes;
-   Scan_Code_KP_Less                : constant Scan_Codes;
-   Scan_Code_KP_Greater             : constant Scan_Codes;
-   Scan_Code_KP_Ampersand           : constant Scan_Codes;
-   Scan_Code_KP_Double_Ampersand    : constant Scan_Codes;
-   Scan_Code_KP_Vertical_Bar        : constant Scan_Codes;
-   Scan_Code_KP_Double_Vertical_Bar : constant Scan_Codes;
-   Scan_Code_KP_Colon               : constant Scan_Codes;
-   Scan_Code_KP_Hash                : constant Scan_Codes;
-   Scan_Code_KP_Space               : constant Scan_Codes;
-   Scan_Code_KP_At                  : constant Scan_Codes;
-   Scan_Code_KP_Exclamation         : constant Scan_Codes;
-   Scan_Code_KP_Memory_Store        : constant Scan_Codes;
-   Scan_Code_KP_Memory_Recall       : constant Scan_Codes;
-   Scan_Code_KP_Memory_Clear        : constant Scan_Codes;
-   Scan_Code_KP_Memory_Add          : constant Scan_Codes;
-   Scan_Code_KP_Memory_Subtract     : constant Scan_Codes;
-   Scan_Code_KP_Memory_Multiply     : constant Scan_Codes;
-   Scan_Code_KP_Memory_Divide       : constant Scan_Codes;
-   Scan_Code_KP_Plus_Minus          : constant Scan_Codes;
-   Scan_Code_KP_Clear               : constant Scan_Codes;
-   Scan_Code_KP_Clear_Entry         : constant Scan_Codes;
-   Scan_Code_KP_Binary              : constant Scan_Codes;
-   Scan_Code_KP_Octal               : constant Scan_Codes;
-   Scan_Code_KP_Decimal             : constant Scan_Codes;
-   Scan_Code_KP_Hexadecimal         : constant Scan_Codes;
-
-   Scan_Code_Left_Control           : constant Scan_Codes;
-   Scan_Code_Left_Shift             : constant Scan_Codes;
-   Scan_Code_Left_Alt               : constant Scan_Codes;    --  Alt, option, etc.
-   Scan_Code_Left_GUI               : constant Scan_Codes;    --  Windows, Command (Apple), Meta, etc.
-   Scan_Code_Right_Control          : constant Scan_Codes;
-   Scan_Code_Right_Shift            : constant Scan_Codes;
-   Scan_Code_Right_Alt              : constant Scan_Codes;    --  Alt gr, option, etc.
-   Scan_Code_Right_GUI              : constant Scan_Codes;    --  Windows, Command (Apple), Meta, etc.
-
-   Scan_Code_Mode                   : constant Scan_Codes;
-
-   --  Usage page in USB document.
-   Scan_Code_Audio_Next             : constant Scan_Codes;
-   Scan_Code_Audio_Previous         : constant Scan_Codes;
-   Scan_Code_Audio_Stop             : constant Scan_Codes;
-   Scan_Code_Audio_Play             : constant Scan_Codes;
-   Scan_Code_Audio_Mute             : constant Scan_Codes;
-   Scan_Code_Media_Select           : constant Scan_Codes;
-   Scan_Code_WWW                    : constant Scan_Codes;
-   Scan_Code_Mail                   : constant Scan_Codes;
-   Scan_Code_Calculator             : constant Scan_Codes;
-   Scan_Code_Computer               : constant Scan_Codes;
-   Scan_Code_AC_Search              : constant Scan_Codes;
-   Scan_Code_AC_Home                : constant Scan_Codes;
-   Scan_Code_AC_Back                : constant Scan_Codes;
-   Scan_Code_AC_Forward             : constant Scan_Codes;
-   Scan_Code_AC_Stop                : constant Scan_Codes;
-   Scan_Code_AC_Refresh             : constant Scan_Codes;
-   Scan_Code_AC_Bookmarks           : constant Scan_Codes;
-
-   --  Walther keys (for Mac?).
-   Scan_Code_Brightness_Up          : constant Scan_Codes;
-   Scan_Code_Brightness_Down        : constant Scan_Codes;
-   Scan_Code_Display_Switch         : constant Scan_Codes;
-
-   Scan_Code_Illumination_Toggle    : constant Scan_Codes;
-   Scan_Code_Illumination_Down      : constant Scan_Codes;
-   Scan_Code_Illumination_Up        : constant Scan_Codes;
-   Scan_Code_Eject                  : constant Scan_Codes;
-   Scan_Code_Sleep                  : constant Scan_Codes;
-
-   Scan_Code_Application_1          : constant Scan_Codes;
-   Scan_Code_Application_2          : constant Scan_Codes;
-
-   --  All other scan codes go here.
-
-   Scan_Code_Total                  : constant Scan_Codes;
-
-   -----------------------------------------------------------------------------------------------------------------
-   --  Key codes.
-   -----------------------------------------------------------------------------------------------------------------
-   type Key_Codes is mod 2 ** 32 with
-     Convention => C,
-     Size       => 32;
-
-   To_Key_Code_Mask                 : constant Key_Codes;
-
-   Code_Unknown                     : constant Key_Codes;
-   Code_Return                      : constant Key_Codes;
-   Code_Escape                      : constant Key_Codes;
-   Code_Backspace                   : constant Key_Codes;
-   Code_Tab                         : constant Key_Codes;
-   Code_Space                       : constant Key_Codes;
-   Code_Exclamation                 : constant Key_Codes;
-   Code_Double_Quote                : constant Key_Codes;
-   Code_Hash                        : constant Key_Codes;
-   Code_Percent                     : constant Key_Codes;
-   Code_Dollar                      : constant Key_Codes;
-   Code_Ampersand                   : constant Key_Codes;
-   Code_Quote                       : constant Key_Codes;
-   Code_Left_Parenthesis            : constant Key_Codes;
-   Code_Right_Parenthesis           : constant Key_Codes;
-   Code_Asterisk                    : constant Key_Codes;
-   Code_Plus                        : constant Key_Codes;
-   Code_Comma                       : constant Key_Codes;
-   Code_Minus                       : constant Key_Codes;
-   Code_Period                      : constant Key_Codes;
-   Code_Slash                       : constant Key_Codes;
-   Code_0                           : constant Key_Codes;
-   Code_1                           : constant Key_Codes;
-   Code_2                           : constant Key_Codes;
-   Code_3                           : constant Key_Codes;
-   Code_4                           : constant Key_Codes;
-   Code_5                           : constant Key_Codes;
-   Code_6                           : constant Key_Codes;
-   Code_7                           : constant Key_Codes;
-   Code_8                           : constant Key_Codes;
-   Code_9                           : constant Key_Codes;
-   Code_Colon                       : constant Key_Codes;
-   Code_Semi_Colon                  : constant Key_Codes;
-   Code_Less                        : constant Key_Codes;
-   Code_Equals                      : constant Key_Codes;
-   Code_Greater                     : constant Key_Codes;
-   Code_Question                    : constant Key_Codes;
-   Code_At                          : constant Key_Codes;
-
-   --  Skip the uppercase letters.
-
-   Code_Left_Bracket                : constant Key_Codes;
-   Code_Back_Slash                  : constant Key_Codes;
-   Code_Right_Bracket               : constant Key_Codes;
-   Code_Caret                       : constant Key_Codes;
-   Code_Underscore                  : constant Key_Codes;
-   Code_Back_Quote                  : constant Key_Codes;
-   Code_A                           : constant Key_Codes;
-   Code_B                           : constant Key_Codes;
-   Code_C                           : constant Key_Codes;
-   Code_D                           : constant Key_Codes;
-   Code_E                           : constant Key_Codes;
-   Code_F                           : constant Key_Codes;
-   Code_G                           : constant Key_Codes;
-   Code_H                           : constant Key_Codes;
-   Code_I                           : constant Key_Codes;
-   Code_J                           : constant Key_Codes;
-   Code_K                           : constant Key_Codes;
-   Code_L                           : constant Key_Codes;
-   Code_M                           : constant Key_Codes;
-   Code_N                           : constant Key_Codes;
-   Code_O                           : constant Key_Codes;
-   Code_P                           : constant Key_Codes;
-   Code_Q                           : constant Key_Codes;
-   Code_R                           : constant Key_Codes;
-   Code_S                           : constant Key_Codes;
-   Code_T                           : constant Key_Codes;
-   Code_U                           : constant Key_Codes;
-   Code_V                           : constant Key_Codes;
-   Code_W                           : constant Key_Codes;
-   Code_X                           : constant Key_Codes;
-   Code_Y                           : constant Key_Codes;
-   Code_Z                           : constant Key_Codes;
-
-   Code_Caps_Lock                   : constant Key_Codes;
-   Code_F1                          : constant Key_Codes;
-   Code_F2                          : constant Key_Codes;
-   Code_F3                          : constant Key_Codes;
-   Code_F4                          : constant Key_Codes;
-   Code_F5                          : constant Key_Codes;
-   Code_F6                          : constant Key_Codes;
-   Code_F7                          : constant Key_Codes;
-   Code_F8                          : constant Key_Codes;
-   Code_F9                          : constant Key_Codes;
-   Code_F10                         : constant Key_Codes;
-   Code_F11                         : constant Key_Codes;
-   Code_F12                         : constant Key_Codes;
-
-   Code_Print_Screen                : constant Key_Codes;
-   Code_Scroll_Lock                 : constant Key_Codes;
-   Code_Pause                       : constant Key_Codes;
-   Code_Insert                      : constant Key_Codes;
-   Code_Home                        : constant Key_Codes;
-   Code_Page_Up                     : constant Key_Codes;
-   Code_Delete                      : constant Key_Codes;
-   Code_End                         : constant Key_Codes;
-   Code_Page_Down                   : constant Key_Codes;
-   Code_Right                       : constant Key_Codes;
-   Code_Left                        : constant Key_Codes;
-   Code_Down                        : constant Key_Codes;
-   Code_Up                          : constant Key_Codes;
-
-   Code_Num_Lock_Clear              : constant Key_Codes;
-   Code_KP_Divide                   : constant Key_Codes;
-   Code_KP_Multiply                 : constant Key_Codes;
-   Code_KP_Minus                    : constant Key_Codes;
-   Code_KP_Plus                     : constant Key_Codes;
-   Code_KP_Enter                    : constant Key_Codes;
-   Code_KP_1                        : constant Key_Codes;
-   Code_KP_2                        : constant Key_Codes;
-   Code_KP_3                        : constant Key_Codes;
-   Code_KP_4                        : constant Key_Codes;
-   Code_KP_5                        : constant Key_Codes;
-   Code_KP_6                        : constant Key_Codes;
-   Code_KP_7                        : constant Key_Codes;
-   Code_KP_8                        : constant Key_Codes;
-   Code_KP_9                        : constant Key_Codes;
-   Code_KP_0                        : constant Key_Codes;
-   Code_KP_Period                   : constant Key_Codes;
-
-   Code_Application                 : constant Key_Codes;
-   Code_Power                       : constant Key_Codes;
-   Code_KP_Equals                   : constant Key_Codes;
-   Code_F13                         : constant Key_Codes;
-   Code_F14                         : constant Key_Codes;
-   Code_F15                         : constant Key_Codes;
-   Code_F16                         : constant Key_Codes;
-   Code_F17                         : constant Key_Codes;
-   Code_F18                         : constant Key_Codes;
-   Code_F19                         : constant Key_Codes;
-   Code_F20                         : constant Key_Codes;
-   Code_F21                         : constant Key_Codes;
-   Code_F22                         : constant Key_Codes;
-   Code_F23                         : constant Key_Codes;
-   Code_F24                         : constant Key_Codes;
-   Code_Execute                     : constant Key_Codes;
-   Code_Help                        : constant Key_Codes;
-   Code_Menu                        : constant Key_Codes;
-   Code_Select                      : constant Key_Codes;
-   Code_Stop                        : constant Key_Codes;
-   Code_Again                       : constant Key_Codes;
-   Code_Undo                        : constant Key_Codes;
-   Code_Cut                         : constant Key_Codes;
-   Code_Copy                        : constant Key_Codes;
-   Code_Paste                       : constant Key_Codes;
-   Code_Find                        : constant Key_Codes;
-   Code_Mute                        : constant Key_Codes;
-   Code_Volume_Up                   : constant Key_Codes;
-   Code_Volume_Down                 : constant Key_Codes;
-   Code_KP_Comma                    : constant Key_Codes;
-   Code_KP_Equals_AS400             : constant Key_Codes;
-
-   Code_Alt_Erase                   : constant Key_Codes;
-   Code_Sys_Req                     : constant Key_Codes;
-   Code_Cancel                      : constant Key_Codes;
-   Code_Clear                       : constant Key_Codes;
-   Code_Prior                       : constant Key_Codes;
-   Code_Return_2                    : constant Key_Codes;
-   Code_Separator                   : constant Key_Codes;
-   Code_Out                         : constant Key_Codes;
-   Code_Oper                        : constant Key_Codes;
-   Code_Clear_Again                 : constant Key_Codes;
-   Code_CR_Sel                      : constant Key_Codes;
-   Code_Ex_Sel                      : constant Key_Codes;
-
-   Code_KP_00                       : constant Key_Codes;
-   Code_KP_000                      : constant Key_Codes;
-   Code_Thousands_Separator         : constant Key_Codes;
-   Code_Decimal_Separator           : constant Key_Codes;
-   Code_Currency_Unit               : constant Key_Codes;
-   Code_Currency_Subunit            : constant Key_Codes;
-   Code_KP_Left_Parenthesis         : constant Key_Codes;
-   Code_KP_Right_Parentheesis       : constant Key_Codes;
-   Code_KP_Left_Brace               : constant Key_Codes;
-   Code_KP_Right_Brace              : constant Key_Codes;
-   Code_KP_Tab                      : constant Key_Codes;
-   Code_KP_Backspace                : constant Key_Codes;
-   Code_KP_A                        : constant Key_Codes;
-   Code_KP_B                        : constant Key_Codes;
-   Code_KP_C                        : constant Key_Codes;
-   Code_KP_D                        : constant Key_Codes;
-   Code_KP_E                        : constant Key_Codes;
-   Code_KP_F                        : constant Key_Codes;
-   Code_KP_XOR                      : constant Key_Codes;
-   Code_KP_Power                    : constant Key_Codes;
-   Code_KP_Percent                  : constant Key_Codes;
-   Code_KP_Less                     : constant Key_Codes;
-   Code_KP_Greater                  : constant Key_Codes;
-   Code_KP_Ampersand                : constant Key_Codes;
-   Code_KP_Double_Ampersand         : constant Key_Codes;
-   Code_KP_Vertical_Bar             : constant Key_Codes;
-   Code_KP_Double_Vertical_Bar      : constant Key_Codes;
-   Code_KP_Colon                    : constant Key_Codes;
-   Code_KP_Hash                     : constant Key_Codes;
-   Code_KP_Space                    : constant Key_Codes;
-   Code_KP_At                       : constant Key_Codes;
-   Code_KP_Exclamation              : constant Key_Codes;
-   Code_KP_Memory_Store             : constant Key_Codes;
-   Code_KP_Memory_Recall            : constant Key_Codes;
-   Code_KP_Memory_Clear             : constant Key_Codes;
-   Code_KP_Memory_Add               : constant Key_Codes;
-   Code_KP_Memory_Subtract          : constant Key_Codes;
-   Code_KP_Memory_Multiply          : constant Key_Codes;
-   Code_KP_Memory_Divide            : constant Key_Codes;
-   Code_KP_Plus_Minus               : constant Key_Codes;
-   Code_KP_Clear                    : constant Key_Codes;
-   Code_KP_Clear_Entry              : constant Key_Codes;
-   Code_KP_Binary                   : constant Key_Codes;
-   Code_KP_Octal                    : constant Key_Codes;
-   Code_KP_Decimal                  : constant Key_Codes;
-   Code_KP_Hexadecimal              : constant Key_Codes;
-
-   Code_Left_Control                : constant Key_Codes;
-   Code_Left_Shift                  : constant Key_Codes;
-   Code_Left_Alt                    : constant Key_Codes;
-   Code_Left_GUI                    : constant Key_Codes;
-   Code_Right_Control               : constant Key_Codes;
-   Code_Right_Shift                 : constant Key_Codes;
-   Code_Right_Alt                   : constant Key_Codes;
-   Code_Right_GUI                   : constant Key_Codes;
-
-   Code_Mode                        : constant Key_Codes;
-
-   Code_Audio_Next                  : constant Key_Codes;
-   Code_Audio_Previous              : constant Key_Codes;
-   Code_Audio_Stop                  : constant Key_Codes;
-   Code_Audio_Play                  : constant Key_Codes;
-   Code_Audio_Mute                  : constant Key_Codes;
-   Code_Media_Select                : constant Key_Codes;
-   Code_WWW                         : constant Key_Codes;
-   Code_Mail                        : constant Key_Codes;
-   Code_Calculator                  : constant Key_Codes;
-   Code_Computer                    : constant Key_Codes;
-   Code_AC_Search                   : constant Key_Codes;
-   Code_AC_Home                     : constant Key_Codes;
-   Code_AC_Back                     : constant Key_Codes;
-   Code_AC_Forward                  : constant Key_Codes;
-   Code_AC_Stop                     : constant Key_Codes;
-   Code_AC_Refresh                  : constant Key_Codes;
-   Code_AC_Bookmarks                : constant Key_Codes;
-
-   Code_Brightness_Down             : constant Key_Codes;
-   Code_Brightness_Up               : constant Key_Codes;
-   Code_Display_Switch              : constant Key_Codes;
-   Code_Illumination_Toggle         : constant Key_Codes;
-   Code_Illumination_Down           : constant Key_Codes;
-   Code_Illumination_Up             : constant Key_Codes;
-   Code_Eject                       : constant Key_Codes;
-   Code_Sleep                       : constant Key_Codes;
-
-   type Key_Modifiers is mod 2 ** 16 with
-     Convention => C,
-     Size       => 16;
-
-   Modifier_None          : constant Key_Modifiers := 16#00_00#;
-   Modifier_Left_Shift    : constant Key_Modifiers := 16#00_01#;
-   Modifier_Right_Shift   : constant Key_Modifiers := 16#00_02#;
-   Modifier_Left_Control  : constant Key_Modifiers := 16#00_40#;
-   Modifier_Right_Control : constant Key_Modifiers := 16#00_80#;
-   Modifier_Left_Alt      : constant Key_Modifiers := 16#01_00#;
-   Modifier_Right_Alt     : constant Key_Modifiers := 16#02_00#;
-   Modifier_Left_GUI      : constant Key_Modifiers := 16#04_00#;
-   Modifier_Right_GUI     : constant Key_Modifiers := 16#08_00#;
-   Modifier_Num           : constant Key_Modifiers := 16#10_00#;
-   Modifier_Caps          : constant Key_Modifiers := 16#20_00#;
-   Modifier_Mode          : constant Key_Modifiers := 16#40_00#;
-   Modifier_Reserved      : constant Key_Modifiers := 16#80_00#;
-
-   type Key_Syms is
-      record
-         Scan_Code : Scan_Codes;
-         Key_Code  : Key_Codes;
-         Modifiers : Key_Modifiers;
-         Unused    : Interfaces.Unsigned_32;
-      end record with
-     Convention => C;
-
-   type Keyboard_Event is
-      record
-         Event_Type : Event_Types;           --  Will be set to Key_Up/Down.
-         Time_Stamp : Time_Stamps;
-
-         ID         : SDL.Video.Windows.ID;
-         State      : Button_State;
-         Repeat     : Interfaces.Unsigned_8;
-         Padding_2  : Padding_Type;
-         Padding_3  : Padding_Type;
-         Key_Sym    : Key_Syms;
-      end record with
-     Convention => C;
-
-   -----------------------------------------------------------------------------------------------------------------
-   --  Text editing events
-   -----------------------------------------------------------------------------------------------------------------
-   subtype Text_Buffers is Interfaces.C.char_array (0 .. 31);
-
-   type Text_Editing_Event is
-      record
-         Event_Type : Event_Types;           --  Will be set to Text_Editing.
-         Time_Stamp : Time_Stamps;
-
-         ID         : SDL.Video.Windows.ID;
-         Text       : Text_Buffers;
-         Repeat     : Interfaces.Unsigned_8;
-         Padding_2  : Padding_Type;
-         Padding_3  : Padding_Type;
-      end record with
-     Convention => C;
-
-   -----------------------------------------------------------------------------------------------------------------
-   --  TODO: events
-   -----------------------------------------------------------------------------------------------------------------
-
-   -----------------------------------------------------------------------------------------------------------------
-   --  TODO: events
-   -----------------------------------------------------------------------------------------------------------------
-
-   -----------------------------------------------------------------------------------------------------------------
-   --  TODO: events
-   -----------------------------------------------------------------------------------------------------------------
-
-   -----------------------------------------------------------------------------------------------------------------
-   --  TODO: events
-   -----------------------------------------------------------------------------------------------------------------
-
-   -----------------------------------------------------------------------------------------------------------------
-   --  TODO: Audio events - 2.0.4
-   -----------------------------------------------------------------------------------------------------------------
-   type Event_Selector is (Is_Event, Is_Window_Event, Is_Keyboard_Event);
-
-   type Events (Event_Type : Event_Selector := Is_Event) is
-      record
-         case Event_Type is
-            when Is_Window_Event =>
-               Window   : Window_Event;
-
-            when Is_Keyboard_Event =>
-               Keyboard : Keyboard_Event;
-
-            when others =>
-               Common   : Common_Event;
-         end case;
-      end record with
-     Unchecked_Union,
-     Convention => C;
-
-   function Poll (Event : out Events) return Boolean;
-private
    for Button_State use (Released => 0, Pressed => 1);
 
    -----------------------------------------------------------------------------------------------------------------
@@ -879,31 +116,67 @@ private
 
    Last_Event                 : constant Event_Types := 16#0000_FFFF#;
 
-   for Window_Event use
-      record
-         Event_Type at 0 * SDL.Word range  0 .. 31;
-         Time_Stamp at 1 * SDL.Word range  0 .. 31;
+   type Padding_Type is mod 2 ** 8 with
+     Convention => C,
+     Size       => 8;
 
-         ID         at 2 * SDL.Word range  0 .. 31;
-         Event_ID   at 3 * SDL.Word range  0 ..  7;
-         Padding_1  at 3 * SDL.Word range  8 .. 15;
-         Padding_2  at 3 * SDL.Word range 16 .. 23;
-         Padding_3  at 3 * SDL.Word range 24 .. 31;
-         Data_1     at 4 * SDL.Word range  0 .. 31;
-         Data_2     at 5 * SDL.Word range  0 .. 31;
-      end record;
+   type Time_Stamps is mod 2 ** 32 with
+     Convention => C;
 
-   for Key_Syms use
+   type Common_Event is
       record
-         Scan_Code at 0 * SDL.Word range 0 .. 31;
-         Key_Code  at 1 * SDL.Word range 0 .. 31;
-         Modifiers at 2 * SDL.Word range 0 .. 15;
-         Unused    at 3 * SDL.Word range 0 .. 31;
-      end record;
+         Event_Type : Event_Types;
+         Time_Stamp : Time_Stamps;
+      end record with
+     Convention => C;
+
+   -----------------------------------------------------------------------------------------------------------------
+   --  Window events
+   -----------------------------------------------------------------------------------------------------------------
+   type Window_Event_ID is
+     (None,
+      Shown,
+      Hidden,
+      Exposed,
+      Moved,
+      Resized,
+      Size_Changed,
+      Minimised,
+      Maximised,
+      Restored,
+      Enter,
+      Leave,
+      Focus_Gained,
+      Focus_Lost,
+      Close) with
+     Convention => C;
+
+   type Window_Event is
+      record
+         Event_Type : Event_Types;           --  Will be set to Window.
+         Time_Stamp : Time_Stamps;
+
+         ID         : SDL.Video.Windows.ID;
+         Event_ID   : Window_Event_ID;
+         Padding_1  : Padding_Type;
+         Padding_2  : Padding_Type;
+         Padding_3  : Padding_Type;
+         Data_1     : Interfaces.Integer_32;
+         Data_2     : Interfaces.Integer_32;
+      end record with
+     Convention => C;
+
+   -----------------------------------------------------------------------------------------------------------------
+   --  Keyboard events
+   -----------------------------------------------------------------------------------------------------------------
 
    -----------------------------------------------------------------------------------------------------------------
    --  Scan codes.
    -----------------------------------------------------------------------------------------------------------------
+   type Scan_Codes is range 0 .. 512 with
+     Convention => C,
+     Size       => 32;
+
    Scan_Code_Unknown                : constant Scan_Codes := 0;
 
    Scan_Code_A                      : constant Scan_Codes := 4;
@@ -1178,6 +451,10 @@ private
    -----------------------------------------------------------------------------------------------------------------
    --  Key codes.
    -----------------------------------------------------------------------------------------------------------------
+   type Key_Codes is mod 2 ** 32 with
+     Convention => C,
+     Size       => 32;
+
    package Latin_1 renames Ada.Characters.Latin_1;
 
    To_Key_Code_Mask                 : constant Key_Codes := 16#2000_0000#;
@@ -1436,6 +713,126 @@ private
    Code_Illumination_Up             : constant Key_Codes := To_Key_Code (Scan_Code_Illumination_Up);
    Code_Eject                       : constant Key_Codes := To_Key_Code (Scan_Code_Eject);
    Code_Sleep                       : constant Key_Codes := To_Key_Code (Scan_Code_Sleep);
+
+   type Key_Modifiers is mod 2 ** 16 with
+     Convention => C,
+     Size       => 16;
+
+   Modifier_None          : constant Key_Modifiers := 16#00_00#;
+   Modifier_Left_Shift    : constant Key_Modifiers := 16#00_01#;
+   Modifier_Right_Shift   : constant Key_Modifiers := 16#00_02#;
+   Modifier_Left_Control  : constant Key_Modifiers := 16#00_40#;
+   Modifier_Right_Control : constant Key_Modifiers := 16#00_80#;
+   Modifier_Left_Alt      : constant Key_Modifiers := 16#01_00#;
+   Modifier_Right_Alt     : constant Key_Modifiers := 16#02_00#;
+   Modifier_Left_GUI      : constant Key_Modifiers := 16#04_00#;
+   Modifier_Right_GUI     : constant Key_Modifiers := 16#08_00#;
+   Modifier_Num           : constant Key_Modifiers := 16#10_00#;
+   Modifier_Caps          : constant Key_Modifiers := 16#20_00#;
+   Modifier_Mode          : constant Key_Modifiers := 16#40_00#;
+   Modifier_Reserved      : constant Key_Modifiers := 16#80_00#;
+
+   type Key_Syms is
+      record
+         Scan_Code : Scan_Codes;
+         Key_Code  : Key_Codes;
+         Modifiers : Key_Modifiers;
+         Unused    : Interfaces.Unsigned_32;
+      end record with
+     Convention => C;
+
+   type Keyboard_Event is
+      record
+         Event_Type : Event_Types;           --  Will be set to Key_Up/Down.
+         Time_Stamp : Time_Stamps;
+
+         ID         : SDL.Video.Windows.ID;
+         State      : Button_State;
+         Repeat     : Interfaces.Unsigned_8;
+         Padding_2  : Padding_Type;
+         Padding_3  : Padding_Type;
+         Key_Sym    : Key_Syms;
+      end record with
+     Convention => C;
+
+   -----------------------------------------------------------------------------------------------------------------
+   --  Text editing events
+   -----------------------------------------------------------------------------------------------------------------
+   subtype Text_Buffers is Interfaces.C.char_array (0 .. 31);
+
+   type Text_Editing_Event is
+      record
+         Event_Type : Event_Types;           --  Will be set to Text_Editing.
+         Time_Stamp : Time_Stamps;
+
+         ID         : SDL.Video.Windows.ID;
+         Text       : Text_Buffers;
+         Repeat     : Interfaces.Unsigned_8;
+         Padding_2  : Padding_Type;
+         Padding_3  : Padding_Type;
+      end record with
+     Convention => C;
+
+   -----------------------------------------------------------------------------------------------------------------
+   --  TODO: events
+   -----------------------------------------------------------------------------------------------------------------
+
+   -----------------------------------------------------------------------------------------------------------------
+   --  TODO: events
+   -----------------------------------------------------------------------------------------------------------------
+
+   -----------------------------------------------------------------------------------------------------------------
+   --  TODO: events
+   -----------------------------------------------------------------------------------------------------------------
+
+   -----------------------------------------------------------------------------------------------------------------
+   --  TODO: events
+   -----------------------------------------------------------------------------------------------------------------
+
+   -----------------------------------------------------------------------------------------------------------------
+   --  TODO: Audio events - 2.0.4
+   -----------------------------------------------------------------------------------------------------------------
+   type Event_Selector is (Is_Event, Is_Window_Event, Is_Keyboard_Event);
+
+   type Events (Event_Type : Event_Selector := Is_Event) is
+      record
+         case Event_Type is
+            when Is_Window_Event =>
+               Window   : Window_Event;
+
+            when Is_Keyboard_Event =>
+               Keyboard : Keyboard_Event;
+
+            when others =>
+               Common   : Common_Event;
+         end case;
+      end record with
+     Unchecked_Union,
+     Convention => C;
+
+   function Poll (Event : out Events) return Boolean;
+private
+   for Window_Event use
+      record
+         Event_Type at 0 * SDL.Word range  0 .. 31;
+         Time_Stamp at 1 * SDL.Word range  0 .. 31;
+
+         ID         at 2 * SDL.Word range  0 .. 31;
+         Event_ID   at 3 * SDL.Word range  0 ..  7;
+         Padding_1  at 3 * SDL.Word range  8 .. 15;
+         Padding_2  at 3 * SDL.Word range 16 .. 23;
+         Padding_3  at 3 * SDL.Word range 24 .. 31;
+         Data_1     at 4 * SDL.Word range  0 .. 31;
+         Data_2     at 5 * SDL.Word range  0 .. 31;
+      end record;
+
+   for Key_Syms use
+      record
+         Scan_Code at 0 * SDL.Word range 0 .. 31;
+         Key_Code  at 1 * SDL.Word range 0 .. 31;
+         Modifiers at 2 * SDL.Word range 0 .. 15;
+         Unused    at 3 * SDL.Word range 0 .. 31;
+      end record;
 
    for Keyboard_Event use
       record
