@@ -54,12 +54,27 @@ begin
          Finished : Boolean := False;
 
          use type SDL.Events.Event_Types;
+         use type SDL.Events.Key_Codes;
       begin
          loop
             while SDL.Events.Poll (Event) loop
-               if Event.Common.Event_Type = SDL.Events.Quit then
-                  Finished := True;
-               end if;
+               case Event.Common.Event_Type is
+                  when SDL.Events.Quit =>
+                     Finished := True;
+
+                  when SDL.Events.Key_Up =>
+                     SDL.Log.Put_Debug ("Key up event: " &
+                                          SDL.Events.Key_Codes'Image (Event.Keyboard.Key_Sym.Key_Code) &
+                                          "    Scan code: " &
+                                          SDL.Events.Scan_Codes'Image (Event.Keyboard.Key_Sym.Scan_Code));
+
+                     if Event.Keyboard.Key_Sym.Key_Code = SDL.Events.Code_Escape then
+                        Finished := True;
+                     end if;
+
+                  when others =>
+                     null;
+               end case;
             end loop;
 
             exit when Finished;
