@@ -24,6 +24,14 @@
 --
 --  Game controller specific events.
 package SDL.Events.Controllers is
+   --  Game controller events.
+   Controller_Axis_Motion     : constant Event_Types := 16#0000_0650#;
+   Controller_Button_Down     : constant Event_Types := Controller_Axis_Motion + 1;
+   Controller_Button_Up       : constant Event_Types := Controller_Axis_Motion + 2;
+   Controller_Device_Added    : constant Event_Types := Controller_Axis_Motion + 3;
+   Controller_Device_Removed  : constant Event_Types := Controller_Axis_Motion + 4;
+   Controller_Device_Remapped : constant Event_Types := Controller_Axis_Motion + 5;
+
    type Controller_Axes is (Invalid,
                             Left_X,
                             Left_Y,
