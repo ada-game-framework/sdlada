@@ -574,6 +574,9 @@ package SDL.Events.Keyboards is
    Code_Eject                       : constant Key_Codes := To_Key_Code (Scan_Code_Eject);
    Code_Sleep                       : constant Key_Codes := To_Key_Code (Scan_Code_Sleep);
 
+   -----------------------------------------------------------------------------------------------------------------
+   --  Key modifiers.
+   -----------------------------------------------------------------------------------------------------------------
    type Key_Modifiers is mod 2 ** 16 with
      Convention => C,
      Size       => 16;
