@@ -1,5 +1,6 @@
 with SDL;
 with SDL.Error;
+with SDL.Events;
 with SDL.Log;
 with SDL.Video.Windows;
 with SDL.Versions;
@@ -40,7 +41,7 @@ begin
 
       SDL.Log.Put_Debug ("Window Grabbed : " & Boolean'Image (W.Is_Grabbed));
 
-      W.Set_Grabbed;
+      --W.Set_Grabbed;
 
       SDL.Log.Put_Debug ("Window Grabbed : " & Boolean'Image (W.Is_Grabbed));
       SDL.Log.Put_Debug ("Window ID      : " & SDL.Video.Windows.ID'Image (W.Get_ID));
@@ -48,7 +49,22 @@ begin
 
       --  W.Set_Mode (SDL.Video.Windows.Full_Screen);
 
-      delay 10.0;
+      declare
+         Event    : SDL.Events.Events;
+         Finished : Boolean := False;
+
+         use type SDL.Events.Event_Types;
+      begin
+         loop
+            while SDL.Events.Poll (Event) loop
+               if Event.Common.Event_Type = SDL.Events.Quit then
+                  Finished := True;
+               end if;
+            end loop;
+
+            exit when Finished;
+         end loop;
+      end;
 
       W.Finalize;
       SDL.Finalise;
