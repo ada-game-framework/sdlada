@@ -41,7 +41,7 @@ begin
 
       SDL.Log.Put_Debug ("Window Grabbed : " & Boolean'Image (W.Is_Grabbed));
 
-      --W.Set_Grabbed;
+      --  W.Set_Grabbed;
 
       SDL.Log.Put_Debug ("Window Grabbed : " & Boolean'Image (W.Is_Grabbed));
       SDL.Log.Put_Debug ("Window ID      : " & SDL.Video.Windows.ID'Image (W.Get_ID));
