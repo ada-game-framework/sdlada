@@ -389,7 +389,7 @@ SDL_PauseAudioDevice                  |   n   |
 SDL_PeepEvents                        |   n   |
 SDL_PixelFormatEnumToMasks            |   y   |
 SDL_PointInRect                       |   n   |
-SDL_PollEvent                         |   n   |
+SDL_PollEvent                         |   y   |
 SDL_PumpEvents                        |   n   |
 SDL_PushEvent                         |   n   |
 SDL_QueryTexture                      |   n   |
