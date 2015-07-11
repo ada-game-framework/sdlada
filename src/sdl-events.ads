@@ -224,6 +224,4 @@ package SDL.Events is
    --           Padding_2  at 3 * SDL.Word range  16 .. 23;
    --           Padding_3  at 3 * SDL.Word range  24 .. 31;
    --        end record;
-
-   procedure Dummy;
 end SDL.Events;
