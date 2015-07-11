@@ -1,26 +1,28 @@
 library project SDL_Build is
-  Version := "1";
+   Version := "1";
 
-  type Platform_Type is ("linux", "windows", "macosx", "ios", "android");
+   type Platform_Type is ("linux", "bsd", "windows", "macosx", "ios", "android");
 
-  Platform : Platform_Type := external ("SDL_PLATFORM", "linux");
+   Platform : Platform_Type := external ("SDL_PLATFORM", "linux");
 
-  for Languages    use ("Ada", "C");
-  for Source_Dirs  use ("src", "src/" & Platform);
-  for Library_Name use "sdlada";
-  for Object_Dir   use "lib/.obj";
-  for Library_Dir  use "lib";
-  for Library_Kind use "static";
+   for Languages    use ("Ada", "C");
+   for Source_Dirs  use ("src", "src/" & Platform);
+   for Library_Name use "sdlada";
+   for Object_Dir   use "lib/.obj";
+   for Library_Dir  use "lib";
+   for Library_Kind use "static";
 
-  package Compiler is
-     for Default_Switches ("C") use ("-O0", "-g", "-ffunction-sections", "-fdata-sections");
-     for Default_Switches ("Ada") use ("-O0", "-g",
-                                       "-ffunction-sections", "-fdata-sections",
-                                       "-gnat2012", "-gnata", "-gnato", "-gnatE",
-                                       "-gnaty", "-gnaty-s", "-gnatyO", "-gnatyM120", "-gnatyO");
-  end Compiler;
+   for Excluded_Source_Files use ("sdl-video-textures-pixels.ads");
 
---  package Builder is
---     for Default_Switches ("Ada") use ("-gnat2012", "-gnata", "-gnato", "-gnatE", "-gnaty", "-gnatyO");
---  end Builder;
+   package Compiler is
+      for Default_Switches ("C") use ("-O0", "-g", "-ffunction-sections", "-fdata-sections");
+      for Default_Switches ("Ada") use ("-O0", "-g",
+                                        "-ffunction-sections", "-fdata-sections",
+                                        "-gnat2012", "-gnata", "-gnato", "-gnatE",
+                                        "-gnaty", "-gnaty-s", "-gnatyO", "-gnatyM120", "-gnatyO");
+   end Compiler;
+
+   --  package Builder is
+   --     for Default_Switches ("Ada") use ("-gnat2012", "-gnata", "-gnato", "-gnatE", "-gnaty", "-gnatyO");
+   --  end Builder;
 end SDL_Build;
