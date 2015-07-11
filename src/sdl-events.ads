@@ -812,6 +812,31 @@ package SDL.Events is
    -----------------------------------------------------------------------------------------------------------------
    --  TODO: Controller axis events
    -----------------------------------------------------------------------------------------------------------------
+   type Controller_Axes is (Invalid,
+                            Left_X,
+                            Left_Y,
+                            Right_X,
+                            Right_Y,
+                            Left_Trigger,
+                            Right_Trigger) with
+     Convention => C;
+
+   for Controller_Axes use (Invalid       => -1,
+                            Left_X        => 0,
+                            Left_Y        => 1,
+                            Right_X       => 2,
+                            Right_Y       => 3,
+                            Left_Trigger  => 4,
+                            Right_Trigger => 5);
+
+   type Controller_Events is
+      record
+         Event_Type : Event_Types;           --  Will be set to Controller_Axis_Motion.
+         Time_Stamp : Time_Stamps;
+
+      end record with
+     Convention => C;
+
 
    -----------------------------------------------------------------------------------------------------------------
    --  TODO: Controller button events
