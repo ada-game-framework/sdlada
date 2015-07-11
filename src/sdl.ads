@@ -30,7 +30,7 @@ package SDL is
    type Init_Flags is mod 2 ** 32 with
      Convention => C;
 
-   Null_Init_Flags : constant Init_Flags := 16#0000_0000#;
+   Null_Init_Flags        : constant Init_Flags := 16#0000_0000#;
    Enable_Timer           : constant Init_Flags := 16#0000_0001#;
    Enable_Audio           : constant Init_Flags := 16#0000_0010#;
    Enable_Screen          : constant Init_Flags := 16#0000_0020#;
@@ -46,17 +46,17 @@ package SDL is
    function Initialise (Flags : in Init_Flags := Enable_Everything) return Boolean;
 
    procedure Finalise with
-       Import        => True,
-       Convention    => C,
-       External_Name => "SDL_Quit";
+     Import        => True,
+     Convention    => C,
+     External_Name => "SDL_Quit";
 
    function Initialise_Sub_System (Flags : in Init_Flags) return Boolean;
 
    procedure Finalise_Sub_System
      (Flags : in Init_Flags) with
-       Import        => True,
-       Convention    => C,
-       External_Name => "SDL_QuitSubSystem";
+     Import        => True,
+     Convention    => C,
+     External_Name => "SDL_QuitSubSystem";
 
    --  Get which sub-systems were initialised.
    function Was_Initialised return Init_Flags;
@@ -67,4 +67,8 @@ private
    Success   : constant Interfaces.C.int := 0;
    SDL_True  : constant Interfaces.C.int := 1;
    SDL_False : constant Interfaces.C.int := 0;
+
+   --  The next value is used in mapping the Ada types onto the C types, it is the word size used for all data
+   --  in SDL, i.e. all data is 4 byte aligned so it works with 32-bit architectures.
+   Word      : constant := 4;
 end SDL;
