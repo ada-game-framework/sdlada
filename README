@@ -39,6 +39,11 @@ Anything listed here is a question of whether it's required.
 
 * Do we need to hook into the Assert module? To raise an exception maybe?
 
+SDL version tested against
+==========================
+
+2.0.3
+
 Bound functions
 ===============
 
