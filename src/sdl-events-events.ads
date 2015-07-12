@@ -26,6 +26,7 @@
 --  the nicest of names for the package, but it works.
 with SDL.Events.Windows;
 with SDL.Events.Keyboards;
+with SDL.Events.Mice;
 with SDL.Events.Joysticks;
 with SDL.Events.Controllers;
 
@@ -33,13 +34,17 @@ package SDL.Events.Events is
    type Event_Selector is (Is_Event,
                            Is_Window_Event,
                            Is_Keyboard_Event,
-                           Is_Controller_Axis_Event,
-                           Is_Controller_Button_Event,
-                           Is_Controller_Device_Event,
+                           Is_Mouse_Motion_Event,
+                           Is_Mouse_Button_Event,
+                           Is_Mouse_Wheel_Event,
                            Is_Joystick_Axis_Event,
                            Is_Joystick_Ball_Event,
                            Is_Joystick_Hat_Event,
-                           Is_Joystick_Device_Event);
+                           Is_Joystick_Button_Event,
+                           Is_Joystick_Device_Event,
+                           Is_Controller_Axis_Event,
+                           Is_Controller_Button_Event,
+                           Is_Controller_Device_Event);
 
    type Events (Event_Type : Event_Selector := Is_Event) is
       record
@@ -50,6 +55,15 @@ package SDL.Events.Events is
             when Is_Keyboard_Event =>
                Keyboard           : SDL.Events.Keyboards.Keyboard_Events;
 
+            when Is_Mouse_Motion_Event =>
+               Mouse_Motion       : SDL.Events.Mice.Motion_Events;
+
+            when Is_Mouse_Button_Event =>
+               Mouse_Button       : SDL.Events.Mice.Button_Events;
+
+            when Is_Mouse_Wheel_Event =>
+               Mouse_Wheel        : SDL.Events.Mice.Wheel_Events;
+
             when Is_Joystick_Axis_Event =>
                Joystick_Axis      : SDL.Events.Joysticks.Axis_Events;
 
@@ -58,6 +72,9 @@ package SDL.Events.Events is
 
             when Is_Joystick_Hat_Event =>
                Joystick_Hat       : SDL.Events.Joysticks.Hat_Events;
+
+            when Is_Joystick_Button_Event =>
+               Joystick_Button    : SDL.Events.Joysticks.Button_Events;
 
             when Is_Joystick_Device_Event =>
                Joystick_Device    : SDL.Events.Joysticks.Device_Events;
