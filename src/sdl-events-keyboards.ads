@@ -621,7 +621,10 @@ package SDL.Events.Keyboards is
    -----------------------------------------------------------------------------------------------------------------
    --  Text editing events
    -----------------------------------------------------------------------------------------------------------------
-   subtype UTF8_Text_Buffers is Interfaces.C.char_array (0 .. 31);
+   Max_UTF8_Elements             : constant := 31;
+   Max_UTF8_Element_Storage_Bits : constant := ((Max_UTF8_Elements + 1) * 8) - 1;
+
+   subtype UTF8_Text_Buffers is Interfaces.C.char_array (0 .. Max_UTF8_Elements);
 
    type Cursor_Positions is range -2 ** 31 .. 2 ** 31 - 1 with
      Convention => C,
@@ -683,7 +686,7 @@ private
          Time_Stamp at  1 * SDL.Word range  0  .. 31;
 
          ID         at  2 * SDL.Word range  0  .. 31;
-         Text       at  3 * SDL.Word range  0  .. 255; -- 31 characters.
+         Text       at  3 * SDL.Word range  0  .. Max_UTF8_Element_Storage_Bits; -- 31 characters.
          Start      at 11 * SDL.Word range  0  .. 31;
          Length     at 12 * SDL.Word range  0  .. 31;
       end record;
@@ -694,6 +697,6 @@ private
          Time_Stamp at  1 * SDL.Word range  0  .. 31;
 
          ID         at  2 * SDL.Word range  0  .. 31;
-         Text       at  3 * SDL.Word range  0  .. 255; -- 31 characters.
+         Text       at  3 * SDL.Word range  0  .. Max_UTF8_Element_Storage_Bits; -- 31 characters.
       end record;
 end SDL.Events.Keyboards;
