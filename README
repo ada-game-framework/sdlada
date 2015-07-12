@@ -39,10 +39,10 @@ Anything listed here is a question of whether it's required.
 
 * Do we need to hook into the Assert module? To raise an exception maybe?
 
-Current version
-===============
+Current version (semver.org)
+============================
 
-v1.1.0
+v1.2.0
 
 SDL version tested against
 ==========================
