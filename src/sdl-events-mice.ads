@@ -80,6 +80,10 @@ package SDL.Events.Mice is
      Convention => C,
      Size       => 32;
 
+   type Screen_Coordinates is range -2 ** 31 .. 2 ** 31 - 1 with
+     Convention => C,
+     Size       => 32;
+
    type Movement_Values is range -2 ** 31 .. 2 ** 31 - 1 with
      Convention => C,
      Size       => 32;
