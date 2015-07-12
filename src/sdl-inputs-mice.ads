@@ -33,7 +33,8 @@ package SDL.Inputs.Mice is
 
    type Supported is (Yes, No);
 
-   function Capture (Enabled : in Boolean) return Supported;
+   --  TODO: Re-enable this when the library links against 2.0.4!
+   --     function Capture (Enabled : in Boolean) return Supported;
 
    --  SDL_CreateColorCursor
    --  SDL_CreateCursor
@@ -42,8 +43,9 @@ package SDL.Inputs.Mice is
    --  SDL_GetCursor
    --  SDL_GetDefaultCursor
 
-   function Get_Global_State (X_Relative, Y_Relative : out SDL.Events.Mice.Movement_Values) return
-     SDL.Events.Mice.Button_Masks;
+   --  TODO: Re-enable this when the library links against 2.0.4!
+   --     function Get_Global_State (X_Relative, Y_Relative : out SDL.Events.Mice.Movement_Values) return
+   --       SDL.Events.Mice.Button_Masks;
 
    --  SDL_GetMouseFocus
 
@@ -64,6 +66,7 @@ package SDL.Inputs.Mice is
    --  Move the mouse to (x, y) on the screen.
    procedure Warp (X, Y : in SDL.Events.Mice.Screen_Coordinates);
 
+   --  TODO: Re-enable this when the library links against 2.0.4!
    --  Move the mouse to (x, y) in the specified window.
-   procedure Warp (Window : in SDL.Video.Windows.Window; X, Y : in SDL.Events.Mice.Window_Coordinates);
+   --  procedure Warp (Window : in SDL.Video.Windows.Window; X, Y : in SDL.Events.Mice.Window_Coordinates);
 end SDL.Inputs.Mice;
