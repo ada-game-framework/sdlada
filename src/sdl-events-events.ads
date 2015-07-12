@@ -29,6 +29,7 @@ with SDL.Events.Keyboards;
 with SDL.Events.Mice;
 with SDL.Events.Joysticks;
 with SDL.Events.Controllers;
+with SDL.Events.Touches;
 
 package SDL.Events.Events is
    type Event_Selector is (Is_Event,
@@ -46,58 +47,70 @@ package SDL.Events.Events is
                            Is_Joystick_Device_Event,
                            Is_Controller_Axis_Event,
                            Is_Controller_Button_Event,
-                           Is_Controller_Device_Event);
+                           Is_Controller_Device_Event,
+                           Is_Touch_Finger_Event,
+                           Is_Touch_Multi_Gesture_Event,
+                           Is_Touch_Dollar_Gesture);
 
    type Events (Event_Type : Event_Selector := Is_Event) is
       record
          case Event_Type is
             when Is_Window_Event =>
-               Window             : SDL.Events.Windows.Window_Events;
+               Window               : SDL.Events.Windows.Window_Events;
 
             when Is_Keyboard_Event =>
-               Keyboard           : SDL.Events.Keyboards.Keyboard_Events;
+               Keyboard             : SDL.Events.Keyboards.Keyboard_Events;
 
             when Is_Text_Editing_Event =>
-               Text_Editing       : SDL.Events.Keyboards.Text_Editing_Events;
+               Text_Editing         : SDL.Events.Keyboards.Text_Editing_Events;
 
             when Is_Text_Input_Event =>
-               Text_Input         : SDL.Events.Keyboards.Text_Input_Events;
+               Text_Input           : SDL.Events.Keyboards.Text_Input_Events;
 
             when Is_Mouse_Motion_Event =>
-               Mouse_Motion       : SDL.Events.Mice.Motion_Events;
+               Mouse_Motion         : SDL.Events.Mice.Motion_Events;
 
             when Is_Mouse_Button_Event =>
-               Mouse_Button       : SDL.Events.Mice.Button_Events;
+               Mouse_Button         : SDL.Events.Mice.Button_Events;
 
             when Is_Mouse_Wheel_Event =>
-               Mouse_Wheel        : SDL.Events.Mice.Wheel_Events;
+               Mouse_Wheel          : SDL.Events.Mice.Wheel_Events;
 
             when Is_Joystick_Axis_Event =>
-               Joystick_Axis      : SDL.Events.Joysticks.Axis_Events;
+               Joystick_Axis        : SDL.Events.Joysticks.Axis_Events;
 
             when Is_Joystick_Ball_Event =>
-               Joystick_Ball      : SDL.Events.Joysticks.Ball_Events;
+               Joystick_Ball        : SDL.Events.Joysticks.Ball_Events;
 
             when Is_Joystick_Hat_Event =>
-               Joystick_Hat       : SDL.Events.Joysticks.Hat_Events;
+               Joystick_Hat         : SDL.Events.Joysticks.Hat_Events;
 
             when Is_Joystick_Button_Event =>
-               Joystick_Button    : SDL.Events.Joysticks.Button_Events;
+               Joystick_Button      : SDL.Events.Joysticks.Button_Events;
 
             when Is_Joystick_Device_Event =>
-               Joystick_Device    : SDL.Events.Joysticks.Device_Events;
+               Joystick_Device      : SDL.Events.Joysticks.Device_Events;
 
             when Is_Controller_Axis_Event =>
-               Constroller_Axis   : SDL.Events.Controllers.Axis_Events;
+               Constroller_Axis     : SDL.Events.Controllers.Axis_Events;
 
             when Is_Controller_Button_Event =>
-               Constroller_Button : SDL.Events.Controllers.Button_Events;
+               Constroller_Button   : SDL.Events.Controllers.Button_Events;
 
             when Is_Controller_Device_Event =>
-               Constroller_Device : SDL.Events.Controllers.Device_Events;
+               Constroller_Device   : SDL.Events.Controllers.Device_Events;
+
+            when Is_Touch_Finger_Event =>
+               Touch_Finger         : SDL.Events.Touches.Finger_Events;
+
+            when Is_Touch_Multi_Gesture_Event =>
+               Touch_Multi_Gesture  : SDL.Events.Touches.Multi_Gesture_Events;
+
+            when Is_Touch_Dollar_Gesture =>
+               Touch_Dollar_Gesture : SDL.Events.Touches.Dollar_Events;
 
             when others =>
-               Common             : Common_Events;
+               Common               : Common_Events;
          end case;
       end record with
      Unchecked_Union,

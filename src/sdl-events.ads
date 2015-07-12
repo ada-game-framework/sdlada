@@ -60,16 +60,6 @@ package SDL.Events is
    App_Will_Enter_Foreground  : constant Event_Types := Quit + 5;
    App_Did_Enter_Foreground   : constant Event_Types := Quit + 6;
 
-   --  Touch events.
-   Finger_Down                : constant Event_Types := 16#0000_0700#;
-   Finger_Up                  : constant Event_Types := Finger_Down + 1;
-   Finger_Motion              : constant Event_Types := Finger_Down + 2;
-
-   --  Gesture events.
-   Dollar_Gesture             : constant Event_Types := 16#0000_0800#;
-   Dollar_Record              : constant Event_Types := Dollar_Gesture + 1;
-   Dollar_Multi_Gesture       : constant Event_Types := Dollar_Gesture + 2;
-
    --  Clipboard events.
    Clipboard_Update           : constant Event_Types := 16#0000_0900#;
 
