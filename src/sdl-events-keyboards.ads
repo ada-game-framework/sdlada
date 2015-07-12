@@ -612,8 +612,8 @@ package SDL.Events.Keyboards is
          ID         : SDL.Video.Windows.ID;
          State      : Button_State;
          Repeat     : Interfaces.Unsigned_8;
-         Padding_2  : Padding_Type;
-         Padding_3  : Padding_Type;
+         Padding_2  : Padding_8;
+         Padding_3  : Padding_8;
          Key_Sym    : Key_Syms;
       end record with
      Convention => C;

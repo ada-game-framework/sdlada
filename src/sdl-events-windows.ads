@@ -53,9 +53,9 @@ package SDL.Events.Windows is
 
          ID         : SDL.Video.Windows.ID;
          Event_ID   : Window_Event_ID;
-         Padding_1  : Padding_Type;
-         Padding_2  : Padding_Type;
-         Padding_3  : Padding_Type;
+         Padding_1  : Padding_8;
+         Padding_2  : Padding_8;
+         Padding_3  : Padding_8;
          Data_1     : Interfaces.Integer_32;
          Data_2     : Interfaces.Integer_32;
       end record with
