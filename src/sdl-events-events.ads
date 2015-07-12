@@ -33,7 +33,9 @@ package SDL.Events.Events is
    type Event_Selector is (Is_Event,
                            Is_Window_Event,
                            Is_Keyboard_Event,
-                           Is_Controller_Event,
+                           Is_Controller_Axis_Event,
+                           Is_Controller_Button_Event,
+                           Is_Controller_Device_Event,
                            Is_Joystick_Axis_Event,
                            Is_Joystick_Ball_Event,
                            Is_Joystick_Hat_Event,
@@ -43,28 +45,34 @@ package SDL.Events.Events is
       record
          case Event_Type is
             when Is_Window_Event =>
-               Window          : SDL.Events.Windows.Window_Events;
+               Window             : SDL.Events.Windows.Window_Events;
 
             when Is_Keyboard_Event =>
-               Keyboard        : SDL.Events.Keyboards.Keyboard_Events;
+               Keyboard           : SDL.Events.Keyboards.Keyboard_Events;
 
             when Is_Joystick_Axis_Event =>
-               Joystick_Axis   : SDL.Events.Joysticks.Axis_Events;
+               Joystick_Axis      : SDL.Events.Joysticks.Axis_Events;
 
             when Is_Joystick_Ball_Event =>
-               Joystick_Ball   : SDL.Events.Joysticks.Ball_Events;
+               Joystick_Ball      : SDL.Events.Joysticks.Ball_Events;
 
             when Is_Joystick_Hat_Event =>
-               Joystick_Hat    : SDL.Events.Joysticks.Hat_Events;
+               Joystick_Hat       : SDL.Events.Joysticks.Hat_Events;
 
             when Is_Joystick_Device_Event =>
-               Joystick_Device : SDL.Events.Joysticks.Device_Events;
+               Joystick_Device    : SDL.Events.Joysticks.Device_Events;
 
-            when Is_Controller_Event =>
-               Constroller     : SDL.Events.Controllers.Controller_Events;
+            when Is_Controller_Axis_Event =>
+               Constroller_Axis   : SDL.Events.Controllers.Axis_Events;
+
+            when Is_Controller_Button_Event =>
+               Constroller_Button : SDL.Events.Controllers.Button_Events;
+
+            when Is_Controller_Device_Event =>
+               Constroller_Device : SDL.Events.Controllers.Device_Events;
 
             when others =>
-               Common          : Common_Events;
+               Common             : Common_Events;
          end case;
       end record with
      Unchecked_Union,
