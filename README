@@ -39,6 +39,11 @@ Anything listed here is a question of whether it's required.
 
 * Do we need to hook into the Assert module? To raise an exception maybe?
 
+Current version
+===============
+
+v1.1.0
+
 SDL version tested against
 ==========================
 
@@ -79,7 +84,7 @@ SDL_BlitSurface                       |   n   |
 SDL_BuildAudioCVT                     |   n   |
 SDL_COMPILEDVERSION                   |   n   |      *
 SDL_CalculateGammaRamp                |   y   |
-SDL_CaptureMouse                      |   n   |
+SDL_CaptureMouse                      |   y   |
 SDL_ClearError                        |   y   |
 SDL_ClearHints                        |   y   |
 SDL_ClearQueuedAudio                  |   n   |
@@ -201,7 +206,7 @@ SDL_GetDisplayMode                    |   y   |
 SDL_GetDisplayName                    |   n   |
 SDL_GetError                          |   y   |
 SDL_GetEventFilter                    |   n   |
-SDL_GetGlobalMouseState               |   n   |
+SDL_GetGlobalMouseState               |   y   |
 SDL_GetHint                           |   y   |
 SDL_GetKeyFromName                    |   n   |
 SDL_GetKeyFromScancode                |   n   |
@@ -210,7 +215,7 @@ SDL_GetKeyboardFocus                  |   n   |
 SDL_GetKeyboardState                  |   n   |
 SDL_GetModState                       |   n   |
 SDL_GetMouseFocus                     |   n   |
-SDL_GetMouseState                     |   n   |
+SDL_GetMouseState                     |   y   |
 SDL_GetNumAudioDevices                |   n   |
 SDL_GetNumAudioDrivers                |   n   |
 SDL_GetNumDisplayModes                |   y   |
@@ -228,8 +233,8 @@ SDL_GetPrefPath                       |   n   |
 SDL_GetQueuedAudioSize                |   n   |
 SDL_GetRGB                            |   y   |
 SDL_GetRGBA                           |   y   |
-SDL_GetRelativeMouseMode              |   n   |
-SDL_GetRelativeMouseState             |   n   |
+SDL_GetRelativeMouseMode              |   y   |
+SDL_GetRelativeMouseState             |   y   |
 SDL_GetRenderDrawBlendMode            |   y   |
 SDL_GetRenderDrawColor                |   y   |
 SDL_GetRenderDriverInfo               |   n   |
@@ -473,7 +478,7 @@ SDL_SetMainReady                      |   n   |
 SDL_SetModState                       |   n   |
 SDL_SetPaletteColors                  |   n   |
 SDL_SetPixelFormatPalette             |   n   |
-SDL_SetRelativeMouseMode              |   n   |
+SDL_SetRelativeMouseMode              |   y   |
 SDL_SetRenderDrawBlendMode            |   y   |
 SDL_SetRenderDrawColor                |   y   |
 SDL_SetRenderTarget                   |   y   |
@@ -545,8 +550,8 @@ SDL_VideoQuit                         |   y   |
 SDL_WaitEvent                         |   n   |
 SDL_WaitEventTimeout                  |   n   |
 SDL_WaitThread                        |   n   |
-SDL_WarpMouseGlobal                   |   n   |
-SDL_WarpMouseInWindow                 |   n   |
+SDL_WarpMouseGlobal                   |   y   |
+SDL_WarpMouseInWindow                 |   y   |
 SDL_WasInit                           |   y   |
 SDL_WinRTGetFSPathUNICODE             |   n   |
 SDL_WinRTGetFSPathUTF8                |   n   |
