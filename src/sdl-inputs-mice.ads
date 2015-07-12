@@ -22,6 +22,7 @@
 --------------------------------------------------------------------------------------------------------------------
 --  SDL.Inputs.Mice
 with SDL.Events.Mice;
+with SDL.Video.Windows;
 
 package SDL.Inputs.Mice is
    Mice_Error : exception;
@@ -60,6 +61,9 @@ package SDL.Inputs.Mice is
 
    --  SDL_ShowCursor
 
-   procedure Warp_Global (X, Y : in SDL.Events.Mice.Screen_Coordinates);
-   procedure Warp_In_Window (X, Y : in SDL.Events.Mice.Window_Coordinates);
+   --  Move the mouse to (x, y) on the screen.
+   procedure Warp (X, Y : in SDL.Events.Mice.Screen_Coordinates);
+
+   --  Move the mouse to (x, y) in the specified window.
+   procedure Warp (Window : in SDL.Video.Windows.Window; X, Y : in SDL.Events.Mice.Window_Coordinates);
 end SDL.Inputs.Mice;

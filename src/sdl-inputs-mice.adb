@@ -22,6 +22,7 @@
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C;
 with SDL.Error;
+with System;
 
 package body SDL.Inputs.Mice is
    package C renames Interfaces.C;
@@ -123,21 +124,25 @@ package body SDL.Inputs.Mice is
       end if;
    end Set_Relative_Mode;
 
-   procedure Warp_Global (X, Y : in SDL.Events.Mice.Screen_Coordinates) is
+   procedure Warp (X, Y : in SDL.Events.Mice.Screen_Coordinates) is
       procedure SDL_Warp_Mouse_Global (X, Y : in C.int) with
         Import => True,
         Convention => C,
         External_Name => "SDL_WarpMouseGlobal";
    begin
       SDL_Warp_Mouse_Global (C.int (X), C.int (Y));
-   end Warp_Global;
+   end Warp;
 
-   procedure Warp_In_Window (X, Y : in SDL.Events.Mice.Window_Coordinates) is
-      procedure SDL_Warp_Mouse_In_Window (X, Y : in C.int) with
+   procedure Warp (Window : in SDL.Video.Windows.Window; X, Y : in SDL.Events.Mice.Window_Coordinates) is
+      function Get_Address (Self : in SDL.Video.Windows.Window) return System.Address with
+        Import     => True,
+        Convention => Ada;
+
+      procedure SDL_Warp_Mouse_In_Window (Window : in System.Address; X, Y : in C.int) with
         Import => True,
         Convention => C,
         External_Name => "SDL_WarpMouseInWindow";
    begin
-      SDL_Warp_Mouse_In_Window (C.int (X), C.int (Y));
-   end Warp_In_Window;
+      SDL_Warp_Mouse_In_Window (Get_Address (Window), C.int (X), C.int (Y));
+   end Warp;
 end SDL.Inputs.Mice;
