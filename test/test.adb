@@ -2,6 +2,7 @@ with SDL;
 with SDL.Error;
 with SDL.Events.Events;
 with SDL.Events.Keyboards;
+with SDL.Events.Joysticks;
 with SDL.Log;
 with SDL.Video.Windows;
 with SDL.Versions;
@@ -72,6 +73,12 @@ begin
                      if Event.Keyboard.Key_Sym.Key_Code = SDL.Events.Keyboards.Code_Escape then
                         Finished := True;
                      end if;
+
+                  when SDL.Events.Joysticks.Axis_Motion =>
+                     SDL.Log.Put_Debug
+                       ("Joystick axis event (ID = " & SDL.Events.Joysticks.IDs'Image (Event.Joystick_Axis.Which) &
+                          "): Axis: " & SDL.Events.Joysticks.Axes'Image (Event.Joystick_Axis.Axis) &
+                          "    Value: " & SDL.Events.Joysticks.Axes_Values'Image (Event.Joystick_Axis.Value));
 
                   when others =>
                      null;
