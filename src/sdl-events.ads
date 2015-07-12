@@ -63,9 +63,6 @@ package SDL.Events is
    --  Clipboard events.
    Clipboard_Update           : constant Event_Types := 16#0000_0900#;
 
-   --  Drag and drop events.
-   Drop_File                  : constant Event_Types := 16#0000_1000#;
-
    --  TODO: Audio hot plug events for 2.0.4
 
    --  User events.
