@@ -617,6 +617,45 @@ package SDL.Events.Keyboards is
          Key_Sym    : Key_Syms;
       end record with
      Convention => C;
+
+   -----------------------------------------------------------------------------------------------------------------
+   --  Text editing events
+   -----------------------------------------------------------------------------------------------------------------
+   subtype UTF8_Text_Buffers is Interfaces.C.char_array (0 .. 31);
+
+   type Cursor_Positions is range -2 ** 31 .. 2 ** 31 - 1 with
+     Convention => C,
+     Size       => 32;
+
+   type Text_Lengths is range -2 ** 31 .. 2 ** 31 - 1 with
+     Convention => C,
+     Size       => 32;
+
+   type Text_Editing_Events is
+      record
+         Event_Type : Event_Types;           --  Will be set to Text_Editing.
+         Time_Stamp : Time_Stamps;
+
+         ID         : SDL.Video.Windows.ID;
+         Text       : UTF8_Text_Buffers;
+         Start      : Cursor_Positions;      --  TODO: Find out why this needs to be a signed value!
+         Length     : Text_Lengths;          --  TODO: Again, signed, why?
+      end record with
+     Convention => C;
+
+   -----------------------------------------------------------------------------------------------------------------
+   --  Text input events
+   -----------------------------------------------------------------------------------------------------------------
+   type Text_Input_Events is
+      record
+         Event_Type : Event_Types;           --  Will be set to Text_Editing.
+         Time_Stamp : Time_Stamps;
+
+         ID         : SDL.Video.Windows.ID;
+         Text       : UTF8_Text_Buffers;
+      end record with
+     Convention => C;
+
 private
    for Key_Syms use
       record
@@ -636,5 +675,25 @@ private
          Repeat     at 3 * SDL.Word range  8  .. 15;
          Padding_2  at 3 * SDL.Word range  16 .. 23;
          Padding_3  at 3 * SDL.Word range  24 .. 31;
+      end record;
+
+   for Text_Editing_Events use
+      record
+         Event_Type at  0 * SDL.Word range  0  .. 31;
+         Time_Stamp at  1 * SDL.Word range  0  .. 31;
+
+         ID         at  2 * SDL.Word range  0  .. 31;
+         Text       at  3 * SDL.Word range  0  .. 255; -- 31 characters.
+         Start      at 11 * SDL.Word range  0  .. 31;
+         Length     at 12 * SDL.Word range  0  .. 31;
+      end record;
+
+   for Text_Input_Events use
+      record
+         Event_Type at  0 * SDL.Word range  0  .. 31;
+         Time_Stamp at  1 * SDL.Word range  0  .. 31;
+
+         ID         at  2 * SDL.Word range  0  .. 31;
+         Text       at  3 * SDL.Word range  0  .. 255; -- 31 characters.
       end record;
 end SDL.Events.Keyboards;

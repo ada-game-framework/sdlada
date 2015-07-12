@@ -34,6 +34,8 @@ package SDL.Events.Events is
    type Event_Selector is (Is_Event,
                            Is_Window_Event,
                            Is_Keyboard_Event,
+                           Is_Text_Editing_Event,
+                           Is_Text_Input_Event,
                            Is_Mouse_Motion_Event,
                            Is_Mouse_Button_Event,
                            Is_Mouse_Wheel_Event,
@@ -54,6 +56,12 @@ package SDL.Events.Events is
 
             when Is_Keyboard_Event =>
                Keyboard           : SDL.Events.Keyboards.Keyboard_Events;
+
+            when Is_Text_Editing_Event =>
+               Text_Editing       : SDL.Events.Keyboards.Text_Editing_Events;
+
+            when Is_Text_Input_Event =>
+               Text_Input         : SDL.Events.Keyboards.Text_Input_Events;
 
             when Is_Mouse_Motion_Event =>
                Mouse_Motion       : SDL.Events.Mice.Motion_Events;
