@@ -60,12 +60,6 @@ package SDL.Events is
    App_Will_Enter_Foreground  : constant Event_Types := Quit + 5;
    App_Did_Enter_Foreground   : constant Event_Types := Quit + 6;
 
-   --  Mouse events.
-   Mouse_Motion               : constant Event_Types := 16#0000_0400#;
-   Mouse_Button_Down          : constant Event_Types := Mouse_Motion + 1;
-   Mouse_Button_Up            : constant Event_Types := Mouse_Motion + 2;
-   Mouse_Wheel                : constant Event_Types := Mouse_Motion + 3;
-
    --  Touch events.
    Finger_Down                : constant Event_Types := 16#0000_0700#;
    Finger_Up                  : constant Event_Types := Finger_Down + 1;
