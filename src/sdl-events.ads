@@ -66,15 +66,6 @@ package SDL.Events is
    Mouse_Button_Up            : constant Event_Types := Mouse_Motion + 2;
    Mouse_Wheel                : constant Event_Types := Mouse_Motion + 3;
 
-   --  Joystick events.
-   Joystick_Axis_Motion       : constant Event_Types := 16#0000_0600#;
-   Joystick_Ball_Motion       : constant Event_Types := Joystick_Axis_Motion + 1;
-   Joystick_Hat_Motion        : constant Event_Types := Joystick_Axis_Motion + 2;
-   Joystick_Button_Down       : constant Event_Types := Joystick_Axis_Motion + 3;
-   Joystick_Button_Up         : constant Event_Types := Joystick_Axis_Motion + 4;
-   Joystick_Device_Added      : constant Event_Types := Joystick_Axis_Motion + 5;
-   Joystick_Device_Removed    : constant Event_Types := Joystick_Axis_Motion + 6;
-
    --  Touch events.
    Finger_Down                : constant Event_Types := 16#0000_0700#;
    Finger_Up                  : constant Event_Types := Finger_Down + 1;
@@ -98,9 +89,13 @@ package SDL.Events is
 
    Last_Event                 : constant Event_Types := 16#0000_FFFF#;
 
-   type Padding_Type is mod 2 ** 8 with
+   type Padding_8 is mod 2 ** 8 with
      Convention => C,
      Size       => 8;
+
+   type Padding_16 is mod 2 ** 16 with
+     Convention => C,
+     Size       => 16;
 
    type Time_Stamps is mod 2 ** 32 with
      Convention => C;
@@ -125,8 +120,8 @@ package SDL.Events is
          ID         : SDL.Video.Windows.ID;
          Text       : Text_Buffers;
          Repeat     : Interfaces.Unsigned_8;
-         Padding_2  : Padding_Type;
-         Padding_3  : Padding_Type;
+         Padding_2  : Padding_8;
+         Padding_3  : Padding_8;
       end record with
      Convention => C;
 
@@ -204,6 +199,12 @@ package SDL.Events is
    --  TODO: Audio events - 2.0.4
    -----------------------------------------------------------------------------------------------------------------
 
+private
+   for Common_Events use
+      record
+         Event_Type at 0 * SDL.Word range  0 .. 31;
+         Time_Stamp at 1 * SDL.Word range  0 .. 31;
+      end record;
 
    --     for Text_Editing_Events use
    --        record
