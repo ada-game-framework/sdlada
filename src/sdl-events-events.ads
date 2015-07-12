@@ -30,6 +30,7 @@ with SDL.Events.Mice;
 with SDL.Events.Joysticks;
 with SDL.Events.Controllers;
 with SDL.Events.Touches;
+with SDL.Events.Files;
 
 package SDL.Events.Events is
    type Event_Selector is (Is_Event,
@@ -50,7 +51,8 @@ package SDL.Events.Events is
                            Is_Controller_Device_Event,
                            Is_Touch_Finger_Event,
                            Is_Touch_Multi_Gesture_Event,
-                           Is_Touch_Dollar_Gesture);
+                           Is_Touch_Dollar_Gesture,
+                           Is_Drop_Event);
 
    type Events (Event_Type : Event_Selector := Is_Event) is
       record
@@ -108,6 +110,9 @@ package SDL.Events.Events is
 
             when Is_Touch_Dollar_Gesture =>
                Touch_Dollar_Gesture : SDL.Events.Touches.Dollar_Events;
+
+            when Is_Drop_Event =>
+               Drop                 : SDL.Events.Files.Drop_Events;
 
             when others =>
                Common               : Common_Events;
