@@ -33,12 +33,12 @@ package body SDL.Video.Rectangles is
       function SDL_Enclose_Points (P    : in Point_Arrays;
                                    L    : in C.int;
                                    Clip : in Rectangle;
-                                   R    : out Rectangle) return C.int with
+                                   R    : out Rectangle) return SDL_Bool with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_EnclosePoints";
 
-      Result : C.int := SDL_Enclose_Points (Points, C.int (Points'Length), Clip, Enclosed);
+      Result : SDL_Bool := SDL_Enclose_Points (Points, C.int (Points'Length), Clip, Enclosed);
    begin
       return (Result = SDL_True);
    end Enclose;
@@ -47,12 +47,12 @@ package body SDL.Video.Rectangles is
       function SDL_Enclose_Points (P    : in Point_Arrays;
                                    L    : in C.int;
                                    Clip : in System.Address;
-                                   R    : out Rectangle) return C.int with
+                                   R    : out Rectangle) return SDL_Bool with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_EnclosePoints";
 
-      Result : C.int := SDL_Enclose_Points (Points, C.int (Points'Length), System.Null_Address, Enclosed);
+      Result : SDL_Bool := SDL_Enclose_Points (Points, C.int (Points'Length), System.Null_Address, Enclosed);
    begin
       if Result /= SDL_True then
          raise Rectangle_Error with SDL.Error.Get;
@@ -60,38 +60,38 @@ package body SDL.Video.Rectangles is
    end Enclose;
 
    function Has_Intersected (A, B : in Rectangle) return Boolean is
-      function SDL_Has_Intersection (A, B : in Rectangle) return C.int with
+      function SDL_Has_Intersection (A, B : in Rectangle) return SDL_Bool with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_HasIntersection";
 
-      Result : C.int := SDL_Has_Intersection (A, B);
+      Result : SDL_Bool := SDL_Has_Intersection (A, B);
    begin
       return (Result = SDL_True);
    end Has_Intersected;
 
    function Intersects (A, B : in Rectangle; Intersection : out Rectangle) return Boolean is
-      function SDL_Intersect_Rect (A, B : in Rectangle; R : out Rectangle) return C.int with
+      function SDL_Intersect_Rect (A, B : in Rectangle; R : out Rectangle) return SDL_Bool with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_IntersectRect";
 
-      Result : C.int := SDL_Intersect_Rect (A, B, R => Intersection);
+      Result : SDL_Bool := SDL_Intersect_Rect (A, B, R => Intersection);
    begin
       return (Result = SDL_True);
    end Intersects;
 
    function Clip_To (Clip_Area : in Rectangle; Line : in out Line_Segment) return Boolean is
-      function SDL_Intersect_Rect_And_Line (R : in Rectangle; X1, Y1, X2, Y2 : in out C.int) return C.int with
+      function SDL_Intersect_Rect_And_Line (R : in Rectangle; X1, Y1, X2, Y2 : in out C.int) return SDL_Bool with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_IntersectRectAndLine";
 
-      Result : C.int := SDL_Intersect_Rect_And_Line (Clip_Area,
-                                                     Line.Start.X,
-                                                     Line.Start.Y,
-                                                     Line.Finish.X,
-                                                     Line.Finish.Y);
+      Result : SDL_Bool := SDL_Intersect_Rect_And_Line (Clip_Area,
+                                                        Line.Start.X,
+                                                        Line.Start.Y,
+                                                        Line.Finish.X,
+                                                        Line.Finish.Y);
    begin
       return (Result = SDL_True);
    end Clip_To;

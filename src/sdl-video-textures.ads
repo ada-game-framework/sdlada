@@ -26,6 +26,7 @@
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Finalization;
 with System;
+private with SDL.C_Pointers;
 with SDL.Video.Palettes;
 with SDL.Video.Pixel_Formats;
 with SDL.Video.Pixels;
@@ -109,7 +110,8 @@ private
       record
          --  TODO: Change System.Address to a C convention access type as Address is a different size compared to
          --        a C pointer.
-         Internal     : System.Address                             := System.Null_Address;
+         Internal     : SDL.C_Pointers.Texture_Pointer             := null;
+         Owns         : Boolean                                    := True;
          Locked       : Boolean                                    := False;
          Size         : SDL.Video.Windows.Sizes                    := (Positive'First, Positive'First);
          Pixel_Format : SDL.Video.Pixel_Formats.Pixel_Format_Names := SDL.Video.Pixel_Formats.Pixel_Format_Unknown;
@@ -118,13 +120,13 @@ private
    overriding
    procedure Finalize (Self : in out Texture);
 
-   function Get_Address (Self : in Texture) return System.Address with
-     Export        => True,
-     Convention    => Ada,
-     External_Name => "Get_Texture_Address";
+   function Get_Internal_Texture (Self : in Texture) return SDL.C_Pointers.Texture_Pointer with
+     Export     => True,
+     Convention => Ada;
 
    Null_Texture : constant Texture := (Ada.Finalization.Limited_Controlled with
-                                       Internal     => System.Null_Address,
+                                       Internal     => null,
+                                       Owns         => True,
                                        Size         => (Positive'First, Positive'First),
                                        Pixel_Format => Pixel_Formats.Pixel_Format_Unknown,
                                        Locked       => False);

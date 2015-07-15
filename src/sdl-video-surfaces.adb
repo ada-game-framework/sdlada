@@ -21,14 +21,24 @@
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
 package body SDL.Video.Surfaces is
-   --  Private subprograms for accessing the internal value.
-   function Get_Address (Self : in Surface) return System.Address is
+   use type SDL.C_Pointers.Surface_Pointer;
+
+   overriding
+   procedure Finalize (Self : in out Surface) is
+      --        procedure SDL_Destroy_Renderer (R : in SDL.C_Pointers.Renderer_Pointer) with
+      --          Import        => True,
+      --          Convention    => C,
+      --          External_Name => "SDL_DestroyRenderer";
+   begin
+      if Self.Internal /= null and then Self.Owns then
+         --           SDL_Destroy_Renderer (Self.Internal);
+
+         Self.Internal := null;
+      end if;
+   end Finalize;
+
+   function Get_Internal_Surface (Self : in Surface) return SDL.C_Pointers.Surface_Pointer is
    begin
       return Self.Internal;
-   end Get_Address;
-
-   procedure Set_Address (Self : in out Surface; A : in System.Address) is
-   begin
-      Self.Internal := A;
-   end Set_Address;
+   end Get_Internal_Surface;
 end SDL.Video.Surfaces;

@@ -26,6 +26,7 @@
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Finalization;
 with Ada.Strings.UTF_Encoding;
+private with SDL.C_Pointers;
 with SDL.Video.Displays;
 with SDL.Video.Pixel_Formats;
 with SDL.Video.Rectangles;
@@ -55,7 +56,7 @@ package SDL.Video.Windows is
 
    --  TODO: This isn't raising any exception when I pass a different value for some reason.
    subtype Full_Screen_Flags is Window_Flags with
-     Static_Predicate => Full_Screen_Flags in Windowed | Full_Screen | Full_Screen_Desktop;
+   Static_Predicate => Full_Screen_Flags in Windowed | Full_Screen | Full_Screen_Desktop;
 
    type ID is mod 2 ** 32 with
      Convention => C;
@@ -153,7 +154,7 @@ package SDL.Video.Windows is
    procedure Set_Size (Self : in out Window; Size : in Sizes) with
      Inline => True;
 
-   procedure Get_Surface (Self : in Window; Surface : out SDL.Video.Surfaces.Surface);
+   function Get_Surface (Self : in Window) return SDL.Video.Surfaces.Surface;
 
    function Get_Title (Self : in Window) return Ada.Strings.UTF_Encoding.UTF_8_String;
    procedure Set_Title (Self : in Window; Title : in Ada.Strings.UTF_Encoding.UTF_8_String);
@@ -196,17 +197,17 @@ private
 
    type Window is new Ada.Finalization.Limited_Controlled with
       record
-         Internal : System.Address := System.Null_Address;
+         Internal : SDL.C_Pointers.Windows_Pointer := null;  --  System.Address := System.Null_Address;
+         Owns     : Boolean                        := True;  --  Does this Window type own the Internal data?
       end record;
 
-   function Get_Address (Self : in Window) return System.Address with
+   function Get_Internal_Window (Self : in Window) return SDL.C_Pointers.Windows_Pointer with
      Export        => True,
-     Convention    => Ada,
-     External_Name => "Get_Window_Address"; --  TODO: If I remove this, I get a duplicate symbol error with the on
-                                            --        in Surfaces.
+     Convention    => Ada;
 
    Null_Window : constant Window := (Ada.Finalization.Limited_Controlled with
-                                       Internal => System.Null_Address);
+                                     Internal => null, --  System.Null_Address,
+                                     Owns     => True);
 
    Total_Windows_Created : Natural := Natural'First;
 end SDL.Video.Windows;

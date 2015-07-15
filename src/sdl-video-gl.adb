@@ -22,6 +22,7 @@
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C;
 with Interfaces.C.Strings;
+private with SDL.C_Pointers;
 with SDL.Error;
 
 package body SDL.Video.GL is
@@ -494,23 +495,23 @@ package body SDL.Video.GL is
    end Set_Share_With_Current_Context;
 
    --  Some helper functions to get make this type work ok.
-   function Get_Address (Window : in SDL.Video.Windows.Window) return System.Address with
+   function Get_Internal_Window (Self : in SDL.Video.Windows.Window) return SDL.C_Pointers.Windows_Pointer with
      Import     => True,
      Convention => Ada;
 
-   function Get_Address (Texture : in SDL.Video.Textures.Texture) return System.Address with
+   function Get_Internal_Texture (Self : in SDL.Video.Textures.Texture) return SDL.C_Pointers.Texture_Pointer with
      Import     => True,
      Convention => Ada;
 
    --  The GL context.
 
    procedure Create (Self : in out Contexts; From : in SDL.Video.Windows.Window) is
-      function SDL_GL_Create_Context (W : in System.Address) return System.Address with
+      function SDL_GL_Create_Context (W : in SDL.C_Pointers.Windows_Pointer) return System.Address with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GL_CreateContext";
 
-      C : System.Address := SDL_GL_Create_Context (Get_Address (Window => From));
+      C : System.Address := SDL_GL_Create_Context (Get_Internal_Window (From));
    begin
       if C = System.Null_Address then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -545,8 +546,7 @@ package body SDL.Video.GL is
         External_Name => "SDL_GL_GetCurrentContext";
    begin
       return C : constant Contexts := (Ada.Finalization.Limited_Controlled with
-                                         Internal => SDL_GL_Get_Current_Context,
-                                         Own      => False)
+                                         Internal => SDL_GL_Get_Current_Context, Own => False)
       do
          if C.Internal = System.Null_Address then
             raise SDL_GL_Error with SDL.Error.Get;
@@ -555,12 +555,13 @@ package body SDL.Video.GL is
    end Get_Current;
 
    procedure Set_Current (Self : in Contexts; To : in SDL.Video.Windows.Window) is
-      function SDL_GL_Make_Current (W, Context : in System.Address) return C.int with
+      function SDL_GL_Make_Current (W       : in SDL.C_Pointers.Windows_Pointer;
+                                    Context : in System.Address) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GL_MakeCurrent";
 
-      Result : C.int := SDL_GL_Make_Current (Self.Internal, Get_Address (Window => To));
+      Result : C.int := SDL_GL_Make_Current (Get_Internal_Window (To), Self.Internal);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -568,13 +569,13 @@ package body SDL.Video.GL is
    end Set_Current;
 
    function Supports (Extension : in String) return Boolean is
-      function SDL_GL_Extension_Supported (E : in C.Strings.chars_ptr) return C.int with
+      function SDL_GL_Extension_Supported (E : in C.Strings.chars_ptr) return SDL_Bool with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GL_ExtensionSupported";
 
       C_Name_Str : C.Strings.chars_ptr := C.Strings.New_String (Extension);
-      Result     : C.int               := SDL_GL_Extension_Supported (C_Name_Str);
+      Result     : SDL_Bool            := SDL_GL_Extension_Supported (C_Name_Str);
    begin
       C.Strings.Free (C_Name_Str);
 
@@ -621,11 +622,11 @@ package body SDL.Video.GL is
    end Set_Swap_Interval;
 
    procedure Swap (Window : in out SDL.Video.Windows.Window) is
-      procedure SDL_GL_Swap_Window (W : in System.Address) with
+      procedure SDL_GL_Swap_Window (W : in SDL.C_Pointers.Windows_Pointer) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GL_SwapWindow";
    begin
-      SDL_GL_Swap_Window (Get_Address (Window));
+      SDL_GL_Swap_Window (Get_Internal_Window (Window));
    end Swap;
 end SDL.Video.GL;

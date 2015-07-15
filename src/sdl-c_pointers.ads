@@ -20,34 +20,24 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
---  SDL.Video.Surfaces
+--  SDL.C_Pointers
 --
---  Render surface abstraction.
+--  This private package contains all the types representing the internal C pointers for various objects.
 --------------------------------------------------------------------------------------------------------------------
-with Ada.Finalization;
-private with SDL.C_Pointers;
-with System;
+private package SDL.C_Pointers is
+   type Windows is null record;
+   type Windows_Pointer is access all Windows with
+     Convention => C;
 
-package SDL.Video.Surfaces is
-   type Surface is new Ada.Finalization.Limited_Controlled with private;
+   type Renderers is null record;
+   type Renderer_Pointer is access all Renderers with
+     Convention => C;
 
-   Null_Surface : constant Surface;
+   type Surfaces is null record;
+   type Surface_Pointer is access all Surfaces with
+     Convention => C;
 
-   overriding
-   procedure Finalize (Self : in out Surface);
-private
-   type Surface is new Ada.Finalization.Limited_Controlled with
-      record
-         Internal : SDL.C_Pointers.Surface_Pointer := null;
-         Owns     : Boolean := True;
-      end record;
-
-   function Get_Internal_Surface (Self : in Surface) return SDL.C_Pointers.Surface_Pointer with
-     Export     => True,
-     Convention => Ada;
-
-   Null_Surface : constant Surface := (Ada.Finalization.Limited_Controlled with
-                                       Internal => null,
-                                       Owns     => True);
-
-end SDL.Video.Surfaces;
+   type Textures is null record;
+   type Texture_Pointer is access all Textures with
+     Convention => C;
+end SDL.C_Pointers;

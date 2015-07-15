@@ -23,6 +23,7 @@
 with Interfaces.C;
 with Interfaces;
 with Ada.Unchecked_Conversion;
+private with SDL.C_Pointers;
 with SDL.Error;
 
 package body SDL.Video.Textures is
@@ -30,13 +31,13 @@ package body SDL.Video.Textures is
 
    use type C.int;
    use type System.Address;
+   use type SDL.C_Pointers.Texture_Pointer;
 
-   --  We need to get the actual adresses of these objects in this package.
-   function Get_Address (Self : in SDL.Video.Renderers.Renderer) return System.Address with
+   function Get_Internal_Surface (Self : in SDL.Video.Surfaces.Surface) return SDL.C_Pointers.Surface_Pointer with
      Import     => True,
      Convention => Ada;
 
-   function Get_Address (Self : in SDL.Video.Surfaces.Surface) return System.Address with
+   function Get_Internal_Renderer (Self : in SDL.Video.Renderers.Renderer) return SDL.C_Pointers.Renderer_Pointer with
      Import     => True,
      Convention => Ada;
 
@@ -53,19 +54,22 @@ package body SDL.Video.Textures is
                                                               Target => Interfaces.Unsigned_32);
 
       function SDL_Create_Texture
-        (R      : in System.Address;
+        (R      : in SDL.C_Pointers.Renderer_Pointer;
          Format : in Interfaces.Unsigned_32;
          Kind   : in Kinds;
-         W, H   : in C.int) return System.Address with
+         W, H   : in C.int) return SDL.C_Pointers.Texture_Pointer with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_CreateTexture";
 
    begin
-      Self.Internal := SDL_Create_Texture (Get_Address (Renderer), To_Unsigned32 (Format), Kind,
-                                           C.int (Size.Width), C.int (Size.Height));
+      Self.Internal := SDL_Create_Texture (Get_Internal_Renderer (Renderer),
+                                           To_Unsigned32 (Format),
+                                           Kind,
+                                           C.int (Size.Width),
+                                           C.int (Size.Height));
 
-      if Self.Internal = System.Null_Address then
+      if Self.Internal = null then
          raise Texture_Error with SDL.Error.Get;
       end if;
 
@@ -78,31 +82,34 @@ package body SDL.Video.Textures is
       Renderer : in SDL.Video.Renderers.Renderer;
       Surface  : in SDL.Video.Surfaces.Surface) is
 
-      function SDL_Create_Texture_Form_Surface (R, S : in System.Address) return System.Address with
+      function SDL_Create_Texture_Form_Surface (R : in SDL.C_Pointers.Renderer_Pointer;
+                                                S : in SDL.C_Pointers.Surface_Pointer)
+                                                return SDL.C_Pointers.Texture_Pointer with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_CreateTextureFromSurface";
    begin
-      Self.Internal := SDL_Create_Texture_Form_Surface (Get_Address (Renderer), Get_Address (Surface));
+      Self.Internal := SDL_Create_Texture_Form_Surface (Get_Internal_Renderer (Renderer),
+                                                        Get_Internal_Surface (Surface));
 
-      if Self.Internal = System.Null_Address then
+      if Self.Internal = null then
          raise Texture_Error with SDL.Error.Get;
       end if;
    end Create;
 
    procedure Destroy (Self : in out Texture) is
-      procedure SDL_Destroy_Texture (T : in System.Address) with
+      procedure SDL_Destroy_Texture (T : in SDL.C_Pointers.Texture_Pointer) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_DestroyTexture";
    begin
       SDL_Destroy_Texture (Self.Internal);
 
-      Self.Internal := System.Null_Address;
+      Self.Internal := null;
    end Destroy;
 
    function Get_Alpha (Self : in Texture) return SDL.Video.Palettes.Colour_Component is
-      function SDL_Get_Texture_Alpha_Mod (T     : in System.Address;
+      function SDL_Get_Texture_Alpha_Mod (T     : in SDL.C_Pointers.Texture_Pointer;
                                           Alpha : out SDL.Video.Palettes.Colour_Component) return C.int with
         Import        => True,
         Convention    => C,
@@ -119,7 +126,7 @@ package body SDL.Video.Textures is
    end Get_Alpha;
 
    procedure Set_Alpha (Self : in out Texture; Alpha : in SDL.Video.Palettes.Colour_Component) is
-      function SDL_Set_Texture_Alpha_Mod (T     : in System.Address;
+      function SDL_Set_Texture_Alpha_Mod (T     : in SDL.C_Pointers.Texture_Pointer;
                                           Alpha : in SDL.Video.Palettes.Colour_Component) return C.int with
         Import        => True,
         Convention    => C,
@@ -133,7 +140,7 @@ package body SDL.Video.Textures is
    end Set_Alpha;
 
    function Get_Blend_Mode (Self : in Texture) return Blend_Modes is
-      function SDL_Get_Texture_Blend_Mode (T     : in System.Address;
+      function SDL_Get_Texture_Blend_Mode (T     : in SDL.C_Pointers.Texture_Pointer;
                                            Blend : out Blend_Modes) return C.int with
         Import        => True,
         Convention    => C,
@@ -150,7 +157,7 @@ package body SDL.Video.Textures is
    end Get_Blend_Mode;
 
    procedure Set_Blend_Mode (Self : in out Texture; Mode : in Blend_Modes) is
-      function SDL_Set_Texture_Blend_Mode (T    : in System.Address;
+      function SDL_Set_Texture_Blend_Mode (T    : in SDL.C_Pointers.Texture_Pointer;
                                            Mode : in Blend_Modes) return C.int with
         Import        => True,
         Convention    => C,
@@ -164,7 +171,7 @@ package body SDL.Video.Textures is
    end Set_Blend_Mode;
 
    function Get_Modulate_Colour (Self : in Texture) return SDL.Video.Palettes.RGB_Colour is
-      function SDL_Get_Texture_Color_Mod (T       : in System.Address;
+      function SDL_Get_Texture_Color_Mod (T       : in SDL.C_Pointers.Texture_Pointer;
                                           R, G, B : out SDL.Video.Palettes.Colour_Component) return C.int with
         Import        => True,
         Convention    => C,
@@ -181,7 +188,7 @@ package body SDL.Video.Textures is
    end Get_Modulate_Colour;
 
    procedure Set_Modulate_Colour (Self : in out Texture; Colour : in SDL.Video.Palettes.RGB_Colour) is
-      function SDL_Set_Texture_Color_Mod (T       : in System.Address;
+      function SDL_Set_Texture_Color_Mod (T       : in SDL.C_Pointers.Texture_Pointer;
                                           R, G, B : in SDL.Video.Palettes.Colour_Component) return C.int with
         Import        => True,
         Convention    => C,
@@ -223,8 +230,8 @@ package body SDL.Video.Textures is
    procedure Lock (Self    : in out Texture;
                    Pixels  : out SDL.Video.Pixels.ARGB_8888_Access.Pointer;
                    Pitches : out SDL.Video.Pixels.Pitch_Access.Pointer) is
-      function SDL_Lock_Texture (T       : in System.Address;
-                                 Area    : in System.Address;
+      function SDL_Lock_Texture (T       : in SDL.C_Pointers.Texture_Pointer;
+                                 Area    : in System.Address; --  TODO??
                                  Pixels  : out SDL.Video.Pixels.ARGB_8888_Access.Pointer;
                                  Pitches : out SDL.Video.Pixels.Pitch_Access.Pointer) return C.int with
         Import        => True,
@@ -241,7 +248,7 @@ package body SDL.Video.Textures is
    end Lock;
 
    procedure Unlock (Self : in out Texture) is
-      procedure SDL_Unlock_Texture (T : in System.Address) with
+      procedure SDL_Unlock_Texture (T : in SDL.C_Pointers.Texture_Pointer) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_UnlockTexture";
@@ -256,13 +263,13 @@ package body SDL.Video.Textures is
    overriding
    procedure Finalize (Self : in out Texture) is
    begin
-      if Self.Internal /= System.Null_Address then
+      if Self.Internal /= null and then Self.Owns then
          Destroy (Self);
       end if;
    end Finalize;
 
-   function Get_Address (Self : in Texture) return System.Address is
+   function Get_Internal_Texture (Self : in Texture) return SDL.C_Pointers.Texture_Pointer is
    begin
       return Self.Internal;
-   end Get_Address;
+   end Get_Internal_Texture;
 end SDL.Video.Textures;
