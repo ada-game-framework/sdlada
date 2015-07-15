@@ -26,6 +26,7 @@
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Finalization;
 with System;
+private with SDL.C_Pointers;
 with SDL.Video.Windows;
 with SDL.Video.Textures;
 
@@ -148,12 +149,12 @@ package SDL.Video.GL is
    procedure Set_Current (Self : in Contexts; To : in SDL.Video.Windows.Window);
 
    --  TODO: Finish this.
---  SDL_GL_BindTexture
---  SDL_GL_UnbindTexture
+   --  SDL_GL_BindTexture
+   --  SDL_GL_UnbindTexture
 
    function Supports (Extension : in String) return Boolean;
 
---  SDL_GL_GetProcAddress
+   --  SDL_GL_GetProcAddress
 
    type Swap_Intervals is (Not_Supported, Not_Synchronised, Synchronised) with
      Convention => C;
@@ -171,12 +172,12 @@ package SDL.Video.GL is
      Inline => True;
 
    --  TODO: Why do we need these?
---  SDL_GL_LoadLibrary
---  SDL_GL_UnloadLibrary
+   --  SDL_GL_LoadLibrary
+   --  SDL_GL_UnloadLibrary
 private
    type Contexts is new Ada.Finalization.Limited_Controlled with
       record
-         Internal : System.Address;
-         Own      : Boolean;  --  TODO: Move to a base type?
+         Internal : SDL.C_Pointers.GL_Context_Pointer;
+         Owns     : Boolean;
       end record;
 end SDL.Video.GL;

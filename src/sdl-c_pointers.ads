@@ -40,4 +40,8 @@ private package SDL.C_Pointers is
    type Textures is null record;
    type Texture_Pointer is access all Textures with
      Convention => C;
+
+   type GL_Contexts is null record;
+   type GL_Context_Pointer is access all GL_Contexts with
+     Convention => C;
 end SDL.C_Pointers;

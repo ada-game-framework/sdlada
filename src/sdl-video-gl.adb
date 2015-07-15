@@ -30,6 +30,7 @@ package body SDL.Video.GL is
 
    use type C.int;
    use type System.Address;
+   use type SDL.C_Pointers.GL_Context_Pointer;
 
    type Attributes is
      (Attribute_Red_Size,
@@ -506,49 +507,50 @@ package body SDL.Video.GL is
    --  The GL context.
 
    procedure Create (Self : in out Contexts; From : in SDL.Video.Windows.Window) is
-      function SDL_GL_Create_Context (W : in SDL.C_Pointers.Windows_Pointer) return System.Address with
+      function SDL_GL_Create_Context (W : in SDL.C_Pointers.Windows_Pointer)
+                                      return SDL.C_Pointers.GL_Context_Pointer with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GL_CreateContext";
 
-      C : System.Address := SDL_GL_Create_Context (Get_Internal_Window (From));
+      C : SDL.C_Pointers.GL_Context_Pointer := SDL_GL_Create_Context (Get_Internal_Window (From));
    begin
-      if C = System.Null_Address then
+      if C = null then
          raise SDL_GL_Error with SDL.Error.Get;
       end if;
 
       Self.Internal := C;
-      Self.Own      := True;
+      Self.Owns     := True;
    end Create;
 
    overriding
    procedure Finalize (Self : in out Contexts) is
-      procedure SDL_GL_Delete_Context (W : in System.Address) with
+      procedure SDL_GL_Delete_Context (W : in SDL.C_Pointers.GL_Context_Pointer) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GL_DeleteContext";
    begin
       --  We have to own this pointer before we go any further...
       --  and make sure we don't delete this twice if we do!
-      if Self.Own and then Self.Internal /= System.Null_Address then
+      if Self.Internal /= null and then Self.Owns then
          SDL_GL_Delete_Context (Self.Internal);
 
-         Self.Internal := System.Null_Address;
+         Self.Internal := null;
       end if;
    end Finalize;
 
    --  TODO: Make sure we make all similar functions across the API match this pattern.
    --  Create a temporary Context.
    function Get_Current return Contexts is
-      function SDL_GL_Get_Current_Context return System.Address with
+      function SDL_GL_Get_Current_Context return SDL.C_Pointers.GL_Context_Pointer with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GL_GetCurrentContext";
    begin
       return C : constant Contexts := (Ada.Finalization.Limited_Controlled with
-                                         Internal => SDL_GL_Get_Current_Context, Own => False)
+                                         Internal => SDL_GL_Get_Current_Context, Owns => False)
       do
-         if C.Internal = System.Null_Address then
+         if C.Internal = null then
             raise SDL_GL_Error with SDL.Error.Get;
          end if;
       end return;
@@ -556,7 +558,7 @@ package body SDL.Video.GL is
 
    procedure Set_Current (Self : in Contexts; To : in SDL.Video.Windows.Window) is
       function SDL_GL_Make_Current (W       : in SDL.C_Pointers.Windows_Pointer;
-                                    Context : in System.Address) return C.int with
+                                    Context : in SDL.C_Pointers.GL_Context_Pointer) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GL_MakeCurrent";
