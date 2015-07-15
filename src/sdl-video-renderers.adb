@@ -29,6 +29,7 @@ package body SDL.Video.Renderers is
    package C renames Interfaces.C;
 
    use type C.int;
+   use type SDL.C_Pointers.Renderer_Pointer;
 
    type Internal_Flip is mod 2 ** 32 with
      Convention => C;
@@ -45,22 +46,17 @@ package body SDL.Video.Renderers is
       Internal_Flip_Vertical,
       Internal_Flip_Horizontal or Internal_Flip_Vertical);
 
-   function Get_Address (Self : in SDL.Video.Surfaces.Surface) return System.Address with
+   function Get_Internal_Window (Self : in SDL.Video.Windows.Window) return SDL.C_Pointers.Windows_Pointer with
+     Convention => Ada,
+     Import     => True;
+
+   function Get_Internal_Surface (Self : in SDL.Video.Surfaces.Surface) return SDL.C_Pointers.Surface_Pointer with
      Import     => True,
      Convention => Ada;
 
-   function Get_Address (Self : in SDL.Video.Windows.Window) return System.Address with
+   function Get_Internal_Texture (Self : in SDL.Video.Textures.Texture) return SDL.C_Pointers.Texture_Pointer with
      Import     => True,
      Convention => Ada;
-
-   function Get_Address (Self : in SDL.Video.Textures.Texture) return System.Address with
-     Import     => True,
-     Convention => Ada;
-
-   function Get_Address (Self : in Renderer) return System.Address is
-   begin
-      return Self.Internal;
-   end Get_Address;
 
    function Total_Drivers return Positive is
       function SDL_Get_Num_Render_Drivers return C.int with
@@ -83,13 +79,13 @@ package body SDL.Video.Renderers is
       Driver : in Positive;
       Flags  : in Renderer_Flags := Default_Renderer_Flags) is
 
-      function SDL_Create_Renderer (W : in System.Address; Index : in C.int; Flags : in Renderer_Flags)
-                                    return System.Address with
+      function SDL_Create_Renderer (W : in SDL.C_Pointers.Windows_Pointer; Index : in C.int; Flags : in Renderer_Flags)
+                                    return SDL.C_Pointers.Renderer_Pointer with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_CreateRenderer";
    begin
-      Self.Internal := SDL_Create_Renderer (Get_Address (Window), C.int (Driver), Flags);
+      Self.Internal := SDL_Create_Renderer (Get_Internal_Window (Window), C.int (Driver), Flags);
    end Create;
 
    procedure Create
@@ -97,41 +93,46 @@ package body SDL.Video.Renderers is
       Window : in out SDL.Video.Windows.Window;
       Flags  : in Renderer_Flags := Default_Renderer_Flags) is
 
-      function SDL_Create_Renderer (W : in System.Address; Index : in C.int; Flags : in Renderer_Flags)
-                                    return System.Address with
+      function SDL_Create_Renderer (W : in SDL.C_Pointers.Windows_Pointer; Index : in C.int; Flags : in Renderer_Flags)
+                                    return SDL.C_Pointers.Renderer_Pointer with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_CreateRenderer";
    begin
-      Self.Internal := SDL_Create_Renderer (Get_Address (Window), -1, Flags);
+      Self.Internal := SDL_Create_Renderer (Get_Internal_Window (Window), -1, Flags);
+      Self.Owns     := True;
    end Create;
 
    procedure Create_Software
      (Self    : in out Renderer;
       Surface : in SDL.Video.Surfaces.Surface) is
 
-      function SDL_Create_Software_Renderer (S : in System.Address) return System.Address with
+      function SDL_Create_Software_Renderer (S : in SDL.C_Pointers.Surface_Pointer)
+                                             return SDL.C_Pointers.Renderer_Pointer with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_CreateSoftwareRenderer";
    begin
-      Self.Internal := SDL_Create_Software_Renderer (Get_Address (Surface));
+      Self.Internal := SDL_Create_Software_Renderer (Get_Internal_Surface (Surface));
+      Self.Owns     := True;
    end Create_Software;
 
    overriding
    procedure Finalize (Self : in out Renderer) is
-      procedure SDL_Destroy_Renderer (R : in System.Address) with
+      procedure SDL_Destroy_Renderer (R : in SDL.C_Pointers.Renderer_Pointer) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_DestroyRenderer";
    begin
-      SDL_Destroy_Renderer (Self.Internal);
+      if Self.Internal /= null and then Self.Owns then
+         SDL_Destroy_Renderer (Self.Internal);
 
-      Self.Internal := System.Null_Address;
+         Self.Internal := null;
+      end if;
    end Finalize;
 
    function Get_Blend_Mode (Self : in Renderer) return SDL.Video.Textures.Blend_Modes is
-      function SDL_Get_Render_Draw_Blend_Mode (R : in System.Address;
+      function SDL_Get_Render_Draw_Blend_Mode (R : in SDL.C_Pointers.Renderer_Pointer;
                                                M : out SDL.Video.Textures.Blend_Modes) return C.int with
         Import        => True,
         Convention    => C,
@@ -148,7 +149,7 @@ package body SDL.Video.Renderers is
    end Get_Blend_Mode;
 
    procedure Set_Blend_Mode (Self : in out Renderer; Mode : in SDL.Video.Textures.Blend_Modes) is
-      function SDL_Set_Render_Draw_Blend_Mode (R : in System.Address;
+      function SDL_Set_Render_Draw_Blend_Mode (R : in SDL.C_Pointers.Renderer_Pointer;
                                                M : in SDL.Video.Textures.Blend_Modes) return C.int with
         Import        => True,
         Convention    => C,
@@ -163,7 +164,7 @@ package body SDL.Video.Renderers is
 
    function Get_Draw_Colour (Self : in Renderer) return SDL.Video.Palettes.Colour is
       function SDL_Get_Render_Draw_Color
-        (R                       : in System.Address;
+        (R                       : in SDL.C_Pointers.Renderer_Pointer;
          Red, Green, Blue, Alpha : out SDL.Video.Palettes.Colour_Component) return C.int with
         Import        => True,
         Convention    => C,
@@ -181,7 +182,7 @@ package body SDL.Video.Renderers is
 
    procedure Set_Draw_Colour (Self : in out Renderer; Colour : in SDL.Video.Palettes.Colour) is
       function SDL_Set_Render_Draw_Color
-        (R                       : in System.Address;
+        (R                       : in SDL.C_Pointers.Renderer_Pointer;
          Red, Green, Blue, Alpha : in SDL.Video.Palettes.Colour_Component) return C.int with
         Import        => True,
         Convention    => C,
@@ -195,7 +196,7 @@ package body SDL.Video.Renderers is
    end Set_Draw_Colour;
 
    procedure Clear (Self : in out Renderer) is
-      function SDL_Render_Clear (R : in System.Address) return C.int with
+      function SDL_Render_Clear (R : in SDL.C_Pointers.Renderer_Pointer) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderClear";
@@ -212,13 +213,17 @@ package body SDL.Video.Renderers is
       Copy_From : in SDL.Video.Textures.Texture) is
 
       function SDL_Render_Copy
-        (R, T, Src, Dest : in System.Address) return C.int with
+        (R         : in SDL.C_Pointers.Renderer_Pointer;
+         T         : in SDL.C_Pointers.Texture_Pointer;
+         Src, Dest : in System.Address) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderCopy";
 
-      Result : C.int := SDL_Render_Copy (Self.Internal, Get_Address (Copy_From),
-                                         System.Null_Address, System.Null_Address);
+      Result : C.int := SDL_Render_Copy (Self.Internal,
+                                         Get_Internal_Texture (Copy_From),
+                                         System.Null_Address,
+                                         System.Null_Address);
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -234,12 +239,17 @@ package body SDL.Video.Renderers is
 
       function SDL_Render_Copy
       --  (R, T : in System.Address; Src, Dest : in SDL.Video.Rectangles.Rectangle) return C.int with
-        (R, T, Src, Dest : in System.Address) return C.int with
+        (R         : in SDL.C_Pointers.Renderer_Pointer;
+         T         : in SDL.C_Pointers.Texture_Pointer;
+         Src, Dest : in System.Address) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderCopy";
 
-      Result : C.int := SDL_Render_Copy (Self.Internal, Get_Address (Copy_From), From'Address, To'Address);
+      Result : C.int := SDL_Render_Copy (Self.Internal,
+                                         Get_Internal_Texture (Copy_From),
+                                         From'Address,
+                                         To'Address);
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -258,7 +268,8 @@ package body SDL.Video.Renderers is
       Flip      : in Renderer_Flip) is
 
       function SDL_Render_Copy_Ex
-        (R, T      : in System.Address;
+        (R         : in SDL.C_Pointers.Renderer_Pointer;
+         T         : in SDL.C_Pointers.Texture_Pointer;
          Src, Dest : in SDL.Video.Rectangles.Rectangle;
          A         : in C.double;
          Centre    : in SDL.Video.Rectangles.Point;
@@ -268,7 +279,7 @@ package body SDL.Video.Renderers is
         External_Name => "SDL_RenderCopyEx";
 
       Result : C.int := SDL_Render_Copy_Ex (Self.Internal,
-                                            Get_Address (Copy_From),
+                                            Get_Internal_Texture (Copy_From),
                                             From,
                                             To,
                                             C.double (Angle),
@@ -281,7 +292,8 @@ package body SDL.Video.Renderers is
    end Copy;
 
    procedure Draw (Self : in out Renderer; Line : in SDL.Video.Rectangles.Line_Segment) is
-      function SDL_Render_Draw_Line (R : in System.Address; X1, Y1, X2, Y2 : in C.int) return C.int with
+      function SDL_Render_Draw_Line (R              : in SDL.C_Pointers.Renderer_Pointer;
+                                     X1, Y1, X2, Y2 : in C.int) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderDrawLine";
@@ -296,7 +308,7 @@ package body SDL.Video.Renderers is
    --  TODO: Check this works!
    procedure Draw (Self : in out Renderer; Lines : in SDL.Video.Rectangles.Line_Arrays) is
       --  As the records and arrays are defined as C types, an array of lines is also an array of points.
-      function SDL_Render_Draw_Lines (R     : in System.Address;
+      function SDL_Render_Draw_Lines (R     : in SDL.C_Pointers.Renderer_Pointer;
                                       P     : in SDL.Video.Rectangles.Line_Arrays;
                                       Count : in C.int) return C.int with
         Import        => True,
@@ -311,7 +323,7 @@ package body SDL.Video.Renderers is
    end Draw;
 
    procedure Draw (Self : in out Renderer; Point : in SDL.Video.Rectangles.Point) is
-      function SDL_Render_Draw_Point (R : in System.Address; X, Y : in C.int) return C.int with
+      function SDL_Render_Draw_Point (R : in SDL.C_Pointers.Renderer_Pointer; X, Y : in C.int) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderDrawPoint";
@@ -324,7 +336,7 @@ package body SDL.Video.Renderers is
    end Draw;
 
    procedure Draw (Self : in out Renderer; Points : in SDL.Video.Rectangles.Point_Arrays) is
-      function SDL_Render_Draw_Points (R     : in System.Address;
+      function SDL_Render_Draw_Points (R     : in SDL.C_Pointers.Renderer_Pointer;
                                        P     : in SDL.Video.Rectangles.Point_Arrays;
                                        Count : in C.int) return C.int with
         Import        => True,
@@ -339,7 +351,7 @@ package body SDL.Video.Renderers is
    end Draw;
 
    procedure Draw (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle) is
-      function SDL_Render_Draw_Rect (R    : in System.Address;
+      function SDL_Render_Draw_Rect (R    : in SDL.C_Pointers.Renderer_Pointer;
                                      Rect : in SDL.Video.Rectangles.Rectangle) return C.int with
         Import        => True,
         Convention    => C,
@@ -353,7 +365,7 @@ package body SDL.Video.Renderers is
    end Draw;
 
    procedure Draw (Self : in out Renderer; Rectangles : in SDL.Video.Rectangles.Rectangle_Arrays) is
-      function SDL_Render_Draw_Rects (R     : in System.Address;
+      function SDL_Render_Draw_Rects (R     : in SDL.C_Pointers.Renderer_Pointer;
                                       Rect  : in SDL.Video.Rectangles.Rectangle_Arrays;
                                       Count : in C.int) return C.int with
         Import        => True,
@@ -368,7 +380,8 @@ package body SDL.Video.Renderers is
    end Draw;
 
    procedure Fill (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle) is
-      function SDL_Render_Fill_Rect (R : in System.Address; Rect : in SDL.Video.Rectangles.Rectangle) return C.int with
+      function SDL_Render_Fill_Rect (R    : in SDL.C_Pointers.Renderer_Pointer;
+                                     Rect : in SDL.Video.Rectangles.Rectangle) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderFillRect";
@@ -381,7 +394,7 @@ package body SDL.Video.Renderers is
    end Fill;
 
    procedure Fill (Self : in out Renderer; Rectangles : in SDL.Video.Rectangles.Rectangle_Arrays) is
-      function SDL_Render_Fill_Rects (R     : in System.Address;
+      function SDL_Render_Fill_Rects (R     : in SDL.C_Pointers.Renderer_Pointer;
                                       Rect  : in SDL.Video.Rectangles.Rectangle_Arrays;
                                       Count : in C.int) return C.int with
         Import        => True,
@@ -396,7 +409,8 @@ package body SDL.Video.Renderers is
    end Fill;
 
    procedure Get_Clip (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle) is
-      procedure SDL_Render_Get_Clip_Rect (R : in System.Address; Rect : out SDL.Video.Rectangles.Rectangle) with
+      procedure SDL_Render_Get_Clip_Rect (R    : in SDL.C_Pointers.Renderer_Pointer;
+                                          Rect : out SDL.Video.Rectangles.Rectangle) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderGetClipRect";
@@ -405,7 +419,7 @@ package body SDL.Video.Renderers is
    end Get_Clip;
 
    procedure Set_Clip (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle) is
-      function SDL_Render_Set_Clip_Rect (R    : in System.Address;
+      function SDL_Render_Set_Clip_Rect (R    : in SDL.C_Pointers.Renderer_Pointer;
                                          Rect : in SDL.Video.Rectangles.Rectangle) return C.int with
         Import        => True,
         Convention    => C,
@@ -419,7 +433,8 @@ package body SDL.Video.Renderers is
    end Set_Clip;
 
    procedure Get_Logical_Size (Self : in Renderer; Size : out SDL.Video.Rectangles.Size) is
-      procedure SDL_Render_Get_Logical_Size (R : in System.Address; S : out SDL.Video.Rectangles.Size) with
+      procedure SDL_Render_Get_Logical_Size (R : in SDL.C_Pointers.Renderer_Pointer;
+                                             S : out SDL.Video.Rectangles.Size) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderGetLogicalSize";
@@ -428,7 +443,8 @@ package body SDL.Video.Renderers is
    end Get_Logical_Size;
 
    procedure Set_Logical_Size (Self : in out Renderer; Size : in SDL.Video.Rectangles.Size) is
-      function SDL_Render_Set_Logical_Size (R : in System.Address; S : in SDL.Video.Rectangles.Size) return C.int with
+      function SDL_Render_Set_Logical_Size (R : in SDL.C_Pointers.Renderer_Pointer;
+                                            S : in SDL.Video.Rectangles.Size) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderSetLogicalSize";
@@ -441,7 +457,7 @@ package body SDL.Video.Renderers is
    end Set_Logical_Size;
 
    procedure Get_Scale (Self : in Renderer; X, Y : out Float) is
-      procedure SDL_Render_Get_Scale (R : in System.Address; X, Y : out C.C_float) with
+      procedure SDL_Render_Get_Scale (R : in SDL.C_Pointers.Renderer_Pointer; X, Y : out C.C_float) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderGetScale";
@@ -450,7 +466,7 @@ package body SDL.Video.Renderers is
    end Get_Scale;
 
    procedure Set_Scale (Self : in out Renderer; X, Y : in Float) is
-      function SDL_Render_Set_Scale (R : in System.Address; X, Y : in C.C_float) return C.int with
+      function SDL_Render_Set_Scale (R : in SDL.C_Pointers.Renderer_Pointer; X, Y : in C.C_float) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderSetScale";
@@ -463,7 +479,8 @@ package body SDL.Video.Renderers is
    end Set_Scale;
 
    procedure Get_Viewport (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle) is
-      procedure SDL_Render_Get_Viewport (R : in System.Address; Rect : out SDL.Video.Rectangles.Rectangle) with
+      procedure SDL_Render_Get_Viewport (R    : in SDL.C_Pointers.Renderer_Pointer;
+                                         Rect : out SDL.Video.Rectangles.Rectangle) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderGetViewport";
@@ -472,7 +489,7 @@ package body SDL.Video.Renderers is
    end Get_Viewport;
 
    procedure Set_Viewport (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle) is
-      function SDL_Render_Set_Viewport (R    : in System.Address;
+      function SDL_Render_Set_Viewport (R    : in SDL.C_Pointers.Renderer_Pointer;
                                         Rect : in SDL.Video.Rectangles.Rectangle) return C.int with
         Import        => True,
         Convention    => C,
@@ -486,7 +503,7 @@ package body SDL.Video.Renderers is
    end Set_Viewport;
 
    procedure Present (Self : in Renderer) is
-      procedure SDL_Render_Present (R : in System.Address) with
+      procedure SDL_Render_Present (R : in SDL.C_Pointers.Renderer_Pointer) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderPresent";
@@ -495,7 +512,7 @@ package body SDL.Video.Renderers is
    end Present;
 
    function Supports_Targets (Self : in Renderer) return Boolean is
-      function SDL_Render_Target_Supported (R : in System.Address) return C.int with
+      function SDL_Render_Target_Supported (R : in SDL.C_Pointers.Renderer_Pointer) return SDL_Bool with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderTargetSupported";
@@ -504,12 +521,13 @@ package body SDL.Video.Renderers is
    end Supports_Targets;
 
    procedure Set_Target (Self : in out Renderer; Target : in SDL.Video.Textures.Texture) is
-      function SDL_Set_Render_Target (R, T : in System.Address) return C.int with
+      function SDL_Set_Render_Target (R : in SDL.C_Pointers.Renderer_Pointer;
+                                      T : in SDL.C_Pointers.Texture_Pointer) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_SetRenderTarget";
 
-      Result : C.int := SDL_Set_Render_Target (Self.Internal, Get_Address (Target));
+      Result : C.int := SDL_Set_Render_Target (Self.Internal, Get_Internal_Texture (Target));
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -517,14 +535,20 @@ package body SDL.Video.Renderers is
    end Set_Target;
 
    function Get_Renderer (Window : in SDL.Video.Windows.Window) return Renderer is
-      function SDL_Get_Renderer (W : in System.Address) return System.Address with
+      function SDL_Get_Renderer (W : in SDL.C_Pointers.Windows_Pointer) return SDL.C_Pointers.Renderer_Pointer with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetRenderer";
    begin
-      return Result : constant Renderer := (Ada.Finalization.Limited_Controlled with
-                                              Internal => SDL_Get_Renderer (Get_Address (Window))) do
+      return Result : constant Renderer :=
+        (Ada.Finalization.Limited_Controlled with
+           Internal => SDL_Get_Renderer (Get_Internal_Window (Window)), Owns => False) do
          null;
       end return;
    end Get_Renderer;
+
+   function Get_Internal_Renderer (Self : in Renderer) return SDL.C_Pointers.Renderer_Pointer is
+   begin
+      return Self.Internal;
+   end Get_Internal_Renderer;
 end SDL.Video.Renderers;

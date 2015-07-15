@@ -26,6 +26,7 @@
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Finalization;
 with System;
+private with SDL.C_Pointers;
 with SDL.Video.Palettes;
 with SDL.Video.Rectangles;
 with SDL.Video.Surfaces;
@@ -143,14 +144,15 @@ package SDL.Video.Renderers is
 private
    type Renderer is new Ada.Finalization.Limited_Controlled with
       record
-         Internal : System.Address;
+         Internal : SDL.C_Pointers.Renderer_Pointer := null;
+         Owns     : Boolean                         := True;  --  Does this Window type own the Internal data?
       end record;
 
-   function Get_Address (Self : in Renderer) return System.Address with
+   function Get_Internal_Renderer (Self : in Renderer) return SDL.C_Pointers.Renderer_Pointer with
      Export        => True,
-     Convention    => Ada,
-     External_Name => "Get_Renderer_Address";
+     Convention    => Ada;
 
    Null_Renderer : constant Renderer := (Ada.Finalization.Limited_Controlled with
-                                         Internal => System.Null_Address);
+                                         Internal => null,
+                                         Owns     => True);
 end SDL.Video.Renderers;
