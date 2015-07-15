@@ -65,8 +65,9 @@ package SDL is
    function Was_Initialised (Flags : in Init_Flags) return Boolean;
 private
    Success   : constant Interfaces.C.int := 0;
-   SDL_True  : constant Interfaces.C.int := 1;
-   SDL_False : constant Interfaces.C.int := 0;
+
+   type SDL_Bool is (SDL_False, SDL_True) with
+     Convention => C;
 
    --  The next value is used in mapping the Ada types onto the C types, it is the word size used for all data
    --  in SDL, i.e. all data is 4 byte aligned so it works with 32-bit architectures.
