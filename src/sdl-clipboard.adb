@@ -20,7 +20,6 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
---with Interfaces.C;
 with Interfaces.C.Strings;
 with SDL;
 with SDL.Error;
@@ -55,7 +54,7 @@ package body SDL.Clipboard is
    end Get;
 
    function Is_Empty return Boolean is
-      function SDL_Has_Clipboard_Text return C.int with
+      function SDL_Has_Clipboard_Text return SDL_Bool with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_HasClipboardText";

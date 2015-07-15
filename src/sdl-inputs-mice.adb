@@ -37,7 +37,7 @@ package body SDL.Inputs.Mice is
    --          Convention => C,
    --          External_Name => "SDL_CaptureMouse";
    --     begin
-   --        if SDL_Capture_Mouse (if Enabled = True then 1 else 0) = -1 then
+   --        if SDL_Capture_Mouse (if Enabled = True then 1 else 0) /= Success then
    --           return No;
    --        end if;
    --
@@ -84,12 +84,12 @@ package body SDL.Inputs.Mice is
    end Get_State;
 
    function In_Relative_Mode return Boolean is
-      function SDL_Get_Relative_Mouse_Mode return C.unsigned with
+      function SDL_Get_Relative_Mouse_Mode return SDL_Bool with
         Import => True,
         Convention => C,
         External_Name => "SDL_GetRelativeMouseMode";
    begin
-      if SDL_Get_Relative_Mouse_Mode = 1 then
+      if SDL_Get_Relative_Mouse_Mode = SDL_True then
          return True;
       end if;
 
@@ -121,7 +121,7 @@ package body SDL.Inputs.Mice is
         Convention => C,
         External_Name => "SDL_SetRelativeMouseMode";
    begin
-      if SDL_Set_Relative_Mouse_Mode (if Enable = True then 1 else 0) = -1 then
+      if SDL_Set_Relative_Mouse_Mode (if Enable = True then 1 else 0) /= Success then
          raise Mice_Error with SDL.Error.Get;
       end if;
    end Set_Relative_Mode;

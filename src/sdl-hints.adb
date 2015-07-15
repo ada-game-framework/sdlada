@@ -96,14 +96,14 @@ package body SDL.Hints is
    end Get;
 
    procedure Set (Name : in Hint; Value : in String) is
-      function SDL_Set_Hint (Name, Value : in C.Strings.chars_ptr) return C.int with
+      function SDL_Set_Hint (Name, Value : in C.Strings.chars_ptr) return SDL_Bool with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_SetHint";
 
       C_Hint_Str  : C.Strings.chars_ptr := C.Strings.New_String (Hints.Value (Name));
       C_Value_Str : C.Strings.chars_ptr := C.Strings.New_String (Value);
-      Result      : C.int               := SDL_Set_Hint
+      Result      : SDL_Bool            := SDL_Set_Hint
         (Name  => C_Hint_Str,
          Value => C_Value_Str);
    begin
@@ -116,14 +116,14 @@ package body SDL.Hints is
    end Set;
 
    procedure Set (Name : in Hint; Value : in String; Priority : in Priorities) is
-      function SDL_Set_Hint (Name, Value : in C.Strings.chars_ptr; P : in Priorities) return C.int with
+      function SDL_Set_Hint (Name, Value : in C.Strings.chars_ptr; P : in Priorities) return SDL_Bool with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_SetHintWithPriority";
 
       C_Hint_Str  : C.Strings.chars_ptr := C.Strings.New_String (Hints.Value (Name));
       C_Value_Str : C.Strings.chars_ptr := C.Strings.New_String (Value);
-      Result      : C.int               := SDL_Set_Hint
+      Result      : SDL_Bool            := SDL_Set_Hint
         (Name  => C_Hint_Str,
          Value => C_Value_Str,
          P     => Priority);
