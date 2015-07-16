@@ -1,5 +1,5 @@
 library project SDLAda is
-   Version := "1";
+   Version := "1.3.0";
 
    type Platform_Type is ("linux", "bsd", "windows", "macosx", "ios", "android");
    type Mode_Type is ("debug", "release");
@@ -14,6 +14,7 @@ library project SDLAda is
    for Library_Name use "sdlada";
    for Object_Dir   use "lib/.obj";
    for Library_Dir  use "lib";
+   for Library_Version use "libsdlada.so." & Version;
 
    case Build is
       when "static" =>

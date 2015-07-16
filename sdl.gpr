@@ -1,5 +1,5 @@
 library project SDL is
-   Version := "1";
+   Version := "1.3.0";
 
    type Platform_Type is ("linux", "bsd", "windows", "macosx", "ios", "android");
    type Mode_Type is ("debug", "release");
@@ -13,6 +13,7 @@ library project SDL is
    for Library_Name use "sdlada";
    for Object_Dir   use "obj";
    for Library_Dir  use "lib";
+   for Library_Version use "libsdlada.so." & Version;
    for Externally_Built use "true";
 
    case Build is
