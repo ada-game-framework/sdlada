@@ -20,9 +20,16 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
---  SDL.Video.Surfaces.Makers
+--  SDL.Video.Surfaces.Internal_Makers
 --
 --  Functions to create surface objects.
-private package SDL.Video.Surfaces.Makers is
-   procedure Make;
-end SDL.Video.Surfaces.Makers;
+private with SDL.C_Pointers;
+
+private package SDL.Video.Surfaces.Internal_Makers is
+private
+   --  Create a new Surface passing in the internal C pointer and whether this particular object owns it's pointer.
+   function Make (S : in SDL.C_Pointers.Surface_Pointer; Owns : in Boolean) return Surface with
+     Convention    => Ada,
+     Export        => True,
+     External_Name => "Make_Surface_From_Pointer";
+end SDL.Video.Surfaces.Internal_Makers;

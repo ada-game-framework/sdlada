@@ -20,9 +20,11 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
---  SDL.Video.Surfaces.Makers
---
---  Functions to create surface objects.
-private package SDL.Video.Surfaces.Makers is
-   procedure Make;
-end SDL.Video.Surfaces.Makers;
+package body SDL.Video.Surfaces.Internal_Makers is
+   function Make (S : in SDL.C_Pointers.Surface_Pointer; Owns : in Boolean) return Surface is
+   begin
+      return R : Surface := (Ada.Finalization.Limited_Controlled with Internal => S, Owns => Owns) do
+         null;
+      end return;
+   end Make;
+end SDL.Video.Surfaces.Internal_Makers;
