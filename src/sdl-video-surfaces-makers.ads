@@ -23,6 +23,6 @@
 --  SDL.Video.Surfaces.Makers
 --
 --  Functions to create surface objects.
-private package SDL.Video.Surfaces.Makers is
+package SDL.Video.Surfaces.Makers is
    procedure Make;
 end SDL.Video.Surfaces.Makers;
