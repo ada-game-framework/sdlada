@@ -53,6 +53,13 @@ begin
       --  W.Set_Mode (SDL.Video.Windows.Full_Screen);
 
       declare
+         ID : SDL.Video.Windows.ID     := SDL.Video.Windows.Get_ID (W);
+         W2 : SDL.Video.Windows.Window := SDL.Video.Windows.From_ID (ID);
+      begin
+         SDL.Video.Windows.Set_Title (W2, "Grabbed second window!");
+      end;
+
+      declare
          Event    : SDL.Events.Events.Events;
          Finished : Boolean := False;
 
