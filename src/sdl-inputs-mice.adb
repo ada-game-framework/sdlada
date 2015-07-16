@@ -126,16 +126,16 @@ package body SDL.Inputs.Mice is
       end if;
    end Set_Relative_Mode;
 
-   procedure Warp (X, Y : in SDL.Events.Mice.Screen_Coordinates) is
-      procedure SDL_Warp_Mouse_Global (X, Y : in C.int) with
-        Import => True,
-        Convention => C,
-        External_Name => "SDL_WarpMouseGlobal";
-   begin
-      SDL_Warp_Mouse_Global (C.int (X), C.int (Y));
-   end Warp;
-
    --  TODO: Re-enable this when the library links against 2.0.4!
+   --     procedure Warp (X, Y : in SDL.Events.Mice.Screen_Coordinates) is
+   --        procedure SDL_Warp_Mouse_Global (X, Y : in C.int) with
+   --          Import => True,
+   --          Convention => C,
+   --          External_Name => "SDL_WarpMouseGlobal";
+   --     begin
+   --        SDL_Warp_Mouse_Global (C.int (X), C.int (Y));
+   --     end Warp;
+   --
    --     procedure Warp (Window : in SDL.Video.Windows.Window; X, Y : in SDL.Events.Mice.Window_Coordinates) is
    --        function Get_Address (Self : in SDL.Video.Windows.Window) return System.Address with
    --          Import     => True,

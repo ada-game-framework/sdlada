@@ -63,10 +63,10 @@ package SDL.Inputs.Mice is
 
    --  SDL_ShowCursor
 
-   --  Move the mouse to (x, y) on the screen.
-   procedure Warp (X, Y : in SDL.Events.Mice.Screen_Coordinates);
-
    --  TODO: Re-enable this when the library links against 2.0.4!
+   --  Move the mouse to (x, y) on the screen.
+   --     procedure Warp (X, Y : in SDL.Events.Mice.Screen_Coordinates);
+   --
    --  Move the mouse to (x, y) in the specified window.
    --  procedure Warp (Window : in SDL.Video.Windows.Window; X, Y : in SDL.Events.Mice.Window_Coordinates);
 end SDL.Inputs.Mice;
