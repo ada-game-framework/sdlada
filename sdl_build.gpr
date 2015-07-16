@@ -2,24 +2,53 @@ library project SDL_Build is
    Version := "1";
 
    type Platform_Type is ("linux", "bsd", "windows", "macosx", "ios", "android");
+   type Mode_Type is ("debug", "release");
+   type Build_Type is ("static", "shared");
 
    Platform : Platform_Type := external ("SDL_PLATFORM", "linux");
+   Mode     : Mode_Type     := external ("SDL_MODE", "debug");
+   Build    : Build_Type    := external ("SDL_BUILD", "static");
 
    for Languages    use ("Ada", "C");
    for Source_Dirs  use ("src", "src/" & Platform);
    for Library_Name use "sdlada";
    for Object_Dir   use "lib/.obj";
    for Library_Dir  use "lib";
-   for Library_Kind use "static";
+
+   case Build is
+      when "static" =>
+         for Library_Kind use "static";
+
+      when "shared" =>
+         for Library_Kind use "relocatable";
+   end case;
 
    for Excluded_Source_Files use ("sdl-video-textures-pixels.ads");
 
    package Compiler is
-      for Default_Switches ("C") use ("-O0", "-g", "-ffunction-sections", "-fdata-sections");
-      for Default_Switches ("Ada") use ("-O0", "-g",
-                                        "-ffunction-sections", "-fdata-sections",
-                                        "-gnat2012", "-gnata", "-gnato", "-gnatE",
-                                        "-gnaty", "-gnaty-s", "-gnatyO", "-gnatyM120", "-gnatyO");
+      C_Switches   := ("-ffunction-sections", "-fdata-sections");
+      Ada_Switches := ("-ffunction-sections", "-fdata-sections",
+                       "-gnat2012", "-gnata", "-gnato", "-gnatE",
+                       "-gnaty", "-gnaty-s", "-gnatyO", "-gnatyM120", "-gnatyO");
+
+      case Mode is
+         when "debug" =>
+            for Default_Switches ("C") use C_Switches & ("-O0", "-g");
+            for Default_Switches ("Ada") use Ada_Switches & ("-O0", "-g");
+
+         when "release" =>
+            for Default_Switches ("C") use C_Switches & ("-O2");
+            for Default_Switches ("Ada") use Ada_Switches & ("-O2");
+      end case;
+
+      case Build is
+         when "shared" =>
+            for Default_Switches ("C") use C_Switches & ("-fpic");
+            for Default_Switches ("Ada") use Ada_Switches & ("-fpic");
+
+         when others =>
+            null;
+      end case;
    end Compiler;
 
    --  package Builder is
