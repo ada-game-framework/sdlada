@@ -28,7 +28,7 @@ all: sdl_build.gpr test_maths_build.gpr test.gpr
 
 sdl_build.gpr: lib/libadasdl.a
 	$(GPRMAKE) -p -gnat2012 -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
-		-Psdl_build.gpr -cargs `sdl2-config --cflags`
+		-Psdlada.gpr -cargs `sdl2-config --cflags`
 
 #####################################################################################
 # Maths library
@@ -57,14 +57,14 @@ unit_tests.gpr: build_unit_tests/unit_tests
 install:
 	$(GPRINSTALL) --prefix=$(DESTDIR)/sdlada -p \
 		-XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
-		-Psdl_build.gpr
+		-Psdlada.gpr
 
 #####################################################################################
 
 .PHONY: lib/libadasdl.a build_test/libmaths.so build_test/test build_unit_tests/unit_tests clean clean_test
 
 clean: clean_test
-	$(GPRCLEAN) -Psdl_build.gpr -XSDL_PLATFORM=$(SDL_PLATFORM)
+	$(GPRCLEAN) -Psdlada.gpr -XSDL_PLATFORM=$(SDL_PLATFORM)
 	$(GPRCLEAN) -Ptest_maths_build.gpr -XSDL_PLATFORM=$(SDL_PLATFORM)
 	$(GPRCLEAN) -Ptest.gpr -XSDL_PLATFORM=$(SDL_PLATFORM)
 	$(GPRCLEAN) -Punit_tests.gpr -XSDL_PLATFORM=$(SDL_PLATFORM)
