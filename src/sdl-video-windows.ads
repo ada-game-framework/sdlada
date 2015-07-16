@@ -88,19 +88,6 @@ package SDL.Video.Windows is
 
    Null_Window : constant Window;
 
-   procedure Create
-     (Self   : in out Window;
-      Title  : in Ada.Strings.UTF_Encoding.UTF_8_String;
-      X      : in Integer;
-      Y      : in Integer;
-      Width  : in Integer;
-      Height : in Integer;
-      Flags  : in Window_Flags := OpenGL);
-
-   --  Create a window from an existing window created in some other way.
-   procedure Create (Self : in out Window; Native : in Native_Window) with
-     Inline => True;
-
    --  TODO: Normalise the API by adding a destroy sub program and making this one call destroy,
    --  see textures for more info.
    overriding
@@ -210,4 +197,7 @@ private
                                      Owns     => True);
 
    Total_Windows_Created : Natural := Natural'First;
+
+   procedure Increment_Windows;
+   procedure Decrement_Windows;
 end SDL.Video.Windows;

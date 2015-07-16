@@ -44,52 +44,6 @@ package body SDL.Video.Windows is
       Total_Windows_Created := Total_Windows_Created + 1;
    end Decrement_Windows;
 
-   procedure Create
-     (Self   : in out Window;
-      Title  : in Ada.Strings.UTF_Encoding.UTF_8_String;
-      X      : in Integer;
-      Y      : in Integer;
-      Width  : in Integer;
-      Height : in Integer;
-      Flags  : in Window_Flags := OpenGL) is
-
-      function SDL_Create
-        (Title      : C.Strings.chars_ptr;
-         X, Y, W, H : in C.int;
-         F          : in Window_Flags) return SDL.C_Pointers.Windows_Pointer with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_CreateWindow";
-
-      C_Title_Str : C.Strings.chars_ptr := C.Strings.New_String (Title);
-   begin
-      Self.Internal := SDL_Create (C_Title_Str, C.int (X), C.int (Y), C.int (Width), C.int (Height), Flags);
-
-      C.Strings.Free (C_Title_Str);
-
-      if Self.Internal = null then
-         raise Window_Error with SDL.Error.Get;
-      end if;
-
-      Increment_Windows;
-   end Create;
-
-   procedure Create (Self : in out Window; Native : in Native_Window) is
-      function SDL_Create_Window_From (Native : Native_Window) return SDL.C_Pointers.Windows_Pointer with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_CreateWindowFrom";
-   begin
-      Self.Internal := SDL_Create_Window_From (Native);
-      Self.Owns     := True;
-
-      if Self.Internal = null then
-         raise Window_Error with SDL.Error.Get;
-      end if;
-
-      Increment_Windows;
-   end Create;
-
    overriding
    procedure Finalize (Self : in out Window) is
       procedure SDL_Destroy (W : in SDL.C_Pointers.Windows_Pointer) with

@@ -3,6 +3,7 @@ with SDL.Clipboard;
 with SDL.Error;
 with SDL.Log;
 with SDL.Video.Windows;
+with SDL.Video.Windows.Makers;
 
 procedure Clipboard is
    W : SDL.Video.Windows.Window;
@@ -10,7 +11,12 @@ begin
    SDL.Log.Set (Category => SDL.Log.Application, Priority => SDL.Log.Debug);
 
    if SDL.Initialise = True then
-      W.Create (Title => "Test SDLAda 2.0 - हिन्दी समाचार", X => 100, Y => 100, Width => 800, Height => 640);
+      SDL.Video.Windows.Makers.Create (Win    => W,
+                                       Title  => "Test SDLAda 2.0 - हिन्दी समाचार",
+                                       X      => 100,
+                                       Y      => 100,
+                                       Width  => 800,
+                                       Height => 640);
 
       delay 2.0;
 

@@ -5,6 +5,7 @@ with SDL.Events.Keyboards;
 with SDL.Events.Joysticks;
 with SDL.Log;
 with SDL.Video.Windows;
+with SDL.Video.Windows.Makers;
 with SDL.Versions;
 with System;
 
@@ -40,7 +41,12 @@ begin
 
       SDL.Log.Put_Debug ("Error           : " & SDL.Error.Get);
 
-      W.Create (Title => "Test SDLAda 2.0 - हिन्दी समाचार", X => 100, Y => 100, Width => 800, Height => 640);
+      SDL.Video.Windows.Makers.Create (Win    => W,
+                                       Title  => "Test SDLAda 2.0 - हिन्दी समाचार",
+                                       X      => 100,
+                                       Y      => 100,
+                                       Width  => 800,
+                                       Height => 640);
 
       SDL.Log.Put_Debug ("Window Grabbed  : " & Boolean'Image (W.Is_Grabbed));
 

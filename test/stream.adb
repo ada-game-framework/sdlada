@@ -12,6 +12,7 @@ with SDL.Video.Pixels;
 with SDL.Video.Renderers;
 with SDL.Video.Textures;
 with SDL.Video.Windows;
+with SDL.Video.Windows.Makers;
 with SDL.Versions;
 with System;
 with System.Address_To_Access_Conversions;
@@ -205,9 +206,13 @@ begin
    Cache_Moose (Cache, Moose_Frame_Data, Moose_Palette);
 
    if SDL.Initialise = True then
-      W.Create (Title => "Stream (Moose animation)",
-                X     => 100, Y => 100,
-                Width => Moose_Size.Width * 4, Height => Moose_Size.Height * 4, Flags => SDL.Video.Windows.Resizable);
+      SDL.Video.Windows.Makers.Create (Win    => W,
+                                       Title  => "Stream (Moose animation)",
+                                       X      => 100,
+                                       Y      => 100,
+                                       Width  => Moose_Size.Width * 4,
+                                       Height => Moose_Size.Height * 4,
+                                       Flags  => SDL.Video.Windows.Resizable);
 
       Renderer.Create (W);
 
