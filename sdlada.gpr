@@ -1,4 +1,4 @@
-library project SDL_Build is
+library project SDLAda is
    Version := "1";
 
    type Platform_Type is ("linux", "bsd", "windows", "macosx", "ios", "android");
@@ -54,4 +54,4 @@ library project SDL_Build is
    --  package Builder is
    --     for Default_Switches ("Ada") use ("-gnat2012", "-gnata", "-gnato", "-gnatE", "-gnaty", "-gnatyO");
    --  end Builder;
-end SDL_Build;
+end SDLAda;
