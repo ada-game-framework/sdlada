@@ -1,8 +1,8 @@
 SDLAda
 ======
 
-This is a new variable thickness Ada 2012 binding to SDL 2.x.y. This means that things are wrapped when
-they need to be into a thicker binding and those things that can just be imported, are.
+This is a new variable thickness Ada 2012 binding to [SDL 2.x.y](http://www.libsdl.org). This means that things are
+wrapped when they need to be into a thicker binding and those things that can just be imported, are.
 
 There will still be a need to use conditional compilation for the various platforms as there will be
 some platform specifics which cannot be abstracted out leanly, but this will be reduced as much as possible.
@@ -23,9 +23,10 @@ Building
 There are a number of variables which can be set to control the compilation:
 
 SDL_PLATFORM = Can be set to one of the following values: linux, windows, macosx, ios or android
-STATIC       = When set to "no" will build using the shared libraries of the host OS.
+SDL_MODE     = Can be one of: debug or release. Defaults to debug.
+SDL_BUILD    = Can be one of: static or shared. Defaults to a statically built library.
 
-SDL_PLATFORM=linux STATIC=no make
+e.g. SDL_PLATFORM=linux SDL_BUILD=static SDL_MODE=release make
 
 Copyright
 =========
@@ -42,7 +43,7 @@ Anything listed here is a question of whether it's required.
 Current version (semver.org)
 ============================
 
-v1.2.0
+v1.4.0
 
 SDL version tested against
 ==========================
