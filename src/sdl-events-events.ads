@@ -94,13 +94,13 @@ package SDL.Events.Events is
                Joystick_Device      : SDL.Events.Joysticks.Device_Events;
 
             when Is_Controller_Axis_Event =>
-               Constroller_Axis     : SDL.Events.Controllers.Axis_Events;
+               Controller_Axis      : SDL.Events.Controllers.Axis_Events;
 
             when Is_Controller_Button_Event =>
-               Constroller_Button   : SDL.Events.Controllers.Button_Events;
+               Controller_Button    : SDL.Events.Controllers.Button_Events;
 
             when Is_Controller_Device_Event =>
-               Constroller_Device   : SDL.Events.Controllers.Device_Events;
+               Controller_Device    : SDL.Events.Controllers.Device_Events;
 
             when Is_Touch_Finger_Event =>
                Touch_Finger         : SDL.Events.Touches.Finger_Events;
