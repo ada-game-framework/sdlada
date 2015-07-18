@@ -60,24 +60,6 @@ package SDL.Video.Renderers is
 
    Null_Renderer : constant Renderer;
 
-   procedure Create
-     (Self   : in out Renderer;
-      Window : in out SDL.Video.Windows.Window;
-      Driver : in Positive;
-      Flags  : in Renderer_Flags := Default_Renderer_Flags);
-
-   --  Specifically create a renderer using the first available driver.
-   procedure Create
-     (Self   : in out Renderer;
-      Window : in out SDL.Video.Windows.Window;
-      Flags  : in Renderer_Flags := Default_Renderer_Flags);
-
-   procedure Create_Software
-     (Self    : in out Renderer;
-      Surface : in SDL.Video.Surfaces.Surface);
-
-   --  SDL_CreateWindowAndRenderer
-
    overriding
    procedure Finalize (Self : in out Renderer);
 

@@ -20,7 +20,6 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
---  with Ada.Unchecked_Conversion;
 with Interfaces.C;
 with SDL.Error;
 with System;
@@ -50,10 +49,6 @@ package body SDL.Video.Renderers is
      Convention => Ada,
      Import     => True;
 
-   function Get_Internal_Surface (Self : in SDL.Video.Surfaces.Surface) return SDL.C_Pointers.Surface_Pointer with
-     Import     => True,
-     Convention => Ada;
-
    function Get_Internal_Texture (Self : in SDL.Video.Textures.Texture) return SDL.C_Pointers.Texture_Pointer with
      Import     => True,
      Convention => Ada;
@@ -72,50 +67,6 @@ package body SDL.Video.Renderers is
 
       return Positive (Result);
    end Total_Drivers;
-
-   procedure Create
-     (Self   : in out Renderer;
-      Window : in out SDL.Video.Windows.Window;
-      Driver : in Positive;
-      Flags  : in Renderer_Flags := Default_Renderer_Flags) is
-
-      function SDL_Create_Renderer (W : in SDL.C_Pointers.Windows_Pointer; Index : in C.int; Flags : in Renderer_Flags)
-                                    return SDL.C_Pointers.Renderer_Pointer with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_CreateRenderer";
-   begin
-      Self.Internal := SDL_Create_Renderer (Get_Internal_Window (Window), C.int (Driver), Flags);
-   end Create;
-
-   procedure Create
-     (Self   : in out Renderer;
-      Window : in out SDL.Video.Windows.Window;
-      Flags  : in Renderer_Flags := Default_Renderer_Flags) is
-
-      function SDL_Create_Renderer (W : in SDL.C_Pointers.Windows_Pointer; Index : in C.int; Flags : in Renderer_Flags)
-                                    return SDL.C_Pointers.Renderer_Pointer with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_CreateRenderer";
-   begin
-      Self.Internal := SDL_Create_Renderer (Get_Internal_Window (Window), -1, Flags);
-      Self.Owns     := True;
-   end Create;
-
-   procedure Create_Software
-     (Self    : in out Renderer;
-      Surface : in SDL.Video.Surfaces.Surface) is
-
-      function SDL_Create_Software_Renderer (S : in SDL.C_Pointers.Surface_Pointer)
-                                             return SDL.C_Pointers.Renderer_Pointer with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_CreateSoftwareRenderer";
-   begin
-      Self.Internal := SDL_Create_Software_Renderer (Get_Internal_Surface (Surface));
-      Self.Owns     := True;
-   end Create_Software;
 
    overriding
    procedure Finalize (Self : in out Renderer) is
