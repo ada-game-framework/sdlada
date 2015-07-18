@@ -9,10 +9,8 @@ with SDL.Log;
 with SDL.Video.Palettes;
 with SDL.Video.Pixel_Formats;
 with SDL.Video.Pixels;
-with SDL.Video.Renderers;
-with SDL.Video.Textures;
+with SDL.Video.Renderers.Makers;
 with SDL.Video.Textures.Makers;
-with SDL.Video.Windows;
 with SDL.Video.Windows.Makers;
 with SDL.Versions;
 with System;
@@ -215,7 +213,7 @@ begin
                                        Height => Moose_Size.Height * 4,
                                        Flags  => SDL.Video.Windows.Resizable);
 
-      Renderer.Create (W);
+      SDL.Video.Renderers.Makers.Create (Renderer, W);
 
       SDL.Video.Textures.Makers.Create (Tex      => Texture,
                                         Renderer => Renderer,
