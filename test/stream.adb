@@ -11,6 +11,7 @@ with SDL.Video.Pixel_Formats;
 with SDL.Video.Pixels;
 with SDL.Video.Renderers;
 with SDL.Video.Textures;
+with SDL.Video.Textures.Makers;
 with SDL.Video.Windows;
 with SDL.Video.Windows.Makers;
 with SDL.Versions;
@@ -216,10 +217,11 @@ begin
 
       Renderer.Create (W);
 
-      Texture.Create (Renderer => Renderer,
-                      Format   => SDL.Video.Pixel_Formats.Pixel_Format_ARGB_8888,
-                      Kind     => SDL.Video.Textures.Streaming,
-                      Size     => Moose_Size);
+      SDL.Video.Textures.Makers.Create (Tex      => Texture,
+                                        Renderer => Renderer,
+                                        Format   => SDL.Video.Pixel_Formats.Pixel_Format_ARGB_8888,
+                                        Kind     => SDL.Video.Textures.Streaming,
+                                        Size     => Moose_Size);
 
       --  W.Set_Mode (SDL.Video.Windows.Full_Screen);
 
