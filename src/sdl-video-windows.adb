@@ -91,6 +91,7 @@ package body SDL.Video.Windows is
    function To_Data_Access is new Ada.Unchecked_Conversion (Source => System.Address, Target => User_Data_Access);
    function To_Address is new Ada.Unchecked_Conversion (Source => User_Data_Access, Target => System.Address);
 
+   --  TODO: Make this and Set_Data generic.
    function Get_Data (Self : in Window; Name : in String) return User_Data_Access is
       function SDL_Get_Window_Data (W    : in SDL.C_Pointers.Windows_Pointer;
                                     Name : in C.Strings.chars_ptr) return System.Address with
