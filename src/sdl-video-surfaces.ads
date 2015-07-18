@@ -26,7 +26,6 @@
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Finalization;
 private with SDL.C_Pointers;
-with System;
 
 package SDL.Video.Surfaces is
    type Surface is new Ada.Finalization.Limited_Controlled with private;
