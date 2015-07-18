@@ -55,18 +55,6 @@ package SDL.Video.Textures is
 
    Null_Texture : constant Texture;
 
-   procedure Create
-     (Self     : in out Texture;
-      Renderer : in SDL.Video.Renderers.Renderer;
-      Format   : in SDL.Video.Pixel_Formats.Pixel_Format_Names;
-      Kind     : in Kinds;
-      Size     : in SDL.Video.Windows.Sizes);
-
-   procedure Create
-     (Self     : in out Texture;
-      Renderer : in SDL.Video.Renderers.Renderer;
-      Surface  : in SDL.Video.Surfaces.Surface);
-
    procedure Destroy (Self : in out Texture);
 
    --  Get the alpha value to be multiplied (modulated) into render copy operations.
