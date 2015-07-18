@@ -22,7 +22,6 @@
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C;
 with SDL.Error;
-with System;
 
 package body SDL.Video.Renderers is
    package C renames Interfaces.C;
@@ -166,15 +165,15 @@ package body SDL.Video.Renderers is
       function SDL_Render_Copy
         (R         : in SDL.C_Pointers.Renderer_Pointer;
          T         : in SDL.C_Pointers.Texture_Pointer;
-         Src, Dest : in System.Address) return C.int with
+         Src, Dest : in SDL.Video.Rectangles.Rectangle_Access) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderCopy";
 
       Result : C.int := SDL_Render_Copy (Self.Internal,
                                          Get_Internal_Texture (Copy_From),
-                                         System.Null_Address,
-                                         System.Null_Address);
+                                         null,
+                                         null);
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -189,18 +188,17 @@ package body SDL.Video.Renderers is
       To        : in SDL.Video.Rectangles.Rectangle) is
 
       function SDL_Render_Copy
-      --  (R, T : in System.Address; Src, Dest : in SDL.Video.Rectangles.Rectangle) return C.int with
         (R         : in SDL.C_Pointers.Renderer_Pointer;
          T         : in SDL.C_Pointers.Texture_Pointer;
-         Src, Dest : in System.Address) return C.int with
+         Src, Dest : in SDL.Video.Rectangles.Rectangle) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderCopy";
 
       Result : C.int := SDL_Render_Copy (Self.Internal,
                                          Get_Internal_Texture (Copy_From),
-                                         From'Address,
-                                         To'Address);
+                                         From,
+                                         To);
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;

@@ -22,12 +22,9 @@
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Unchecked_Conversion;
 with SDL.Error;
-with System;
 
 package body SDL.Video.Rectangles is
    use type C.int;
-
-   function To_Address is new Ada.Unchecked_Conversion (Source => Rectangle_Access, Target => System.Address);
 
    function Enclose (Points : in Point_Arrays; Clip : in Rectangle; Enclosed : out Rectangle) return Boolean is
       function SDL_Enclose_Points (P    : in Point_Arrays;
@@ -46,13 +43,13 @@ package body SDL.Video.Rectangles is
    procedure Enclose (Points : in Point_Arrays; Enclosed : out Rectangle) is
       function SDL_Enclose_Points (P    : in Point_Arrays;
                                    L    : in C.int;
-                                   Clip : in System.Address;
+                                   Clip : in Rectangle_Access;
                                    R    : out Rectangle) return SDL_Bool with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_EnclosePoints";
 
-      Result : SDL_Bool := SDL_Enclose_Points (Points, C.int (Points'Length), System.Null_Address, Enclosed);
+      Result : SDL_Bool := SDL_Enclose_Points (Points, C.int (Points'Length), null, Enclosed);
    begin
       if Result /= SDL_True then
          raise Rectangle_Error with SDL.Error.Get;
