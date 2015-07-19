@@ -362,7 +362,6 @@ package body SDL.Video.Windows is
          raise Window_Error with SDL.Error.Get;
       end if;
 
-      --  Set_Address (Surface, A);
       return Make (A);
    end Get_Surface;
 
@@ -385,7 +384,6 @@ package body SDL.Video.Windows is
    end Set_Title;
 
    procedure Hide (Self : in Window) is
-      --        procedure SDL_Hide_Window (W : in System.Address) with
       procedure SDL_Hide_Window (W : in SDL.C_Pointers.Windows_Pointer) with
         Import        => True,
         Convention    => C,
