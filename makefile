@@ -3,6 +3,7 @@ DESTDIR		?=	/opt
 GPRMAKE		=	gprbuild
 GPRINSTALL	=	gprinstall
 GPRCLEAN	=	gprclean
+INSTALL		=	install
 
 SDL_MODE	?=	debug
 
@@ -54,10 +55,11 @@ unit_tests.gpr: build_unit_tests/unit_tests
 #####################################################################################
 .PHONY: install
 
-install:
-	$(GPRINSTALL) --prefix=$(DESTDIR)/sdlada -p \
+install: all
+	$(GPRINSTALL) --prefix=$(DESTDIR)/sdlada --build-name=$(SDL_MODE).$(SDL_BUILD) -p \
 		-XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
 		-Psdlada.gpr
+	$(INSTALL) --mode=0644 sdl_version.gpr $(DESTDIR)/sdlada/share/gpr/
 
 #####################################################################################
 
@@ -68,4 +70,5 @@ clean: clean_test
 	$(GPRCLEAN) -Ptest_maths_build.gpr -XSDL_PLATFORM=$(SDL_PLATFORM)
 	$(GPRCLEAN) -Ptest.gpr -XSDL_PLATFORM=$(SDL_PLATFORM)
 	$(GPRCLEAN) -Punit_tests.gpr -XSDL_PLATFORM=$(SDL_PLATFORM)
+
 
