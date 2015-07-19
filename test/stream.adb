@@ -2,7 +2,7 @@ with Ada.Calendar;
 with Ada.Directories;
 with Ada.Text_IO.Text_Streams;
 with Ada.Unchecked_Conversion;
-with Interfaces.c.Pointers;
+with Interfaces.C.Pointers;
 with SDL;
 with SDL.Error;
 with SDL.Log;
@@ -93,7 +93,7 @@ procedure Stream is
                                                            Target => System.Address);
 
       Start_Time       : Ada.Calendar.Time;
-      End_time         : Ada.Calendar.Time;
+      End_Time         : Ada.Calendar.Time;
       Colour           : SDL.Video.Palettes.RGB_Colour;
    begin
       Start_Time := Ada.Calendar.Clock;
@@ -117,7 +117,7 @@ procedure Stream is
       end loop;
 
       End_Time := Ada.Calendar.Clock;
-      SDL.Log.Put_Debug ("Update_Texture_1 took " & Duration'Image (End_time - Start_Time) & " seconds.");
+      SDL.Log.Put_Debug ("Update_Texture_1 took " & Duration'Image (End_Time - Start_Time) & " seconds.");
    end Update_Texture_1;
 
    type Texture_2D_Array is array (Positive range <>, Positive range <>) of aliased SDL.Video.Pixels.ARGB_8888;
@@ -134,7 +134,7 @@ procedure Stream is
                                                            Target => System.Address);
 
       Start_Time       : Ada.Calendar.Time;
-      End_time         : Ada.Calendar.Time;
+      End_Time         : Ada.Calendar.Time;
       Colour           : SDL.Video.Palettes.RGB_Colour;
       Actual_Pixels    : Texture_2D_Array (1 .. Moose_Size.Height, 1 .. Moose_Size.Width) with
         Address => To_Address (Pixels);
@@ -153,7 +153,7 @@ procedure Stream is
       end loop;
 
       End_Time := Ada.Calendar.Clock;
-      SDL.Log.Put_Debug ("Update_Texture_2 took " & Duration'Image (End_time - Start_Time) & " seconds.");
+      SDL.Log.Put_Debug ("Update_Texture_2 took " & Duration'Image (End_Time - Start_Time) & " seconds.");
    end Update_Texture_2;
 
    type Cached_Moose_Frame_Array is array (Moose_Frames) of
@@ -186,7 +186,7 @@ procedure Stream is
                                                            Target => System.Address);
 
       Start_Time       : Ada.Calendar.Time;
-      End_time         : Ada.Calendar.Time;
+      End_Time         : Ada.Calendar.Time;
       Actual_Pixels    : Texture_2D_Array (1 .. Moose_Size.Height, 1 .. Moose_Size.Width) with
         Address => To_Address (Pixels);
    begin
@@ -195,7 +195,7 @@ procedure Stream is
       Actual_Pixels := Frame;
 
       End_Time := Ada.Calendar.Clock;
-      SDL.Log.Put_Debug ("Update_Texture_3 took " & Duration'Image (End_time - Start_Time) & " seconds.");
+      SDL.Log.Put_Debug ("Update_Texture_3 took " & Duration'Image (End_Time - Start_Time) & " seconds.");
    end Update_Texture_3;
 begin
    SDL.Log.Set (Category => SDL.Log.Application, Priority => SDL.Log.Debug);
@@ -297,7 +297,7 @@ begin
                                                                  Target => System.Address);
 
             Start_Time       : Ada.Calendar.Time;
-            End_time         : Ada.Calendar.Time;
+            End_Time         : Ada.Calendar.Time;
             Actual_Pixels    : Texture_2D_Array (1 .. Moose_Size.Height, 1 .. Moose_Size.Width) with
               Address => To_Address (Pixels);
          begin
@@ -306,7 +306,7 @@ begin
             Actual_Pixels := Cache (Moose_Frame);
 
             End_Time := Ada.Calendar.Clock;
-            SDL.Log.Put_Debug ("Update_Texture_3 took " & Duration'Image (End_time - Start_Time) & " seconds.");
+            SDL.Log.Put_Debug ("Update_Texture_3 took " & Duration'Image (End_Time - Start_Time) & " seconds.");
          end;
 
          Texture.Unlock;
