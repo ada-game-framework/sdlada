@@ -32,15 +32,21 @@ with System;
 package SDL.Video.Displays is
    package C renames Interfaces.C;
 
+   type Refresh_Rates is range 0 .. 400 with
+     Convention => C;
+
    type Mode is
       record
          Format       : SDL.Video.Pixel_Formats.Pixel_Format_Names;
          Width        : C.int;
          Height       : C.int;
-         Refresh_Rate : C.int;
-         Driver_Data  : System.Address;
+         Refresh_Rate : Refresh_Rates;
+         Driver_Data  : System.Address;  --  TODO: Somehow make this a real type.
       end record with
-        Convention => C;
+     Convention => C;
+
+   type Access_Mode is access all Mode with
+     Convention => C;
 
    function Closest_Mode (Display : in Natural; Wanted : in Mode; Target : out Mode) return Boolean;
 

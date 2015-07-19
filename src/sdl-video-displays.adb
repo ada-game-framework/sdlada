@@ -21,18 +21,17 @@
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
 package body SDL.Video.Displays is
-   use type System.Address;
    use type C.int;
 
    function Closest_Mode (Display : in Natural; Wanted : in Mode; Target : out Mode) return Boolean is
-      function SDL_Get_Closest_Display_Mode (D : C.int; W : in Mode; T : out Mode) return System.Address with
+      function SDL_Get_Closest_Display_Mode (D : C.int; W : in Mode; T : out Mode) return Access_Mode with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetClosestDisplayMode";
 
-      Result : System.Address := SDL_Get_Closest_Display_Mode (C.int (Display), Wanted, Target);
+      Result : Access_Mode := SDL_Get_Closest_Display_Mode (C.int (Display), Wanted, Target);
    begin
-      return (Result = System.Null_Address);
+      return (Result = null);
    end Closest_Mode;
 
    function Current_Mode (Display : in Natural; Target : out Mode) return Boolean is
