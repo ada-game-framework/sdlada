@@ -21,7 +21,6 @@
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C;
-with System;
 
 package body SDL.Power is
    package C renames Interfaces.C;
@@ -29,7 +28,7 @@ package body SDL.Power is
    use type C.int;
 
    procedure Info (Data : in out Battery_Info) is
-      function SDL_GetPowerInfo (Seconds, Percent : in System.Address) return State with
+      function SDL_GetPowerInfo (Seconds, Percent : out C.int) return State with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetPowerInfo";
@@ -37,7 +36,7 @@ package body SDL.Power is
       Seconds, Percent : C.int;
 
    begin
-      Data.Power_State := SDL_GetPowerInfo (Seconds'Address, Percent'Address);
+      Data.Power_State := SDL_GetPowerInfo (Seconds, Percent);
 
       if Seconds = -1 then
          Data.Time_Valid := False;
