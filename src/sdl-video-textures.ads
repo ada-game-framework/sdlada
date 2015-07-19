@@ -96,8 +96,6 @@ package SDL.Video.Textures is
 private
    type Texture is new Ada.Finalization.Limited_Controlled with
       record
-         --  TODO: Change System.Address to a C convention access type as Address is a different size compared to
-         --        a C pointer.
          Internal     : SDL.C_Pointers.Texture_Pointer             := null;
          Owns         : Boolean                                    := True;
          Locked       : Boolean                                    := False;
