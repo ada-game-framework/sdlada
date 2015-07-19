@@ -25,7 +25,6 @@
 --  Extended OpenGL functionality.
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Finalization;
-with System;
 private with SDL.C_Pointers;
 with SDL.Video.Windows;
 with SDL.Video.Textures;
