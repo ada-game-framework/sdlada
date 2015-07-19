@@ -24,6 +24,7 @@
 --
 --  Combines all of the various event types into a single variant record to match the union in the SDL library. Not
 --  the nicest of names for the package, but it works.
+--------------------------------------------------------------------------------------------------------------------
 with SDL.Events.Windows;
 with SDL.Events.Keyboards;
 with SDL.Events.Mice;

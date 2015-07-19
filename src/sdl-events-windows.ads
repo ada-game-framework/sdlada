@@ -23,6 +23,7 @@
 --  SDL.Events.Windows
 --
 --  Window specific events.
+--------------------------------------------------------------------------------------------------------------------
 package SDL.Events.Windows is
    --  Window events.
    Window                     : constant Event_Types := 16#0000_0200#;

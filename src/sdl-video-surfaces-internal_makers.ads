@@ -23,6 +23,7 @@
 --  SDL.Video.Surfaces.Internal_Makers
 --
 --  Functions to create surface objects.
+--------------------------------------------------------------------------------------------------------------------
 private with SDL.C_Pointers;
 
 private package SDL.Video.Surfaces.Internal_Makers is

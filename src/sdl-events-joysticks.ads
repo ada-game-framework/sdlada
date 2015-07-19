@@ -23,6 +23,7 @@
 --  SDL.Events.Joysticks
 --
 --  Joystick specific events.
+--------------------------------------------------------------------------------------------------------------------
 with Interfaces;
 
 package SDL.Events.Joysticks is

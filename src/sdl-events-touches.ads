@@ -28,6 +28,7 @@
 --  See:
 --    https://bugzilla.libsdl.org/show_bug.cgi?id=3060
 --    http://lists.libsdl.org/pipermail/sdl-libsdl.org/2015-July/098468.html
+--------------------------------------------------------------------------------------------------------------------
 with Interfaces.C;
 
 package SDL.Events.Touches is

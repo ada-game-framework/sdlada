@@ -23,6 +23,7 @@
 --  SDL.Events.Keyboards
 --
 --  Keyboard specific events.
+--------------------------------------------------------------------------------------------------------------------
 package SDL.Events.Keyboards is
    --  Keyboard events.
    Key_Down                         : constant Event_Types := 16#0000_0300#;

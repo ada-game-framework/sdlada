@@ -23,6 +23,7 @@
 --  SDL.Events.Controllers
 --
 --  Game controller specific events.
+--------------------------------------------------------------------------------------------------------------------
 with SDL.Events.Joysticks;
 
 package SDL.Events.Controllers is
