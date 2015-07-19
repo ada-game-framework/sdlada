@@ -31,8 +31,6 @@ with Interfaces.C.Pointers;
 with SDL.Video.Windows;
 with SDL.Video.Pixel_Formats;
 with SDL.Video.Palettes;
-with System;
-with System.Address_To_Access_Conversions;
 
 package SDL.Video.Pixels is
    package C renames Interfaces.C;
