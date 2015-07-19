@@ -23,4 +23,33 @@ library project SDL is
       when "shared" =>
          for Library_Kind use "relocatable";
    end case;
+
+   package Compiler is
+      C_Switches   := ("-ffunction-sections", "-fdata-sections");
+      Ada_Switches := ("-ffunction-sections", "-fdata-sections",
+                       "-gnat2012", "-gnata", "-gnato", "-gnatE",
+                       "-gnaty", "-gnaty-s", "-gnatyO", "-gnatyM120", "-gnatyO");
+
+      case Mode is
+         when "debug" =>
+            C_Switches   := C_Switches & ("-O0", "-g");
+            Ada_Switches := Ada_Switches & ("-O0", "-g");
+
+         when "release" =>
+            C_Switches   := C_Switches & ("-O2");
+            Ada_Switches := Ada_Switches & ("-O2");
+      end case;
+
+      case Build is
+         when "shared" =>
+            C_Switches   := C_Switches & ("-fpic");
+            Ada_Switches := Ada_Switches & ("-fpic");
+
+         when others =>
+            null;
+      end case;
+
+      for Default_Switches ("C") use C_Switches;
+      for Default_Switches ("Ada") use Ada_Switches;
+   end Compiler;
 end SDL;
