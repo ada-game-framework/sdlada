@@ -178,6 +178,7 @@ package SDL.Video.Windows is
    --  Determine whether any windows have been created.
    function Exist return Boolean;
 private
+   --  TODO: Make this a proper type.
    type Native_Window is new System.Address;
 
    type User_Data is new Ada.Finalization.Controlled with null record;
