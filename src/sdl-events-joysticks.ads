@@ -142,6 +142,20 @@ package SDL.Events.Joysticks is
          Which      : IDs;
       end record with
      Convention => C;
+
+   --  Update the joystick event data. This is called by the event loop.
+   procedure Update with
+     Import        => True,
+     Convention    => C,
+     External_Name => "SDL_JoystickUpdate";
+
+   function Is_Polling_Enabled return Boolean;
+
+   procedure Enable_Polling with
+     Inline => True;
+
+   procedure Disable_Polling with
+     Inline => True;
 private
    for Axis_Events use
       record
