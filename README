@@ -33,6 +33,12 @@ Copyright
 
 Copyright (C) 2013-2015 by Luke A. Guest
 
+WARNING!!!
+==========
+
+I have tried to model the types correctly, but remember SDL is a C library and some things may not make sense. Please
+file a bug report if you use this library and find that a type does not cover enough values for cross-platform use.
+
 Possible TODO's
 ===============
 
@@ -40,10 +46,14 @@ Anything listed here is a question of whether it's required.
 
 * Do we need to hook into the Assert module? To raise an exception maybe?
 
-Current version (semver.org)
-============================
+Native_Windows - Need a a set of packages which define this type for each platform. There should be a flag passed to
+                 make to specify whether to use the SDLAda one or to use a package that renames a type from another
+                 binding. So, if there is a windows binding, rename the HWND from there. Same for X11/Wayland/etc.
 
-v1.4.0
+(Current version)[http://www.semver.org]
+========================================
+
+v2.0.0
 
 SDL version tested against
 ==========================
@@ -209,12 +219,12 @@ SDL_GetError                          |   y   |
 SDL_GetEventFilter                    |   n   |
 SDL_GetGlobalMouseState               |   y   |
 SDL_GetHint                           |   y   |
-SDL_GetKeyFromName                    |   n   |
-SDL_GetKeyFromScancode                |   n   |
-SDL_GetKeyName                        |   n   |
-SDL_GetKeyboardFocus                  |   n   |
+SDL_GetKeyFromName                    |   y   |
+SDL_GetKeyFromScancode                |   y   |
+SDL_GetKeyName                        |   y   |
+SDL_GetKeyboardFocus                  |   y   |
 SDL_GetKeyboardState                  |   n   |
-SDL_GetModState                       |   n   |
+SDL_GetModState                       |   y   |
 SDL_GetMouseFocus                     |   n   |
 SDL_GetMouseState                     |   y   |
 SDL_GetNumAudioDevices                |   n   |
@@ -245,9 +255,9 @@ SDL_GetRendererInfo                   |   n   |
 SDL_GetRendererOutputSize             |   n   |
 SDL_GetRevision                       |   y   |
 SDL_GetRevisionNumber                 |   y   |
-SDL_GetScancodeFromKey                |   n   |
-SDL_GetScancodeFromName               |   n   |
-SDL_GetScancodeName                   |   n   |
+SDL_GetScancodeFromKey                |   y   |
+SDL_GetScancodeFromName               |   y   |
+SDL_GetScancodeName                   |   y   |
 SDL_GetSurfaceAlphaMod                |   n   |
 SDL_GetSurfaceBlendMode               |   n   |
 SDL_GetSurfaceColorMod                |   n   |
@@ -321,37 +331,37 @@ SDL_HasSSE2                           |   y   |
 SDL_HasSSE3                           |   y   |
 SDL_HasSSE41                          |   y   |
 SDL_HasSSE42                          |   n   |
-SDL_HasScreenKeyboardSupport          |   n   |
+SDL_HasScreenKeyboardSupport          |   y   |
 SDL_HideWindow                        |   y   |
 SDL_Init                              |   y   |
 SDL_InitSubSystem                     |   y   |
 SDL_IntersectRect                     |   y   |
 SDL_IntersectRectAndLine              |   y   |
 SDL_IsGameController                  |   n   |
-SDL_IsScreenKeyboardShown             |   n   |
+SDL_IsScreenKeyboardShown             |   y   |
 SDL_IsScreenSaverEnabled              |   y   |
-SDL_IsTextInputActive                 |   n   |
-SDL_JoystickClose                     |   n   |
-SDL_JoystickEventState                |   n   |
-SDL_JoystickGetAttached               |   n   |
-SDL_JoystickGetAxis                   |   n   |
-SDL_JoystickGetBall                   |   n   |
-SDL_JoystickGetButton                 |   n   |
-SDL_JoystickGetDeviceGUID             |   n   |
-SDL_JoystickGetGUID                   |   n   |
-SDL_JoystickGetGUIDFromString         |   n   |
-SDL_JoystickGetGUIDString             |   n   |
-SDL_JoystickGetHat                    |   n   |
-SDL_JoystickInstanceID                |   n   |
-SDL_JoystickIsHaptic                  |   n   |
-SDL_JoystickName                      |   n   |
-SDL_JoystickNameForIndex              |   n   |
-SDL_JoystickNumAxes                   |   n   |
-SDL_JoystickNumBalls                  |   n   |
-SDL_JoystickNumButtons                |   n   |
-SDL_JoystickNumHats                   |   n   |
-SDL_JoystickOpen                      |   n   |
-SDL_JoystickUpdate                    |   n   |
+SDL_IsTextInputActive                 |   y   |
+SDL_JoystickClose                     |   y   |
+SDL_JoystickEventState                |   y   |
+SDL_JoystickGetAttached               |   y   |
+SDL_JoystickGetAxis                   |   y   |
+SDL_JoystickGetBall                   |   y   |
+SDL_JoystickGetButton                 |   y   |
+SDL_JoystickGetDeviceGUID             |   y   |
+SDL_JoystickGetGUID                   |   y   |
+SDL_JoystickGetGUIDFromString         |   y   |
+SDL_JoystickGetGUIDString             |   y   |
+SDL_JoystickGetHat                    |   y   |
+SDL_JoystickInstanceID                |   y   |
+SDL_JoystickIsHaptic                  |   y   |
+SDL_JoystickName                      |   y   |
+SDL_JoystickNameForIndex              |   y   |
+SDL_JoystickNumAxes                   |   y   |
+SDL_JoystickNumBalls                  |   y   |
+SDL_JoystickNumButtons                |   y   |
+SDL_JoystickNumHats                   |   y   |
+SDL_JoystickOpen                      |   y   |
+SDL_JoystickUpdate                    |   y   |
 SDL_LoadBMP                           |   n   |
 SDL_LoadBMP_RW                        |   n   |
 SDL_LoadDollarTemplates               |   n   |
@@ -392,7 +402,7 @@ SDL_MixAudioFormat                    |   n   |
 SDL_MostSignificantBitIndex32         |   n   |
 SDL_MouseIsHaptic                     |   n   |
 SDL_NumHaptics                        |   n   |
-SDL_NumJoysticks                      |   n   |
+SDL_NumJoysticks                      |   y   |
 SDL_OpenAudio                         |   n   |
 SDL_OpenAudioDevice                   |   n   |
 SDL_PauseAudio                        |   n   |
@@ -476,7 +486,7 @@ SDL_SetEventFilter                    |   n   |
 SDL_SetHint                           |   y   |
 SDL_SetHintWithPriority               |   y   |
 SDL_SetMainReady                      |   n   |
-SDL_SetModState                       |   n   |
+SDL_SetModState                       |   y   |
 SDL_SetPaletteColors                  |   n   |
 SDL_SetPixelFormatPalette             |   n   |
 SDL_SetRelativeMouseMode              |   y   |
@@ -488,7 +498,7 @@ SDL_SetSurfaceBlendMode               |   n   |
 SDL_SetSurfaceColorMod                |   n   |
 SDL_SetSurfacePalette                 |   n   |
 SDL_SetSurfaceRLE                     |   n   |
-SDL_SetTextInputRect                  |   n   |
+SDL_SetTextInputRect                  |   y   |
 SDL_SetTextureAlphaMod                |   y   |
 SDL_SetTextureBlendMode               |   y   |
 SDL_SetTextureColorMod                |   y   |
@@ -511,8 +521,8 @@ SDL_ShowCursor                        |   n   |
 SDL_ShowMessageBox                    |   n   |
 SDL_ShowSimpleMessageBox              |   n   |
 SDL_ShowWindow                        |   y   |
-SDL_StartTextInput                    |   n   |
-SDL_StopTextInput                     |   n   |
+SDL_StartTextInput                    |   y   |
+SDL_StopTextInput                     |   y   |
 SDL_Swap16                            |   n   |
 SDL_Swap32                            |   n   |
 SDL_Swap64                            |   n   |
