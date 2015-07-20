@@ -309,6 +309,12 @@ package SDL.Events.Keyboards is
 
    Scan_Code_Total                  : constant Scan_Codes := 512;
 
+   function Value (Name : in String) return SDL.Events.Keyboards.Scan_Codes with
+     Inline => True;
+
+   function Image (Scan_Code : in SDL.Events.Keyboards.Scan_Codes) return String with
+     Inline => True;
+
    -----------------------------------------------------------------------------------------------------------------
    --  Key codes.
    -----------------------------------------------------------------------------------------------------------------
@@ -318,12 +324,13 @@ package SDL.Events.Keyboards is
 
    package Latin_1 renames Ada.Characters.Latin_1;
 
-   To_Key_Code_Mask                 : constant Key_Codes := 16#2000_0000#;
+   --  Warning!! Do not use these 3 items in user code. Use the bindings below.
+   Internal_To_Key_Code_Mask        : constant Key_Codes := 16#2000_0000#;
 
    function Convert is new Ada.Unchecked_Conversion (Source => Scan_Codes, Target => Key_Codes);
 
-   function To_Key_Code (Code : in Scan_Codes) return Key_Codes is
-     (To_Key_Code_Mask and Convert (Code));
+   function Internal_To_Key_Code (Code : in Scan_Codes) return Key_Codes is
+     (Internal_To_Key_Code_Mask and Convert (Code));
 
    Code_Unknown                     : constant Key_Codes := Key_Codes'First;
    Code_Return                      : constant Key_Codes := Character'Pos (Latin_1.CR);
@@ -399,181 +406,193 @@ package SDL.Events.Keyboards is
    Code_Y                           : constant Key_Codes := Character'Pos ('y');
    Code_Z                           : constant Key_Codes := Character'Pos ('z');
 
-   Code_Caps_Lock                   : constant Key_Codes := To_Key_Code (Scan_Code_Caps_Lock);
-   Code_F1                          : constant Key_Codes := To_Key_Code (Scan_Code_F1);
-   Code_F2                          : constant Key_Codes := To_Key_Code (Scan_Code_F2);
-   Code_F3                          : constant Key_Codes := To_Key_Code (Scan_Code_F3);
-   Code_F4                          : constant Key_Codes := To_Key_Code (Scan_Code_F4);
-   Code_F5                          : constant Key_Codes := To_Key_Code (Scan_Code_F5);
-   Code_F6                          : constant Key_Codes := To_Key_Code (Scan_Code_F6);
-   Code_F7                          : constant Key_Codes := To_Key_Code (Scan_Code_F7);
-   Code_F8                          : constant Key_Codes := To_Key_Code (Scan_Code_F8);
-   Code_F9                          : constant Key_Codes := To_Key_Code (Scan_Code_F9);
-   Code_F10                         : constant Key_Codes := To_Key_Code (Scan_Code_F10);
-   Code_F11                         : constant Key_Codes := To_Key_Code (Scan_Code_F11);
-   Code_F12                         : constant Key_Codes := To_Key_Code (Scan_Code_F12);
+   Code_Caps_Lock                   : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Caps_Lock);
+   Code_F1                          : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F1);
+   Code_F2                          : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F2);
+   Code_F3                          : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F3);
+   Code_F4                          : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F4);
+   Code_F5                          : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F5);
+   Code_F6                          : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F6);
+   Code_F7                          : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F7);
+   Code_F8                          : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F8);
+   Code_F9                          : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F9);
+   Code_F10                         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F10);
+   Code_F11                         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F11);
+   Code_F12                         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F12);
 
-   Code_Print_Screen                : constant Key_Codes := To_Key_Code (Scan_Code_Print_Screen);
-   Code_Scroll_Lock                 : constant Key_Codes := To_Key_Code (Scan_Code_Scroll_Lock);
-   Code_Pause                       : constant Key_Codes := To_Key_Code (Scan_Code_Pause);
-   Code_Insert                      : constant Key_Codes := To_Key_Code (Scan_Code_Insert);
-   Code_Home                        : constant Key_Codes := To_Key_Code (Scan_Code_Home);
-   Code_Page_Up                     : constant Key_Codes := To_Key_Code (Scan_Code_Page_Up);
+   Code_Print_Screen                : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Print_Screen);
+   Code_Scroll_Lock                 : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Scroll_Lock);
+   Code_Pause                       : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Pause);
+   Code_Insert                      : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Insert);
+   Code_Home                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Home);
+   Code_Page_Up                     : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Page_Up);
    Code_Delete                      : constant Key_Codes := Character'Pos (Latin_1.DEL);
-   Code_End                         : constant Key_Codes := To_Key_Code (Scan_Code_End);
-   Code_Page_Down                   : constant Key_Codes := To_Key_Code (Scan_Code_Page_Down);
-   Code_Right                       : constant Key_Codes := To_Key_Code (Scan_Code_Right);
-   Code_Left                        : constant Key_Codes := To_Key_Code (Scan_Code_Left);
-   Code_Down                        : constant Key_Codes := To_Key_Code (Scan_Code_Down);
-   Code_Up                          : constant Key_Codes := To_Key_Code (Scan_Code_Up);
+   Code_End                         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_End);
+   Code_Page_Down                   : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Page_Down);
+   Code_Right                       : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Right);
+   Code_Left                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Left);
+   Code_Down                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Down);
+   Code_Up                          : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Up);
 
-   Code_Num_Lock_Clear              : constant Key_Codes := To_Key_Code (Scan_Code_Num_Lock_Clear);
-   Code_KP_Divide                   : constant Key_Codes := To_Key_Code (Scan_Code_KP_Divide);
-   Code_KP_Multiply                 : constant Key_Codes := To_Key_Code (Scan_Code_KP_Multiply);
-   Code_KP_Minus                    : constant Key_Codes := To_Key_Code (Scan_Code_KP_Minus);
-   Code_KP_Plus                     : constant Key_Codes := To_Key_Code (Scan_Code_KP_Plus);
-   Code_KP_Enter                    : constant Key_Codes := To_Key_Code (Scan_Code_KP_Enter);
-   Code_KP_1                        : constant Key_Codes := To_Key_Code (Scan_Code_KP_1);
-   Code_KP_2                        : constant Key_Codes := To_Key_Code (Scan_Code_KP_2);
-   Code_KP_3                        : constant Key_Codes := To_Key_Code (Scan_Code_KP_3);
-   Code_KP_4                        : constant Key_Codes := To_Key_Code (Scan_Code_KP_4);
-   Code_KP_5                        : constant Key_Codes := To_Key_Code (Scan_Code_KP_5);
-   Code_KP_6                        : constant Key_Codes := To_Key_Code (Scan_Code_KP_6);
-   Code_KP_7                        : constant Key_Codes := To_Key_Code (Scan_Code_KP_7);
-   Code_KP_8                        : constant Key_Codes := To_Key_Code (Scan_Code_KP_8);
-   Code_KP_9                        : constant Key_Codes := To_Key_Code (Scan_Code_9);
-   Code_KP_0                        : constant Key_Codes := To_Key_Code (Scan_Code_0);
-   Code_KP_Period                   : constant Key_Codes := To_Key_Code (Scan_Code_Period);
+   Code_Num_Lock_Clear              : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Num_Lock_Clear);
+   Code_KP_Divide                   : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Divide);
+   Code_KP_Multiply                 : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Multiply);
+   Code_KP_Minus                    : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Minus);
+   Code_KP_Plus                     : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Plus);
+   Code_KP_Enter                    : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Enter);
+   Code_KP_1                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_1);
+   Code_KP_2                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_2);
+   Code_KP_3                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_3);
+   Code_KP_4                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_4);
+   Code_KP_5                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_5);
+   Code_KP_6                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_6);
+   Code_KP_7                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_7);
+   Code_KP_8                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_8);
+   Code_KP_9                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_9);
+   Code_KP_0                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_0);
+   Code_KP_Period                   : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Period);
 
-   Code_Application                 : constant Key_Codes := To_Key_Code (Scan_Code_Application);
-   Code_Power                       : constant Key_Codes := To_Key_Code (Scan_Code_Power);
-   Code_KP_Equals                   : constant Key_Codes := To_Key_Code (Scan_Code_KP_Equals);
-   Code_F13                         : constant Key_Codes := To_Key_Code (Scan_Code_F13);
-   Code_F14                         : constant Key_Codes := To_Key_Code (Scan_Code_F14);
-   Code_F15                         : constant Key_Codes := To_Key_Code (Scan_Code_F15);
-   Code_F16                         : constant Key_Codes := To_Key_Code (Scan_Code_F16);
-   Code_F17                         : constant Key_Codes := To_Key_Code (Scan_Code_F17);
-   Code_F18                         : constant Key_Codes := To_Key_Code (Scan_Code_F18);
-   Code_F19                         : constant Key_Codes := To_Key_Code (Scan_Code_F19);
-   Code_F20                         : constant Key_Codes := To_Key_Code (Scan_Code_F20);
-   Code_F21                         : constant Key_Codes := To_Key_Code (Scan_Code_F21);
-   Code_F22                         : constant Key_Codes := To_Key_Code (Scan_Code_F22);
-   Code_F23                         : constant Key_Codes := To_Key_Code (Scan_Code_F23);
-   Code_F24                         : constant Key_Codes := To_Key_Code (Scan_Code_F24);
-   Code_Execute                     : constant Key_Codes := To_Key_Code (Scan_Code_Execute);
-   Code_Help                        : constant Key_Codes := To_Key_Code (Scan_Code_Help);
-   Code_Menu                        : constant Key_Codes := To_Key_Code (Scan_Code_Menu);
-   Code_Select                      : constant Key_Codes := To_Key_Code (Scan_Code_Select);
-   Code_Stop                        : constant Key_Codes := To_Key_Code (Scan_Code_Stop);
-   Code_Again                       : constant Key_Codes := To_Key_Code (Scan_Code_Again);
-   Code_Undo                        : constant Key_Codes := To_Key_Code (Scan_Code_Undo);
-   Code_Cut                         : constant Key_Codes := To_Key_Code (Scan_Code_Cut);
-   Code_Copy                        : constant Key_Codes := To_Key_Code (Scan_Code_Copy);
-   Code_Paste                       : constant Key_Codes := To_Key_Code (Scan_Code_Paste);
-   Code_Find                        : constant Key_Codes := To_Key_Code (Scan_Code_Find);
-   Code_Mute                        : constant Key_Codes := To_Key_Code (Scan_Code_Mute);
-   Code_Volume_Up                   : constant Key_Codes := To_Key_Code (Scan_Code_Volume_Up);
-   Code_Volume_Down                 : constant Key_Codes := To_Key_Code (Scan_Code_Volume_Down);
-   Code_KP_Comma                    : constant Key_Codes := To_Key_Code (Scan_Code_KP_Comma);
-   Code_KP_Equals_AS400             : constant Key_Codes := To_Key_Code (Scan_Code_KP_Equals_AS400);
+   Code_Application                 : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Application);
+   Code_Power                       : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Power);
+   Code_KP_Equals                   : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Equals);
+   Code_F13                         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F13);
+   Code_F14                         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F14);
+   Code_F15                         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F15);
+   Code_F16                         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F16);
+   Code_F17                         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F17);
+   Code_F18                         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F18);
+   Code_F19                         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F19);
+   Code_F20                         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F20);
+   Code_F21                         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F21);
+   Code_F22                         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F22);
+   Code_F23                         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F23);
+   Code_F24                         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_F24);
+   Code_Execute                     : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Execute);
+   Code_Help                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Help);
+   Code_Menu                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Menu);
+   Code_Select                      : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Select);
+   Code_Stop                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Stop);
+   Code_Again                       : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Again);
+   Code_Undo                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Undo);
+   Code_Cut                         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Cut);
+   Code_Copy                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Copy);
+   Code_Paste                       : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Paste);
+   Code_Find                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Find);
+   Code_Mute                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Mute);
+   Code_Volume_Up                   : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Volume_Up);
+   Code_Volume_Down                 : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Volume_Down);
+   Code_KP_Comma                    : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Comma);
+   Code_KP_Equals_AS400             : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Equals_AS400);
 
-   Code_Alt_Erase                   : constant Key_Codes := To_Key_Code (Scan_Code_Alt_Erase);
-   Code_Sys_Req                     : constant Key_Codes := To_Key_Code (Scan_Code_Sys_Req);
-   Code_Cancel                      : constant Key_Codes := To_Key_Code (Scan_Code_Cancel);
-   Code_Clear                       : constant Key_Codes := To_Key_Code (Scan_Code_Clear);
-   Code_Prior                       : constant Key_Codes := To_Key_Code (Scan_Code_Prior);
-   Code_Return_2                    : constant Key_Codes := To_Key_Code (Scan_Code_Return_2);
-   Code_Separator                   : constant Key_Codes := To_Key_Code (Scan_Code_Separator);
-   Code_Out                         : constant Key_Codes := To_Key_Code (Scan_Code_Out);
-   Code_Oper                        : constant Key_Codes := To_Key_Code (Scan_Code_Oper);
-   Code_Clear_Again                 : constant Key_Codes := To_Key_Code (Scan_Code_Clear_Again);
-   Code_CR_Sel                      : constant Key_Codes := To_Key_Code (Scan_Code_CR_Sel);
-   Code_Ex_Sel                      : constant Key_Codes := To_Key_Code (Scan_Code_EX_Sel);
+   Code_Alt_Erase                   : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Alt_Erase);
+   Code_Sys_Req                     : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Sys_Req);
+   Code_Cancel                      : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Cancel);
+   Code_Clear                       : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Clear);
+   Code_Prior                       : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Prior);
+   Code_Return_2                    : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Return_2);
+   Code_Separator                   : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Separator);
+   Code_Out                         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Out);
+   Code_Oper                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Oper);
+   Code_Clear_Again                 : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Clear_Again);
+   Code_CR_Sel                      : constant Key_Codes := Internal_To_Key_Code (Scan_Code_CR_Sel);
+   Code_Ex_Sel                      : constant Key_Codes := Internal_To_Key_Code (Scan_Code_EX_Sel);
 
-   Code_KP_00                       : constant Key_Codes := To_Key_Code (Scan_Code_KP_00);
-   Code_KP_000                      : constant Key_Codes := To_Key_Code (Scan_Code_KP_000);
-   Code_Thousands_Separator         : constant Key_Codes := To_Key_Code (Scan_Code_Thousands_Separator);
-   Code_Decimal_Separator           : constant Key_Codes := To_Key_Code (Scan_Code_Decimal_Separator);
-   Code_Currency_Unit               : constant Key_Codes := To_Key_Code (Scan_Code_Currency_Unit);
-   Code_Currency_Subunit            : constant Key_Codes := To_Key_Code (Scan_Code_Currency_Subunit);
-   Code_KP_Left_Parenthesis         : constant Key_Codes := To_Key_Code (Scan_Code_KP_Left_Parenthesis);
-   Code_KP_Right_Parentheesis       : constant Key_Codes := To_Key_Code (Scan_Code_KP_Right_Parentheesis);
-   Code_KP_Left_Brace               : constant Key_Codes := To_Key_Code (Scan_Code_KP_Left_Brace);
-   Code_KP_Right_Brace              : constant Key_Codes := To_Key_Code (Scan_Code_KP_Right_Brace);
-   Code_KP_Tab                      : constant Key_Codes := To_Key_Code (Scan_Code_KP_Tab);
-   Code_KP_Backspace                : constant Key_Codes := To_Key_Code (Scan_Code_KP_Backspace);
-   Code_KP_A                        : constant Key_Codes := To_Key_Code (Scan_Code_KP_A);
-   Code_KP_B                        : constant Key_Codes := To_Key_Code (Scan_Code_KP_B);
-   Code_KP_C                        : constant Key_Codes := To_Key_Code (Scan_Code_KP_C);
-   Code_KP_D                        : constant Key_Codes := To_Key_Code (Scan_Code_KP_D);
-   Code_KP_E                        : constant Key_Codes := To_Key_Code (Scan_Code_KP_E);
-   Code_KP_F                        : constant Key_Codes := To_Key_Code (Scan_Code_KP_F);
-   Code_KP_XOR                      : constant Key_Codes := To_Key_Code (Scan_Code_KP_XOR);
-   Code_KP_Power                    : constant Key_Codes := To_Key_Code (Scan_Code_KP_Power);
-   Code_KP_Percent                  : constant Key_Codes := To_Key_Code (Scan_Code_KP_Percent);
-   Code_KP_Less                     : constant Key_Codes := To_Key_Code (Scan_Code_KP_Less);
-   Code_KP_Greater                  : constant Key_Codes := To_Key_Code (Scan_Code_KP_Greater);
-   Code_KP_Ampersand                : constant Key_Codes := To_Key_Code (Scan_Code_KP_Ampersand);
-   Code_KP_Double_Ampersand         : constant Key_Codes := To_Key_Code (Scan_Code_KP_Double_Ampersand);
-   Code_KP_Vertical_Bar             : constant Key_Codes := To_Key_Code (Scan_Code_KP_Vertical_Bar);
-   Code_KP_Double_Vertical_Bar      : constant Key_Codes := To_Key_Code (Scan_Code_KP_Double_Vertical_Bar);
-   Code_KP_Colon                    : constant Key_Codes := To_Key_Code (Scan_Code_KP_Colon);
-   Code_KP_Hash                     : constant Key_Codes := To_Key_Code (Scan_Code_KP_Hash);
-   Code_KP_Space                    : constant Key_Codes := To_Key_Code (Scan_Code_KP_Space);
-   Code_KP_At                       : constant Key_Codes := To_Key_Code (Scan_Code_KP_At);
-   Code_KP_Exclamation              : constant Key_Codes := To_Key_Code (Scan_Code_KP_Exclamation);
-   Code_KP_Memory_Store             : constant Key_Codes := To_Key_Code (Scan_Code_KP_Memory_Store);
-   Code_KP_Memory_Recall            : constant Key_Codes := To_Key_Code (Scan_Code_KP_Memory_Recall);
-   Code_KP_Memory_Clear             : constant Key_Codes := To_Key_Code (Scan_Code_KP_Memory_Clear);
-   Code_KP_Memory_Add               : constant Key_Codes := To_Key_Code (Scan_Code_KP_Memory_Add);
-   Code_KP_Memory_Subtract          : constant Key_Codes := To_Key_Code (Scan_Code_KP_Memory_Subtract);
-   Code_KP_Memory_Multiply          : constant Key_Codes := To_Key_Code (Scan_Code_KP_Memory_Multiply);
-   Code_KP_Memory_Divide            : constant Key_Codes := To_Key_Code (Scan_Code_KP_Memory_Divide);
-   Code_KP_Plus_Minus               : constant Key_Codes := To_Key_Code (Scan_Code_KP_Plus_Minus);
-   Code_KP_Clear                    : constant Key_Codes := To_Key_Code (Scan_Code_KP_Clear);
-   Code_KP_Clear_Entry              : constant Key_Codes := To_Key_Code (Scan_Code_KP_Clear_Entry);
-   Code_KP_Binary                   : constant Key_Codes := To_Key_Code (Scan_Code_KP_Binary);
-   Code_KP_Octal                    : constant Key_Codes := To_Key_Code (Scan_Code_KP_Octal);
-   Code_KP_Decimal                  : constant Key_Codes := To_Key_Code (Scan_Code_KP_Decimal);
-   Code_KP_Hexadecimal              : constant Key_Codes := To_Key_Code (Scan_Code_KP_Hexadecimal);
+   Code_KP_00                       : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_00);
+   Code_KP_000                      : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_000);
+   Code_Thousands_Separator         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Thousands_Separator);
+   Code_Decimal_Separator           : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Decimal_Separator);
+   Code_Currency_Unit               : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Currency_Unit);
+   Code_Currency_Subunit            : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Currency_Subunit);
+   Code_KP_Left_Parenthesis         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Left_Parenthesis);
+   Code_KP_Right_Parentheesis       : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Right_Parentheesis);
+   Code_KP_Left_Brace               : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Left_Brace);
+   Code_KP_Right_Brace              : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Right_Brace);
+   Code_KP_Tab                      : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Tab);
+   Code_KP_Backspace                : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Backspace);
+   Code_KP_A                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_A);
+   Code_KP_B                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_B);
+   Code_KP_C                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_C);
+   Code_KP_D                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_D);
+   Code_KP_E                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_E);
+   Code_KP_F                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_F);
+   Code_KP_XOR                      : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_XOR);
+   Code_KP_Power                    : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Power);
+   Code_KP_Percent                  : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Percent);
+   Code_KP_Less                     : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Less);
+   Code_KP_Greater                  : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Greater);
+   Code_KP_Ampersand                : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Ampersand);
+   Code_KP_Double_Ampersand         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Double_Ampersand);
+   Code_KP_Vertical_Bar             : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Vertical_Bar);
+   Code_KP_Double_Vertical_Bar      : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Double_Vertical_Bar);
+   Code_KP_Colon                    : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Colon);
+   Code_KP_Hash                     : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Hash);
+   Code_KP_Space                    : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Space);
+   Code_KP_At                       : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_At);
+   Code_KP_Exclamation              : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Exclamation);
+   Code_KP_Memory_Store             : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Memory_Store);
+   Code_KP_Memory_Recall            : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Memory_Recall);
+   Code_KP_Memory_Clear             : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Memory_Clear);
+   Code_KP_Memory_Add               : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Memory_Add);
+   Code_KP_Memory_Subtract          : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Memory_Subtract);
+   Code_KP_Memory_Multiply          : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Memory_Multiply);
+   Code_KP_Memory_Divide            : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Memory_Divide);
+   Code_KP_Plus_Minus               : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Plus_Minus);
+   Code_KP_Clear                    : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Clear);
+   Code_KP_Clear_Entry              : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Clear_Entry);
+   Code_KP_Binary                   : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Binary);
+   Code_KP_Octal                    : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Octal);
+   Code_KP_Decimal                  : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Decimal);
+   Code_KP_Hexadecimal              : constant Key_Codes := Internal_To_Key_Code (Scan_Code_KP_Hexadecimal);
 
-   Code_Left_Control                : constant Key_Codes := To_Key_Code (Scan_Code_Left_Control);
-   Code_Left_Shift                  : constant Key_Codes := To_Key_Code (Scan_Code_Left_Shift);
-   Code_Left_Alt                    : constant Key_Codes := To_Key_Code (Scan_Code_Left_Alt);
-   Code_Left_GUI                    : constant Key_Codes := To_Key_Code (Scan_Code_Left_GUI);
-   Code_Right_Control               : constant Key_Codes := To_Key_Code (Scan_Code_Right_Control);
-   Code_Right_Shift                 : constant Key_Codes := To_Key_Code (Scan_Code_Right_Shift);
-   Code_Right_Alt                   : constant Key_Codes := To_Key_Code (Scan_Code_Right_Alt);
-   Code_Right_GUI                   : constant Key_Codes := To_Key_Code (Scan_Code_Right_GUI);
+   Code_Left_Control                : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Left_Control);
+   Code_Left_Shift                  : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Left_Shift);
+   Code_Left_Alt                    : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Left_Alt);
+   Code_Left_GUI                    : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Left_GUI);
+   Code_Right_Control               : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Right_Control);
+   Code_Right_Shift                 : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Right_Shift);
+   Code_Right_Alt                   : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Right_Alt);
+   Code_Right_GUI                   : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Right_GUI);
 
-   Code_Mode                        : constant Key_Codes := To_Key_Code (Scan_Code_Mode);
+   Code_Mode                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Mode);
 
-   Code_Audio_Next                  : constant Key_Codes := To_Key_Code (Scan_Code_Audio_Next);
-   Code_Audio_Previous              : constant Key_Codes := To_Key_Code (Scan_Code_Audio_Previous);
-   Code_Audio_Stop                  : constant Key_Codes := To_Key_Code (Scan_Code_Audio_Stop);
-   Code_Audio_Play                  : constant Key_Codes := To_Key_Code (Scan_Code_Audio_Play);
-   Code_Audio_Mute                  : constant Key_Codes := To_Key_Code (Scan_Code_Audio_Mute);
-   Code_Media_Select                : constant Key_Codes := To_Key_Code (Scan_Code_Media_Select);
-   Code_WWW                         : constant Key_Codes := To_Key_Code (Scan_Code_WWW);
-   Code_Mail                        : constant Key_Codes := To_Key_Code (Scan_Code_Mail);
-   Code_Calculator                  : constant Key_Codes := To_Key_Code (Scan_Code_Calculator);
-   Code_Computer                    : constant Key_Codes := To_Key_Code (Scan_Code_Computer);
-   Code_AC_Search                   : constant Key_Codes := To_Key_Code (Scan_Code_AC_Search);
-   Code_AC_Home                     : constant Key_Codes := To_Key_Code (Scan_Code_AC_Home);
-   Code_AC_Back                     : constant Key_Codes := To_Key_Code (Scan_Code_AC_Back);
-   Code_AC_Forward                  : constant Key_Codes := To_Key_Code (Scan_Code_AC_Forward);
-   Code_AC_Stop                     : constant Key_Codes := To_Key_Code (Scan_Code_AC_Stop);
-   Code_AC_Refresh                  : constant Key_Codes := To_Key_Code (Scan_Code_AC_Refresh);
-   Code_AC_Bookmarks                : constant Key_Codes := To_Key_Code (Scan_Code_AC_Bookmarks);
+   Code_Audio_Next                  : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Audio_Next);
+   Code_Audio_Previous              : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Audio_Previous);
+   Code_Audio_Stop                  : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Audio_Stop);
+   Code_Audio_Play                  : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Audio_Play);
+   Code_Audio_Mute                  : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Audio_Mute);
+   Code_Media_Select                : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Media_Select);
+   Code_WWW                         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_WWW);
+   Code_Mail                        : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Mail);
+   Code_Calculator                  : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Calculator);
+   Code_Computer                    : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Computer);
+   Code_AC_Search                   : constant Key_Codes := Internal_To_Key_Code (Scan_Code_AC_Search);
+   Code_AC_Home                     : constant Key_Codes := Internal_To_Key_Code (Scan_Code_AC_Home);
+   Code_AC_Back                     : constant Key_Codes := Internal_To_Key_Code (Scan_Code_AC_Back);
+   Code_AC_Forward                  : constant Key_Codes := Internal_To_Key_Code (Scan_Code_AC_Forward);
+   Code_AC_Stop                     : constant Key_Codes := Internal_To_Key_Code (Scan_Code_AC_Stop);
+   Code_AC_Refresh                  : constant Key_Codes := Internal_To_Key_Code (Scan_Code_AC_Refresh);
+   Code_AC_Bookmarks                : constant Key_Codes := Internal_To_Key_Code (Scan_Code_AC_Bookmarks);
 
-   Code_Brightness_Down             : constant Key_Codes := To_Key_Code (Scan_Code_Brightness_Down);
-   Code_Brightness_Up               : constant Key_Codes := To_Key_Code (Scan_Code_Brightness_Up);
-   Code_Display_Switch              : constant Key_Codes := To_Key_Code (Scan_Code_Display_Switch);
-   Code_Illumination_Toggle         : constant Key_Codes := To_Key_Code (Scan_Code_Illumination_Toggle);
-   Code_Illumination_Down           : constant Key_Codes := To_Key_Code (Scan_Code_Illumination_Down);
-   Code_Illumination_Up             : constant Key_Codes := To_Key_Code (Scan_Code_Illumination_Up);
-   Code_Eject                       : constant Key_Codes := To_Key_Code (Scan_Code_Eject);
-   Code_Sleep                       : constant Key_Codes := To_Key_Code (Scan_Code_Sleep);
+   Code_Brightness_Down             : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Brightness_Down);
+   Code_Brightness_Up               : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Brightness_Up);
+   Code_Display_Switch              : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Display_Switch);
+   Code_Illumination_Toggle         : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Illumination_Toggle);
+   Code_Illumination_Down           : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Illumination_Down);
+   Code_Illumination_Up             : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Illumination_Up);
+   Code_Eject                       : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Eject);
+   Code_Sleep                       : constant Key_Codes := Internal_To_Key_Code (Scan_Code_Sleep);
+
+   function Value (Name : in String) return SDL.Events.Keyboards.Key_Codes with
+     Inline => True;
+
+   function Image (Key_Code : in SDL.Events.Keyboards.Key_Codes) return String with
+     Inline => True;
+
+   function To_Key_Code (Scan_Code : in SDL.Events.Keyboards.Scan_Codes) return SDL.Events.Keyboards.Key_Codes with
+     Inline => True;
+
+   function To_Scan_Code (Key_Code : in SDL.Events.Keyboards.Key_Codes) return SDL.Events.Keyboards.Scan_Codes with
+     Inline => True;
 
    -----------------------------------------------------------------------------------------------------------------
    --  Key modifiers.
@@ -594,6 +613,10 @@ package SDL.Events.Keyboards is
    Modifier_Num           : constant Key_Modifiers := 16#10_00#;
    Modifier_Caps          : constant Key_Modifiers := 16#20_00#;
    Modifier_Mode          : constant Key_Modifiers := 16#40_00#;
+   Modifier_Control       : constant Key_Modifiers := Modifier_Left_Control or Modifier_Right_Control;
+   Modifier_Shift         : constant Key_Modifiers := Modifier_Left_Shift or Modifier_Right_Shift;
+   Modifier_Alt           : constant Key_Modifiers := Modifier_Left_Alt or Modifier_Right_Alt;
+   Modifier_GUI           : constant Key_Modifiers := Modifier_Left_GUI or Modifier_Right_GUI;
    Modifier_Reserved      : constant Key_Modifiers := 16#80_00#;
 
    type Key_Syms is
