@@ -24,8 +24,6 @@ library project SDLAda is
          for Library_Kind use "relocatable";
    end case;
 
-   for Excluded_Source_Files use ("sdl-video-textures-pixels.ads");
-
    package Compiler is
       C_Switches   := ("-ffunction-sections", "-fdata-sections");
       Ada_Switches := ("-ffunction-sections", "-fdata-sections",
