@@ -44,4 +44,8 @@ private package SDL.C_Pointers is
    type GL_Contexts is null record;
    type GL_Context_Pointer is access all GL_Contexts with
      Convention => C;
+
+   type Joysticks is null record;
+   type Joystick_Pointer is access all Joysticks with
+     Convention => C;
 end SDL.C_Pointers;
