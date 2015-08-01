@@ -1,7 +1,7 @@
 SDLAda
 ======
 
-This is a new variable thickness Ada 2012 binding to [SDL 2.x.y](http://www.libsdl.org). This means that things are
+This is a new variable thickness Ada 2012 binding to SDL 2.x.y (http://www.libsdl.org). This means that things are
 wrapped when they need to be into a thicker binding and those things that can just be imported, are.
 
 There will still be a need to use conditional compilation for the various platforms as there will be
@@ -26,7 +26,12 @@ SDL_PLATFORM = Can be set to one of the following values: linux, windows, macosx
 SDL_MODE     = Can be one of: debug or release. Defaults to debug.
 SDL_BUILD    = Can be one of: static or shared. Defaults to a statically built library.
 
-e.g. SDL_PLATFORM=linux SDL_BUILD=static SDL_MODE=release make
+e.g. make SDL_PLATFORM=linux SDL_BUILD=static SDL_MODE=release
+
+Installation
+============
+
+e.g. make SDL_PLATFORM=linux SDL_BUILD=static SDL_MODE=release DESTDIR=/myprefix install
 
 Copyright
 =========
@@ -50,10 +55,10 @@ Native_Windows - Need a a set of packages which define this type for each platfo
                  make to specify whether to use the SDLAda one or to use a package that renames a type from another
                  binding. So, if there is a windows binding, rename the HWND from there. Same for X11/Wayland/etc.
 
-(Current version)[http://www.semver.org]
+[Current version](http://www.semver.org)
 ========================================
 
-v2.0.0
+v2.1.0
 
 SDL version tested against
 ==========================
