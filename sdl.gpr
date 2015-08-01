@@ -28,7 +28,8 @@ library project SDL is
       C_Switches   := ("-ffunction-sections", "-fdata-sections");
       Ada_Switches := ("-ffunction-sections", "-fdata-sections",
                        "-gnat2012", "-gnata", "-gnato", "-gnatE",
-                       "-gnaty", "-gnaty-s", "-gnatyO", "-gnatyM120", "-gnatyO");
+                       "-gnaty", "-gnaty-s", "-gnatyO", "-gnatyM120", "-gnatyO",
+                       "-gnatwu");
 
       case Mode is
          when "debug" =>
