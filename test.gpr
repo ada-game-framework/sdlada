@@ -6,7 +6,7 @@ project Test is
    for Object_Dir use "build_test/.obj";
    for Exec_Dir use "build_test";
    for Main use ("test.adb", "version.adb", "platform.adb", "error.adb", "libraries.adb", "clipboard.adb",
-                 "stream.adb");
+                 "stream.adb", "stream2.adb");
 
    package Compiler renames SDL.Compiler;
 
