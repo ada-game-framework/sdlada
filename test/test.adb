@@ -4,6 +4,7 @@ with SDL.Events.Events;
 with SDL.Events.Keyboards;
 with SDL.Events.Joysticks;
 with SDL.Inputs.Joysticks.Makers;
+with SDL.Events.Mice;
 with SDL.Log;
 with SDL.Video.Windows;
 with SDL.Video.Windows.Makers;
@@ -145,6 +146,24 @@ begin
                           "): Axis: " & SDL.Events.Joysticks.Axes'Image (Event.Joystick_Axis.Axis) &
                           "    Value: " & SDL.Events.Joysticks.Axes_Values'Image (Event.Joystick_Axis.Value));
 
+                  when SDL.Events.Mice.Motion =>
+                     SDL.Log.Put_Debug
+                       ("Mouse motion event (ID = " & SDL.Events.Mice.IDs'Image (Event.Mouse_Motion.Which) &
+                          "): (X => " & SDL.Events.Mice.Window_Coordinates'Image (Event.Mouse_Motion.X) &
+                          "): (Y => " & SDL.Events.Mice.Window_Coordinates'Image (Event.Mouse_Motion.Y) &
+                          "): (X Rel => " & SDL.Events.Mice.Movement_Values'Image (Event.Mouse_Motion.X_Relative) &
+                          ", Y Rel => " & SDL.Events.Mice.Movement_Values'Image (Event.Mouse_Motion.Y_Relative) &
+                          ")");
+
+                  when SDL.Events.Mice.Button_Up | SDL.Events.Mice.Button_Down =>
+                     SDL.Log.Put_Debug
+                       ("Mouse button event (ID = " & SDL.Events.Mice.IDs'Image (Event.Mouse_Motion.Which) &
+                          "): Button = " & SDL.Events.Mice.Buttons'Image (Event.Mouse_Button.Button) &
+                          "    State: " & SDL.Events.Button_State'Image (Event.Mouse_Button.State) &
+                          "    Clicks: " & SDL.Events.Mice.Button_Clicks'Image (Event.Mouse_Button.Clicks) &
+                          "    (X => " & SDL.Events.Mice.Window_Coordinates'Image (Event.Mouse_Button.X) &
+                          ", Y => " & SDL.Events.Mice.Window_Coordinates'Image (Event.Mouse_Button.Y) &
+                          ")");
                   when others =>
                      null;
                end case;
