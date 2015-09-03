@@ -96,6 +96,7 @@ package SDL.Events.Mice is
          Event_Type : Event_Types;  --  Will be set to Motion.
          Time_Stamp : Time_Stamps;
 
+         Window     : SDL.Video.Windows.ID;
          Which      : IDs;
          Mask       : Button_Masks;
          X          : Window_Coordinates;
@@ -114,6 +115,7 @@ package SDL.Events.Mice is
          Event_Type : Event_Types;  --  Will be set to Button_Up or Button_Down.
          Time_Stamp : Time_Stamps;
 
+         Window     : SDL.Video.Windows.ID;
          Which      : IDs;
          Button     : Buttons;
          State      : Button_State;
@@ -133,6 +135,7 @@ package SDL.Events.Mice is
          Event_Type : Event_Types;  --  Will be set to Wheel.
          Time_Stamp : Time_Stamps;
 
+         Window     : SDL.Video.Windows.ID;
          Which      : IDs;
          X          : Wheel_Values;
          Y          : Wheel_Values;
@@ -144,12 +147,13 @@ private
          Event_Type at 0 * SDL.Word range  0 .. 31;
          Time_Stamp at 1 * SDL.Word range  0 .. 31;
 
-         Which      at 2 * SDL.Word range  0 .. 31;
-         Mask       at 3 * SDL.Word range  0 .. 31;
-         X          at 4 * SDL.Word range  0 .. 31;
-         Y          at 5 * SDL.Word range  0 .. 31;
-         X_Relative at 6 * SDL.Word range  0 .. 31;
-         Y_Relative at 7 * SDL.Word range  0 .. 31;
+         Window     at 2 * SDL.Word range  0 .. 31;
+         Which      at 3 * SDL.Word range  0 .. 31;
+         Mask       at 4 * SDL.Word range  0 .. 31;
+         X          at 5 * SDL.Word range  0 .. 31;
+         Y          at 6 * SDL.Word range  0 .. 31;
+         X_Relative at 7 * SDL.Word range  0 .. 31;
+         Y_Relative at 8 * SDL.Word range  0 .. 31;
       end record;
 
    for Button_Events use
@@ -157,13 +161,14 @@ private
          Event_Type at 0 * SDL.Word range  0 .. 31;
          Time_Stamp at 1 * SDL.Word range  0 .. 31;
 
-         Which      at 2 * SDL.Word range  0 .. 31;
-         Button     at 3 * SDL.Word range  0 ..  7;
-         State      at 3 * SDL.Word range  8 .. 15;
-         Clicks     at 3 * SDL.Word range 16 .. 23;
-         Padding_1  at 3 * SDL.Word range 24 .. 31;
-         X          at 4 * SDL.Word range  0 .. 31;
-         Y          at 5 * SDL.Word range  0 .. 31;
+         Window     at 2 * SDL.Word range  0 .. 31;
+         Which      at 3 * SDL.Word range  0 .. 31;
+         Button     at 4 * SDL.Word range  0 ..  7;
+         State      at 4 * SDL.Word range  8 .. 15;
+         Clicks     at 4 * SDL.Word range 16 .. 23;
+         Padding_1  at 4 * SDL.Word range 24 .. 31;
+         X          at 5 * SDL.Word range  0 .. 31;
+         Y          at 6 * SDL.Word range  0 .. 31;
       end record;
 
    for Wheel_Events use
@@ -171,8 +176,9 @@ private
          Event_Type at 0 * SDL.Word range  0 .. 31;
          Time_Stamp at 1 * SDL.Word range  0 .. 31;
 
-         Which      at 2 * SDL.Word range  0 .. 31;
-         X          at 3 * SDL.Word range  0 .. 31;
-         Y          at 4 * SDL.Word range  0 .. 31;
+         Window     at 2 * SDL.Word range  0 .. 31;
+         Which      at 3 * SDL.Word range  0 .. 31;
+         X          at 4 * SDL.Word range  0 .. 31;
+         Y          at 5 * SDL.Word range  0 .. 31;
       end record;
 end SDL.Events.Mice;
