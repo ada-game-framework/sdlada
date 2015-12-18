@@ -1,4 +1,4 @@
-with "sdl";
+with "sdlada";
 with "aunit";
 
 project Unit_Tests is
