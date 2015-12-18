@@ -55,7 +55,7 @@ procedure Stream is
    procedure Load_Moose_Data (Data : out Moose_Frame_Data_Array) is
       package Dirs renames Ada.Directories;
 
-      Actual_Name : String := "test/moose.dat";
+      Actual_Name : String := "../../test/moose.dat";
       Size        : Dirs.File_Size := Dirs.Size (Actual_Name);
       Data_File   : Ada.Text_IO.File_Type;
       Stream      : Ada.Text_IO.Text_Streams.Stream_Access := null;
