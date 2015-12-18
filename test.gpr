@@ -1,4 +1,4 @@
-with "sdl.gpr";
+with "sdlada.gpr";
 
 project Test is
 
@@ -8,7 +8,7 @@ project Test is
    for Main use ("test.adb", "version.adb", "platform.adb", "error.adb", "libraries.adb", "clipboard.adb",
                  "stream.adb", "stream2.adb");
 
-   package Compiler renames SDL.Compiler;
+   package Compiler renames SDLAda.Compiler;
 
    --     package Builder is
    --        for Default_Switches ("Ada") use ("-gnat2012", "-gnata"); --, "-gnatG");
