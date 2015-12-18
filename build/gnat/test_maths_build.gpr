@@ -1,19 +1,25 @@
 library project Test_Maths_Build is
-  Version := "1";
+   type Mode_Type is ("debug", "release");
+   type Build_Type is ("static", "shared");
 
-  for Languages    use ("Ada", "C");
-  for Source_Dirs  use ("test/maths/");
-  for Library_Name use "testmaths";
-  for Object_Dir   use "build_test/.obj";
-  for Library_Dir  use "build_test";
-  for Library_Kind use "dynamic";
+   Mode     : Mode_Type     := external ("SDL_MODE", "debug");
+   Build    : Build_Type    := external ("SDL_BUILD", "static");
 
-  package Builder is
-     for Default_Switches ("Ada") use ("-gnat2012", "-gnata");
-  end Builder;
+   Version := "1";
 
-  package Compiler is
---     for Default_Switches ("Ada") use ("-O0", "-g", "-ffunction-sections", "-fdata-sections", "-fPIC");
-     for Default_Switches ("Ada") use ("-O0", "-g", "-fPIC");
-  end Compiler;
+   for Languages    use ("Ada", "C");
+   for Source_Dirs  use ("../../test/maths/");
+   for Library_Name use "testmaths";
+   for Object_Dir   use "gen/" & Build & "/lib/test/.obj";
+   for Library_Dir  use "gen/" & Build & "/lib/test";
+   for Library_Kind use "dynamic";
+
+   package Builder is
+      for Default_Switches ("Ada") use ("-gnat2012", "-gnata");
+   end Builder;
+
+   package Compiler is
+      --     for Default_Switches ("Ada") use ("-O0", "-g", "-ffunction-sections", "-fdata-sections", "-fPIC");
+      for Default_Switches ("Ada") use ("-O0", "-g", "-fPIC");
+   end Compiler;
 end Test_Maths_Build;

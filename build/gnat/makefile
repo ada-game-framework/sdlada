@@ -7,7 +7,21 @@ INSTALL		=	install
 
 SDL_MODE	?=	debug
 
+SRC_DIR		=	../..
+
 SRCS		=	src/sdl.ads
+
+TESTS_SRCS	=	$(SRC_DIR)/test/clipboard.adb \
+			$(SRC_DIR)/test/error.adb \
+			$(SRC_DIR)/test/libraries.adb \
+			$(SRC_DIR)/test/platform.adb \
+			$(SRC_DIR)/test/stream.adb \
+			$(SRC_DIR)/test/stream2.adb \
+			$(SRC_DIR)/test/test.adb \
+			$(SRC_DIR)/test/version.adb \
+			$(SRC_DIR)/test/maths/maths.ad[sb] \
+			$(SRC_DIR)/test/maths/maths.c
+
 
 ifeq ($(SDL_BUILD),)
 SDL_BUILD	=	static
@@ -31,32 +45,34 @@ all: tools $(LIB_NAME) tests
 #####################################################################################
 # SDL library
 
-$(LIB_NAME): sdlada.gpr gen/sdl-events-keyboards.ads
+$(LIB_NAME): sdlada.gpr gen/src/sdl-events-keyboards.ads
 	$(GPRMAKE) -p -gnat2012 -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
 		-Psdlada.gpr -cargs `sdl2-config --cflags`
 
 #####################################################################################
 # Tools
 
-tools: gen/sdl-events-keyboards.ads
+tools: gen/src/sdl-events-keyboards.ads
 
-gen/sdl-events-keyboards.ads: build_tools/gen_keyboard
-	./build_tools/gen_keyboard > $@
+gen/src/sdl-events-keyboards.ads: gen/tools/gen_keyboard
+	./gen/tools/gen_keyboard > $@
 
-build_tools/gen_keyboard:
+gen/tools/gen_keyboard:
 	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptools.gpr
 
 #####################################################################################
 # Tests
 
-tests: $(LIB_NAME) build_test/test
+tests: $(LIB_NAME) tests.gpr gen/$(SDL_BUILD)/lib/test/test
 
-build_test/test: build_test/libmaths.so
-	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptest.gpr -largs $(SDL2_LIBS)
+.PHONY: $(TESTS_SRCS)
+
+tests.gpr: $(TESTS_SRCS) gen/$(SDL_BUILD)/lib/test/libtestmaths.so
+	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptests.gpr -largs $(SDL2_LIBS)
 
 # Maths library
 
-build_test/libmaths.so:
+gen/$(SDL_BUILD)/lib/test/libtestmaths.so: $(SRC_DIR)/test/maths/maths.ad[sb] $(SRC_DIR)/test/maths/maths.c
 	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptest_maths_build.gpr
 
 #####################################################################################
