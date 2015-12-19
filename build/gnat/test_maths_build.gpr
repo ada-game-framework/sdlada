@@ -10,8 +10,8 @@ library project Test_Maths_Build is
    for Languages    use ("Ada", "C");
    for Source_Dirs  use ("../../test/maths/");
    for Library_Name use "testmaths";
-   for Object_Dir   use "gen/" & Build & "/lib/test/.obj";
-   for Library_Dir  use "gen/" & Build & "/lib/test";
+   for Object_Dir   use "gen/" & Build & "." & Mode &  "/lib/test/.obj";
+   for Library_Dir  use "gen/" & Build & "." & Mode &  "/lib/test";
    for Library_Kind use "dynamic";
 
    package Builder is

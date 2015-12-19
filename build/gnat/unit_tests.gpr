@@ -4,8 +4,8 @@ with "aunit";
 project Unit_Tests is
    for Languages   use ("Ada", "C");
    for Source_Dirs use ("../../unit_tests");
-   for Object_Dir  use "gen/" & SDLAda.Build & "/lib/unit_tests/.obj";
-   for Exec_Dir    use "gen/" & SDLAda.Build & "/lib/unit_tests";
+   for Object_Dir  use "gen/" & SDLAda.Build & "." & SDLAda.Mode &  "/lib/unit_tests/.obj";
+   for Exec_Dir    use "gen/" & SDLAda.Build & "." & SDLAda.Mode &  "/lib/unit_tests";
    for Main        use ("unit_tests.adb");
 
    -- package Ide is
