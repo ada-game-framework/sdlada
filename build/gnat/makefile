@@ -22,9 +22,14 @@ TESTS_SRCS	=	$(SRC_DIR)/test/clipboard.adb \
 			$(SRC_DIR)/test/maths/maths.ad[sb] \
 			$(SRC_DIR)/test/maths/maths.c
 
+GEN_KB		=	gen/src/sdl-events-keyboards.ads
 
 ifeq ($(SDL_BUILD),)
 SDL_BUILD	=	static
+endif
+
+ifeq ($(SDL_MODE),)
+SDL_MODE	=	debug
 endif
 
 ifeq ($(SDL_BUILD),static)
@@ -45,35 +50,58 @@ all: tools $(LIB_NAME) tests
 #####################################################################################
 # SDL library
 
-$(LIB_NAME): sdlada.gpr gen/src/sdl-events-keyboards.ads
+$(LIB_NAME): sdlada.gpr $(GEN_KB)
 	$(GPRMAKE) -p -gnat2012 -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
 		-Psdlada.gpr -cargs `sdl2-config --cflags`
+
+.PHONY: clean-lib
+
+clean-lib:
+	$(GPRCLEAN) -Psdlada.gpr -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM)
 
 #####################################################################################
 # Tools
 
-tools: gen/src/sdl-events-keyboards.ads
+tools: $(GEN_KB)
 
-gen/src/sdl-events-keyboards.ads: gen/tools/gen_keyboard
+$(GEN_KB): gen/tools/gen_keyboard
 	./gen/tools/gen_keyboard > $@
 
 gen/tools/gen_keyboard:
-	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptools.gpr
+	$(GPRMAKE) -p -gnat2012 -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
+		-Ptools.gpr
+
+.PHONY: clean-kb clean-tools
+
+clean-kb:
+	-rm $(GEN_KB)
+
+clean-tools:
+
+	$(GPRCLEAN) -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptools.gpr
 
 #####################################################################################
 # Tests
 
-tests: $(LIB_NAME) tests.gpr gen/$(SDL_BUILD)/lib/test/test
+tests: $(LIB_NAME) tests.gpr $(TESTS_SRCS)
 
 .PHONY: $(TESTS_SRCS)
 
 tests.gpr: $(TESTS_SRCS) gen/$(SDL_BUILD)/lib/test/libtestmaths.so
-	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptests.gpr -largs $(SDL2_LIBS)
+	$(GPRMAKE) -p -gnat2012 -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
+		-Ptests.gpr -largs $(SDL2_LIBS)
 
 # Maths library
 
 gen/$(SDL_BUILD)/lib/test/libtestmaths.so: $(SRC_DIR)/test/maths/maths.ad[sb] $(SRC_DIR)/test/maths/maths.c
-	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptest_maths_build.gpr
+	$(GPRMAKE) -p -gnat2012 -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
+		-Ptest_maths_build.gpr
+
+.PHONY: clean-tests
+
+clean-tests:
+	$(GPRCLEAN) -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptests.gpr
+	$(GPRCLEAN) -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptest_maths_build.gpr
 
 #####################################################################################
 # Unit tests
@@ -81,8 +109,13 @@ gen/$(SDL_BUILD)/lib/test/libtestmaths.so: $(SRC_DIR)/test/maths/maths.ad[sb] $(
 unit_tests: $(LIB_NAME) build_unit_tests/unit_tests
 
 build_unit_tests/unit_tests:
-	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Punit_tests.gpr \
-		-largs $(SDL2_LIBS)
+	$(GPRMAKE) -p -gnat2012 -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
+		-Punit_tests.gpr -largs $(SDL2_LIBS)
+
+.PHONY: clean-unit_tests
+
+clean-unit_tests:
+	-$(GPRCLEAN) -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Punit_tests.gpr
 
 #####################################################################################
 .PHONY: install
@@ -95,9 +128,6 @@ install: all
 
 #####################################################################################
 
-clean:
-	$(GPRCLEAN) -Psdlada.gpr -XSDL_PLATFORM=$(SDL_PLATFORM)
-	$(GPRCLEAN) -Ptest_maths_build.gpr -XSDL_PLATFORM=$(SDL_PLATFORM)
-	$(GPRCLEAN) -Ptest.gpr -XSDL_PLATFORM=$(SDL_PLATFORM)
-	$(GPRCLEAN) -Punit_tests.gpr -XSDL_PLATFORM=$(SDL_PLATFORM)
-	$(GPRCLEAN) -Ptools.gpr -XSDL_PLATFORM=$(SDL_PLATFORM)
+.PHONY: clean
+
+clean: clean-kb clean-tools clean-tests clean-unit_tests clean-lib
