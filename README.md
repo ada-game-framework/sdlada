@@ -29,13 +29,14 @@ SDL_BUILD    = Can be one of: static or shared. Defaults to a statically built l
 ```
 cd build/gnat
 make SDL_PLATFORM=linux SDL_BUILD=static SDL_MODE=release
-make SDL_PLATFORM=linux SDL_BUILD=static SDL_MODE=release DESTDIT=<some dir> install
 ```
 
 Installation
 ============
 
-e.g. make SDL_PLATFORM=linux SDL_BUILD=static SDL_MODE=release DESTDIR=/myprefix install
+```
+make SDL_PLATFORM=linux SDL_BUILD=static SDL_MODE=release DESTDIT=/myprefix install
+```
 
 Copyright
 =========
