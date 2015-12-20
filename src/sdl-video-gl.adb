@@ -569,6 +569,53 @@ package body SDL.Video.GL is
       end if;
    end Set_Current;
 
+   procedure Bind_Texture (Texture : in SDL.Video.Textures.Texture) is
+      function SDL_GL_Bind_Texture (T : in SDL.C_Pointers.Texture_Pointer) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GL_BindTexture";
+   begin
+      if SDL_GL_Bind_Texture (Get_Internal_Texture (Texture)) /= SDL.Success then
+         raise SDL_GL_Error with "Cannot bind texture, unsupported operation in this context.";
+      end if;
+   end Bind_Texture;
+
+   procedure Bind_Texture (Texture : in SDL.Video.Textures.Texture; Size : out SDL.Video.Rectangles.Size) is
+      function SDL_GL_Bind_Texture (T : in SDL.C_Pointers.Texture_Pointer; W, H : out C.int) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GL_BindTexture";
+   begin
+      if SDL_GL_Bind_Texture (Get_Internal_Texture (Texture), Size.Width, Size.Height) /= SDL.Success then
+         raise SDL_GL_Error with "Cannot bind texture, unsupported operation in this context.";
+      end if;
+   end Bind_Texture;
+
+   procedure Unbind_Texture (Texture : in SDL.Video.Textures.Texture) is
+      function SDL_GL_Unbind_Texture (T : in SDL.C_Pointers.Texture_Pointer) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GL_UnbindTexture";
+   begin
+      if SDL_GL_Unbind_Texture (Get_Internal_Texture (Texture)) /= SDL.Success then
+         raise SDL_GL_Error with "Cannot unbind texture, unsupported operation in this context.";
+      end if;
+   end Unbind_Texture;
+
+   function Get_Sub_Program (Name : in String) return Access_To_Sub_Program is
+      function SDL_GL_Get_Proc_Address (P : in C.Strings.chars_ptr) return Access_To_Sub_Program with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GL_GetProcAddress";
+
+      C_Name_Str  : C.Strings.chars_ptr   := C.Strings.New_String (Name);
+      Sub_Program : Access_To_Sub_Program := SDL_GL_Get_Proc_Address (C_Name_Str);
+   begin
+      C.Strings.Free (C_Name_Str);
+
+      return Sub_Program;
+   end Get_Sub_Program;
+
    function Supports (Extension : in String) return Boolean is
       function SDL_GL_Extension_Supported (E : in C.Strings.chars_ptr) return SDL_Bool with
         Import        => True,
@@ -630,4 +677,29 @@ package body SDL.Video.GL is
    begin
       SDL_GL_Swap_Window (Get_Internal_Window (Window));
    end Swap;
+
+   procedure Load_Library (Path : in String) is
+      function SDL_GL_Load_Library (P : in C.Strings.chars_ptr) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GL_LoadLibrary";
+
+      C_Name_Str : C.Strings.chars_ptr := C.Strings.New_String (Path);
+      Result     : C.int               := SDL_GL_Load_Library (C_Name_Str);
+   begin
+      C.Strings.Free (C_Name_Str);
+
+      if Result /= SDL.Success then
+         raise SDL_GL_Error with "Unable to load OpenGL library """ & Path & '"';
+      end if;
+   end Load_Library;
+
+   procedure Unload_Library is
+      procedure SDL_GL_Unload_Library with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GL_UnloadLibrary";
+   begin
+      SDL_GL_Unload_Library;
+   end Unload_Library;
 end SDL.Video.GL;
