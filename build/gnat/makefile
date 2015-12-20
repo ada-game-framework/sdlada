@@ -124,7 +124,6 @@ install: all
 	$(GPRINSTALL) --prefix=$(DESTDIR)/sdlada --build-name=$(SDL_MODE).$(SDL_BUILD) -p -f \
 		-XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
 		-Psdlada.gpr
-	$(INSTALL) --mode=0644 sdl_version.gpr $(DESTDIR)/sdlada/share/gpr/
 
 #####################################################################################
 
