@@ -63,7 +63,7 @@ Native_Windows - Need a a set of packages which define this type for each platfo
 [Current version](http://www.semver.org)
 ========================================
 
-v2.1.3
+v2.1.4
 
 SDL version tested against
 ==========================
@@ -163,7 +163,7 @@ SDL_FreePalette                       |   y   |
 SDL_FreeRW                            |   n   |
 SDL_FreeSurface                       |   n   |
 SDL_FreeWAV                           |   n   |
-SDL_GL_BindTexture                    |   n   |
+SDL_GL_BindTexture                    |   y   |
 SDL_GL_CreateContext                  |   y   |
 SDL_GL_DeleteContext                  |   y   |
 SDL_GL_ExtensionSupported             |   y   |
@@ -179,7 +179,7 @@ SDL_GL_ResetAttributes                |   y   |
 SDL_GL_SetAttribute                   |   y   |
 SDL_GL_SetSwapInterval                |   y   |
 SDL_GL_SwapWindow                     |   y   |
-SDL_GL_UnbindTexture                  |   n   |
+SDL_GL_UnbindTexture                  |   y   |
 SDL_GL_UnloadLibrary                  |   y   |
 SDL_GameControllerAddMapping          |   n   |
 SDL_GameControllerAddMappingsFromFile |   n   |
