@@ -41,7 +41,7 @@ make SDL_PLATFORM=linux SDL_BUILD=static SDL_MODE=release DESTDIT=/myprefix inst
 Copyright
 =========
 
-Copyright (C) 2013-2015 by Luke A. Guest
+Copyright (C) 2013-2016 by Luke A. Guest
 
 WARNING!!!
 ==========
@@ -56,19 +56,15 @@ Anything listed here is a question of whether it's required.
 
 * Do we need to hook into the Assert module? To raise an exception maybe?
 
-Native_Windows - Need a a set of packages which define this type for each platform. There should be a flag passed to
-                 make to specify whether to use the SDLAda one or to use a package that renames a type from another
-                 binding. So, if there is a windows binding, rename the HWND from there. Same for X11/Wayland/etc.
-
 [Current version](http://www.semver.org)
 ========================================
 
-v2.1.4
+v2.1.5
 
 SDL version tested against
 ==========================
 
-2.0.3
+2.0.4
 
 Bound functions
 ===============
@@ -298,7 +294,7 @@ SDL_GetWindowPosition                 |   y   |
 SDL_GetWindowSize                     |   y   |
 SDL_GetWindowSurface                  |   y   |
 SDL_GetWindowTitle                    |   y   |
-SDL_GetWindowWMInfo                   |   n   |
+SDL_GetWindowWMInfo                   |   y   |
 SDL_HapticClose                       |   n   |
 SDL_HapticDestroyEffect               |   n   |
 SDL_HapticEffectSupported             |   n   |
