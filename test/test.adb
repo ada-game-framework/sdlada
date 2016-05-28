@@ -8,6 +8,7 @@ with SDL.Events.Mice;
 with SDL.Log;
 with SDL.Video.Windows;
 with SDL.Video.Windows.Makers;
+with SDL.Video.Windows.Manager;
 with SDL.Versions;
 with System;
 
@@ -113,6 +114,20 @@ begin
                   Stick.Close;
                end if;
             end loop;
+         end if;
+      end;
+
+      --  Window manager.
+      declare
+         Info : SDL.Video.Windows.Manager.WM_Info;
+      begin
+         Info.Version := SDL.Versions.Compiled;
+
+         if SDL.Video.Windows.Manager.Get_WM_Info (W, Info) = True then
+            SDL.Log.Put_Debug ("Window manager in use: " & SDL.Video.Windows.Manager.WM_Types'Image (Info.Sub_System));
+         else
+            SDL.Log.Put_Debug ("Cannot get window manager info.");
+            SDL.Log.Put_Debug ("Error                : " & SDL.Error.Get);
          end if;
       end;
 
