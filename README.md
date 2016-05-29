@@ -59,7 +59,7 @@ Anything listed here is a question of whether it's required.
 [Current version](http://www.semver.org)
 ========================================
 
-v2.1.5
+v2.1.7
 
 SDL version tested against
 ==========================
