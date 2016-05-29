@@ -20,30 +20,31 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
+with Interfaces.C;
+
 package body SDL.Events.Joysticks is
-   type Event_States is (Query,
-                         Ignore,
-                         Enable) with
-     Convention => C;
+   package C renames Interfaces.C;
 
-   for Event_States use (Query  => -1,
-                         Ignore => 0,
-                         Enable => 1);
+   use type C.int;
 
-   function SDL_Joystick_Event_State (State : in Event_States) return SDL_Bool with
-     Import => True,
-     Convention => C,
+   Query  : constant C.int := -1;
+   Ignore : constant C.int :=  0;
+   Enable : constant C.int :=  1;
+
+   function SDL_Joystick_Event_State (State : in C.int) return C.int with
+     Import        => True,
+     Convention    => C,
      External_Name => "SDL_JoystickEventState";
 
-   procedure SDL_Joystick_Event_State (State : in Event_States) with
-     Import => True,
-     Convention => C,
+   procedure SDL_Joystick_Event_State (State : in C.int) with
+     Import        => True,
+     Convention    => C,
      External_Name => "SDL_JoystickEventState";
 
    function Is_Polling_Enabled return Boolean is
-      Result : SDL_Bool := SDL_Joystick_Event_State (Query);
+      Result : C.int := SDL_Joystick_Event_State (Query);
    begin
-      if Result = SDL_True then
+      if Result = Enable then
          return True;
       end if;
 
@@ -57,6 +58,6 @@ package body SDL.Events.Joysticks is
 
    procedure Disable_Polling is
    begin
-      SDL_Joystick_Event_State (Enable);
+      SDL_Joystick_Event_State (Ignore);
    end Disable_Polling;
 end SDL.Events.Joysticks;

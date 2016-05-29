@@ -24,8 +24,6 @@
 --
 --  Joystick specific events.
 --------------------------------------------------------------------------------------------------------------------
-with Interfaces;
-
 package SDL.Events.Joysticks is
    --  Joystick events.
    Axis_Motion       : constant Event_Types := 16#0000_0600#;
