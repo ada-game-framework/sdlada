@@ -30,8 +30,8 @@ package SDL.Inputs.Joysticks.Game_Controllers is
 
    type Hat_Bindings is
       record
-         Hat : SDL.Events.Joysticks.Hats;
-         --  TODO: Mask : int-  What is this?
+         Hat  : SDL.Events.Joysticks.Hats;
+         Mask : SDL.Events.Joysticks.Hat_Positions;
       end record with
         Convention => C;
 
