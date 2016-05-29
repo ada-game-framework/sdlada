@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------------------------------------------
---  Copyright (c) 2014-2015 Luke A. Guest
+--  Copyright (c) 2014 Luke A. Guest
 --
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
@@ -20,36 +20,30 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
---  SDL.C_Pointers
---
---  This private package contains all the types representing the internal C pointers for various objects.
---------------------------------------------------------------------------------------------------------------------
-private package SDL.C_Pointers is
-   type Windows is null record;
-   type Windows_Pointer is access all Windows with
-     Convention => C;
+with Interfaces.C;
+private with SDL.C_Pointers;
 
-   type Renderers is null record;
-   type Renderer_Pointer is access all Renderers with
-     Convention => C;
+package body SDL.Inputs.Joysticks.Game_Controllers.Makers is
+   package C renames Interfaces.C;
 
-   type Surfaces is null record;
-   type Surface_Pointer is access all Surfaces with
-     Convention => C;
+   use type C.int;
+   use type SDL.C_Pointers.Game_Controller_Pointer;
 
-   type Textures is null record;
-   type Texture_Pointer is access all Textures with
-     Convention => C;
+   function SDL_Game_Controller_Open (Device : in C.int) return SDL.C_Pointers.Game_Controller_Pointer with
+     Import        => True,
+     Convention    => C,
+     External_Name => "SDL_GameControllerOpen";
 
-   type GL_Contexts is null record;
-   type GL_Context_Pointer is access all GL_Contexts with
-     Convention => C;
+   function Create (Device : in Devices) return Game_Controller is
+   begin
+      return J : Game_Controller := (Ada.Finalization.Limited_Controlled with
+                                     Internal => SDL_Game_Controller_Open (C.int (Device) - 1), Owns => True) do
+         null;
+      end return;
+   end Create;
 
-   type Joysticks is null record;
-   type Joystick_Pointer is access all Joysticks with
-     Convention => C;
-
-   type Game_Controller is null record;
-   type Game_Controller_Pointer is access all Game_Controller with
-     Convention => C;
-end SDL.C_Pointers;
+   procedure Create (Device : in Devices; Actual_Controller : out Game_Controller) is
+   begin
+      Actual_Controller.Internal := SDL_Game_Controller_Open (C.int (Device) - 1);
+   end Create;
+end SDL.Inputs.Joysticks.Game_Controllers.Makers;
