@@ -41,7 +41,7 @@ package body SDL.Video.Windows is
 
    procedure Decrement_Windows is
    begin
-      Total_Windows_Created := Total_Windows_Created + 1;
+      Total_Windows_Created := Total_Windows_Created - 1;
    end Decrement_Windows;
 
    overriding
