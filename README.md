@@ -156,7 +156,7 @@ SDL_FlushEvents                       |   n   |
 SDL_FreeCursor                        |   n   |
 SDL_FreeFormat                        |   y   |
 SDL_FreePalette                       |   y   |
-SDL_FreeRW                            |   n   |
+SDL_FreeRW                            |   n   |      * (implicitly called by RWclose)
 SDL_FreeSurface                       |   n   |
 SDL_FreeWAV                           |   n   |
 SDL_GL_BindTexture                    |   y   |
@@ -204,7 +204,7 @@ SDL_GetAudioDeviceName                |   n   |
 SDL_GetAudioDeviceStatus              |   n   |
 SDL_GetAudioDriver                    |   n   |
 SDL_GetAudioStatus                    |   n   |
-SDL_GetBasePath                       |   n   |
+SDL_GetBasePath                       |   y   |
 SDL_GetCPUCacheLineSize               |   y   |
 SDL_GetCPUCount                       |   y   |
 SDL_GetClipRect                       |   n   |
@@ -246,7 +246,7 @@ SDL_GetPerformanceFrequency           |   n   |
 SDL_GetPixelFormatName                |   y   |
 SDL_GetPlatform                       |   n   |      *
 SDL_GetPowerInfo                      |   y   |
-SDL_GetPrefPath                       |   n   |
+SDL_GetPrefPath                       |   y   |
 SDL_GetQueuedAudioSize                |   n   |
 SDL_GetRGB                            |   y   |
 SDL_GetRGBA                           |   y   |
@@ -427,22 +427,23 @@ SDL_QuitRequested                     |   n   |
 SDL_QuitSubSystem                     |   y   |
 SDL_REVISION                          |   n   |      *
 SDL_RWFromConstMem                    |   n   |
-SDL_RWFromFP                          |   n   |
-SDL_RWFromFile                        |   n   |
+SDL_RWFromFP                          |   n   |      * (unix only)
+SDL_RWFromFile                        |   y   |
 SDL_RWFromMem                         |   n   |
-SDL_RWclose                           |   n   |
-SDL_RWread                            |   n   |
-SDL_RWseek                            |   n   |
-SDL_RWsize                            |   n   |
-SDL_RWtell                            |   n   |
-SDL_RWwrite                           |   n   |
+SDL_RWclose                           |   y   |
+SDL_RWread                            |   y   |
+SDL_RWseek                            |   y   |
+SDL_RWsize                            |   y   |
+SDL_RWtell                            |   y   |
+SDL_RWwrite                           |   y   |
 SDL_RaiseWindow                       |   y   |
-SDL_ReadBE16                          |   n   |
-SDL_ReadBE32                          |   n   |
-SDL_ReadBE64                          |   n   |
-SDL_ReadLE16                          |   n   |
-SDL_ReadLE32                          |   n   |
-SDL_ReadLE64                          |   n   |
+SDL_ReadBE16                          |   y   |
+SDL_ReadBE32                          |   y   |
+SDL_ReadBE64                          |   y   |
+SDL_ReadLE16                          |   y   |
+SDL_ReadLE32                          |   y   |
+SDL_ReadLE64                          |   y   |
+SDL_ReadU8                            |   y   |
 SDL_RecordGesture                     |   n   |
 SDL_RectEmpty                         |   n   |
 SDL_RectEquals                        |   n   |

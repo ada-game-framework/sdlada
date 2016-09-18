@@ -5,7 +5,7 @@ project Test is
    for Object_Dir  use "gen/" & SDLAda.Build & "." & SDLAda.Mode & "/lib/test/.obj";
    for Exec_Dir    use "gen/" & SDLAda.Build & "." & SDLAda.Mode & "/lib/test";
    for Main        use ("test.adb", "version.adb", "platform.adb", "error.adb", "libraries.adb", "clipboard.adb",
-   "stream.adb", "stream2.adb");
+   "stream.adb", "stream2.adb", "rwops.adb");
 
    package Compiler renames SDLAda.Compiler;
 
