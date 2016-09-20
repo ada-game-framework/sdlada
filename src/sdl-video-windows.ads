@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------------------------------------------
---  Copyright (c) 2014-2015 Luke A. Guest
+--  Copyright (c) 2013-2016 Luke A. Guest
 --
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
@@ -56,7 +56,7 @@ package SDL.Video.Windows is
 
    --  TODO: This isn't raising any exception when I pass a different value for some reason.
    subtype Full_Screen_Flags is Window_Flags with
-   Static_Predicate => Full_Screen_Flags in Windowed | Full_Screen | Full_Screen_Desktop;
+     Static_Predicate => Full_Screen_Flags in Windowed | Full_Screen | Full_Screen_Desktop;
 
    type ID is mod 2 ** 32 with
      Convention => C;

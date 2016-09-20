@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------------------------------------------
---  Copyright (c) 2014 Luke A. Guest
+--  Copyright (c) 2013-2016 Luke A. Guest
 --
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
@@ -34,7 +34,7 @@ package SDL.Events.Joysticks.Game_Controllers is
                  Right_Y,
                  Trigger_Left,
                  Trigger_Right) with
-                   Convention => C;
+     Convention => C;
 
    for Axes use (Invalid       => -1,
                  Left_X        =>  0,
@@ -71,7 +71,7 @@ package SDL.Events.Joysticks.Game_Controllers is
                     D_Pad_Down,
                     D_Pad_Left,
                     D_Pad_Right) with
-                      Convention => C;
+     Convention => C;
 
    for Buttons use (Invalid        => -1,
                     A              =>  0,

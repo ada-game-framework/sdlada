@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------------------------------------------
---  Copyright (c) 2014 Luke A. Guest
+--  Copyright (c) 2013-2016 Luke A. Guest
 --
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
@@ -20,9 +20,7 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
---  SDL.Platform.Target
---
---  Determine which platform we are running on.
+--  Mac OS X implementation.
 --------------------------------------------------------------------------------------------------------------------
 separate (SDL.Platform)
 function Get return Platforms is

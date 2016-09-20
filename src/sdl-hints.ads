@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------------------------------------------
---  Copyright (c) 2014-2015 Luke A. Guest
+--  Copyright (c) 2013-2016 Luke A. Guest
 --
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
@@ -61,9 +61,9 @@ package SDL.Hints is
      Convention => C;
 
    procedure Clear with
-      Import        => True,
-      Convention    => C,
-      External_Name => "SDL_ClearHints";
+     Import        => True,
+     Convention    => C,
+     External_Name => "SDL_ClearHints";
 
    function Get (Name : in Hint) return String;
    procedure Set (Name : in Hint; Value : in String);

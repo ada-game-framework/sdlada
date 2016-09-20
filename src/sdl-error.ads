@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------------------------------------------
---  Copyright (c) 2014-2015 Luke A. Guest
+--  Copyright (c) 2013-2016 Luke A. Guest
 --
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
@@ -26,9 +26,9 @@
 --------------------------------------------------------------------------------------------------------------------
 package SDL.Error is
    procedure Clear with
-      Import        => True,
-      Convention    => C,
-      External_Name => "SDL_ClearError";
+     Import        => True,
+     Convention    => C,
+     External_Name => "SDL_ClearError";
 
    procedure Set (S : in String);
 

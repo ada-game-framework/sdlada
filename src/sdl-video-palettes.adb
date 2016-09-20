@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------------------------------------------
---  Copyright (c) 2014-2015 Luke A. Guest
+--  Copyright (c) 2013-2016 Luke A. Guest
 --
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
@@ -67,10 +67,10 @@ package body SDL.Video.Palettes is
    --  end Next;
 
    type Iterator (Container : access constant Palette'Class) is new Limited_Controlled and
-        Palette_Iterator_Interfaces.Forward_Iterator with
-   record
-      Index : Natural;
-   end record;
+     Palette_Iterator_Interfaces.Forward_Iterator with
+      record
+         Index : Natural;
+      end record;
 
    overriding
    function First (Object : Iterator) return Cursor;
@@ -106,7 +106,7 @@ package body SDL.Video.Palettes is
    function Iterate (Container : Palette) return
      Palette_Iterator_Interfaces.Forward_Iterator'Class is
    begin
---      Put_Line ("Iterate");
+      --      Put_Line ("Iterate");
 
       return It : constant Iterator :=
         (Limited_Controlled with

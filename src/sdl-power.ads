@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------------------------------------------
---  Copyright (c) 2014-2015 Luke A. Guest
+--  Copyright (c) 2013-2016 Luke A. Guest
 --
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
@@ -32,7 +32,7 @@ package SDL.Power is
       Charging,   --  Plugged in, charging battery.
       Charged     --  Plugged in, battery charged.
      ) with
-     Convention => C;
+       Convention => C;
 
    type Seconds is range 0 .. Integer'Last;
    type Percentage is range 0 .. 100;

@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------------------------------------------
---  Copyright (c) 2014-2015 Luke A. Guest
+--  Copyright (c) 2013-2016 Luke A. Guest
 --
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
@@ -38,7 +38,7 @@ package SDL.Versions is
          Minor : Version_Level;
          Patch : Version_Level;
       end record with
-        Convention => C;
+     Convention => C;
 
    --  These allow the user to determine which version of SDLAda they compiled with.
    Compiled_Major : constant Version_Level with

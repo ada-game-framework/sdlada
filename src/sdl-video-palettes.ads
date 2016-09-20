@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------------------------------------------
---  Copyright (c) 2014-2015 Luke A. Guest
+--  Copyright (c) 2013-2016 Luke A. Guest
 --
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
@@ -42,8 +42,8 @@ package SDL.Video.Palettes is
          Blue  : Colour_Component;
          Alpha : Colour_Component;
       end record with
-        Convention => C,
-        Size       => Colour_Component'Size * 4;
+     Convention => C,
+     Size       => Colour_Component'Size * 4;
 
    for Colour use
       record
@@ -89,7 +89,7 @@ package SDL.Video.Palettes is
       Position  : Cursor) return Colour;
 
    function Iterate (Container : Palette)
-      return Palette_Iterator_Interfaces.Forward_Iterator'Class;
+                     return Palette_Iterator_Interfaces.Forward_Iterator'Class;
 
    function Create (Total_Colours : in Positive) return Palette;
 
@@ -113,7 +113,7 @@ private
          Version   : Interfaces.Unsigned_32;
          Ref_Count : C.int;
       end record with
-        Convention => C;
+     Convention => C;
 
    type Internal_Palette_Access is access Internal_Palette with
      Convention => C;

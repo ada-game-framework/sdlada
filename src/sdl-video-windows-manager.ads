@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------------------------------------------
---  Copyright (c) 2014-2015 Luke A. Guest
+--  Copyright (c) 2013-2016 Luke A. Guest
 --
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
@@ -43,7 +43,7 @@ package SDL.Video.Windows.Manager is
                      WM_Mir,
                      WM_Win_RT,
                      WM_Android) with
-                       Convention => C;
+     Convention => C;
 
    type C_Address is access all Interfaces.Unsigned_32 with
      Convention => C;
@@ -140,7 +140,7 @@ package SDL.Video.Windows.Manager is
                Android_Surface          : Android.EGL_Surface;
          end case;
       end record with
-        Unchecked_Union;
+     Unchecked_Union;
 
    type WM_Info is
       record

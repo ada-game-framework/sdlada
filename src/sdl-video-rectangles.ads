@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------------------------------------------
---  Copyright (c) 2014-2015 Luke A. Guest
+--  Copyright (c) 2013-2016 Luke A. Guest
 --
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
@@ -36,7 +36,7 @@ package SDL.Video.Rectangles is
          Width  : C.int;
          Height : C.int;
       end record with
-        Convention => C;
+     Convention => C;
 
    type Size_Arrays is array (C.size_t range <>) of aliased Size with
      Convention => C;
@@ -46,7 +46,7 @@ package SDL.Video.Rectangles is
          X : C.int;
          Y : C.int;
       end record with
-        Convention => C;
+     Convention => C;
 
    type Point_Arrays is array (C.size_t range <>) of aliased Point with
      Convention => C;
@@ -56,7 +56,7 @@ package SDL.Video.Rectangles is
          Start  : Point;
          Finish : Point;
       end record with
-        Convention => C;
+     Convention => C;
 
    type Line_Arrays is array (C.size_t range <>) of aliased Line_Segment with
      Convention => C;
@@ -68,7 +68,7 @@ package SDL.Video.Rectangles is
          Width  : C.int;
          height : C.int;
       end record with
-        Convention => C;
+     Convention => C;
 
    Null_Rectangle : constant Rectangle := (others => 0);
 

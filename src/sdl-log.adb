@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------------------------------------------
---  Copyright (c) 2014-2015 Luke A. Guest
+--  Copyright (c) 2013-2016 Luke A. Guest
 --
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
@@ -138,7 +138,7 @@ package body SDL.Log is
          Callback : Output_Callback;
          Data     : Root_User_Data;
       end record with
-        Convention => C;
+     Convention => C;
 
    procedure Local_Callback
      (User_Data : in Local_User_Data;
