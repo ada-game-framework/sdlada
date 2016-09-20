@@ -222,4 +222,7 @@ procedure Rwops is
 begin
    RWops_Tests;
    RWops_Streams_Test;
+exception
+   when SDL.RWops.RWops_Error =>
+      Text_IO.Put_Line ("Make sure you have a file named 'test' in this directory, it can be any file.");
 end Rwops;
