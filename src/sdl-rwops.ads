@@ -1,10 +1,36 @@
+--------------------------------------------------------------------------------------------------------------------
+--  Copyright (c) 2014-2016 Luke A. Guest
+--
+--  This software is provided 'as-is', without any express or implied
+--  warranty. In no event will the authors be held liable for any damages
+--  arising from the use of this software.
+--
+--  Permission is granted to anyone to use this software for any purpose,
+--  including commercial applications, and to alter it and redistribute it
+--  freely, subject to the following restrictions:
+--
+--     1. The origin of this software must not be misrepresented; you must not
+--     claim that you wrote the original software. If you use this software
+--     in a product, an acknowledgment in the product documentation would be
+--     appreciated but is not required.
+--
+--     2. Altered source versions must be plainly marked as such, and must not be
+--     misrepresented as being the original software.
+--
+--     3. This notice may not be removed or altered from any source
+--     distribution.
+--------------------------------------------------------------------------------------------------------------------
+--  SDL.RWops
+--
+--  Read/Write operations, i.e. file related machinery.
+--------------------------------------------------------------------------------------------------------------------
 with Ada.Strings.UTF_Encoding;
-use Ada;
 
 private with System;
 with Interfaces.C;
 
 package SDL.RWops is
+   package Strings renames Ada.Strings;
 
    RWops_Error : exception;
 
@@ -30,130 +56,124 @@ package SDL.RWops is
 
    type Whence_Type is private;
 
-   Rw_Seek_Set : constant Whence_Type;
-   -- Seek from the beginning of data.
+   RW_Seek_Set : constant Whence_Type;  --  Seek from the beginning of data.
+   RW_Seek_Cur : constant Whence_Type;  --  Seek relative to current read point.
+   RW_Seek_End : constant Whence_Type;  --  Seek relative to the end of data.
 
-   Rw_Seek_Cur : constant Whence_Type;
-   -- Seek relative to current read point.
+   type Offsets is new Interfaces.Integer_64;
 
-   Rw_Seek_End : constant Whence_Type;
-   -- Seek relative to the end of data.
+   Null_Offset  : constant Offsets :=  0;
+   Error_Offset : constant Offsets := -1;
 
-   type Offsets is new Interfaces.C.long;
+   subtype Sizes is Offsets;
+
+   Error_Or_EOF : constant Sizes := 0;
 
    function Get_Base_Path return Strings.UTF_Encoding.UTF_String;
 
    function Get_Pref_Path
-     (Organization : Strings.UTF_Encoding.UTF_String;
-      Application  : Strings.UTF_Encoding.UTF_String) return Strings.UTF_Encoding.UTF_String;
+     (Organization : in Strings.UTF_Encoding.UTF_String;
+      Application  : in Strings.UTF_Encoding.UTF_String) return Strings.UTF_Encoding.UTF_String;
 
-   function RW_Seek
-     (Context : RWops;
-      Offset  : Offsets;
-      Whence  : Whence_Type) return Offsets;
+   function Seek
+     (Context : in RWops;
+      Offset  : in Offsets;
+      Whence  : in Whence_Type) return Offsets;
 
-   function RW_Size (Context : RWops) return Offsets;
-   function RW_Tell (Context : RWops) return Offsets;
+   function Size (Context : in RWops) return Offsets;
+   function Tell (Context : in RWops) return Offsets;
 
-   function RW_From_File
-     (File_Name : Strings.UTF_Encoding.UTF_String;
-      Mode      : File_Mode) return RWops;
+   function From_File
+     (File_Name : in Strings.UTF_Encoding.UTF_String;
+      Mode      : in File_Mode) return RWops;
 
-   procedure RW_From_File
-     (File_Name : Strings.UTF_Encoding.UTF_String;
-      Mode      : File_Mode;
+   procedure From_File
+     (File_Name : in Strings.UTF_Encoding.UTF_String;
+      Mode      : in File_Mode;
       Ops       : out RWops);
 
-   procedure RW_Close (Ops : RWops);
+   procedure Close (Ops : in RWops);
 
-   function ReadU8 (src : RWops) return Uint8 with
+   function Read_U_8 (src : in RWops) return Uint8 with
      Import        => True,
      Convention    => C,
      External_Name => "SDL_ReadU8";
 
-   function ReadLE16 (Src : RWops) return Uint16 with
+   function Read_LE_16 (Src : in RWops) return Uint16 with
      Import        => True,
      Convention    => C,
      External_Name => "SDL_ReadLE16";
 
-   function ReadBE16 (Src : RWops) return Uint16 with
+   function Read_BE_16 (Src : in RWops) return Uint16 with
      Import        => True,
      Convention    => C,
      External_Name => "SDL_ReadBE16";
 
-   function ReadLE32 (Src : RWops) return Uint32 with
+   function Read_LE_32 (Src : in RWops) return Uint32 with
      Import        => True,
      Convention    => C,
      External_Name => "SDL_ReadLE32";
 
-   function ReadBE32 (Src : RWops) return Uint32 with
+   function Read_BE_32 (Src : in RWops) return Uint32 with
      Import        => True,
      Convention    => C,
      External_Name => "SDL_ReadBE32";
 
-   function ReadLE64 (Src : RWops) return Uint64 with
+   function Read_LE_64 (Src : in RWops) return Uint64 with
      Import        => True,
      Convention    => C,
      External_Name => "SDL_ReadLE64";
 
-   function ReadBE64 (Src : RWops) return Uint64 with
+   function Read_BE_64 (Src : in RWops) return Uint64 with
      Import        => True,
      Convention    => C,
      External_Name => "SDL_ReadBE64";
 
-   procedure WriteU8 (Destination : RWops; Value : Uint8);
-
-   procedure WriteLE16 (Destination : RWops; Value : Uint16);
-
-   procedure WriteBE16 (Destination : RWops; Value : Uint16);
-
-   procedure WriteLE32 (Destination : RWops; Value : Uint32);
-
-   procedure WriteBE32 (Destination : RWops; Value : Uint32);
-
-   procedure WriteLE64 (Destination : RWops; Value : Uint64);
-
-   procedure WriteBE64 (Destination : RWops; Value : Uint64);
-
+   procedure Write_U_8 (Destination : in RWops; Value : in Uint8);
+   procedure Write_LE_16 (Destination : in RWops; Value : in Uint16);
+   procedure Write_BE_16 (Destination : in RWops; Value : in Uint16);
+   procedure Write_LE_32 (Destination : in RWops; Value : in Uint32);
+   procedure Write_BE_32 (Destination : in RWops; Value : in Uint32);
+   procedure Write_LE_64 (Destination : in RWops; Value : in Uint64);
+   procedure Write_BE_64 (Destination : in RWops; Value : in Uint64);
 private
-
    type Whence_Type is new Interfaces.C.int;
-   Rw_Seek_Set : constant Whence_Type := 0;
-   Rw_Seek_Cur : constant Whence_Type := 1;
-   Rw_Seek_End : constant Whence_Type := 2;
 
-   type Dummy_Type is
+   RW_Seek_Set : constant Whence_Type := 0;
+   RW_Seek_Cur : constant Whence_Type := 1;
+   RW_Seek_End : constant Whence_Type := 2;
+
+   --  The SDL_RWops struct contains a union which is only used internally
+   --  by SDL. The biggest variant of this union cosists of three pointers.
+   --  An object of this dummy-type is just used as a placeholder and is never
+   --  accessed by this binding.
+   type Hidden_Type is
       record
          A1 : System.Address;
          A2 : System.Address;
          A3 : System.Address;
       end record;
-   -- The SDL_RWops struct contains a uninon which is only used internally
-   -- by SDL. The biggest variant of this union cosists of three pointers.
-   -- An object of this dummy-type is just used as a placeholder and is never
-   -- accessed by this binding.
+
+   type Stream_Types is new Interfaces.C.unsigned;
 
    type RWops_Pointer;
 
    type SDL_RWops is record
-      Size   : access function (context : RWops_Pointer) return Interfaces.C.long;
-      Seek   : access function
-        (context : RWops_Pointer;
-         offset  : Interfaces.C.long;
-         whence  : Interfaces.C.int) return Interfaces.C.long;
-      Read   : access function
-        (context : RWops_Pointer;
-         ptr     : System.Address;
-         size    : Interfaces.C.unsigned_long;
-         maxnum  : Interfaces.C.unsigned_long) return Interfaces.C.unsigned_long;
-      Write  : access function
-        (context : RWops_Pointer;
-         ptr     : System.Address;
-         size    : Interfaces.C.unsigned_long;
-         num     : Interfaces.C.unsigned_long) return Interfaces.C.unsigned_long;
-      Close  : access function (Arg1 : RWops_Pointer) return Interfaces.C.int;
-      C_Type : aliased Integer;
-      Hidden : aliased Dummy_Type;
+      Size        : access function (Context : in RWops_Pointer) return Offsets;
+      Seek        : access function (Context : in RWops_Pointer;
+                                     Offset  : in Offsets;
+                                     Whence  : in Whence_Type) return Offsets;
+      Read        : access function (Context : in RWops_Pointer;
+                                     Ptr     : in System.Address;
+                                     Size    : in Sizes;
+                                     Max_Num : in Interfaces.C.unsigned_long) return Interfaces.C.unsigned_long;
+      Write       : access function (Context : in RWops_Pointer;
+                                     Ptr     : in System.Address;
+                                     Size    : in Sizes;
+                                     Num     : in Interfaces.C.unsigned_long) return Interfaces.C.unsigned_long;
+      Close       : access function (Context : in RWops_Pointer) return Interfaces.C.int;
+      Stream_Type : aliased Stream_Types;
+      Hidden      : aliased Hidden_Type;
    end record with
      Convention => C_Pass_By_Copy;
 
@@ -161,5 +181,4 @@ private
      Convention => C;
 
    type RWops is new RWops_Pointer;
-
 end SDL.RWops;

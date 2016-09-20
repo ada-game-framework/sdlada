@@ -1,11 +1,33 @@
+--------------------------------------------------------------------------------------------------------------------
+--  Copyright (c) 2014-2016 Luke A. Guest
+--
+--  This software is provided 'as-is', without any express or implied
+--  warranty. In no event will the authors be held liable for any damages
+--  arising from the use of this software.
+--
+--  Permission is granted to anyone to use this software for any purpose,
+--  including commercial applications, and to alter it and redistribute it
+--  freely, subject to the following restrictions:
+--
+--     1. The origin of this software must not be misrepresented; you must not
+--     claim that you wrote the original software. If you use this software
+--     in a product, an acknowledgment in the product documentation would be
+--     appreciated but is not required.
+--
+--     2. Altered source versions must be plainly marked as such, and must not be
+--     misrepresented as being the original software.
+--
+--     3. This notice may not be removed or altered from any source
+--     distribution.
+--------------------------------------------------------------------------------------------------------------------
 with Interfaces.C.Strings;
 with SDL.Error;
 
 package body SDL.RWops is
    use type Interfaces.C.int;
-   use type Interfaces.C.unsigned_long;
+   use type Interfaces.C.size_t;
 
-   procedure SDL_Free (Mem : Interfaces.C.Strings.chars_ptr) with
+   procedure SDL_Free (Mem : in Interfaces.C.Strings.chars_ptr) with
      Import        => True,
      Convention    => C,
      External_Name => "SDL_free";
@@ -13,16 +35,13 @@ package body SDL.RWops is
    function Get_Base_Path return Strings.UTF_Encoding.UTF_String is
       use type Interfaces.C.Strings.chars_ptr;
 
-      function SDL_GetBasePath return Interfaces.C.Strings.chars_ptr with
+      function SDL_Get_Base_Path return Interfaces.C.Strings.chars_ptr with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetBasePath";
 
-      C_Path : constant Interfaces.C.Strings.chars_ptr :=
-                 SDL_GetBasePath;
-
+      C_Path : constant Interfaces.C.Strings.chars_ptr := SDL_Get_Base_Path;
    begin
-
       if C_Path = Interfaces.C.Strings.Null_Ptr then
          raise RWops_Error with SDL.Error.Get;
       end if;
@@ -35,18 +54,17 @@ package body SDL.RWops is
 
          return Ada_Path;
       end;
-
    end Get_Base_Path;
 
    function Get_Pref_Path
-     (Organization : Strings.UTF_Encoding.UTF_String;
-      Application  : Strings.UTF_Encoding.UTF_String) return Strings.UTF_Encoding.UTF_String
+     (Organization : in Strings.UTF_Encoding.UTF_String;
+      Application  : in Strings.UTF_Encoding.UTF_String) return Strings.UTF_Encoding.UTF_String
    is
       use type Interfaces.C.Strings.chars_ptr;
 
-      function SDL_GetPrefPath
-        (org : Interfaces.C.Strings.chars_ptr;
-         app : Interfaces.C.Strings.chars_ptr) return Interfaces.C.Strings.chars_ptr with
+      function SDL_Get_Pref_Path
+        (Organization : in Interfaces.C.Strings.chars_ptr;
+         Application  : in Interfaces.C.Strings.chars_ptr) return Interfaces.C.Strings.chars_ptr with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetPrefPath";
@@ -56,12 +74,10 @@ package body SDL.RWops is
       C_Path         : Interfaces.C.Strings.chars_ptr;
    begin
       C_Organization := Interfaces.C.Strings.New_String (Organization);
-      C_Application := Interfaces.C.Strings.New_String (Application);
+      C_Application  := Interfaces.C.Strings.New_String (Application);
 
-      C_Path :=
-        SDL_GetPrefPath
-          (org => C_Organization,
-           app => C_Application);
+      C_Path := SDL_Get_Pref_Path (Organization => C_Organization,
+                                   Application  => C_Application);
 
       Interfaces.C.Strings.Free (C_Organization);
       Interfaces.C.Strings.Free (C_Application);
@@ -78,10 +94,9 @@ package body SDL.RWops is
 
          return Ada_Path;
       end;
-
    end Get_Pref_Path;
 
-   procedure RW_Close (Ops : RWops) is
+   procedure Close (Ops : in RWops) is
       Result : Interfaces.C.int := -1;
    begin
       Result := Ops.Close (RWops_Pointer (Ops));
@@ -89,16 +104,13 @@ package body SDL.RWops is
       if Result /= 0 then
          raise RWops_Error with SDL.Error.Get;
       end if;
-   end RW_Close;
+   end Close;
 
-   function RW_From_File
-     (File_Name : Strings.UTF_Encoding.UTF_String;
-      Mode      : File_Mode) return RWops
+   function From_File (File_Name : in Strings.UTF_Encoding.UTF_String;
+                       Mode      : in File_Mode) return RWops
    is
-
-      function SDL_RWFromFile
-        (File : Interfaces.C.Strings.chars_ptr;
-         Mode : Interfaces.C.Strings.chars_ptr) return RWops_Pointer with
+      function SDL_RW_From_File (File : in Interfaces.C.Strings.chars_ptr;
+                                 Mode : in Interfaces.C.Strings.chars_ptr) return RWops_Pointer with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RWFromFile";
@@ -107,11 +119,10 @@ package body SDL.RWops is
       RWop        : RWops_Pointer;
 
       C_File_Name : Interfaces.C.Strings.chars_ptr :=
-                      Interfaces.C.Strings.Null_Ptr;
+        Interfaces.C.Strings.Null_Ptr;
 
       C_File_Mode : Interfaces.C.Strings.chars_ptr :=
-                      Interfaces.C.Strings.Null_Ptr;
-
+        Interfaces.C.Strings.Null_Ptr;
    begin
       case Mode is
          when Read =>
@@ -142,7 +153,9 @@ package body SDL.RWops is
 
       C_File_Name := Interfaces.C.Strings.New_String (File_Name);
       C_File_Mode := Interfaces.C.Strings.New_String (Mode_String);
-      RWop := SDL_RWFromFile (File => C_File_Name, Mode => C_File_Mode);
+
+      RWop := SDL_RW_From_File (File => C_File_Name, Mode => C_File_Mode);
+
       Interfaces.C.Strings.Free (C_File_Name);
       Interfaces.C.Strings.Free (C_File_Mode);
 
@@ -151,178 +164,161 @@ package body SDL.RWops is
       end if;
 
       return RWops (RWop);
-   end RW_From_File;
+   end From_File;
 
-   procedure RW_From_File
-     (File_Name : Strings.UTF_Encoding.UTF_String;
-      Mode      : File_Mode;
-      Ops       : out RWops) is
+   procedure From_File (File_Name : in Strings.UTF_Encoding.UTF_String;
+                        Mode      : in File_Mode;
+                        Ops       : out RWops) is
    begin
-      Ops := RW_From_File (File_Name, Mode);
-   end RW_From_File;
+      Ops := From_File (File_Name, Mode);
+   end From_File;
 
-   function RW_Seek
-     (Context : RWops;
-      Offset  : Offsets;
-      Whence  : Whence_Type) return Offsets
+   function Seek (Context : in RWops;
+                  Offset  : in Offsets;
+                  Whence  : in Whence_Type) return Offsets
    is
-      use type Interfaces.C.long;
-      Returned_Offset : Interfaces.C.long := -1;
+      Returned_Offset : SDL.RWops.Offsets := SDL.RWops.Error_Offset;
    begin
+      Returned_Offset := Context.Seek (Context => RWops_Pointer (Context),
+                                       Offset  => Offset,
+                                       Whence  => Whence);
 
-      Returned_Offset :=
-        Context.Seek
-          (context => RWops_Pointer (Context),
-           offset  => Interfaces.C.long (Offset),
-           whence  => Interfaces.C.int (Whence));
-
-      if Returned_Offset = -1 then
+      if Returned_Offset = SDL.RWops.Error_Offset then
          raise RWops_Error with SDL.Error.Get;
       end if;
 
-      return Offsets (Returned_Offset);
+      return Returned_Offset;
+   end Seek;
 
-   end RW_Seek;
-
-   function RW_Size (Context : RWops) return Offsets is
-      use type Interfaces.C.long;
-      Returned_Offset : Interfaces.C.long := -1;
+   function Size (Context : in RWops) return Offsets is
+      Returned_Offset : SDL.RWops.Offsets := SDL.RWops.Error_Offset;
    begin
+      Returned_Offset := Context.Size (Context => RWops_Pointer (Context));
 
-      Returned_Offset :=
-        Context.Size (context => RWops_Pointer (Context));
-
-      if Returned_Offset < 0 then
+      if Returned_Offset < Null_Offset then
          raise RWops_Error with SDL.Error.Get;
       end if;
 
-      return Offsets (Returned_Offset);
+      return Returned_Offset;
+   end Size;
 
-   end RW_Size;
-
-   function RW_Tell (Context : RWops) return Offsets is
-      use type Interfaces.C.long;
-      Returned_Offset : Interfaces.C.long := -1;
+   function Tell (Context : in RWops) return Offsets is
+      Returned_Offset : SDL.RWops.Offsets := SDL.RWops.Error_Offset;
    begin
+      --  In C SDL_RWtell is a macro doing just this.
+      Returned_Offset := Context.Seek (Context => RWops_Pointer (Context),
+                                       Offset  => Null_Offset,
+                                       Whence  => RW_Seek_Cur);
 
-      Returned_Offset :=
-        Context.Seek
-          (context => RWops_Pointer (Context),
-           offset  => 0,
-           whence  => Interfaces.C.int (Rw_Seek_Cur));
-      -- In C SDL_RWtell is a macro doing just this.
-
-      if Returned_Offset = -1 then
+      if Returned_Offset = SDL.RWops.Error_Offset then
          raise RWops_Error with SDL.Error.Get;
       end if;
 
-      return Offsets (Returned_Offset);
+      return Returned_Offset;
+   end Tell;
 
-   end RW_Tell;
-
-   procedure WriteBE16 (Destination : RWops; Value : Uint16)  is
-      function WriteBE16 (Dst : RWops; Value : Uint16) return Interfaces.C.unsigned_long with
+   procedure Write_BE_16 (Destination : in RWops; Value : in Uint16)  is
+      function SDL_Write_BE_16 (Destination : in RWops; Value : in Uint16) return Interfaces.C.size_t with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_WriteBE16";
 
-      Result : Interfaces.C.unsigned_long := 0;
+      Result : Interfaces.C.size_t := 0;
    begin
-      Result := WriteBE16 (Destination, Value);
+      Result := SDL_Write_BE_16 (Destination, Value);
 
       if Result = 0 then
          raise RWops_Error with SDL.Error.Get;
       end if;
-   end WriteBE16;
+   end Write_BE_16;
 
-   procedure WriteBE32 (Destination : RWops; Value : Uint32)  is
-      function WriteBE32 (Dst : RWops; Value : Uint32) return Interfaces.C.unsigned_long with
+   procedure Write_BE_32 (Destination : in RWops; Value : in Uint32)  is
+      function SDL_Write_BE_32 (Destination : in RWops; Value : in Uint32) return Interfaces.C.size_t with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_WriteBE32";
 
-      Result : Interfaces.C.unsigned_long := 0;
+      Result : Interfaces.C.size_t := 0;
    begin
-      Result := WriteBE32 (Destination, Value);
+      Result := SDL_Write_BE_32 (Destination, Value);
 
       if Result = 0 then
          raise RWops_Error with SDL.Error.Get;
       end if;
-   end WriteBE32;
+   end Write_BE_32;
 
-   procedure WriteBE64 (Destination : RWops; Value : Uint64)  is
-      function WriteBE64 (Dst : RWops; Value : Uint64) return Interfaces.C.unsigned_long with
+   procedure Write_BE_64 (Destination : in RWops; Value : in Uint64)  is
+      function SDL_Write_BE_64 (Destination : in RWops; Value : in Uint64) return Interfaces.C.size_t with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_WriteBE64";
 
-      Result : Interfaces.C.unsigned_long := 0;
+      Result : Interfaces.C.size_t := 0;
    begin
-      Result := WriteBE64 (Destination, Value);
+      Result := SDL_Write_BE_64 (Destination, Value);
 
       if Result = 0 then
          raise RWops_Error with SDL.Error.Get;
       end if;
-   end WriteBE64;
+   end Write_BE_64;
 
-   procedure WriteLE16 (Destination : RWops; Value : Uint16)  is
-      function WriteLE16 (Dst : RWops; Value : Uint16) return Interfaces.C.unsigned_long with
+   procedure Write_LE_16 (Destination : in RWops; Value : in Uint16)  is
+      function SDL_Write_LE_16 (Destination : in RWops; Value : in Uint16) return Interfaces.C.size_t with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_WriteLE16";
 
-      Result : Interfaces.C.unsigned_long := 0;
+      Result : Interfaces.C.size_t := 0;
    begin
-      Result := WriteLE16 (Destination, Value);
+      Result := SDL_Write_LE_16 (Destination, Value);
 
       if Result = 0 then
          raise RWops_Error with SDL.Error.Get;
       end if;
-   end WriteLE16;
+   end Write_LE_16;
 
-   procedure WriteLE32 (Destination : RWops; Value : Uint32)  is
-      function WriteLE32 (Dst : RWops; Value : Uint32) return Interfaces.C.unsigned_long with
+   procedure Write_LE_32 (Destination : in RWops; Value : in Uint32)  is
+      function SDL_Write_LE_32 (Destination : in RWops; Value : in Uint32) return Interfaces.C.size_t with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_WriteLE32";
 
-      Result : Interfaces.C.unsigned_long := 0;
+      Result : Interfaces.C.size_t := 0;
    begin
-      Result := WriteLE32 (Destination, Value);
+      Result := SDL_Write_LE_32 (Destination, Value);
 
       if Result = 0 then
          raise RWops_Error with SDL.Error.Get;
       end if;
-   end WriteLE32;
+   end Write_LE_32;
 
-   procedure WriteLE64 (Destination : RWops; Value : Uint64)  is
-      function WriteLE64 (Dst : RWops; Value : Uint64) return Interfaces.C.unsigned_long with
+   procedure Write_LE_64 (Destination : in RWops; Value : in Uint64)  is
+      function SDL_Write_LE_64 (Destination : in RWops; Value : in Uint64) return Interfaces.C.size_t with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_WriteLE64";
 
-      Result : Interfaces.C.unsigned_long := 0;
+      Result : Interfaces.C.size_t := 0;
    begin
-      Result := WriteLE64 (Destination, Value);
+      Result := SDL_Write_LE_64 (Destination, Value);
 
       if Result = 0 then
          raise RWops_Error with SDL.Error.Get;
       end if;
-   end WriteLE64;
+   end Write_LE_64;
 
-   procedure WriteU8 (Destination : RWops; Value : Uint8)  is
-      function WriteU8 (Dst : RWops; Value : Uint8) return Interfaces.C.unsigned_long with
+   procedure Write_U_8 (Destination : in RWops; Value : in Uint8)  is
+      function SDL_Write_U_8 (Destination : in RWops; Value : in Uint8) return Interfaces.C.size_t with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_WriteU8";
 
-      Result : Interfaces.C.unsigned_long := 0;
+      Result : Interfaces.C.size_t := 0;
    begin
-      Result := WriteU8 (Destination, Value);
+      Result := SDL_Write_U_8 (Destination, Value);
 
       if Result = 0 then
          raise RWops_Error with SDL.Error.Get;
       end if;
-   end WriteU8;
-
+   end Write_U_8;
 end SDL.RWops;
