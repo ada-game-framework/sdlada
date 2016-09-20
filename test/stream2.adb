@@ -149,18 +149,18 @@ begin
                   when SDL.Events.Keyboards.Key_Down =>
                      if Event.Keyboard.Key_Sym.Key_Code = SDL.Events.Keyboards.Code_Escape then
                         Finished := True;
-                        --                       elsif Event.Keyboard.Key_Sym.Scan_Code = SDL.Events.Keyboards.Scan_Code_Left then
-                        --                          if Moose_Frame = Moose_Frames'First then
-                        --                             Moose_Frame := Moose_Frames'Last;
-                        --                          else
-                        --                             Moose_Frame := Moose_Frame - 1;
-                        --                          end if;
-                        --                       elsif Event.Keyboard.Key_Sym.Scan_Code = SDL.Events.Keyboards.Scan_Code_Right then
-                        --                          if Moose_Frame = Moose_Frames'Last then
-                        --                             Moose_Frame := Moose_Frames'First;
-                        --                          else
-                        --                             Moose_Frame := Moose_Frame + 1;
-                        --                          end if;
+                        --  elsif Event.Keyboard.Key_Sym.Scan_Code = SDL.Events.Keyboards.Scan_Code_Left then
+                        --     if Moose_Frame = Moose_Frames'First then
+                        --        Moose_Frame := Moose_Frames'Last;
+                        --     else
+                        --        Moose_Frame := Moose_Frame - 1;
+                        --     end if;
+                        --  elsif Event.Keyboard.Key_Sym.Scan_Code = SDL.Events.Keyboards.Scan_Code_Right then
+                        --     if Moose_Frame = Moose_Frames'Last then
+                        --        Moose_Frame := Moose_Frames'First;
+                        --     else
+                        --        Moose_Frame := Moose_Frame + 1;
+                        --     end if;
                      elsif Event.Keyboard.Key_Sym.Scan_Code = SDL.Events.Keyboards.Scan_Code_Left then
                         Moose_Frame := Moose_Frame - 1;
                      elsif Event.Keyboard.Key_Sym.Scan_Code = SDL.Events.Keyboards.Scan_Code_Right then
