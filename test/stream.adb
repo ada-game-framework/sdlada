@@ -79,7 +79,8 @@ procedure Stream is
    Renderer         : SDL.Video.Renderers.Renderer;
    Texture          : SDL.Video.Textures.Texture;
    Pixels           : SDL.Video.Pixels.ARGB_8888_Access.Pointer;
-   Pitch            : SDL.Video.Pixels.Pitches;
+
+   procedure Lock is new SDL.Video.Textures.Lock (Pixel_Pointer_Type => SDL.Video.Pixels.ARGB_8888_Access.Pointer);
 
    type Pixel_Array is new SDL.Video.Pixels.ARGB_8888_Array (1 .. Moose_Frame_Size);
 
@@ -208,7 +209,7 @@ begin
 
       --  First test.
       for Index in 1 .. 10 loop
-         Texture.Lock (Pixels, Pitch);
+         Lock (Texture, Pixels);
 
          --  The block makes things a bit clearer.
          begin
@@ -239,7 +240,7 @@ begin
 
       --  Second test.
       for Index in 1 .. 10 loop
-         Texture.Lock (Pixels, Pitch);
+         Lock (Texture, Pixels);
 
          --  The block makes things a bit clearer.
          begin
@@ -270,8 +271,7 @@ begin
 
       --  Third test.
       for Index in 1 .. 100 loop
-         Texture.Lock (Pixels, Pitch);
-         Ada.Text_IO.Put_Line ("Pitch: " & SDL.Video.Pixels.Pitches'Image (Pitch));
+         Lock (Texture, Pixels);
 
          --  The block makes things a bit clearer.
          Update_Texture_3 : declare

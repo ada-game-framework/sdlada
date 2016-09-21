@@ -420,7 +420,7 @@ SDL_PointInRect                       |   n   |
 SDL_PollEvent                         |   y   |
 SDL_PumpEvents                        |   n   |
 SDL_PushEvent                         |   n   |
-SDL_QueryTexture                      |   n   |
+SDL_QueryTexture                      |   y   |
 SDL_QueueAudio                        |   n   |
 SDL_Quit                              |   y   |
 SDL_QuitRequested                     |   n   |

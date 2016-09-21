@@ -30,7 +30,7 @@ private with SDL.C_Pointers;
 with SDL.Video.Palettes;
 with SDL.Video.Pixel_Formats;
 with SDL.Video.Pixels;
---  with SDL.Video.Rectangles;
+with SDL.Video.Rectangles;
 limited with SDL.Video.Renderers;
 with SDL.Video.Surfaces;
 with SDL.Video.Windows;
@@ -85,12 +85,34 @@ package SDL.Video.Textures is
    --  package ARGB_8888_Array is new SDL.Video.Pixels.Texture_Data (Width => , Height => , Element => );
    --     procedure Lock_Texture (Self   : in out Texture;
    --                             Pixels : out SDL.Video.Pixels.Pixel_ARGB_8888_Array_Access);
+
+   --  Lock
+   --
+   --  Lock the entire texture data.
+   --
+   --  There will be multiple pixel formats, there should only be one Lock sub-program to handle them all.
+   generic
+      type Pixel_Pointer_Type is private;
    procedure Lock (Self   : in out Texture;
-                   Pixels : out SDL.Video.Pixels.ARGB_8888_Access.Pointer;
-                   Pitch  : out SDL.Video.Pixels.Pitches);
+                   Pixels : out Pixel_Pointer_Type);
+
+   --  Lock
+   --
+   --  Lock a particular area of the texture data.
+   generic
+      type Pixel_Pointer_Type is private;
+   procedure Lock_Area (Self   : in out Texture;
+                        Area   : in SDL.Video.Rectangles.Rectangle;
+                        Pixels : out Pixel_Pointer_Type;
+                        Pitch  : out SDL.Video.Pixels.Pitches);
+
    procedure Unlock (Self : in out Texture);
 
-   --  SDL_QueryTexture
+   procedure Query (Self         : in Texture;
+                    Pixel_Format : out SDL.Video.Pixel_Formats.Pixel_Format_Names;
+                    Kind         : out Kinds;
+                    Size         : out SDL.Video.Windows.Sizes);
+
    --  SDL_UpdateTexture
    --  SDL_UpdateYUVTexture
 private
