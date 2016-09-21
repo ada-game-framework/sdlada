@@ -165,12 +165,14 @@ package body SDL.Video.Textures is
       function SDL_Lock_Texture (T      : in SDL.C_Pointers.Texture_Pointer;
                                  Area   : in System.Address;
                                  Pixels : out Pixel_Pointer_Type;
-                                 Pitch  : in System.Address) return C.int with
+                                 Pitch  : out SDL.Video.Pixels.Pitches) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_LockTexture";
 
-      Result : C.int := SDL_Lock_Texture (Self.Internal, System.Null_Address, Pixels, System.Null_Address);
+      --  Don't care about Pitch value.
+      Dummy  : SDL.Video.Pixels.Pitches := 0;
+      Result : C.int := SDL_Lock_Texture (Self.Internal, System.Null_Address, Pixels, Dummy);
    begin
       if Result /= Success then
          raise Texture_Error with SDL.Error.Get;
@@ -236,7 +238,6 @@ package body SDL.Video.Textures is
 
       Size := SDL.Video.Windows.Sizes'(Positive (W), Positive (H));
    end Query;
-
 
    overriding
    procedure Finalize (Self : in out Texture) is
