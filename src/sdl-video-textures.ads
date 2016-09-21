@@ -85,9 +85,9 @@ package SDL.Video.Textures is
    --  package ARGB_8888_Array is new SDL.Video.Pixels.Texture_Data (Width => , Height => , Element => );
    --     procedure Lock_Texture (Self   : in out Texture;
    --                             Pixels : out SDL.Video.Pixels.Pixel_ARGB_8888_Array_Access);
-   procedure Lock (Self    : in out Texture;
-                   Pixels  : out SDL.Video.Pixels.ARGB_8888_Access.Pointer;
-                   Pitches : out SDL.Video.Pixels.Pitch_Access.Pointer);
+   procedure Lock (Self   : in out Texture;
+                   Pixels : out SDL.Video.Pixels.ARGB_8888_Access.Pointer;
+                   Pitch  : out SDL.Video.Pixels.Pitches);
    procedure Unlock (Self : in out Texture);
 
    --  SDL_QueryTexture

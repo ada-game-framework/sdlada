@@ -40,19 +40,9 @@ package SDL.Video.Pixels is
    Pixels_Error : exception;
 
    --  These give access to the pitch data returned by locking a texture.
-   type Pitch is new C.int with
+   type Pitches is new C.int with
      Size       => 32,
      Convention => C;
-
-   type Pitch_Ptr is access all Pitch with
-     Convention => C;
-
-   type Pitch_Array is array (Positive range <>) of aliased Pitch;
-
-   package Pitch_Access is new Interfaces.C.Pointers (Index              => Positive,
-                                                      Element            => Pitch,
-                                                      Element_Array      => Pitch_Array,
-                                                      Default_Terminator => 0);
 
    --  ARGB8888 pixels.
    --  These give access to a texture's/surface's (TODO??) pixel data in the above format.

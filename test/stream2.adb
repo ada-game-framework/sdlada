@@ -74,7 +74,7 @@ procedure Stream2 is
    Renderer         : SDL.Video.Renderers.Renderer;
    Texture          : SDL.Video.Textures.Texture;
    Pixels           : SDL.Video.Pixels.ARGB_8888_Access.Pointer;
-   Pitches          : SDL.Video.Pixels.Pitch_Access.Pointer;
+   Pitch            : SDL.Video.Pixels.Pitches;
 
    use type SDL.Video.Pixels.ARGB_8888_Access.Pointer;
    use type Ada.Calendar.Time;
@@ -171,7 +171,7 @@ begin
                end case;
             end loop;
 
-            Texture.Lock (Pixels, Pitches);
+            Texture.Lock (Pixels, Pitch);
 
             declare
                function To_Address is new Ada.Unchecked_Conversion (Source => SDL.Video.Pixels.ARGB_8888_Access.Pointer,

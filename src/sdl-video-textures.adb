@@ -160,18 +160,18 @@ package body SDL.Video.Textures is
    --        Pixels := SDL.Video.Pixels.Create (C_Pixels, C_Pitch.all, Self.Size);
    --     end Lock_Texture;
 
-   procedure Lock (Self    : in out Texture;
-                   Pixels  : out SDL.Video.Pixels.ARGB_8888_Access.Pointer;
-                   Pitches : out SDL.Video.Pixels.Pitch_Access.Pointer) is
-      function SDL_Lock_Texture (T       : in SDL.C_Pointers.Texture_Pointer;
-                                 Area    : in System.Address; --  TODO??
-                                 Pixels  : out SDL.Video.Pixels.ARGB_8888_Access.Pointer;
-                                 Pitches : out SDL.Video.Pixels.Pitch_Access.Pointer) return C.int with
+   procedure Lock (Self   : in out Texture;
+                   Pixels : out SDL.Video.Pixels.ARGB_8888_Access.Pointer;
+                   Pitch  : out SDL.Video.Pixels.Pitches) is
+      function SDL_Lock_Texture (T      : in SDL.C_Pointers.Texture_Pointer;
+                                 Area   : in System.Address; --  TODO??
+                                 Pixels : out SDL.Video.Pixels.ARGB_8888_Access.Pointer;
+                                 Pitch  : out SDL.Video.Pixels.Pitches) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_LockTexture";
 
-      Result : C.int := SDL_Lock_Texture (Self.Internal, System.Null_Address, Pixels, Pitches);
+      Result : C.int := SDL_Lock_Texture (Self.Internal, System.Null_Address, Pixels, Pitch);
    begin
       if Result /= Success then
          raise Texture_Error with SDL.Error.Get;
