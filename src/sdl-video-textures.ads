@@ -113,6 +113,10 @@ package SDL.Video.Textures is
                     Kind         : out Kinds;
                     Size         : out SDL.Video.Windows.Sizes);
 
+   function Get_Pixel_Format (Self : in Texture) return SDL.Video.Pixel_Formats.Pixel_Format_Names;
+   function Get_Kind (Self : in Texture) return Kinds;
+   function Get_Size (Self : in Texture) return SDL.Video.Windows.Sizes;
+
    --  SDL_UpdateTexture
    --  SDL_UpdateYUVTexture
 private
