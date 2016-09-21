@@ -161,7 +161,7 @@ procedure Stream is
 
    procedure Cache_Moose (Cache   : in out Cached_Moose_Frame_Array;
                           Indices : in Moose_Frame_Data_Array;
-                          Palette : Moose_Palette_Array) is
+                          Palette : in Moose_Palette_Array) is
 
       Colour : SDL.Video.Palettes.RGB_Colour;
    begin
@@ -180,23 +180,6 @@ procedure Stream is
    end Cache_Moose;
 
    Cache : Cached_Moose_Frame_Array;
-
-   procedure Update_Texture_3 (Pointer : in Texture_2D.Pointer; Frame : in Texture_2D_Array) is
-      function To_Address is new Ada.Unchecked_Conversion (Source => SDL.Video.Pixels.ARGB_8888_Access.Pointer,
-                                                           Target => System.Address);
-
-      Start_Time       : Ada.Calendar.Time;
-      End_Time         : Ada.Calendar.Time;
-      Actual_Pixels    : Texture_2D_Array (1 .. Moose_Size.Height, 1 .. Moose_Size.Width) with
-        Address => To_Address (Pixels);
-   begin
-      Start_Time := Ada.Calendar.Clock;
-
-      Actual_Pixels := Frame;
-
-      End_Time := Ada.Calendar.Clock;
-      SDL.Log.Put_Debug ("Update_Texture_3 took " & Duration'Image (End_Time - Start_Time) & " seconds.");
-   end Update_Texture_3;
 begin
    SDL.Log.Set (Category => SDL.Log.Application, Priority => SDL.Log.Debug);
 
@@ -290,9 +273,7 @@ begin
          Texture.Lock (Pixels, Pitches);
 
          --  The block makes things a bit clearer.
-         --           begin
-         --              Update_Texture_3 (Texture_2D.Pointer (Pixels), Cache (Moose_Frame));
-         declare
+         Update_Texture_3 : declare
             function To_Address is new Ada.Unchecked_Conversion (Source => SDL.Video.Pixels.ARGB_8888_Access.Pointer,
                                                                  Target => System.Address);
 
@@ -307,7 +288,7 @@ begin
 
             End_Time := Ada.Calendar.Clock;
             SDL.Log.Put_Debug ("Update_Texture_3 took " & Duration'Image (End_Time - Start_Time) & " seconds.");
-         end;
+         end Update_Texture_3;
 
          Texture.Unlock;
 
