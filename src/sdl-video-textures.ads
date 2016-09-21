@@ -108,10 +108,10 @@ package SDL.Video.Textures is
 
    procedure Unlock (Self : in out Texture);
 
-   procedure Query (Self         : in Texture;
-                    Pixel_Format : out SDL.Video.Pixel_Formats.Pixel_Format_Names;
-                    Kind         : out Kinds;
-                    Size         : out SDL.Video.Windows.Sizes);
+   procedure Query (Self              : in Texture;
+                    Pixel_Format_Name : out SDL.Video.Pixel_Formats.Pixel_Format_Names;
+                    Kind              : out Kinds;
+                    Size              : out SDL.Video.Windows.Sizes);
 
    function Get_Pixel_Format (Self : in Texture) return SDL.Video.Pixel_Formats.Pixel_Format_Names;
    function Get_Kind (Self : in Texture) return Kinds;
