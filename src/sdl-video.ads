@@ -27,6 +27,12 @@
 package SDL.Video is
    Video_Error : exception;
 
+   type Sizes is
+      record
+         Width  : Positive;
+         Height : Positive;
+      end record;
+
    --  Screen saver information.
    procedure Enable_Screen_Saver with
      Import        => True,

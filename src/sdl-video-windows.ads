@@ -67,12 +67,6 @@ package SDL.Video.Windows is
          Y : Positive;
       end record;
 
-   type Sizes is
-      record
-         Width  : Positive;
-         Height : Positive;
-      end record;
-
    type Native_Window is private;
 
    --  Allow users to derive new types from this.
