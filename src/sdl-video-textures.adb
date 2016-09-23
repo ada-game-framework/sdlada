@@ -218,7 +218,7 @@ package body SDL.Video.Textures is
    procedure Query (Self              : in Texture;
                     Pixel_Format_Name : out SDL.Video.Pixel_Formats.Pixel_Format_Names;
                     Kind              : out Kinds;
-                    Size              : out SDL.Video.Windows.Sizes) is
+                    Size              : out SDL.Video.Sizes) is
       function SDL_Query_Texture (T                 : in SDL.C_Pointers.Texture_Pointer;
                                   Pixel_Format_Name : out SDL.Video.Pixel_Formats.Pixel_Format_Names;
                                   Kind              : out Kinds;
@@ -236,7 +236,7 @@ package body SDL.Video.Textures is
          raise Texture_Error with SDL.Error.Get;
       end if;
 
-      Size := SDL.Video.Windows.Sizes'(Positive (W), Positive (H));
+      Size := SDL.Video.Sizes'(Positive (W), Positive (H));
    end Query;
 
    function Get_Pixel_Format (Self : in Texture) return SDL.Video.Pixel_Formats.Pixel_Format_Names is
@@ -279,7 +279,7 @@ package body SDL.Video.Textures is
       return Kind;
    end Get_Kind;
 
-   function Get_Size (Self : in Texture) return SDL.Video.Windows.Sizes is
+   function Get_Size (Self : in Texture) return SDL.Video.Sizes is
       function SDL_Query_Texture (T                 : in SDL.C_Pointers.Texture_Pointer;
                                   Pixel_Format_Name : in System.Address := System.Null_Address;
                                   Kind              : in System.Address := System.Null_Address;
@@ -297,7 +297,7 @@ package body SDL.Video.Textures is
          raise Texture_Error with SDL.Error.Get;
       end if;
 
-      return SDL.Video.Windows.Sizes'(Positive (W), Positive (H));
+      return SDL.Video.Sizes'(Positive (W), Positive (H));
    end Get_Size;
 
    overriding

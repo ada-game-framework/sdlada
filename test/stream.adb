@@ -22,7 +22,7 @@ procedure Stream is
    type Moose_Palette_Array is array (Moose_Colour_Index'Range) of SDL.Video.Palettes.RGB_Colour;
 
    W                : SDL.Video.Windows.Window;
-   Moose_Size       : SDL.Video.Windows.Sizes := (64, 88);
+   Moose_Size       : SDL.Video.Sizes         := (64, 88);
    Moose_Frame_Size : constant Natural        := (Moose_Size.Width * Moose_Size.Height) - 1;
    Moose_Frame      : Moose_Frames            := Moose_Frames'First;
    Moose_Palette    : constant Moose_Palette_Array :=

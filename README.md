@@ -120,7 +120,7 @@ SDL_CreateColorCursor                 |   n   |
 SDL_CreateCond                        |   n   |
 SDL_CreateCursor                      |   n   |
 SDL_CreateMutex                       |   n   |
-SDL_CreateRGBSurface                  |   n   |
+SDL_CreateRGBSurface                  |   y   |
 SDL_CreateRGBSurfaceFrom              |   n   |
 SDL_CreateRenderer                    |   y   |
 SDL_CreateSemaphore                   |   n   |
@@ -148,8 +148,8 @@ SDL_DisableScreenSaver                |   y   |
 SDL_EnableScreenSaver                 |   y   |
 SDL_EnclosePoints                     |   y   |
 SDL_EventState                        |   n   |
-SDL_FillRect                          |   n   |
-SDL_FillRects                         |   n   |
+SDL_FillRect                          |   y   |
+SDL_FillRects                         |   y   |
 SDL_FilterEvents                      |   n   |
 SDL_FlushEvent                        |   n   |
 SDL_FlushEvents                       |   n   |
@@ -157,7 +157,7 @@ SDL_FreeCursor                        |   n   |
 SDL_FreeFormat                        |   y   |
 SDL_FreePalette                       |   y   |
 SDL_FreeRW                            |   n   |
-SDL_FreeSurface                       |   n   |
+SDL_FreeSurface                       |   y   |
 SDL_FreeWAV                           |   n   |
 SDL_GL_BindTexture                    |   y   |
 SDL_GL_CreateContext                  |   y   |
@@ -398,7 +398,7 @@ SDL_LogVerbose                        |   y   |
 SDL_LogWarn                           |   y   |
 SDL_LowerBlit                         |   n   |
 SDL_LowerBlitScaled                   |   n   |
-SDL_MUSTLOCK                          |   n   |      *
+SDL_MUSTLOCK                          |   y   |
 SDL_MapRGB                            |   y   |
 SDL_MapRGBA                           |   y   |
 SDL_MasksToPixelFormatEnum            |   y   |

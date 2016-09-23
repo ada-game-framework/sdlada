@@ -20,10 +20,46 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
+with Ada.Finalization;
 package body SDL.Video.Surfaces.Makers is
-   procedure Make is
+   procedure Create (Self       : in out Surface;
+                     Size       : in SDL.Video.Sizes;
+                     BPP        : in Pixel_Depths;
+                     Red_Mask   : in Colour_Masks;
+                     Blue_Mask  : in Colour_Masks;
+                     Green_Mask : in Colour_Masks;
+                     Alpha_Mask : in Colour_Masks) is
+      function SDL_Create_RGB_Surface
+        (Flags      : in Surface_Flags := 0;  --  TODO: Is this the correct type?
+         Width      : in C.int         := 0;
+         Height     : in C.int         := 0;
+         Depth      : in Pixel_Depths  := 1;
+         Red_Mask   : in Colour_Masks  := 0;
+         Green_Mask : in Colour_Masks  := 0;
+         Blue_Mask  : in Colour_Masks  := 0;
+         Alpha_Mask : in Colour_Masks  := 0) return Internal_Surface_Pointer with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_CreateRGBSurface";
    begin
-      --  TODO: When we get more surface api.
-      null;
-   end Make;
+      Self.Internal := SDL_Create_RGB_Surface (Width      => C.int (Size.Width),
+                                               Height     => C.int (Size.Height),
+                                               Depth      => BPP,
+                                               Red_Mask   => Red_Mask,
+                                               Green_Mask => Green_Mask,
+                                               Blue_Mask  => Blue_Mask,
+                                               Alpha_Mask => Alpha_Mask);
+   end Create;
+
+   --  TODO: SDL_CreateRGBSurfaceFrom
+
+   function Get_Internal_Surface (Self : in Surface) return Internal_Surface_Pointer is
+   begin
+      return Self.Internal;
+   end Get_Internal_Surface;
+
+   function Make_Surface_From_Pointer (S : in Internal_Surface_Pointer) return Surface is
+   begin
+      return (Ada.Finalization.Controlled with Internal => S, Owns => False);
+   end Make_Surface_From_Pointer;
 end SDL.Video.Surfaces.Makers;

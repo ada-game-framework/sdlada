@@ -34,7 +34,8 @@ package body SDL.Video.Renderers.Makers is
      Convention => Ada,
      Import     => True;
 
-   function Get_Internal_Surface (Self : in SDL.Video.Surfaces.Surface) return SDL.C_Pointers.Surface_Pointer with
+   function Get_Internal_Surface (Self : in SDL.Video.Surfaces.Surface)
+                                  return SDL.Video.Surfaces.Internal_Surface_Pointer with
      Import     => True,
      Convention => Ada;
 
@@ -72,7 +73,7 @@ package body SDL.Video.Renderers.Makers is
      (Rend    : in out Renderer;
       Surface : in SDL.Video.Surfaces.Surface) is
 
-      function SDL_Create_Software_Renderer (S : in SDL.C_Pointers.Surface_Pointer)
+      function SDL_Create_Software_Renderer (S : in SDL.Video.Surfaces.Internal_Surface_Pointer)
                                              return SDL.C_Pointers.Renderer_Pointer with
         Import        => True,
         Convention    => C,

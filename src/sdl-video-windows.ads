@@ -167,7 +167,8 @@ package SDL.Video.Windows is
 
    procedure Update_Surface (Self : in Window);
 
-   procedure Update_Surface_Rectangles (Self : in Window; Rectangles : SDL.Video.Rectangles.Rectangle_Arrays);
+   procedure Update_Surface_Rectangle (Self : in Window; Rectangle : in SDL.Video.Rectangles.Rectangle);
+   procedure Update_Surface_Rectangles (Self : in Window; Rectangles : in SDL.Video.Rectangles.Rectangle_Arrays);
 
    --  Determine whether any windows have been created.
    function Exist return Boolean;

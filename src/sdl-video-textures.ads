@@ -33,7 +33,7 @@ with SDL.Video.Pixels;
 with SDL.Video.Rectangles;
 limited with SDL.Video.Renderers;
 with SDL.Video.Surfaces;
-with SDL.Video.Windows;
+with SDL.Video;
 
 package SDL.Video.Textures is
    Texture_Error : exception;
@@ -111,11 +111,11 @@ package SDL.Video.Textures is
    procedure Query (Self              : in Texture;
                     Pixel_Format_Name : out SDL.Video.Pixel_Formats.Pixel_Format_Names;
                     Kind              : out Kinds;
-                    Size              : out SDL.Video.Windows.Sizes);
+                    Size              : out SDL.Video.Sizes);
 
    function Get_Pixel_Format (Self : in Texture) return SDL.Video.Pixel_Formats.Pixel_Format_Names;
    function Get_Kind (Self : in Texture) return Kinds;
-   function Get_Size (Self : in Texture) return SDL.Video.Windows.Sizes;
+   function Get_Size (Self : in Texture) return SDL.Video.Sizes;
 
    --  SDL_UpdateTexture
    --  SDL_UpdateYUVTexture
@@ -125,7 +125,7 @@ private
          Internal     : SDL.C_Pointers.Texture_Pointer             := null;
          Owns         : Boolean                                    := True;
          Locked       : Boolean                                    := False;
-         Size         : SDL.Video.Windows.Sizes                    := (Positive'First, Positive'First);
+         Size         : SDL.Video.Sizes                            := (Positive'First, Positive'First);
          Pixel_Format : SDL.Video.Pixel_Formats.Pixel_Format_Names := SDL.Video.Pixel_Formats.Pixel_Format_Unknown;
       end record;
 
