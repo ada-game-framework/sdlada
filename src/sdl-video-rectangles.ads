@@ -66,7 +66,7 @@ package SDL.Video.Rectangles is
          X      : C.int;
          Y      : C.int;
          Width  : C.int;
-         height : C.int;
+         Height : C.int;
       end record with
      Convention => C;
 
