@@ -32,6 +32,9 @@ package SDL.Video.Surfaces.Makers is
                      Blue_Mask  : in Colour_Masks;
                      Green_Mask : in Colour_Masks;
                      Alpha_Mask : in Colour_Masks);
+
+   --  TODO: This is likely a temporary place for this. It's likely I will add a Streams package.
+   --     procedure Create (Self : in out Surface; File_Name : in String);
 private
    function Get_Internal_Surface (Self : in Surface) return Internal_Surface_Pointer with
      Export     => True,
@@ -41,4 +44,8 @@ private
    function Make_Surface_From_Pointer (S : in Internal_Surface_Pointer) return Surface with
      Export     => True,
      Convention => Ada;
+
+   --  TODO: SDL_ConvertSurface
+   --  TODO: SDL_ConvertSurfaceFormat
+   --  TODO: SDL_CreateRGBSurfaceFrom
 end SDL.Video.Surfaces.Makers;

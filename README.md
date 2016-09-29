@@ -96,8 +96,8 @@ SDL_AtomicTryLock                     |   n   |
 SDL_AtomicUnlock                      |   n   |
 SDL_AudioInit                         |   n   |
 SDL_AudioQuit                         |   n   |
-SDL_BlitScaled                        |   n   |
-SDL_BlitSurface                       |   n   |
+SDL_BlitScaled                        |   y   |
+SDL_BlitSurface                       |   y   |
 SDL_BuildAudioCVT                     |   n   |
 SDL_COMPILEDVERSION                   |   n   |      *
 SDL_CalculateGammaRamp                |   y   |
@@ -207,10 +207,10 @@ SDL_GetAudioStatus                    |   n   |
 SDL_GetBasePath                       |   n   |
 SDL_GetCPUCacheLineSize               |   y   |
 SDL_GetCPUCount                       |   y   |
-SDL_GetClipRect                       |   n   |
+SDL_GetClipRect                       |   y   |
 SDL_GetClipboardText                  |   y   |
 SDL_GetClosestDisplayMode             |   y   |
-SDL_GetColorKey                       |   n   |
+SDL_GetColorKey                       |   y   |
 SDL_GetCurrentAudioDriver             |   n   |
 SDL_GetCurrentDisplayMode             |   y   |
 SDL_GetCurrentVideoDriver             |   y   |
@@ -264,9 +264,9 @@ SDL_GetRevisionNumber                 |   y   |
 SDL_GetScancodeFromKey                |   y   |
 SDL_GetScancodeFromName               |   y   |
 SDL_GetScancodeName                   |   y   |
-SDL_GetSurfaceAlphaMod                |   n   |
-SDL_GetSurfaceBlendMode               |   n   |
-SDL_GetSurfaceColorMod                |   n   |
+SDL_GetSurfaceAlphaMod                |   y   |
+SDL_GetSurfaceBlendMode               |   y   |
+SDL_GetSurfaceColorMod                |   y   |
 SDL_GetSystemRAM                      |   n   |
 SDL_GetTextureAlphaMod                |   y   |
 SDL_GetTextureBlendMode               |   y   |
@@ -379,7 +379,7 @@ SDL_LoadWAV_RW                        |   n   |
 SDL_LockAudio                         |   n   |
 SDL_LockAudioDevice                   |   n   |
 SDL_LockMutex                         |   n   |
-SDL_LockSurface                       |   n   |
+SDL_LockSurface                       |   y   |
 SDL_LockTexture                       |   y   |
 SDL_Log                               |   y   |
 SDL_LogCritical                       |   y   |
@@ -396,8 +396,8 @@ SDL_LogSetOutputFunction              |   n   |
 SDL_LogSetPriority                    |   y   |
 SDL_LogVerbose                        |   y   |
 SDL_LogWarn                           |   y   |
-SDL_LowerBlit                         |   n   |
-SDL_LowerBlitScaled                   |   n   |
+SDL_LowerBlit                         |   y   |
+SDL_LowerBlitScaled                   |   y   |
 SDL_MUSTLOCK                          |   y   |
 SDL_MapRGB                            |   y   |
 SDL_MapRGBA                           |   y   |
@@ -484,9 +484,9 @@ SDL_SemValue                          |   n   |
 SDL_SemWait                           |   n   |
 SDL_SemWaitTimeout                    |   n   |
 SDL_SetAssertionHandler               |   n   |
-SDL_SetClipRect                       |   n   |
+SDL_SetClipRect                       |   y   |
 SDL_SetClipboardText                  |   y   |
-SDL_SetColorKey                       |   n   |
+SDL_SetColorKey                       |   y   |
 SDL_SetCursor                         |   n   |
 SDL_SetError                          |   y   |
 SDL_SetEventFilter                    |   n   |
@@ -500,11 +500,11 @@ SDL_SetRelativeMouseMode              |   y   |
 SDL_SetRenderDrawBlendMode            |   y   |
 SDL_SetRenderDrawColor                |   y   |
 SDL_SetRenderTarget                   |   y   |
-SDL_SetSurfaceAlphaMod                |   n   |
-SDL_SetSurfaceBlendMode               |   n   |
-SDL_SetSurfaceColorMod                |   n   |
+SDL_SetSurfaceAlphaMod                |   y   |
+SDL_SetSurfaceBlendMode               |   y   |
+SDL_SetSurfaceColorMod                |   y   |
 SDL_SetSurfacePalette                 |   n   |
-SDL_SetSurfaceRLE                     |   n   |
+SDL_SetSurfaceRLE                     |   y   |
 SDL_SetTextInputRect                  |   y   |
 SDL_SetTextureAlphaMod                |   y   |
 SDL_SetTextureBlendMode               |   y   |
@@ -554,7 +554,7 @@ SDL_UnloadObject                      |   y   |
 SDL_UnlockAudio                       |   n   |
 SDL_UnlockAudioDevice                 |   n   |
 SDL_UnlockMutex                       |   n   |
-SDL_UnlockSurface                     |   n   |
+SDL_UnlockSurface                     |   y   |
 SDL_UnlockTexture                     |   y   |
 SDL_UpdateTexture                     |   n   |
 SDL_UpdateWindowSurface               |   n   |

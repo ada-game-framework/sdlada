@@ -29,6 +29,7 @@ with Interfaces.C;
 with System;
 private with SDL.C_Pointers;
 with SDL.Video;
+with SDL.Video.Palettes;
 with SDL.Video.Pixel_Formats;
 with SDL.Video.Rectangles;
 
@@ -55,17 +56,17 @@ package SDL.Video.Surfaces is
    Null_Surface : constant Surface;
 
    --  Operations to get hold of the various fields in the internal record.
-   function Pixel_Format (Self : in Surface) return SDL.Video.Pixel_Formats.Pixel_Format_Access with
+   function Pixel_Format (Self : in Surface) return Pixel_Formats.Pixel_Format_Access with
      Inline => True;
 
-   function Size (Self : in Surface) return SDL.Video.Sizes with
+   --  Get the dimensions of this surface.
+   function Size (Self : in Surface) return Sizes with
      Inline => True;
 
-   --  TODO: Make generic so that specific arrays which have are mapped onto the pixels address.
+   --  TODO: Make generic so that we can get access to specific arrays which are mapped onto the Pixels address.
    function Pixels (Self : in Surface) return System.Address with
      Inline => True;
 
-   --  TODO: Make generic
    generic
       type Data is private;
       type Data_Pointer is access all Data;
@@ -75,20 +76,95 @@ package SDL.Video.Surfaces is
       procedure Set (Self : in out Surface; Data : in Data_Pointer);
    end User_Data;
 
-   function Clip_Rectangle (Self : in Surface) return SDL.Video.Rectangles.Rectangle with
+   --  Other operations.
+
+   --  Blit Source Surface onto Self Surface.
+   procedure Blit (Self        : in out Surface;
+                   Source      : in Surface);
+
+   procedure Blit (Self        : in out Surface;
+                   Self_Area   : in out Rectangles.Rectangle;
+                   Source      : in Surface;
+                   Source_Area : in Rectangles.Rectangle := Rectangles.Null_Rectangle);
+
+   --  Blit Source Surface onto Self Surface with scaling.
+   procedure Blit_Scaled (Self        : in out Surface;
+                          Source      : in Surface);
+
+   --  As above, but takes in rectangles to define the areas of blitting. Updates the Self_Area with the final area
+   --  used to blit into.
+   procedure Blit_Scaled (Self        : in out Surface;
+                          Self_Area   : in out Rectangles.Rectangle;
+                          Source      : in Surface;
+                          Source_Area : in Rectangles.Rectangle := Rectangles.Null_Rectangle);
+
+   --  The next two functions require that the rectangles already be clipped, if they're not, use the above.
+   procedure Lower_Blit (Self        : in out Surface;
+                         Self_Area   : in Rectangles.Rectangle;
+                         Source      : in Surface;
+                         Source_Area : in Rectangles.Rectangle);
+
+   procedure Lower_Blit_Scaled (Self        : in out Surface;
+                                Self_Area   : in Rectangles.Rectangle;
+                                Source      : in Surface;
+                                Source_Area : in Rectangles.Rectangle);
+   --  TODO: SDL_ConvertPixels
+
+   procedure Fill (Self   : in out Surface;
+                   Area   : in Rectangles.Rectangle;
+                   Colour : in Interfaces.Unsigned_32);
+
+   procedure Fill (Self   : in out Surface;
+                   Areas  : in Rectangles.Rectangle_Arrays;
+                   Colour : in Interfaces.Unsigned_32);
+
+   function Clip_Rectangle (Self : in Surface) return Rectangles.Rectangle with
      Inline => True;
 
-   --  Other operations.
+   procedure Set_Clip_Rectangle (Self : in out Surface; Now : in Rectangles.Rectangle) with
+     Inline => True;
+
+   function Colour_Key (Self : in Surface) return Palettes.Colour with
+     Inline => True;
+
+   procedure Set_Colour_Key (Self : in out Surface; Now : in Palettes.Colour) with
+     Inline => True;
+
+   function Alpha_Blend (Self : in Surface) return Palettes.Colour_Component with
+     Inline => True;
+
+   procedure Set_Alpha_Blend (Self : in out Surface; Now : in Palettes.Colour_Component) with
+     Inline => True;
+
+   function Blend_Mode (Self : in Surface) return Blend_Modes with
+     Inline => True;
+
+   procedure Set_Blend_Mode (Self : in out Surface; Now : in Blend_Modes) with
+     Inline => True;
+
+   function Colour (Self : in Surface) return Palettes.RGB_Colour with
+     Inline => True;
+
+   procedure Set_Colour (Self : in out Surface; Now : in Palettes.RGB_Colour) with
+     Inline => True;
+
+   --  TODO: SDL_LoadBMP_RW
+   --  TODO: SDL_SaveBMP
+   --  TODO: SDL_SaveBMP_RW
+
+   procedure Lock (Self : in out Surface) with
+     Inline => True;
+
+   procedure Unlock (Self : in out Surface) with
+     Inline => True;
+
    function Must_Lock (Self : in Surface) return Boolean with
      Inline => True;
 
-   procedure Fill (Self   : in out Surface;
-                   Area   : in SDL.Video.Rectangles.Rectangle;
-                   Colour : in Interfaces.Unsigned_32);
+   --  TODO: SDL_SetSurfacePalette
 
-   procedure Fill (Self   : in out Surface;
-                   Areas  : in SDL.Video.Rectangles.Rectangle_Arrays;
-                   Colour : in Interfaces.Unsigned_32);
+   procedure Set_RLE (Self : in out Surface; Enabled : in Boolean) with
+     Inline => True;
 
    overriding
    procedure Adjust (Self : in out Surface);
@@ -114,7 +190,7 @@ private
    type Internal_Surface is
       record
          Flags           : Surface_Flags;           --  Internal, don't touch.
-         Pixel_Format    : SDL.Video.Pixel_Formats.Pixel_Format_Access;
+         Pixel_Format    : Pixel_Formats.Pixel_Format_Access;
          Width           : C.int;
          Height          : C.int;
          Pitch           : C.int;
@@ -122,7 +198,7 @@ private
          User_Data       : User_Data_Pointer;
          Locked          : C.int;                   --  Internal, don't touch.
          Lock_Data       : System.Address;          --  Internal, don't touch.
-         Clip_Rectangle  : SDL.Video.Rectangles.Rectangle;
+         Clip_Rectangle  : Rectangles.Rectangle;
          Blit_Map        : System.Address;          --  Internal, don't touch.
          Reference_Count : C.int;
       end record with

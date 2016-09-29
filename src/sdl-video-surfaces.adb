@@ -26,14 +26,14 @@ with SDL.Error;
 package body SDL.Video.Surfaces is
    use type C.int;
 
-   function Pixel_Format (Self : in Surface) return SDL.Video.Pixel_Formats.Pixel_Format_Access is
+   function Pixel_Format (Self : in Surface) return Pixel_Formats.Pixel_Format_Access is
    begin
       return Self.Internal.Pixel_Format;
    end Pixel_Format;
 
-   function Size (Self : in Surface) return SDL.Video.Sizes is
+   function Size (Self : in Surface) return Sizes is
    begin
-      return SDL.Video.Sizes'(Positive (Self.Internal.Width), Positive (Self.Internal.Height));
+      return Sizes'(Positive (Self.Internal.Width), Positive (Self.Internal.Height));
    end Size;
 
    function Pixels (Self : in Surface) return System.Address is
@@ -64,25 +64,144 @@ package body SDL.Video.Surfaces is
       end Set;
    end User_Data;
 
-   function Clip_Rectangle (Self : in Surface) return SDL.Video.Rectangles.Rectangle is
-   begin
-      return Self.Internal.Clip_Rectangle;
-   end Clip_Rectangle;
+   procedure Blit (Self        : in out Surface;
+                   Source      : in Surface) is
+      function SDL_Blit_Surface (S  : in Internal_Surface_Pointer;
+                                 SR : access Rectangles.Rectangle;
+                                 D  : in Internal_Surface_Pointer;
+                                 DR : access Rectangles.Rectangle) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_UpperBlit";  --  SDL_BlitSurface is a macro in SDL_surface.h
 
-   --  This is equivalent to the macro SDL_MUSTLOCK in SDL_surface.h.
-   function Must_Lock (Self : in Surface) return Boolean is
+      Result : C.int := SDL_Blit_Surface (Source.Internal, null, Self.Internal, null);
    begin
-      return (Self.Internal.Flags and RLE_Encoded) = RLE_Encoded;
-   end Must_Lock;
+      if Result /= SDL.Success then
+         raise Surface_Error with SDL.Error.Get;
+      end if;
+   end Blit;
+
+   procedure Blit (Self        : in out Surface;
+                   Self_Area   : in out Rectangles.Rectangle;
+                   Source      : in Surface;
+                   Source_Area : in Rectangles.Rectangle := Rectangles.Null_Rectangle) is
+      function SDL_Blit_Surface (S  : in Internal_Surface_Pointer;
+                                 SR : in Rectangles.Rectangle;
+                                 D  : in Internal_Surface_Pointer;
+                                 DR : access Rectangles.Rectangle) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_UpperBlit";  --  SDL_BlitSurface is a macro in SDL_surface.h
+      use type Rectangles.Rectangle;
+
+      Result : C.int := 0;
+      Area   : aliased Rectangles.Rectangle;
+   begin
+      if Self_Area = Rectangles.Null_Rectangle then
+         Result := SDL_Blit_Surface (Source.Internal, Source_Area, Self.Internal, null);
+      else
+         Result := SDL_Blit_Surface (Source.Internal, Source_Area, Self.Internal, Area'Access);
+
+         Self_Area := Area;
+      end if;
+
+      if Result /= SDL.Success then
+         raise Surface_Error with SDL.Error.Get;
+      end if;
+   end Blit;
+
+   procedure Blit_Scaled (Self        : in out Surface;
+                          Source      : in Surface) is
+      function SDL_Blit_Scaled (S  : in Internal_Surface_Pointer;
+                                SR : access Rectangles.Rectangle;
+                                D  : in Internal_Surface_Pointer;
+                                DR : access Rectangles.Rectangle) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_UpperBlitScaled";  --  SDL_BlitScaled is a macro in SDL_surface.h
+
+      Result : C.int := SDL_Blit_Scaled (Source.Internal, null, Self.Internal, null);
+   begin
+      if Result /= SDL.Success then
+         raise Surface_Error with SDL.Error.Get;
+      end if;
+   end Blit_Scaled;
+
+   procedure Blit_Scaled (Self        : in out Surface;
+                          Self_Area   : in out Rectangles.Rectangle;
+                          Source      : in Surface;
+                          Source_Area : in Rectangles.Rectangle := Rectangles.Null_Rectangle) is
+      function SDL_Blit_Scaled (S  : in Internal_Surface_Pointer;
+                                SR : in Rectangles.Rectangle;
+                                D  : in Internal_Surface_Pointer;
+                                DR : access Rectangles.Rectangle) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_UpperBlitScaled";  --  SDL_BlitScaled is a macro in SDL_surface.h
+      use type Rectangles.Rectangle;
+
+      Result : C.int := 0;
+      Area   : aliased Rectangles.Rectangle;
+   begin
+      if Self_Area = Rectangles.Null_Rectangle then
+         Result := SDL_Blit_Scaled (Source.Internal, Source_Area, Self.Internal, null);
+      else
+         Result := SDL_Blit_Scaled (Source.Internal, Source_Area, Self.Internal, Area'Access);
+
+         Self_Area := Area;
+      end if;
+
+      if Result /= SDL.Success then
+         raise Surface_Error with SDL.Error.Get;
+      end if;
+   end Blit_Scaled;
+
+   procedure Lower_Blit (Self        : in out Surface;
+                         Self_Area   : in Rectangles.Rectangle;
+                         Source      : in Surface;
+                         Source_Area : in Rectangles.Rectangle) is
+      function SDL_Lower_Blit (S  : in Internal_Surface_Pointer;
+                               SR : in Rectangles.Rectangle;
+                               D  : in Internal_Surface_Pointer;
+                               DR : in Rectangles.Rectangle) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_LowerBlit";
+
+      Result : C.int := SDL_Lower_Blit (Source.Internal, Source_Area, Self.Internal, Self_Area);
+   begin
+      if Result /= SDL.Success then
+         raise Surface_Error with SDL.Error.Get;
+      end if;
+   end Lower_Blit;
+
+   procedure Lower_Blit_Scaled (Self        : in out Surface;
+                                Self_Area   : in Rectangles.Rectangle;
+                                Source      : in Surface;
+                                Source_Area : in Rectangles.Rectangle) is
+      function SDL_Lower_Blit_Scaled (S  : in Internal_Surface_Pointer;
+                                      SR : in Rectangles.Rectangle;
+                                      D  : in Internal_Surface_Pointer;
+                                      DR : in Rectangles.Rectangle) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_LowerBlitScaled";
+
+      Result : C.int := SDL_Lower_Blit_Scaled (Source.Internal, Source_Area, Self.Internal, Self_Area);
+   begin
+      if Result /= SDL.Success then
+         raise Surface_Error with SDL.Error.Get;
+      end if;
+   end Lower_Blit_Scaled;
 
    procedure Fill (Self   : in out Surface;
-                   Area   : in SDL.Video.Rectangles.Rectangle;
+                   Area   : in Rectangles.Rectangle;
                    Colour : in Interfaces.Unsigned_32) is
       function SDL_Fill_Rect (S      : in Internal_Surface_Pointer;
-                              Rect   : in SDL.Video.Rectangles.Rectangle;
+                              Rect   : in Rectangles.Rectangle;
                               Colour : in Interfaces.Unsigned_32) return C.int with
-        Import => True,
-        Convention => C,
+        Import        => True,
+        Convention    => C,
         External_Name => "SDL_FillRect";
       Result : C.int := SDL_Fill_Rect (Self.Internal, Area, Colour);
    begin
@@ -92,21 +211,224 @@ package body SDL.Video.Surfaces is
    end Fill;
 
    procedure Fill (Self   : in out Surface;
-                   Areas  : in SDL.Video.Rectangles.Rectangle_Arrays;
+                   Areas  : in Rectangles.Rectangle_Arrays;
                    Colour : in Interfaces.Unsigned_32) is
       function SDL_Fill_Rects (S      : in Internal_Surface_Pointer;
-                               Rects  : in SDL.Video.Rectangles.Rectangle_Arrays;
+                               Rects  : in Rectangles.Rectangle_Arrays;
                                Count  : in C.int;
                                Colour : in Interfaces.Unsigned_32) return C.int with
         Import => True,
         Convention => C,
         External_Name => "SDL_FillRects";
+
       Result : C.int := SDL_Fill_Rects (Self.Internal, Areas, Areas'Length, Colour);
    begin
       if Result < SDL.Success then
          raise Surface_Error with SDL.Error.Get;
       end if;
    end Fill;
+
+   function Clip_Rectangle (Self : in Surface) return Rectangles.Rectangle is
+      procedure SDL_Get_Clip_Rect (S : in Internal_Surface_Pointer;
+                                   R : out Rectangles.Rectangle) with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GetClipRect";
+   begin
+      return Result : Rectangles.Rectangle := Rectangles.Null_Rectangle do
+         SDL_Get_Clip_Rect (Self.Internal, Result);
+      end return;
+   end Clip_Rectangle;
+
+   procedure Set_Clip_Rectangle (Self : in out Surface; Now : in Rectangles.Rectangle) is
+      function SDL_Set_Clip_Rect (S : in out Internal_Surface_Pointer;
+                                  R : in Rectangles.Rectangle) return SDL_Bool with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_SetClipRect";
+
+      Result : SDL_Bool := SDL_Set_Clip_Rect (S => Self.Internal, R => Now);
+   begin
+      if Result = SDL_False then
+         raise Surface_Error with SDL.Error.Get;
+      end if;
+   end Set_Clip_Rectangle;
+
+   function Colour_Key (Self : in Surface) return Palettes.Colour is
+      function SDL_Get_Color_Key (S : in Internal_Surface_Pointer;
+                                  K : out Interfaces.Unsigned_32) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GetColorKey";
+
+      Key    : Interfaces.Unsigned_32;
+      Result : C.int := SDL_Get_Color_Key (Self.Internal, Key);
+   begin
+      if Result < SDL.Success then
+         raise Surface_Error with SDL.Error.Get;
+      end if;
+
+      return Pixel_Formats.To_Colour (Pixel  => Key,
+                                      Format => Self.Pixel_Format);
+   end Colour_Key;
+
+   procedure Set_Colour_Key (Self : in out Surface; Now : in Palettes.Colour) is
+      function SDL_Set_Color_Key (S : in out Internal_Surface_Pointer;
+                                  K : in Interfaces.Unsigned_32) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_SetColorKey";
+
+      --  TODO: SDL_SetColorKey
+      Result : C.int := SDL_Set_Color_Key (S => Self.Internal,
+                                           K => Pixel_Formats.To_Pixel (Colour => Now,
+                                                                        Format => Self.Pixel_Format));
+   begin
+      if Result < SDL.Success then
+         raise Surface_Error with SDL.Error.Get;
+      end if;
+   end Set_Colour_Key;
+
+   function Alpha_Blend (Self : in Surface) return Palettes.Colour_Component is
+      function SDL_Get_Surface_Alpha_Mod (S : in Internal_Surface_Pointer;
+                                          A : out Palettes.Colour_Component) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GetSurfaceAlphaMod";
+
+      Alpha  : Palettes.Colour_Component;
+      Result : C.int := SDL_Get_Surface_Alpha_Mod (S => Self.Internal, A => Alpha);
+   begin
+      if Result < SDL.Success then
+         raise Surface_Error with SDL.Error.Get;
+      end if;
+
+      return Alpha;
+   end Alpha_Blend;
+
+   procedure Set_Alpha_Blend (Self : in out Surface; Now : in Palettes.Colour_Component) is
+      function SDL_Set_Surface_Alpha_Mod (S : in out Internal_Surface_Pointer;
+                                          A : in Palettes.Colour_Component) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_SetSurfaceAlphaMod";
+
+      Result : C.int := SDL_Set_Surface_Alpha_Mod (S => Self.Internal, A => Now);
+   begin
+      if Result < SDL.Success then
+         raise Surface_Error with SDL.Error.Get;
+      end if;
+   end Set_Alpha_Blend;
+
+   function Blend_Mode (Self : in Surface) return Blend_Modes is
+      function SDL_Get_Surface_Blend_Mode (S : in Internal_Surface_Pointer;
+                                           B : out Blend_Modes) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GetSurfaceAlphaMod";
+
+      Blend_Mode : Blend_Modes;
+      Result     : C.int := SDL_Get_Surface_Blend_Mode (S => Self.Internal, B => Blend_Mode);
+   begin
+      if Result < SDL.Success then
+         raise Surface_Error with SDL.Error.Get;
+      end if;
+
+      return Blend_Mode;
+   end Blend_Mode;
+
+   procedure Set_Blend_Mode (Self : in out Surface; Now : in Blend_Modes) is
+      function SDL_Set_Surface_Blend_Mode (S : in out Internal_Surface_Pointer;
+                                           B : in Blend_Modes) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_SetSurfaceBlendMode";
+
+      Result : C.int := SDL_Set_Surface_Blend_Mode (S => Self.Internal, B => Now);
+   begin
+      if Result < SDL.Success then
+         raise Surface_Error with SDL.Error.Get;
+      end if;
+   end Set_Blend_Mode;
+
+   function Colour (Self : in Surface) return Palettes.RGB_Colour is
+      function SDL_Get_Surface_Color_Mod (S : in Internal_Surface_Pointer;
+                                          R : out Palettes.Colour_Component;
+                                          G : out Palettes.Colour_Component;
+                                          B : out Palettes.Colour_Component) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GetSurfaceColorMod";
+
+      Red    : Palettes.Colour_Component;
+      Green  : Palettes.Colour_Component;
+      Blue   : Palettes.Colour_Component;
+      Result : C.int := SDL_Get_Surface_Color_Mod (S => Self.Internal, R => Red, G => Green, B => Blue);
+   begin
+      if Result < SDL.Success then
+         raise Surface_Error with SDL.Error.Get;
+      end if;
+
+      return (Red, Green, Blue);
+   end Colour;
+
+   procedure Set_Colour (Self : in out Surface; Now : in Palettes.RGB_Colour) is
+      function SDL_Set_Surface_Color_Mod (S : in out Internal_Surface_Pointer;
+                                          R : in Palettes.Colour_Component;
+                                          G : in Palettes.Colour_Component;
+                                          B : in Palettes.Colour_Component) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_SetSurfaceColorMod";
+
+      Result : C.int := SDL_Set_Surface_Color_Mod (S => Self.Internal, R => Now.Red, G => Now.Green, B => Now.Blue);
+   begin
+      if Result < SDL.Success then
+         raise Surface_Error with SDL.Error.Get;
+      end if;
+   end Set_Colour;
+
+   procedure Lock (Self : in out Surface) is
+      --  TODO: SDL_LockSurface
+      function SDL_Lock_Surface (Self : in out Internal_Surface_Pointer) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_LockSurface";
+
+      Result : C.int := SDL_Lock_Surface (Self.Internal);
+   begin
+      if Result < SDL.Success then
+         raise Surface_Error with SDL.Error.Get;
+      end if;
+   end Lock;
+
+   procedure Unlock (Self : in out Surface) is
+      procedure SDL_Unlock_Surface (Self : in out Internal_Surface_Pointer) with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_UnlockSurface";
+   begin
+      SDL_Unlock_Surface (Self.Internal);
+   end Unlock;
+
+   procedure Set_RLE (Self : in out Surface; Enabled : in Boolean) is
+      function SDL_Set_Surface_RLE (Self : in out Internal_Surface_Pointer; Enabled : in C.int) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_SetSurfaceRLE";
+
+      Result : C.int := SDL_Set_Surface_RLE (Self.Internal, C.int (if Enabled then 1 else 0));
+   begin
+      if Result < SDL.Success then
+         raise Surface_Error with SDL.Error.Get;
+      end if;
+   end Set_RLE;
+
+   --  This is equivalent to the macro SDL_MUSTLOCK in SDL_surface.h.
+   function Must_Lock (Self : in Surface) return Boolean is
+   begin
+      return (Self.Internal.Flags and RLE_Encoded) = RLE_Encoded;
+   end Must_Lock;
 
    overriding
    procedure Adjust (Self : in out Surface) is

@@ -53,6 +53,16 @@ package body SDL.Video.Surfaces.Makers is
 
    --  TODO: SDL_CreateRGBSurfaceFrom
 
+   --     procedure Create (Self : in out Surface; File_Name : in String) is
+   --        --  This is actually a macro in the header.
+   --        function SDL_Load_BMP (File_Name : in C.char_array) return Internal_Surface_Pointer with
+   --          Import        => True,
+   --          Convention    => C,
+   --          External_Name => "SDL_LoadBMP";
+   --     begin
+   --        Self.Internal := SDL_Load_BMP (C.To_C (File_Name));
+   --     end Create;
+
    function Get_Internal_Surface (Self : in Surface) return Internal_Surface_Pointer is
    begin
       return Self.Internal;
