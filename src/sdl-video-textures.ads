@@ -33,7 +33,7 @@ with SDL.Video.Pixels;
 with SDL.Video.Rectangles;
 limited with SDL.Video.Renderers;
 with SDL.Video.Surfaces;
-with SDL.Video.Windows;
+with SDL.Video;
 
 package SDL.Video.Textures is
    Texture_Error : exception;
@@ -41,15 +41,6 @@ package SDL.Video.Textures is
    --  Was SDL_TextureAccess.
    type Kinds is (Static, Streaming, Target) with
      Convention => C;
-
-   type Blend_Modes is (None, Alpha_Blend, Additive, Colour_Modulate) with
-     Convention => C;
-
-   for Blend_Modes use
-     (None            => 16#0000_0000#,
-      Alpha_Blend     => 16#0000_0001#,
-      Additive        => 16#0000_0002#,
-      Colour_Modulate => 16#0000_0004#);
 
    type Texture is new Ada.Finalization.Limited_Controlled with private;
 
@@ -111,11 +102,11 @@ package SDL.Video.Textures is
    procedure Query (Self              : in Texture;
                     Pixel_Format_Name : out SDL.Video.Pixel_Formats.Pixel_Format_Names;
                     Kind              : out Kinds;
-                    Size              : out SDL.Video.Windows.Sizes);
+                    Size              : out SDL.Video.Sizes);
 
    function Get_Pixel_Format (Self : in Texture) return SDL.Video.Pixel_Formats.Pixel_Format_Names;
    function Get_Kind (Self : in Texture) return Kinds;
-   function Get_Size (Self : in Texture) return SDL.Video.Windows.Sizes;
+   function Get_Size (Self : in Texture) return SDL.Video.Sizes;
 
    --  SDL_UpdateTexture
    --  SDL_UpdateYUVTexture
@@ -125,7 +116,7 @@ private
          Internal     : SDL.C_Pointers.Texture_Pointer             := null;
          Owns         : Boolean                                    := True;
          Locked       : Boolean                                    := False;
-         Size         : SDL.Video.Windows.Sizes                    := (Positive'First, Positive'First);
+         Size         : SDL.Video.Sizes                            := (Positive'First, Positive'First);
          Pixel_Format : SDL.Video.Pixel_Formats.Pixel_Format_Names := SDL.Video.Pixel_Formats.Pixel_Format_Unknown;
       end record;
 

@@ -33,10 +33,6 @@ private package SDL.C_Pointers is
    type Renderer_Pointer is access all Renderers with
      Convention => C;
 
-   type Surfaces is null record;
-   type Surface_Pointer is access all Surfaces with
-     Convention => C;
-
    type Textures is null record;
    type Texture_Pointer is access all Textures with
      Convention => C;

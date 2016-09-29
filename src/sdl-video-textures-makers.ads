@@ -30,7 +30,7 @@ package SDL.Video.Textures.Makers is
       Renderer : in SDL.Video.Renderers.Renderer;
       Format   : in SDL.Video.Pixel_Formats.Pixel_Format_Names;
       Kind     : in Kinds;
-      Size     : in SDL.Video.Windows.Sizes);
+      Size     : in SDL.Video.Sizes);
 
    procedure Create
      (Tex      : in out Texture;

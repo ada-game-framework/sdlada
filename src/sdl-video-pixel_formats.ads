@@ -711,6 +711,12 @@ package SDL.Video.Pixel_Formats is
      Convention    => C,
      External_Name => "SDL_MapRGBA";
 
+   function To_Colour (Pixel : in Interfaces.Unsigned_32; Format : in Pixel_Format_Access) return Palettes.Colour with
+     Inline => True;
+
+   function To_Pixel (Colour : in Palettes.Colour; Format : in Pixel_Format_Access) return Interfaces.Unsigned_32 with
+     Inline => True;
+
    function To_Name
      (Bits       : in Bits_Per_Pixels;
       Red_Mask   : in Colour_Mask;

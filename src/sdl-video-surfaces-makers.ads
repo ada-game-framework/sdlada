@@ -25,5 +25,27 @@
 --  Functions to create surface objects.
 --------------------------------------------------------------------------------------------------------------------
 package SDL.Video.Surfaces.Makers is
-   procedure Make;
+   procedure Create (Self       : in out Surface;
+                     Size       : in SDL.Video.Sizes;
+                     BPP        : in Pixel_Depths;
+                     Red_Mask   : in Colour_Masks;
+                     Blue_Mask  : in Colour_Masks;
+                     Green_Mask : in Colour_Masks;
+                     Alpha_Mask : in Colour_Masks);
+
+   --  TODO: This is likely a temporary place for this. It's likely I will add a Streams package.
+   --     procedure Create (Self : in out Surface; File_Name : in String);
+private
+   function Get_Internal_Surface (Self : in Surface) return Internal_Surface_Pointer with
+     Export     => True,
+     Convention => Ada;
+
+   --  Create a surface from an internal pointer, this pointer will be owned by something else, so we don't delete it.
+   function Make_Surface_From_Pointer (S : in Internal_Surface_Pointer) return Surface with
+     Export     => True,
+     Convention => Ada;
+
+   --  TODO: SDL_ConvertSurface
+   --  TODO: SDL_ConvertSurfaceFormat
+   --  TODO: SDL_CreateRGBSurfaceFrom
 end SDL.Video.Surfaces.Makers;

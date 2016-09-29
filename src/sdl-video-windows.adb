@@ -344,25 +344,26 @@ package body SDL.Video.Windows is
    end Set_Size;
 
    function Get_Surface (Self : in Window) return SDL.Video.Surfaces.Surface is
-      function SDL_Get_Window_Surface (W : in SDL.C_Pointers.Windows_Pointer) return SDL.C_Pointers.Surface_Pointer with
+      function SDL_Get_Window_Surface (W : in SDL.C_Pointers.Windows_Pointer)
+                                       return SDL.Video.Surfaces.Internal_Surface_Pointer with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetWindowSurface";
 
-      use type SDL.C_Pointers.Surface_Pointer;
+      use type SDL.Video.Surfaces.Internal_Surface_Pointer;
 
-      A : SDL.C_Pointers.Surface_Pointer := SDL_Get_Window_Surface (Self.Internal);
+      S : SDL.Video.Surfaces.Internal_Surface_Pointer := SDL_Get_Window_Surface (Self.Internal);
 
-      function Make (S : in SDL.C_Pointers.Surface_Pointer) return SDL.Video.Surfaces.Surface with
+      function Make_Surface_From_Pointer (S : in SDL.Video.Surfaces.Internal_Surface_Pointer)
+                                          return SDL.Video.Surfaces.Surface with
         Convention    => Ada,
-        Import        => True,
-        External_Name => "Make_Surface_From_Pointer";
+        Import        => True;
    begin
-      if A = null then
+      if S = null then
          raise Window_Error with SDL.Error.Get;
       end if;
 
-      return Make (A);
+      return Make_Surface_From_Pointer (S);
    end Get_Surface;
 
    function Get_Title (Self : in Window) return Ada.Strings.UTF_Encoding.UTF_8_String is
@@ -452,14 +453,16 @@ package body SDL.Video.Windows is
    end Set_Mode;
 
    procedure Set_Icon (Self : in out Window; Icon : in SDL.Video.Surfaces.Surface) is
-      procedure SDL_Set_Window_Icon (W : in SDL.C_Pointers.Windows_Pointer; I : SDL.C_Pointers.Surface_Pointer) with
+      procedure SDL_Set_Window_Icon (W : in SDL.C_Pointers.Windows_Pointer;
+                                     S : SDL.Video.Surfaces.Internal_Surface_Pointer) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_SetWindowIcon";
 
-      function Get_Internal_Surface (Self : in SDL.Video.Surfaces.Surface) return SDL.C_Pointers.Surface_Pointer with
-        Convention => Ada,
-        Import     => True;
+      function Get_Internal_Surface (Self : in SDL.Video.Surfaces.Surface)
+                                     return SDL.Video.Surfaces.Internal_Surface_Pointer with
+        Import     => True,
+        Convention => Ada;
    begin
       SDL_Set_Window_Icon (Self.Internal, Get_Internal_Surface (Icon));
    end Set_Icon;
@@ -476,6 +479,21 @@ package body SDL.Video.Windows is
          raise Window_Error with SDL.Error.Get;
       end if;
    end Update_Surface;
+
+   procedure Update_Surface_Rectangle (Self : in Window; Rectangle : in SDL.Video.Rectangles.Rectangle) is
+      function SDL_Update_Window_Surface_Rects (W : in SDL.C_Pointers.Windows_Pointer;
+                                                R : in SDL.Video.Rectangles.Rectangle;
+                                                L : in C.int) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_UpdateWindowSurfaceRects";
+
+      Result : C.int := SDL_Update_Window_Surface_Rects (Self.Internal, Rectangle, 1);
+   begin
+      if Result /= Success then
+         raise Window_Error with SDL.Error.Get;
+      end if;
+   end Update_Surface_Rectangle;
 
    procedure Update_Surface_Rectangles (Self : in Window; Rectangles : SDL.Video.Rectangles.Rectangle_Arrays) is
       function SDL_Update_Window_Surface_Rects (W : in SDL.C_Pointers.Windows_Pointer;

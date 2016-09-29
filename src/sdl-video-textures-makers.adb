@@ -31,7 +31,8 @@ package body SDL.Video.Textures.Makers is
    use type C.int;
    use type SDL.C_Pointers.Texture_Pointer;
 
-   function Get_Internal_Surface (Self : in SDL.Video.Surfaces.Surface) return SDL.C_Pointers.Surface_Pointer with
+   function Get_Internal_Surface (Self : in SDL.Video.Surfaces.Surface)
+                                  return SDL.Video.Surfaces.Internal_Surface_Pointer with
      Import     => True,
      Convention => Ada;
 
@@ -44,7 +45,7 @@ package body SDL.Video.Textures.Makers is
       Renderer : in SDL.Video.Renderers.Renderer;
       Format   : in SDL.Video.Pixel_Formats.Pixel_Format_Names;
       Kind     : in Kinds;
-      Size     : in SDL.Video.Windows.Sizes) is
+      Size     : in SDL.Video.Sizes) is
 
       --  Convert the Pixel_Format_Name to an Unsigned_32 because the compiler is changing the value somewhere along
       --  the lines from the start of this procedure to calling SDL_Create_Texture.
@@ -80,14 +81,14 @@ package body SDL.Video.Textures.Makers is
       Renderer : in SDL.Video.Renderers.Renderer;
       Surface  : in SDL.Video.Surfaces.Surface) is
 
-      function SDL_Create_Texture_Form_Surface (R : in SDL.C_Pointers.Renderer_Pointer;
-                                                S : in SDL.C_Pointers.Surface_Pointer)
+      function SDL_Create_Texture_From_Surface (R : in SDL.C_Pointers.Renderer_Pointer;
+                                                S : in SDL.Video.Surfaces.Internal_Surface_Pointer)
                                                 return SDL.C_Pointers.Texture_Pointer with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_CreateTextureFromSurface";
    begin
-      Tex.Internal := SDL_Create_Texture_Form_Surface (Get_Internal_Renderer (Renderer),
+      Tex.Internal := SDL_Create_Texture_From_Surface (Get_Internal_Renderer (Renderer),
                                                        Get_Internal_Surface (Surface));
 
       if Tex.Internal = null then
