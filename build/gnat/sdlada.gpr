@@ -1,5 +1,5 @@
 library project SDLAda is
-   Version := "2.1.8";
+   Version := "2.2.0";
 
    type Platform_Type is ("linux", "bsd", "windows", "macosx", "ios", "android");
    type Mode_Type is ("debug", "release");
