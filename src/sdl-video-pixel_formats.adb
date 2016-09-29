@@ -37,6 +37,28 @@ package body SDL.Video.Pixel_Formats is
       return C.Strings.Value (C_Str);
    end Image;
 
+   function To_Colour (Pixel : in Interfaces.Unsigned_32; Format : in Pixel_Format_Access) return Palettes.Colour is
+      C : Palettes.Colour;
+   begin
+      To_Components (Pixel  => Pixel,
+                     Format => Format,
+                     Red    => C.Red,
+                     Green  => C.Green,
+                     Blue   => C.Blue,
+                     Alpha  => C.Alpha);
+
+      return C;
+   end To_Colour;
+
+   function To_Pixel (Colour : in Palettes.Colour; Format : in Pixel_Format_Access) return Interfaces.Unsigned_32 is
+   begin
+      return To_Pixel (Format => Format,
+                       Red    => Colour.Red,
+                       Green  => Colour.Green,
+                       Blue   => Colour.Blue,
+                       Alpha  => Colour.Alpha);
+   end To_Pixel;
+
    function To_Masks
      (Format     : in  Pixel_Format_Names;
       Bits       : out Bits_Per_Pixels;
