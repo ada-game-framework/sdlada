@@ -81,14 +81,14 @@ package body SDL.Video.Renderers is
       end if;
    end Finalize;
 
-   function Get_Blend_Mode (Self : in Renderer) return SDL.Video.Textures.Blend_Modes is
+   function Get_Blend_Mode (Self : in Renderer) return Blend_Modes is
       function SDL_Get_Render_Draw_Blend_Mode (R : in SDL.C_Pointers.Renderer_Pointer;
-                                               M : out SDL.Video.Textures.Blend_Modes) return C.int with
+                                               M : out Blend_Modes) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetRenderDrawBlendMode";
 
-      Mode   : SDL.Video.Textures.Blend_Modes;
+      Mode   : Blend_Modes;
       Result : C.int := SDL_Get_Render_Draw_Blend_Mode (Self.Internal, Mode);
    begin
       if Result /= Success then
@@ -98,9 +98,9 @@ package body SDL.Video.Renderers is
       return Mode;
    end Get_Blend_Mode;
 
-   procedure Set_Blend_Mode (Self : in out Renderer; Mode : in SDL.Video.Textures.Blend_Modes) is
+   procedure Set_Blend_Mode (Self : in out Renderer; Mode : in Blend_Modes) is
       function SDL_Set_Render_Draw_Blend_Mode (R : in SDL.C_Pointers.Renderer_Pointer;
-                                               M : in SDL.Video.Textures.Blend_Modes) return C.int with
+                                               M : in Blend_Modes) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_SetRenderDrawBlendMode";

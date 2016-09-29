@@ -62,8 +62,8 @@ package SDL.Video.Renderers is
    overriding
    procedure Finalize (Self : in out Renderer);
 
-   function Get_Blend_Mode (Self : in Renderer) return SDL.Video.Textures.Blend_Modes;
-   procedure Set_Blend_Mode (Self : in out Renderer; Mode : in SDL.Video.Textures.Blend_Modes);
+   function Get_Blend_Mode (Self : in Renderer) return Blend_Modes;
+   procedure Set_Blend_Mode (Self : in out Renderer; Mode : in Blend_Modes);
 
    function Get_Draw_Colour (Self : in Renderer) return SDL.Video.Palettes.Colour;
    procedure Set_Draw_Colour (Self : in out Renderer; Colour : in SDL.Video.Palettes.Colour);

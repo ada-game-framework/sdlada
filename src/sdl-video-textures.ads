@@ -42,15 +42,6 @@ package SDL.Video.Textures is
    type Kinds is (Static, Streaming, Target) with
      Convention => C;
 
-   type Blend_Modes is (None, Alpha_Blend, Additive, Colour_Modulate) with
-     Convention => C;
-
-   for Blend_Modes use
-     (None            => 16#0000_0000#,
-      Alpha_Blend     => 16#0000_0001#,
-      Additive        => 16#0000_0002#,
-      Colour_Modulate => 16#0000_0004#);
-
    type Texture is new Ada.Finalization.Limited_Controlled with private;
 
    Null_Texture : constant Texture;
