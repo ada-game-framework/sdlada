@@ -85,7 +85,7 @@ package SDL.Video.Surfaces is
    procedure Blit (Self        : in out Surface;
                    Self_Area   : in out Rectangles.Rectangle;
                    Source      : in Surface;
-                   Source_Area : in Rectangles.Rectangle := Rectangles.Null_Rectangle);
+                   Source_Area : in out Rectangles.Rectangle);
 
    --  Blit Source Surface onto Self Surface with scaling.
    procedure Blit_Scaled (Self        : in out Surface;
@@ -165,6 +165,9 @@ package SDL.Video.Surfaces is
 
    procedure Set_RLE (Self : in out Surface; Enabled : in Boolean) with
      Inline => True;
+
+   overriding
+   procedure Initialize (Self : in out Surface) renames Adjust;
 
    overriding
    procedure Adjust (Self : in out Surface);
