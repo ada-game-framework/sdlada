@@ -41,7 +41,7 @@ private
      Convention => Ada;
 
    --  Create a surface from an internal pointer, this pointer will be owned by something else, so we don't delete it.
-   function Make_Surface_From_Pointer (S : in Internal_Surface_Pointer) return Surface with
+   function Make_Surface_From_Pointer (S : in Internal_Surface_Pointer; Owns : in Boolean := False) return Surface with
      Export     => True,
      Convention => Ada;
 

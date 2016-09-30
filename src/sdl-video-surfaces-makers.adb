@@ -68,8 +68,8 @@ package body SDL.Video.Surfaces.Makers is
       return Self.Internal;
    end Get_Internal_Surface;
 
-   function Make_Surface_From_Pointer (S : in Internal_Surface_Pointer) return Surface is
+   function Make_Surface_From_Pointer (S : in Internal_Surface_Pointer; Owns : in Boolean := False) return Surface is
    begin
-      return (Ada.Finalization.Controlled with Internal => S, Owns => False);
+      return (Ada.Finalization.Controlled with Internal => S, Owns => Owns);
    end Make_Surface_From_Pointer;
 end SDL.Video.Surfaces.Makers;
