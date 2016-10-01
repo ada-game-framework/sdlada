@@ -10,7 +10,10 @@ library project SDLAda is
    Build    : Build_Type    := external ("SDL_BUILD", "static");
 
    for Languages    use ("Ada", "C");
-   for Source_Dirs  use ("../../src", "../../src/" & Platform, "gen/src/");
+   for Source_Dirs  use ("../../src", "../../src/" & Platform, "gen/src/",
+
+                         --  For SDL.Image.
+                         "../../src/image");
    for Library_Name use "sdlada";
    for Object_Dir   use "gen/" & Build & "." & Mode & "/lib/.obj";
    for Library_Dir  use "gen/" & Build & "." & Mode &  "/lib";
