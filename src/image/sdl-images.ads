@@ -20,32 +20,40 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
---  SDL.Video.Surfaces.Makers
+--  SDL.Images
 --
---  Functions to create surface objects.
+--  Root package implementing the binding to SDL2_mage.
 --------------------------------------------------------------------------------------------------------------------
-package SDL.Video.Surfaces.Makers is
-   procedure Create (Self       : in out Surface;
-                     Size       : in SDL.Video.Sizes;
-                     BPP        : in Pixel_Depths;
-                     Red_Mask   : in Colour_Masks;
-                     Blue_Mask  : in Colour_Masks;
-                     Green_Mask : in Colour_Masks;
-                     Alpha_Mask : in Colour_Masks);
+with Interfaces.C;
 
-   --  TODO: This is likely a temporary place for this. It's likely I will add a Streams package.
-   --     procedure Create (Self : in out Surface; File_Name : in String);
+package SDL.Images is
+   pragma Link_With ("-lSDL2_image");
+
+   package C renames Interfaces.C;
+
+   Image_Error : exception;
+
+   type Init_Image_Flags is new SDL.Init_Flags;
+
+   Enable_JPG        : constant Init_Image_Flags := 16#0000_0001#;
+   Enable_PNG        : constant Init_Image_Flags := 16#0000_0002#;
+   Enable_TIFF       : constant Init_Image_Flags := 16#0000_0004#;
+   Enable_WEBP       : constant Init_Image_Flags := 16#0000_0008#;
+   Enable_Everything : constant Init_Image_Flags := Enable_JPG or Enable_PNG or Enable_TIFF or Enable_WEBP;
+
+   type Formats is (Targa, Cursor, Icon, BMP, GIF, JPG, LBM, PCX, PNG, PNM, TIFF, XCF, XPM, XV, WEBP);
+
+   overriding
+   function Initialise (Flags : in Init_Image_Flags := Enable_Everything) return Boolean;
+
+   procedure Finalise with
+     Import        => True,
+     Convention    => C,
+     External_Name => "IMG_Quit";
 private
-   function Get_Internal_Surface (Self : in Surface) return Internal_Surface_Pointer with
-     Export     => True,
-     Convention => Ada;
+   subtype Format_String_Names is C.char_array (1 .. 5);
+   type Format_String_Arrays is array (Formats) of aliased Format_String_Names;
 
-   --  Create a surface from an internal pointer, this pointer will be owned by something else, so we don't delete it.
-   function Make_Surface_From_Pointer (S : in Internal_Surface_Pointer; Owns : in Boolean := False) return Surface with
-     Export     => True,
-     Convention => Ada;
-
-   --  TODO: SDL_ConvertSurface
-   --  TODO: SDL_ConvertSurfaceFormat
-   --  TODO: SDL_CreateRGBSurfaceFrom
-end SDL.Video.Surfaces.Makers;
+   function Format_String (Format : in Formats) return Format_String_Names with
+     Inline_Always => True;
+end SDL.Images;

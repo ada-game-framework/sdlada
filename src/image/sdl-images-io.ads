@@ -20,32 +20,33 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
---  SDL.Video.Surfaces.Makers
+--  SDL.Images.IO
 --
---  Functions to create surface objects.
+--  Various loading routines.
 --------------------------------------------------------------------------------------------------------------------
-package SDL.Video.Surfaces.Makers is
-   procedure Create (Self       : in out Surface;
-                     Size       : in SDL.Video.Sizes;
-                     BPP        : in Pixel_Depths;
-                     Red_Mask   : in Colour_Masks;
-                     Blue_Mask  : in Colour_Masks;
-                     Green_Mask : in Colour_Masks;
-                     Alpha_Mask : in Colour_Masks);
+with SDL.Video.Renderers;
+with SDL.Video.Surfaces;
+with SDL.Video.Textures;
+with SDL.RWops;
 
-   --  TODO: This is likely a temporary place for this. It's likely I will add a Streams package.
-   --     procedure Create (Self : in out Surface; File_Name : in String);
-private
-   function Get_Internal_Surface (Self : in Surface) return Internal_Surface_Pointer with
-     Export     => True,
-     Convention => Ada;
+package SDL.Images.IO is
+   --  TODO: I don't like the idea of leaving the freeing of the Source to the programmer, this is error prone and will
+   --        cause leaks! I would prefer the RWops object be controlled.
+   procedure Create (Surface : in out Video.Surfaces.Surface; File_Name : in String);
 
-   --  Create a surface from an internal pointer, this pointer will be owned by something else, so we don't delete it.
-   function Make_Surface_From_Pointer (S : in Internal_Surface_Pointer; Owns : in Boolean := False) return Surface with
-     Export     => True,
-     Convention => Ada;
+   procedure Create (Surface     : in out Video.Surfaces.Surface;
+                     Source      : in RWops.RWops;
+                     Format      : in Formats;
+                     Free_Source : in Boolean := True);
 
-   --  TODO: SDL_ConvertSurface
-   --  TODO: SDL_ConvertSurfaceFormat
-   --  TODO: SDL_CreateRGBSurfaceFrom
-end SDL.Video.Surfaces.Makers;
+   procedure Create (Texture   : in out Video.Textures.Texture;
+                     Renderer  : in Video.Renderers.Renderer;
+                     File_Name : in String);
+
+   procedure Create (Texture     : in out Video.Textures.Texture;
+                     Renderer    : in Video.Renderers.Renderer;
+                     Source      : in RWops.RWops;
+                     Free_Source : in Boolean := True);
+
+   procedure Write_PNG (Surface : in out Video.Surfaces.Surface; File_Name : in String);
+end SDL.Images.IO;

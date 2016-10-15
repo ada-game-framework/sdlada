@@ -84,9 +84,9 @@ package body SDL.Video.Surfaces is
    procedure Blit (Self        : in out Surface;
                    Self_Area   : in out Rectangles.Rectangle;
                    Source      : in Surface;
-                   Source_Area : in Rectangles.Rectangle := Rectangles.Null_Rectangle) is
+                   Source_Area : in out Rectangles.Rectangle) is
       function SDL_Blit_Surface (S  : in Internal_Surface_Pointer;
-                                 SR : in Rectangles.Rectangle;
+                                 SR : access Rectangles.Rectangle;
                                  D  : in Internal_Surface_Pointer;
                                  DR : access Rectangles.Rectangle) return C.int with
         Import        => True,
@@ -94,15 +94,28 @@ package body SDL.Video.Surfaces is
         External_Name => "SDL_UpperBlit";  --  SDL_BlitSurface is a macro in SDL_surface.h
       use type Rectangles.Rectangle;
 
-      Result : C.int := 0;
-      Area   : aliased Rectangles.Rectangle;
+      Result    : C.int := 0;
+      Src_Area  : aliased Rectangles.Rectangle := Source_Area;
+      Dest_Area : aliased Rectangles.Rectangle := Self_Area;
    begin
-      if Self_Area = Rectangles.Null_Rectangle then
-         Result := SDL_Blit_Surface (Source.Internal, Source_Area, Self.Internal, null);
-      else
-         Result := SDL_Blit_Surface (Source.Internal, Source_Area, Self.Internal, Area'Access);
+      if Dest_Area = Rectangles.Null_Rectangle then
+         if Src_Area = Rectangles.Null_Rectangle then
+            Result := SDL_Blit_Surface (Source.Internal, null, Self.Internal, null);
+         else
+            Result := SDL_Blit_Surface (Source.Internal, Src_Area'Access, Self.Internal, null);
 
-         Self_Area := Area;
+            Source_Area := Src_Area;
+         end if;
+      else
+         if Src_Area = Rectangles.Null_Rectangle then
+            Result := SDL_Blit_Surface (Source.Internal, null, Self.Internal, Dest_Area'Access);
+         else
+            Result := SDL_Blit_Surface (Source.Internal, Src_Area'Access, Self.Internal, Dest_Area'Access);
+
+            Source_Area := Src_Area;
+         end if;
+
+         Self_Area := Dest_Area;
       end if;
 
       if Result /= SDL.Success then
@@ -436,7 +449,7 @@ package body SDL.Video.Surfaces is
       --        if Self.Internal.Flags and Dont_Free = Dont_Free then
       --        end if;
 
-      if Self.Owns then
+      if Self.Internal /= null and Self.Owns then
          Self.Internal.Reference_Count := Self.Internal.Reference_Count + 1;
       end if;
    end Adjust;
@@ -449,19 +462,7 @@ package body SDL.Video.Surfaces is
         External_Name => "SDL_FreeSurface";
    begin
       if Self.Internal /= null and then Self.Owns then
-         Self.Internal.Reference_Count := Self.Internal.Reference_Count - 1;
-
-         --  The last remaining copy of the surface should always have a reference count of 1 and therefore the
-         --  SDL_Free_Surface procedure  will destroy it.
-         pragma Assert (Check   => Self.Internal.Reference_Count /= 0,
-                        Message => "[Surface.Finalize] Internal reference count should never be zero!");
-
-         --  Only if we created surface using Makers.Create, do we ever destroy the surface.
-         if Self.Internal.Reference_Count = 1 then
-            SDL_Free_Surface (Self.Internal);
-
-            Self.Internal := null;
-         end if;
+         SDL_Free_Surface (Self.Internal);
       end if;
    end Finalize;
 end SDL.Video.Surfaces;

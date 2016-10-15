@@ -1,0 +1,14 @@
+with "sdlada.gpr";
+
+library project SDLAda_Image is
+   Version := "2.2.0";
+
+   for Languages    use ("Ada", "C");
+   for Source_Dirs  use ("../../src/image");
+   for Library_Name use "sdlada_image";
+   for Object_Dir   use "gen/" & SDLAda.Build & "." & SDLAda.Mode & "/lib/.obj";
+   for Library_Dir  use "gen/" & SDLAda.Build & "." & SDLAda.Mode &  "/lib";
+   for Library_Version use "libsdlada_image.so." & Version;
+
+   package Compiler renames SDLAda.Compiler;
+end SDLAda_Image;
