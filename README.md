@@ -61,10 +61,13 @@ Anything listed here is a question of whether it's required.
 
 v2.2.0
 
-SDL version tested against
-==========================
+versions tested against
+=======================
 
-2.0.4
+Library   | Version
+-------------------
+SDL       | 2.0.4
+SDL_image | 2.0.1
 
 Bound functions
 ===============
@@ -585,3 +588,50 @@ SDL_acos                              |   n   |
 SDL_assert                            |   n   |
 SDL_assert_paranoid                   |   n   |
 SDL_assert_release                    |   n   |
+
+SDL_image
+=========
+
+Name                                  | Bound | Won't bind
+--------------------------------------|-------|-----------
+IMG_Linked_Version                    |   y   |
+IMG_Init                              |   y   |
+IMG_Quit                              |   y   |
+IMG_Load                              |   y   |
+IMG_Load_RW                           |   n   |
+IMG_LoadTyped_RW                      |   y   |
+IMG_LoadTexture                       |   n   |
+IMG_LoadTexture_RW                    |   n   |
+IMG_LoadTextureTyped_RW               |   n   |
+IMG_LoadCUR_RW                        |   n   |
+IMG_LoadICO_RW                        |   n   |
+IMG_LoadBMP_RW                        |   n   |
+IMG_LoadPNM_RW                        |   n   |
+IMG_LoadXPM_RW                        |   n   |
+IMG_LoadXCF_RW                        |   n   |
+IMG_LoadPCX_RW                        |   n   |
+IMG_LoadGIF_RW                        |   n   |
+IMG_LoadJPG_RW                        |   n   |
+IMG_LoadTIF_RW                        |   n   |
+IMG_LoadPNG_RW                        |   n   |
+IMG_LoadTGA_RW                        |   n   |
+IMG_LoadLBM_RW                        |   n   |
+IMG_LoadXV_RW                         |   n   |
+IMG_ReadXPMFromArray                  |   n   |
+IMG_isCUR                             |   n   |
+IMG_isICO                             |   n   |
+IMG_isBMP                             |   n   |
+IMG_isPNM                             |   n   |
+IMG_isXPM                             |   n   |
+IMG_isXCF                             |   n   |
+IMG_isPCX                             |   n   |
+IMG_isGIF                             |   n   |
+IMG_isJPG                             |   n   |
+IMG_isTIF                             |   n   |
+IMG_isPNG                             |   n   |
+IMG_isLBM                             |   n   |
+IMG_isXV                              |   n   |
+IMG_SavePNG                           |   y   |
+IMG_SavePNG_RW                        |   n   |
+IMG_SetError                          |   n   |      *
+IMG_GetError                          |   n   |      *
