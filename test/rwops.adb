@@ -94,11 +94,11 @@ procedure Rwops is
       end;
 
       Text_IO.New_Line;
-      Text_IO.Put_Line ("Base path: " & SDL.RWops.Get_Base_Path);
+      Text_IO.Put_Line ("Base path: " & SDL.RWops.Base_Path);
 
       declare
          Tmp_Path  : constant String := Directories.Current_Directory;
-         Pref_Path : constant String := SDL.RWops.Get_Pref_Path ("org", "app");
+         Pref_Path : constant String := SDL.RWops.Preferences_Path ("org", "app");
       begin
          Text_IO.Put_Line ("Pref path: " & Pref_Path);
 
