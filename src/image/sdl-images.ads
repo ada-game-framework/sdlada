@@ -52,7 +52,7 @@ package SDL.Images is
      External_Name => "IMG_Quit";
 private
    subtype Format_String_Names is C.char_array (1 .. 5);
-   type Format_String_Arrays is array (Formats) of aliased Format_String_Names;
+   type Format_String_Arrays is array (Formats) of Format_String_Names;
 
    function Format_String (Format : in Formats) return Format_String_Names with
      Inline_Always => True;
