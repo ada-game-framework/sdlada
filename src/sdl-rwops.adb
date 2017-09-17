@@ -321,4 +321,9 @@ package body SDL.RWops is
          raise RWops_Error with SDL.Error.Get;
       end if;
    end Write_U_8;
+
+   function Is_Null (Source : in RWops) return Boolean is
+   begin
+      return (if Source = null then True else False);
+   end Is_Null;
 end SDL.RWops;

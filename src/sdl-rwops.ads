@@ -132,6 +132,9 @@ package SDL.RWops is
    procedure Write_BE_32 (Destination : in RWops; Value : in Uint32);
    procedure Write_LE_64 (Destination : in RWops; Value : in Uint64);
    procedure Write_BE_64 (Destination : in RWops; Value : in Uint64);
+
+   function Is_Null (Source : in RWops) return Boolean with
+     Inline_Always => True;
 private
    type Whence_Type is new C.int;
 
