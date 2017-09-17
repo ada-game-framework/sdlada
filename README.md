@@ -635,3 +635,57 @@ IMG_SavePNG                           |   y   |
 IMG_SavePNG_RW                        |   n   |
 IMG_SetError                          |   n   |      *
 IMG_GetError                          |   n   |      *
+
+SDL_ttf
+=======
+
+Name                                  | Bound | Won't bind
+--------------------------------------|-------|-----------
+TTF_Init                              |   y   |
+TTF_WasInit                           |   n   |      *
+TTF_Quit                              |   y   |
+TTF_GetError                          |   n   |      *
+TTF_SetError                          |   n   |      *
+TTF_OpenFont                          |   n   |      *
+TTF_OpenFontRW                        |   n   |      *
+TTF_OpenFontIndex                     |   n   |      *
+TTF_OpenFontIndexRW                   |   y   |
+TTF_CloseFont                         |   y   |
+TTF_ByteSwappedUNICODE                |   n   |
+TTF_GetFontStyle                      |   y   |
+TTF_SetFontStyle                      |   y   |
+TTF_GetFontOutline                    |   y   |
+TTF_SetFontOutline                    |   y   |
+TTF_GetFontHinting                    |   y   |
+TTF_SetFontHinting                    |   y   |
+TTF_GetFontKerning                    |   y   |
+TTF_SetFontKerning                    |   y   |
+TTF_FontHeight                        |   y   |
+TTF_FontAscent                        |   y   |
+TTF_FontDescent                       |   y   |
+TTF_FontLineSkip                      |   y   |
+TTF_FontFaces                         |   y   |
+TTF_FontFaceIsFixedWidth              |   y   |
+TTF_FontFaceFamilyName                |   y   |
+TTF_FontFaceStyleName                 |   y   |
+TTF_GlyphIsProvided                   |   n   |
+TTF_GlyphMetrics                      |   n   |
+TTF_SizeText                          |   y   |
+TTF_SizeUTF8                          |   y   |
+TTF_SizeUNICODE                       |   n   |
+TTF_RenderText_Solid                  |   n   |
+TTF_RenderUTF8_Solid                  |   n   |
+TTF_RenderUNICODE_Solid               |   n   |
+TTF_RenderGlyph_Solid                 |   n   |
+TTF_RenderText_Shaded                 |   n   |
+TTF_RenderUTF8_Shaded                 |   n   |
+TTF_RenderUNICODE_Shaded              |   n   |
+TTF_RenderGlyph_Shaded                |   n   |
+TTF_RenderText_Blended                |   n   |
+TTF_RenderUTF8_Blended                |   n   |
+TTF_RenderUNICODE_Blended             |   n   |
+TTF_RenderGlyph_Blended               |   n   |
+TTF_Linked_Version                    |   y   |
+SDL_TTF_MAJOR_VERSION                 |   y   |
+SDL_TTF_MINOR_VERSION                 |   y   |
+SDL_TTF_PATCHLEVEL                    |   y   |

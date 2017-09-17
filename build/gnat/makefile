@@ -33,10 +33,10 @@ SDL_MODE	=	debug
 endif
 
 ifeq ($(SDL_BUILD),static)
-SDL2_LIBS	=	`sdl2-config --static-libs`
+SDL2_LIBS	=	`sdl2-config --static-libs` -lSDL2_ttf -lSDL2_image
 LIB_NAME	=	lib/libadasdl.a
 else
-SDL2_LIBS	=	`sdl2-config --libs`
+SDL2_LIBS	=	`sdl2-config --libs` -lSDL2_ttf -lSDL2_image
 LIB_NAME	=	lib/libadasdl.so.2.1.3
 endif
 
