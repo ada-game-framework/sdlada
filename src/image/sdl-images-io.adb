@@ -52,7 +52,7 @@ package body SDL.Images.IO is
                      Free_Source : in Boolean := True) is
       function IMG_Load_Typed_RW (Ops   : in RWops.RWops;
                                   Free  : in C.int;
-                                  Which : aliased C.char_array) return Video.Surfaces.Internal_Surface_Pointer with
+                                  Which : in C.char_array) return Video.Surfaces.Internal_Surface_Pointer with
         Import        => True,
         Convention    => C,
         External_Name => "IMG_LoadTyped_RW";
@@ -68,9 +68,9 @@ package body SDL.Images.IO is
       Surface := Make_Surface_From_Pointer (S => Result, Owns => True);
    end Create;
 
-   --     function Get_Internal_Texture (Self : in SDL.Video.Textures.Texture) return SDL.C_Pointers.Texture_Pointer with
-   --       Import     => True,
-   --       Convention => Ada;
+--     function Get_Internal_Texture (Self : in SDL.Video.Textures.Texture) return SDL.C_Pointers.Texture_Pointer with
+--       Import     => True,
+--       Convention => Ada;
 
    function Get_Internal_Renderer (Self : in SDL.Video.Renderers.Renderer) return SDL.C_Pointers.Renderer_Pointer with
      Import        => True,
