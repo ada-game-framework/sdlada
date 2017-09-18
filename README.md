@@ -35,7 +35,7 @@ Installation
 ============
 
 ```
-make SDL_PLATFORM=linux SDL_BUILD=static SDL_MODE=release DESTDIT=/myprefix install
+make SDL_PLATFORM=linux SDL_BUILD=static SDL_MODE=release DESTDIR=/myprefix install
 ```
 
 Copyright
