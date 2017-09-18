@@ -71,6 +71,7 @@ Library   | Version
 -------------------
 SDL       | 2.0.4
 SDL_image | 2.0.1
+SDL_ttf   | 2.0.14
 
 Bound functions
 ===============
