@@ -44,7 +44,12 @@ make SDL_PLATFORM=linux SDL_BUILD=static SDL_MODE=release DESTDIR=/myprefix inst
 Copyright
 =========
 
-Copyright (C) 2013-2016 by Luke A. Guest
+Copyright (C) 2013-2017 by Luke A. Guest
+
+Thanks to
+=========
+
+Michael B for providing an initial implementation of RWops.
 
 WARNING!!!
 ==========
@@ -67,6 +72,7 @@ Anything listed here is a question of whether it's required.
   - Try to get as much pre-elaborated as possible.
 * Disable a shared library build, make it a static only build, this makes it easier to distribute. i.e. Link with this
   library and distribute SDL2 libs only.
+* Hide the RWops stuff maybe? Should really be using Ada streams and files.
 
 [Current version](http://www.semver.org)
 ========================================
