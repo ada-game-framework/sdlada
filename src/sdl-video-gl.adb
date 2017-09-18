@@ -20,6 +20,7 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
+with Ada.Unchecked_Conversion;
 with Interfaces.C;
 with Interfaces.C.Strings;
 private with SDL.C_Pointers;
@@ -57,8 +58,7 @@ package body SDL.Video.GL is
       Attribute_Share_With_Current_Context) with
      Convention => C;
 
-   Profile_Values : constant array (Profiles) of Interfaces.Unsigned_32 :=
-     (16#0000_0001#, 16#0000_0002#, 16#0000_0004#);
+   function To_int is new Ada.Unchecked_Conversion (Source => Profiles, Target => C.int);
 
    function SDL_GL_Set_Attribute (Attr : in Attributes; Value : in C.int) return C.int with
      Import        => True,
@@ -467,7 +467,7 @@ package body SDL.Video.GL is
    end Context_Profile;
 
    procedure Set_Context_Profile (Profile : in Profiles) is
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Context_Profile, C.int (Profile_Values (Profile)));
+      Result : C.int := SDL_GL_Set_Attribute (Attribute_Context_Profile, To_int (Profile));
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
