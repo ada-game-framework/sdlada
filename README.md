@@ -64,11 +64,11 @@ Anything listed here is a question of whether it's required.
 
 v2.2.0
 
-versions tested against
+Versions tested against
 =======================
 
 Library   | Version
--------------------
+----------|--------
 SDL       | 2.0.4
 SDL_image | 2.0.1
 SDL_ttf   | 2.0.14
