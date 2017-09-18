@@ -52,12 +52,21 @@ WARNING!!!
 I have tried to model the types correctly, but remember SDL is a C library and some things may not make sense. Please
 file a bug report if you use this library and find that a type does not cover enough values for cross-platform use.
 
-Possible TODO's
-===============
+TODO
+====
 
 Anything listed here is a question of whether it's required.
 
 * Do we need to hook into the Assert module? To raise an exception maybe?
+* Create event tagged type hierarchy, use Poll to convert the C events into these types.
+* Task safe event handling?
+* Split Image, TTF into separate GPR files.
+* Cross platform testing.
+* Optimisations to make the library as thin as possible:
+  - Enable -gnatN for inlining.
+  - Try to get as much pre-elaborated as possible.
+* Disable a shared library build, make it a static only build, this makes it easier to distribute. i.e. Link with this
+  library and distribute SDL2 libs only.
 
 [Current version](http://www.semver.org)
 ========================================
