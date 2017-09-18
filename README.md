@@ -15,7 +15,10 @@ Usage, Licence & Attribution
 
 SDLAda is distributed under the same zlib licence as the SDL libary is. You may use this library as in any way
 you like whether free or commercial. I would add that whilst you don't have to state that your game uses this
-library, I would prefer it if you did, in fact, I'm asking you to.
+library, I would it would be nice if you did, it's all good advertising for Ada :)
+
+You do not need to complete any copyright assignment forms, the licence will not change from zlib as I want people to be
+able to use the library however they wish without restrictions.
 
 Building
 ========
