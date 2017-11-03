@@ -97,7 +97,7 @@ package body SDL.Video.Rectangles is
       procedure SDL_Union_Rect (A, B : in Rectangle; R : out Rectangle) with
         Import        => True,
         Convention    => C,
-        External_Name => "SDL_IntersectRectAndLine";
+        External_Name => "SDL_UnionRect";
 
       Result : Rectangle;
    begin
