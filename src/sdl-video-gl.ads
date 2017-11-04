@@ -25,6 +25,7 @@
 --  Extended OpenGL functionality.
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Finalization;
+with Interfaces.C;
 private with SDL.C_Pointers;
 with SDL.Video.Rectangles;
 with SDL.Video.Windows;
@@ -56,7 +57,8 @@ package SDL.Video.GL is
    type Minor_Versions is range 0 .. 4;
 
    type Profiles is (Core, Compatibility, ES) with
-     Convention => C;
+     Convention => C,
+     Size       => Interfaces.C.int'Size;
 
    for Profiles use (Core          => 16#0000_0001#,
                      Compatibility => 16#0000_0002#,
