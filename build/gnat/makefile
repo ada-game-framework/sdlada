@@ -6,6 +6,8 @@ GPRCLEAN	=	gprclean
 INSTALL		=	install
 
 SDL_MODE	?=	debug
+SDL_BUILD	?=	static
+SDL_PLATFORM	?=	linux
 
 SRC_DIR		=	../..
 
@@ -23,14 +25,6 @@ TESTS_SRCS	=	$(SRC_DIR)/test/clipboard.adb \
 			$(SRC_DIR)/test/maths/maths.c
 
 GEN_KB		=	gen/src/sdl-events-keyboards.ads
-
-ifeq ($(SDL_BUILD),)
-SDL_BUILD	=	static
-endif
-
-ifeq ($(SDL_MODE),)
-SDL_MODE	=	debug
-endif
 
 ifeq ($(SDL_BUILD),static)
 SDL2_LIBS	=	`sdl2-config --static-libs` -lSDL2_ttf -lSDL2_image
