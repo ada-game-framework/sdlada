@@ -278,7 +278,8 @@ package body SDL.Video.Surfaces is
       Result : C.int := SDL_Get_Color_Key (Self.Internal, Key);
    begin
       if Result < SDL.Success then
-         raise Surface_Error with SDL.Error.Get;
+         --  TODO: The SDL source does not set an error message, see https://bugzilla.libsdl.org/show_bug.cgi?id=3992
+         raise Surface_Error with "No colour key set for this surface."; --  with SDL.Error.Get;
       end if;
 
       return Pixel_Formats.To_Colour (Pixel  => Key,
