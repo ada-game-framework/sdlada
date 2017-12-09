@@ -127,7 +127,7 @@ package SDL.Video.Surfaces is
    function Colour_Key (Self : in Surface) return Palettes.Colour with
      Inline => True;
 
-   procedure Set_Colour_Key (Self : in out Surface; Now : in Palettes.Colour) with
+   procedure Set_Colour_Key (Self : in out Surface; Now : in Palettes.Colour; Enable : in Boolean := True) with
      Inline => True;
 
    function Alpha_Blend (Self : in Surface) return Palettes.Colour_Component with

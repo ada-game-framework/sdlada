@@ -286,15 +286,18 @@ package body SDL.Video.Surfaces is
                                       Format => Self.Pixel_Format);
    end Colour_Key;
 
-   procedure Set_Colour_Key (Self : in out Surface; Now : in Palettes.Colour) is
-      function SDL_Set_Color_Key (S : in out Internal_Surface_Pointer;
+   procedure Set_Colour_Key (Self : in out Surface; Now : in Palettes.Colour; Enable : in Boolean := True) is
+      --  TODO: This can work as an "in out Internal_Surface" as the compiler will pass the object as a reference.
+      --        Should the entire API use this? For review!
+      function SDL_Set_Color_Key (S : in Internal_Surface_Pointer;
+                                  F : in C.int;
                                   K : in Interfaces.Unsigned_32) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_SetColorKey";
 
-      --  TODO: SDL_SetColorKey
       Result : C.int := SDL_Set_Color_Key (S => Self.Internal,
+                                           F => (if Enable then 1 else 0),
                                            K => Pixel_Formats.To_Pixel (Colour => Now,
                                                                         Format => Self.Pixel_Format));
    begin
