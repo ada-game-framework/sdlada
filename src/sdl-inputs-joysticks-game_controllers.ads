@@ -67,7 +67,7 @@ package SDL.Inputs.Joysticks.Game_Controllers is
    Null_Game_Controller : constant Game_Controller;
 
    procedure Add_Mapping (Data : in String; Updated_Existing : out Boolean);
-   function Add_Mapping (Database_Filename : in String) return Natural;  --  From v2.0.2
+   procedure Add_Mappings_From_File (Database_Filename : in String; Number_Added : out Natural);
 
    function Axis_Value (Self : in Game_Controller;
                         Axis : in SDL.Events.Joysticks.Game_Controllers.LR_Axes)

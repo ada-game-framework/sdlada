@@ -22,6 +22,7 @@
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C.Strings;
 with SDL.Error;
+with SDL.RWops;
 
 package body SDL.Inputs.Joysticks.Game_Controllers is
    package C renames Interfaces.C;
@@ -37,31 +38,34 @@ package body SDL.Inputs.Joysticks.Game_Controllers is
 
       Result : C.int := SDL_Game_Controller_Add_Mapping (C.To_C (Data));
    begin
-      if Result = 0 then
-         --  An existing mapping was updated.
-         Updated_Existing := True;
-      elsif Result = -1 then
-         raise Mapping_Error with SDL.Error.Get;
-      end if;
-
-      --  Result should be 1 and therefore mapping was added ok.
-   end Add_Mapping;
-
-   function Add_Mapping (Database_Filename : in String) return Natural is
-      function SDL_Game_Controller_Add_Mapping (Buffer : in C.char_array) return C.int with
-        Convention    => C,
-        Import        => True,
-        External_Name => "SDL_GameControllerAddMapping";
-
-      Result : C.int := SDL_Game_Controller_Add_Mapping (C.To_C (Database_Filename));
-   begin
       if Result = -1 then
          raise Mapping_Error with SDL.Error.Get;
       end if;
 
-      --  Return the total number of entries added.
-      return Natural (Result);
+      Updated_Existing := (Result = 0);
    end Add_Mapping;
+
+   procedure Add_Mappings_From_File (Database_Filename : in String; Number_Added : out Natural) is
+      function SDL_Game_Controller_Add_Mappings_From_RW
+        (RW : SDL.RWops.RWops;
+         FreeRW : C.int) return C.int with
+           Convention    => C,
+           Import        => True,
+           External_Name => "SDL_GameControllerAddMappingsFromRW";
+
+      RW : SDL.RWops.RWops := SDL.RWops.From_File (Database_Filename,
+                                                   Mode => SDL.RWops.Read);
+
+      Result : constant Integer
+        := Integer (SDL_Game_Controller_Add_Mappings_From_RW (RW,
+                                                              FreeRW => 1));
+   begin
+      if Result < 0 then
+         raise Mapping_Error with SDL.Error.Get;
+      end if;
+
+      Number_Added := Result;
+   end Add_Mappings_From_File;
 
    function Axis_Value (Self : in Game_Controller;
                         Axis : in SDL.Events.Joysticks.Game_Controllers.LR_Axes)
