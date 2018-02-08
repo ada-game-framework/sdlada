@@ -205,6 +205,30 @@ package body SDL.Video.Renderers is
       end if;
    end Copy;
 
+   procedure Copy
+     (Self      : in out Renderer;
+      Copy_From : in SDL.Video.Textures.Texture;
+      To        : in SDL.Video.Rectangles.Rectangle) is
+
+      function SDL_Render_Copy
+        (R    : in SDL.C_Pointers.Renderer_Pointer;
+         T    : in SDL.C_Pointers.Texture_Pointer;
+         Src  : in SDL.Video.Rectangles.Rectangle_Access;
+         Dest : in SDL.Video.Rectangles.Rectangle) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderCopy";
+
+      Result : C.int := SDL_Render_Copy (Self.Internal,
+                                         Get_Internal_Texture (Copy_From),
+                                         null,
+                                         To);
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Copy;
+
    --  TODO: See above, rearrange the params so that the rectangles are the last elements and make
    --  them default to null_rectangle.
    procedure Copy

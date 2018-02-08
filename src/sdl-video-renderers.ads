@@ -85,6 +85,11 @@ package SDL.Video.Renderers is
    procedure Copy
      (Self      : in out Renderer;
       Copy_From : in SDL.Video.Textures.Texture;
+      To        : in SDL.Video.Rectangles.Rectangle);
+
+   procedure Copy
+     (Self      : in out Renderer;
+      Copy_From : in SDL.Video.Textures.Texture;
       From      : in SDL.Video.Rectangles.Rectangle;
       To        : in SDL.Video.Rectangles.Rectangle;
       Angle     : in Long_Float;
