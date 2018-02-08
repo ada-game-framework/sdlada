@@ -254,7 +254,7 @@ package body SDL.Video.Surfaces is
    end Clip_Rectangle;
 
    procedure Set_Clip_Rectangle (Self : in out Surface; Now : in Rectangles.Rectangle) is
-      function SDL_Set_Clip_Rect (S : in out Internal_Surface_Pointer;
+      function SDL_Set_Clip_Rect (S : in Internal_Surface_Pointer;
                                   R : in Rectangles.Rectangle) return SDL_Bool with
         Import        => True,
         Convention    => C,
@@ -324,7 +324,7 @@ package body SDL.Video.Surfaces is
    end Alpha_Blend;
 
    procedure Set_Alpha_Blend (Self : in out Surface; Now : in Palettes.Colour_Component) is
-      function SDL_Set_Surface_Alpha_Mod (S : in out Internal_Surface_Pointer;
+      function SDL_Set_Surface_Alpha_Mod (S : in Internal_Surface_Pointer;
                                           A : in Palettes.Colour_Component) return C.int with
         Import        => True,
         Convention    => C,
@@ -355,7 +355,7 @@ package body SDL.Video.Surfaces is
    end Blend_Mode;
 
    procedure Set_Blend_Mode (Self : in out Surface; Now : in Blend_Modes) is
-      function SDL_Set_Surface_Blend_Mode (S : in out Internal_Surface_Pointer;
+      function SDL_Set_Surface_Blend_Mode (S : in Internal_Surface_Pointer;
                                            B : in Blend_Modes) return C.int with
         Import        => True,
         Convention    => C,
@@ -390,7 +390,7 @@ package body SDL.Video.Surfaces is
    end Colour;
 
    procedure Set_Colour (Self : in out Surface; Now : in Palettes.RGB_Colour) is
-      function SDL_Set_Surface_Color_Mod (S : in out Internal_Surface_Pointer;
+      function SDL_Set_Surface_Color_Mod (S : in Internal_Surface_Pointer;
                                           R : in Palettes.Colour_Component;
                                           G : in Palettes.Colour_Component;
                                           B : in Palettes.Colour_Component) return C.int with
@@ -406,8 +406,7 @@ package body SDL.Video.Surfaces is
    end Set_Colour;
 
    procedure Lock (Self : in out Surface) is
-      --  TODO: SDL_LockSurface
-      function SDL_Lock_Surface (Self : in out Internal_Surface_Pointer) return C.int with
+      function SDL_Lock_Surface (Self : in Internal_Surface_Pointer) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_LockSurface";
@@ -420,7 +419,7 @@ package body SDL.Video.Surfaces is
    end Lock;
 
    procedure Unlock (Self : in out Surface) is
-      procedure SDL_Unlock_Surface (Self : in out Internal_Surface_Pointer) with
+      procedure SDL_Unlock_Surface (Self : in Internal_Surface_Pointer) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_UnlockSurface";
@@ -429,7 +428,7 @@ package body SDL.Video.Surfaces is
    end Unlock;
 
    procedure Set_RLE (Self : in out Surface; Enabled : in Boolean) is
-      function SDL_Set_Surface_RLE (Self : in out Internal_Surface_Pointer; Enabled : in C.int) return C.int with
+      function SDL_Set_Surface_RLE (Self : in Internal_Surface_Pointer; Enabled : in C.int) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_SetSurfaceRLE";
