@@ -34,7 +34,7 @@ SDL2_LIBS	=	`sdl2-config --static-libs` -lSDL2_ttf -lSDL2_image
 LIB_NAME	=	lib/libadasdl.a
 else
 SDL2_LIBS	=	`sdl2-config --libs` -lSDL2_ttf -lSDL2_image
-LIB_NAME	=	lib/libadasdl.so.2.1.3
+LIB_NAME	=	lib/libadasdl.so.$(VERSION)
 endif
 
 .PHONY: sdlada.gpr test_maths_build.gpr test.gpr tools.gpr
