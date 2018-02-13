@@ -9,6 +9,9 @@ SDL_MODE	?=	debug
 SDL_BUILD	?=	static
 SDL_PLATFORM	?=	linux
 
+# Library version.
+VERSION		=	2.2.0
+
 SRC_DIR		=	../..
 
 SRCS		=	src/sdl.ads
@@ -46,12 +49,16 @@ all: tools $(LIB_NAME) tests
 
 $(LIB_NAME): sdlada.gpr $(GEN_KB)
 	$(GPRMAKE) -p -gnat2012 -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
+		-XVERSION=$(VERSION) \
 		-Psdlada.gpr -cargs `sdl2-config --cflags`
 
 .PHONY: clean-lib
 
 clean-lib:
-	$(GPRCLEAN) -Psdlada.gpr -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM)
+	$(GPRCLEAN) -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
+		-XVERSION=$(VERSION) \
+		-Psdlada.gpr
+
 
 #####################################################################################
 # Tools
