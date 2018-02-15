@@ -1,6 +1,4 @@
 library project SDLAda is
-   Version := external ("VERSION", "0");
-
    type Platform_Type is ("linux", "bsd", "windows", "macosx", "ios", "android");
    type Mode_Type is ("debug", "release");
 

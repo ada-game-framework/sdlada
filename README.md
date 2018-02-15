@@ -76,7 +76,7 @@ Anything listed here is a question of whether it's required.
 [Current version](http://www.semver.org)
 ========================================
 
-v2.2.0
+v2.3.0
 
 Versions tested against
 =======================
