@@ -30,12 +30,25 @@ TESTS_SRCS	=	$(SRC_DIR)/test/clipboard.adb \
 GEN_KB		=	gen/src/sdl-events-keyboards.ads
 
 ifeq ($(SDL_BUILD),static)
-SDL2_LIBS	=	`sdl2-config --static-libs` -lSDL2_ttf -lSDL2_image
+
+# With GNAT, all static libs end with .a
 LIB_NAME	=	lib/libadasdl.a
-else
-SDL2_LIBS	=	`sdl2-config --libs` -lSDL2_ttf -lSDL2_image
-LIB_NAME	=	lib/libadasdl.so.$(VERSION)
+
+else # static
+
+ifeq ($(SDL_PLATFORM),linux)
+	LIB_NAME	=	lib/libadasdl.so.$(VERSION)
+else ifeq ($(SDL_PLATFORM),windows)
+	LIB_NAME	=	lib/libadasdl.dll
+else ifeq ($(SDL_PLATFORM),macosx)
+	LIB_NAME	=	lib/libadasdl.$(VERSION).dylib
+else ifeq ($(SDL_PLATFORM),ios)
+	LIB_NAME	=	lib/libadasdl.$(VERSION).dylib
+else ifeq ($(SDL_PLATFORM),android)
+	LIB_NAME	=	lib/libadasdl.so.$(VERSION)
 endif
+
+endif # static
 
 .PHONY: sdlada.gpr test_maths_build.gpr test.gpr tools.gpr
 
@@ -50,7 +63,7 @@ all: tools $(LIB_NAME) tests
 $(LIB_NAME): sdlada.gpr $(GEN_KB)
 	$(GPRMAKE) -p -gnat2012 -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
 		-XVERSION=$(VERSION) \
-		-Psdlada.gpr -cargs `sdl2-config --cflags`
+		-Psdlada.gpr
 
 .PHONY: clean-lib
 
@@ -89,8 +102,8 @@ tests: $(LIB_NAME) tests.gpr $(TESTS_SRCS)
 .PHONY: $(TESTS_SRCS)
 
 tests.gpr: $(TESTS_SRCS) gen/$(SDL_BUILD)/lib/test/libtestmaths.so
-	$(GPRMAKE) -p -gnat2012 -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
-		-Ptests.gpr -largs $(SDL2_LIBS)
+	$(GPRMAKE) -p -v -gnat2012 -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
+		-Ptests.gpr
 
 # Maths library
 
@@ -111,7 +124,7 @@ unit_tests: $(LIB_NAME) build_unit_tests/unit_tests
 
 build_unit_tests/unit_tests:
 	$(GPRMAKE) -p -gnat2012 -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
-		-Punit_tests.gpr -largs $(SDL2_LIBS)
+		-Punit_tests.gpr
 
 .PHONY: clean-unit_tests
 

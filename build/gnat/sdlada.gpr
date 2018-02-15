@@ -22,6 +22,17 @@ library project SDLAda is
    for Library_Dir  use "gen/" & Build & "." & Mode &  "/lib";
    for Library_Version use "libsdlada.so." & Version;
 
+   case Platform is
+      when "linux" | "bsd" | "android" =>
+         for Library_Version use "lib" & SDLAda'Library_Name & ".so." & Version;
+
+      when "windows" =>
+         for Library_Version use "lib" & SDLAda'Library_Name & ".dll";
+
+      when "macosx" | "ios" => -- TODO: Check iOS
+         for Library_Version use "lib" & SDLAda'Library_Name & "." & Version & ".dylib";
+   end case;
+
    case Build is
       when "static" =>
          for Library_Kind use "static";
@@ -55,9 +66,31 @@ library project SDLAda is
             null;
       end case;
 
+      case Platform is
+         when "linux" | "bsd" | "android" | "windows" =>
+            C_Switches   := C_Switches & ("-I/usr/include/SDL2", "-D_REENTRANT");
+
+         when others =>
+            null;
+      end case;
+
       for Default_Switches ("C") use C_Switches;
       for Default_Switches ("Ada") use Ada_Switches;
    end Compiler;
+
+   package Linker is
+      Ada_Switches := ();
+
+      case Platform is
+         when "linux" | "bsd" | "android" | "windows" =>
+            Ada_Switches := Ada_Switches & ("-lSDL2", "-lSDL2_ttf", "-lSDL2_image");
+
+         when "macosx" | "ios" =>
+            Ada_Switches := Ada_Switches & ("-framework SDL2", "-framework SDL2_image", "-framework SDL2_ttf");
+      end case;
+
+      for Default_Switches ("Ada") use Ada_Switches;
+    end Linker;
 
    --  package Builder is
    --     for Default_Switches ("Ada") use ("-gnat2012", "-gnata", "-gnato", "-gnatE", "-gnaty", "-gnatyO");
