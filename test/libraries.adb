@@ -6,7 +6,7 @@ with System;
 
 use type System.Bit_Order;
 
---  Run with: LD_LIBRARY_PATH=./build_test:$LD_LIBRARY_PATH ./build_test/libraries
+--  Run with: LD_LIBRARY_PATH=./gen/debug/test:$LD_LIBRARY_PATH ./gen/debug/test/libraries
 
 procedure Libraries is
    Lib : SDL.Libraries.Handles;

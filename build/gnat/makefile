@@ -82,13 +82,13 @@ tests: $(LIB_NAME) tests.gpr $(TESTS_SRCS)
 
 .PHONY: $(TESTS_SRCS)
 
-tests.gpr: $(TESTS_SRCS) gen/$(SDL_MODE)/lib/test/libtestmaths.so
+tests.gpr: $(TESTS_SRCS) gen/$(SDL_MODE)/test/libtestmaths.so
 	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
 		-Ptests.gpr
 
 # Maths library
 
-gen/$(SDL_MODE)/lib/test/libtestmaths.so: $(SRC_DIR)/test/maths/maths.ad[sb] $(SRC_DIR)/test/maths/maths.c
+gen/$(SDL_MODE)/test/libtestmaths.so: $(SRC_DIR)/test/maths/maths.ad[sb] $(SRC_DIR)/test/maths/maths.c
 	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
 		-Ptest_maths_build.gpr
 
