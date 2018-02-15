@@ -27,8 +27,6 @@
 with Interfaces.C;
 
 package SDL.Images is
-   pragma Link_With ("-lSDL2_image");
-
    package C renames Interfaces.C;
 
    Image_Error : exception;

@@ -30,8 +30,6 @@ with Interfaces.C;
 with SDL.Video;
 
 package SDL.TTFs is
-   pragma Link_With ("-lSDL2_ttf");
-
    package UTF_Strings renames Ada.Strings.UTF_Encoding;
    package C renames Interfaces.C;
 
