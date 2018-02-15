@@ -27,18 +27,17 @@ There are a number of variables which can be set to control the compilation:
 
 SDL_PLATFORM = Can be set to one of the following values: linux, windows, macosx, ios or android
 SDL_MODE     = Can be one of: debug or release. Defaults to debug.
-SDL_BUILD    = Can be one of: static or shared. Defaults to a statically built library.
 
 ```
 cd build/gnat
-make SDL_PLATFORM=linux SDL_BUILD=static SDL_MODE=release
+make SDL_PLATFORM=linux SDL_MODE=release
 ```
 
 Installation
 ============
 
 ```
-make SDL_PLATFORM=linux SDL_BUILD=static SDL_MODE=release DESTDIR=/myprefix install
+make SDL_PLATFORM=linux SDL_MODE=release DESTDIR=/myprefix install
 ```
 
 Copyright

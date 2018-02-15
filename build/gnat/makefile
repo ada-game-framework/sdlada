@@ -6,7 +6,6 @@ GPRCLEAN	=	gprclean
 INSTALL		=	install
 
 SDL_MODE	?=	debug
-SDL_BUILD	?=	static
 SDL_PLATFORM	?=	linux
 
 # Library version.
@@ -29,26 +28,8 @@ TESTS_SRCS	=	$(SRC_DIR)/test/clipboard.adb \
 
 GEN_KB		=	gen/src/sdl-events-keyboards.ads
 
-ifeq ($(SDL_BUILD),static)
-
 # With GNAT, all static libs end with .a
 LIB_NAME	=	lib/libadasdl.a
-
-else # static
-
-ifeq ($(SDL_PLATFORM),linux)
-	LIB_NAME	=	lib/libadasdl.so.$(VERSION)
-else ifeq ($(SDL_PLATFORM),windows)
-	LIB_NAME	=	lib/libadasdl.dll
-else ifeq ($(SDL_PLATFORM),macosx)
-	LIB_NAME	=	lib/libadasdl.$(VERSION).dylib
-else ifeq ($(SDL_PLATFORM),ios)
-	LIB_NAME	=	lib/libadasdl.$(VERSION).dylib
-else ifeq ($(SDL_PLATFORM),android)
-	LIB_NAME	=	lib/libadasdl.so.$(VERSION)
-endif
-
-endif # static
 
 .PHONY: sdlada.gpr test_maths_build.gpr test.gpr tools.gpr
 
@@ -61,14 +42,14 @@ all: tools $(LIB_NAME) tests
 # SDL library
 
 $(LIB_NAME): sdlada.gpr $(GEN_KB)
-	$(GPRMAKE) -p -gnat2012 -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
+	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
 		-XVERSION=$(VERSION) \
 		-Psdlada.gpr
 
 .PHONY: clean-lib
 
 clean-lib:
-	$(GPRCLEAN) -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
+	$(GPRCLEAN) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
 		-XVERSION=$(VERSION) \
 		-Psdlada.gpr
 
@@ -78,11 +59,11 @@ clean-lib:
 
 tools: $(GEN_KB)
 
-$(GEN_KB): gen/tools/gen_keyboard
-	./gen/tools/gen_keyboard > $@
+$(GEN_KB): gen/$(SDL_MODE)/tools/gen_keyboard
+	./gen/$(SDL_MODE)/tools/gen_keyboard > $@
 
-gen/tools/gen_keyboard:
-	$(GPRMAKE) -p -gnat2012 -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
+gen/$(SDL_MODE)/tools/gen_keyboard:
+	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
 		-Ptools.gpr
 
 .PHONY: clean-kb clean-tools
@@ -92,7 +73,7 @@ clean-kb:
 
 clean-tools:
 
-	$(GPRCLEAN) -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptools.gpr
+	$(GPRCLEAN) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptools.gpr
 
 #####################################################################################
 # Tests
@@ -101,21 +82,21 @@ tests: $(LIB_NAME) tests.gpr $(TESTS_SRCS)
 
 .PHONY: $(TESTS_SRCS)
 
-tests.gpr: $(TESTS_SRCS) gen/$(SDL_BUILD)/lib/test/libtestmaths.so
-	$(GPRMAKE) -p -v -gnat2012 -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
+tests.gpr: $(TESTS_SRCS) gen/$(SDL_MODE)/lib/test/libtestmaths.so
+	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
 		-Ptests.gpr
 
 # Maths library
 
-gen/$(SDL_BUILD)/lib/test/libtestmaths.so: $(SRC_DIR)/test/maths/maths.ad[sb] $(SRC_DIR)/test/maths/maths.c
-	$(GPRMAKE) -p -gnat2012 -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
+gen/$(SDL_MODE)/lib/test/libtestmaths.so: $(SRC_DIR)/test/maths/maths.ad[sb] $(SRC_DIR)/test/maths/maths.c
+	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
 		-Ptest_maths_build.gpr
 
 .PHONY: clean-tests
 
 clean-tests:
-	$(GPRCLEAN) -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptests.gpr
-	$(GPRCLEAN) -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptest_maths_build.gpr
+	$(GPRCLEAN) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptests.gpr
+	$(GPRCLEAN) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptest_maths_build.gpr
 
 #####################################################################################
 # Unit tests
@@ -123,20 +104,20 @@ clean-tests:
 unit_tests: $(LIB_NAME) build_unit_tests/unit_tests
 
 build_unit_tests/unit_tests:
-	$(GPRMAKE) -p -gnat2012 -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
+	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
 		-Punit_tests.gpr
 
 .PHONY: clean-unit_tests
 
 clean-unit_tests:
-	-$(GPRCLEAN) -XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Punit_tests.gpr
+	-$(GPRCLEAN) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Punit_tests.gpr
 
 #####################################################################################
 .PHONY: install
 
 install: all
-	$(GPRINSTALL) --prefix=$(DESTDIR)/sdlada --build-name=$(SDL_MODE).$(SDL_BUILD) -p -f \
-		-XSDL_BUILD=$(SDL_BUILD) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
+	$(GPRINSTALL) --prefix=$(DESTDIR)/sdlada --build-name=$(SDL_MODE) -p -f \
+		-XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
 		-Psdlada.gpr
 
 #####################################################################################
