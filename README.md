@@ -83,8 +83,8 @@ Versions tested against
 
 Library   | Version
 ----------|--------
-SDL       | 2.0.4
-SDL_image | 2.0.1
+SDL       | 2.0.7
+SDL_image | 2.0.2
 SDL_ttf   | 2.0.14
 
 Bound functions
