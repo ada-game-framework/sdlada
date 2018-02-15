@@ -20,7 +20,11 @@
  *    3. This notice may not be removed or altered from any source
  *    distribution.
  **********************************************************************************************************************/
+#ifdef __APPLE__
+#include <SDL2_ttf/SDL_ttf.h>
+#else
 #include <SDL_ttf.h>
+#endif
 
 /* We need to define some constants here so we can get access to the values that in #define form from Ada.
  */
