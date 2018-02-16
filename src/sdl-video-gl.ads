@@ -151,7 +151,7 @@ package SDL.Video.GL is
    procedure Set_Current (Self : in Contexts; To : in SDL.Video.Windows.Window);
 
    procedure Bind_Texture (Texture : in SDL.Video.Textures.Texture);
-   procedure Bind_Texture (Texture : in SDL.Video.Textures.Texture; Size : out SDL.Video.Rectangles.Size);
+   procedure Bind_Texture (Texture : in SDL.Video.Textures.Texture; Size : out SDL.Video.Sizes);
    procedure Unbind_Texture (Texture : in SDL.Video.Textures.Texture);
 
    function Supports (Extension : in String) return Boolean;

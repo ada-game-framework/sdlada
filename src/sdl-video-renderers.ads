@@ -109,8 +109,8 @@ package SDL.Video.Renderers is
    procedure Get_Clip (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle);
    procedure Set_Clip (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle);
 
-   procedure Get_Logical_Size (Self : in Renderer; Size : out SDL.Video.Rectangles.Size);
-   procedure Set_Logical_Size (Self : in out Renderer; Size : in SDL.Video.Rectangles.Size);
+   procedure Get_Logical_Size (Self : in Renderer; Size : out SDL.Video.Sizes);
+   procedure Set_Logical_Size (Self : in out Renderer; Size : in SDL.Video.Sizes);
 
    procedure Get_Scale (Self : in Renderer; X, Y : out Float);
    procedure Set_Scale (Self : in out Renderer; X, Y : in Float);
