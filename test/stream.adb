@@ -17,14 +17,16 @@ with System;
 with System.Address_To_Access_Conversions;
 
 procedure Stream is
+   use type SDL.Dimension;
+
    type Moose_Frames is mod 10;
    type Moose_Colour_Index is range 1 .. 84;
    type Moose_Palette_Array is array (Moose_Colour_Index'Range) of SDL.Video.Palettes.RGB_Colour;
 
    W                : SDL.Video.Windows.Window;
-   Moose_Size       : SDL.Video.Sizes         := (64, 88);
-   Moose_Frame_Size : constant Natural        := (Moose_Size.Width * Moose_Size.Height) - 1;
-   Moose_Frame      : Moose_Frames            := Moose_Frames'First;
+   Moose_Size       : SDL.Sizes                    := (64, 88);
+   Moose_Frame_Size : constant SDL.Dimension       := (Moose_Size.Width * Moose_Size.Height) - 1;
+   Moose_Frame      : Moose_Frames                 := Moose_Frames'First;
    Moose_Palette    : constant Moose_Palette_Array :=
      ((49, 49, 49),    (66, 24, 0),     (66, 33, 0),     (66, 66, 66),
       (66, 115, 49),   (74, 33, 0),     (74, 41, 16),    (82, 33, 8),
@@ -121,10 +123,11 @@ procedure Stream is
       SDL.Log.Put_Debug ("Update_Texture_1 took " & Duration'Image (End_Time - Start_Time) & " seconds.");
    end Update_Texture_1;
 
-   type Texture_2D_Array is array (Positive range <>, Positive range <>) of aliased SDL.Video.Pixels.ARGB_8888;
+   type Texture_2D_Array is array (SDL.Dimension range <>, SDL.Dimension range <>) of
+     aliased SDL.Video.Pixels.ARGB_8888;
 
    package Texture_2D is new SDL.Video.Pixels.Texture_Data
-     (Index              => Positive,
+     (Index              => SDL.Dimension,
       Element            => SDL.Video.Pixels.ARGB_8888,
       Element_Array_1D   => SDL.Video.Pixels.ARGB_8888_Array,
       Element_Array_2D   => Texture_2D_Array,
@@ -278,9 +281,9 @@ begin
             function To_Address is new Ada.Unchecked_Conversion (Source => SDL.Video.Pixels.ARGB_8888_Access.Pointer,
                                                                  Target => System.Address);
 
-            Start_Time       : Ada.Calendar.Time;
-            End_Time         : Ada.Calendar.Time;
-            Actual_Pixels    : Texture_2D_Array (1 .. Moose_Size.Height, 1 .. Moose_Size.Width) with
+            Start_Time    : Ada.Calendar.Time;
+            End_Time      : Ada.Calendar.Time;
+            Actual_Pixels : Texture_2D_Array (1 .. Moose_Size.Height, 1 .. Moose_Size.Width) with
               Address => To_Address (Pixels);
          begin
             Start_Time := Ada.Calendar.Clock;

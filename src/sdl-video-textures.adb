@@ -218,25 +218,25 @@ package body SDL.Video.Textures is
    procedure Query (Self              : in Texture;
                     Pixel_Format_Name : out SDL.Video.Pixel_Formats.Pixel_Format_Names;
                     Kind              : out Kinds;
-                    Size              : out SDL.Video.Sizes) is
+                    Size              : out SDL.Sizes) is
       function SDL_Query_Texture (T                 : in SDL.C_Pointers.Texture_Pointer;
                                   Pixel_Format_Name : out SDL.Video.Pixel_Formats.Pixel_Format_Names;
                                   Kind              : out Kinds;
-                                  Width             : out C.int;
-                                  Height            : out C.int) return C.int with
+                                  Width             : out SDL.Dimension;
+                                  Height            : out SDL.Dimension) return C.int with
         import        => True,
         Convention    => C,
         External_Name => "SDL_QueryTexture";
 
-      W      : C.int := 0;
-      H      : C.int := 0;
-      Result : C.int := SDL_Query_Texture (Self.Internal, Pixel_Format_Name, Kind, W, H);
+      W      : SDL.Dimension := 0;
+      H      : SDL.Dimension := 0;
+      Result : C.int         := SDL_Query_Texture (Self.Internal, Pixel_Format_Name, Kind, W, H);
    begin
       if Result /= Success then
          raise Texture_Error with SDL.Error.Get;
       end if;
 
-      Size := SDL.Video.Sizes'(Positive (W), Positive (H));
+      Size := SDL.Sizes'(W, H);
    end Query;
 
    function Get_Pixel_Format (Self : in Texture) return SDL.Video.Pixel_Formats.Pixel_Format_Names is
@@ -279,25 +279,24 @@ package body SDL.Video.Textures is
       return Kind;
    end Get_Kind;
 
-   function Get_Size (Self : in Texture) return SDL.Video.Sizes is
+   function Get_Size (Self : in Texture) return SDL.Sizes is
       function SDL_Query_Texture (T                 : in SDL.C_Pointers.Texture_Pointer;
                                   Pixel_Format_Name : in System.Address := System.Null_Address;
                                   Kind              : in System.Address := System.Null_Address;
-                                  Width             : out C.int;
-                                  Height            : out C.int) return C.int with
+                                  Width             : out SDL.Dimension;
+                                  Height            : out SDL.Dimension) return C.int with
         import        => True,
         Convention    => C,
         External_Name => "SDL_QueryTexture";
 
-      W      : C.int := 0;
-      H      : C.int := 0;
-      Result : C.int := SDL_Query_Texture (T => Self.Internal, Width => W, Height => H);
+      Size   : SDL.Sizes := SDL.Zero_Size;
+      Result : C.int     := SDL_Query_Texture (T => Self.Internal, Width => Size.Width, Height => Size.Height);
    begin
       if Result /= Success then
          raise Texture_Error with SDL.Error.Get;
       end if;
 
-      return SDL.Video.Sizes'(Positive (W), Positive (H));
+      return Size;
    end Get_Size;
 
    overriding

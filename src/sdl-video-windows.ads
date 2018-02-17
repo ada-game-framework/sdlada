@@ -116,12 +116,12 @@ package SDL.Video.Windows is
    function Get_ID (Self : in Window) return ID with
      Inline => True;
 
-   function Get_Maximum_Size (Self : in Window) return Sizes;
-   procedure Set_Maximum_Size (Self : in out Window; Size : in Sizes) with
+   function Get_Maximum_Size (Self : in Window) return SDL.Sizes;
+   procedure Set_Maximum_Size (Self : in out Window; Size : in SDL.Sizes) with
      Inline => True;
 
-   function Get_Minimum_Size (Self : in Window) return Sizes;
-   procedure Set_Minimum_Size (Self : in out Window; Size : in Sizes) with
+   function Get_Minimum_Size (Self : in Window) return SDL.Sizes;
+   procedure Set_Minimum_Size (Self : in out Window; Size : in SDL.Sizes) with
      Inline => True;
 
    function Pixel_Format (Self : in Window) return SDL.Video.Pixel_Formats.Pixel_Format with
@@ -131,8 +131,8 @@ package SDL.Video.Windows is
    procedure Set_Position (Self : in out Window; Position : Positions) with
      Inline => True;
 
-   function Get_Size (Self : in Window) return Sizes;
-   procedure Set_Size (Self : in out Window; Size : in Sizes) with
+   function Get_Size (Self : in Window) return SDL.Sizes;
+   procedure Set_Size (Self : in out Window; Size : in SDL.Sizes) with
      Inline => True;
 
    function Get_Surface (Self : in Window) return SDL.Video.Surfaces.Surface;

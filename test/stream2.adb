@@ -14,15 +14,17 @@ with SDL.Video.Windows.Makers;
 with System;
 
 procedure Stream2 is
+   use type SDL.Dimension;
+
    type Moose_Frames is mod 10;
    --     type Moose_Frames is range 1 .. 10;
    type Moose_Colour_Index is range 1 .. 84;
    type Moose_Palette_Array is array (Moose_Colour_Index'Range) of SDL.Video.Palettes.RGB_Colour;
 
    W                : SDL.Video.Windows.Window;
-   Moose_Size       : SDL.Video.Sizes         := (64, 88);
-   Moose_Frame_Size : constant Natural        := (Moose_Size.Width * Moose_Size.Height) - 1;
-   Moose_Frame      : Moose_Frames            := Moose_Frames'First;
+   Moose_Size       : SDL.Sizes                    := (64, 88);
+   Moose_Frame_Size : constant SDL.Dimension       := (Moose_Size.Width * Moose_Size.Height) - 1;
+   Moose_Frame      : Moose_Frames                 := Moose_Frames'First;
    Moose_Palette    : constant Moose_Palette_Array :=
      ((49, 49, 49),    (66, 24, 0),     (66, 33, 0),     (66, 66, 66),
       (66, 115, 49),   (74, 33, 0),     (74, 41, 16),    (82, 33, 8),
@@ -83,7 +85,7 @@ procedure Stream2 is
    type Texture_2D_Array is array (Positive range <>, Positive range <>) of aliased SDL.Video.Pixels.ARGB_8888;
 
    type Cached_Moose_Frame_Array is array (Moose_Frames) of
-     Texture_2D_Array (1 .. Moose_Size.Height, 1 .. Moose_Size.Width);
+     Texture_2D_Array (1 .. Positive (Moose_Size.Height), 1 .. Positive (Moose_Size.Width));
 
    procedure Cache_Moose (Cache   : in out Cached_Moose_Frame_Array;
                           Indices : in Moose_Frame_Data_Array;
@@ -96,10 +98,11 @@ procedure Stream2 is
             for X in 1 .. Moose_Size.Width loop
                Colour := Palette (Indices (Frame, ((Y - 1) * Moose_Size.Width) + (X - 1)));
 
-               Cache (Frame) (Y, X) := SDL.Video.Pixels.ARGB_8888'(Red   => Colour.Red,
-                                                                   Green => Colour.Green,
-                                                                   Blue  => Colour.Blue,
-                                                                   Alpha => SDL.Video.Palettes.Colour_Component'Last);
+               Cache (Frame) (Positive (Y), Positive (X)) :=
+                 SDL.Video.Pixels.ARGB_8888'(Red   => Colour.Red,
+                                             Green => Colour.Green,
+                                             Blue  => Colour.Blue,
+                                             Alpha => SDL.Video.Palettes.Colour_Component'Last);
             end loop;
          end loop;
       end loop;
@@ -180,7 +183,7 @@ begin
 
                Start_Time       : Ada.Calendar.Time;
                End_Time         : Ada.Calendar.Time;
-               Actual_Pixels    : Texture_2D_Array (1 .. Moose_Size.Height, 1 .. Moose_Size.Width) with
+               Actual_Pixels    : Texture_2D_Array (1 .. Positive (Moose_Size.Height), 1 .. Positive (Moose_Size.Width)) with
                  Address => To_Address (Pixels);
             begin
                Start_Time := Ada.Calendar.Clock;

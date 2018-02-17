@@ -245,8 +245,9 @@ package body SDL.Video.Windows is
       return SDL_Get_Window_ID (Self.Internal);
    end Get_ID;
 
-   function Get_Maximum_Size (Self : in Window) return Sizes is
-      procedure SDL_Get_Window_Maximum_Size (Win : in SDL.C_Pointers.Windows_Pointer; W, H : out C.int) with
+   function Get_Maximum_Size (Self : in Window) return SDL.Sizes is
+      procedure SDL_Get_Window_Maximum_Size (Win  : in SDL.C_Pointers.Windows_Pointer;
+                                             W, H : out SDL.Dimension) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetWindowMaximumSize";
@@ -255,10 +256,10 @@ package body SDL.Video.Windows is
    begin
       SDL_Get_Window_Maximum_Size (Self.Internal, W, H);
 
-      return Sizes'(Width => Positive (W), Height => Positive (H));
+      return SDL.Sizes'(Width => W, Height => H);
    end Get_Maximum_Size;
 
-   procedure Set_Maximum_Size (Self : in out Window; Size : in Sizes) is
+   procedure Set_Maximum_Size (Self : in out Window; Size : in SDL.Sizes) is
       procedure SDL_Get_Window_Maximum_Size (Win : in SDL.C_Pointers.Windows_Pointer; W, H : in C.int) with
         Import        => True,
         Convention    => C,
@@ -267,8 +268,9 @@ package body SDL.Video.Windows is
       SDL_Get_Window_Maximum_Size (Self.Internal, C.int (Size.Width), C.int (Size.Height));
    end Set_Maximum_Size;
 
-   function Get_Minimum_Size (Self : in Window) return Sizes is
-      procedure SDL_Get_Window_Minimum_Size (Win : in SDL.C_Pointers.Windows_Pointer; W, H : out C.int) with
+   function Get_Minimum_Size (Self : in Window) return SDL.Sizes is
+      procedure SDL_Get_Window_Minimum_Size (Win  : in SDL.C_Pointers.Windows_Pointer;
+                                             W, H : out SDL.Dimension) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetWindowMinimumSize";
@@ -277,10 +279,10 @@ package body SDL.Video.Windows is
    begin
       SDL_Get_Window_Minimum_Size (Self.Internal, W, H);
 
-      return Sizes'(Width => Positive (W), Height => Positive (H));
+      return SDL.Sizes'(Width => W, Height => H);
    end Get_Minimum_Size;
 
-   procedure Set_Minimum_Size (Self : in out Window; Size : in Sizes) is
+   procedure Set_Minimum_Size (Self : in out Window; Size : in SDL.Sizes) is
       procedure SDL_Get_Window_Minimum_Size (Win : in SDL.C_Pointers.Windows_Pointer; W, H : in C.int) with
         Import        => True,
         Convention    => C,
@@ -321,8 +323,8 @@ package body SDL.Video.Windows is
       SDL_Set_Window_Position (Self.Internal, C.int (Position.X), C.int (Position.Y));
    end Set_Position;
 
-   function Get_Size (Self : in Window) return Sizes is
-      procedure SDL_Get_Window_Size (Win : in SDL.C_Pointers.Windows_Pointer; W, H : out C.int) with
+   function Get_Size (Self : in Window) return SDL.Sizes is
+      procedure SDL_Get_Window_Size (Win : in SDL.C_Pointers.Windows_Pointer; W, H : out SDL.Dimension) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetWindowSize";
@@ -331,10 +333,10 @@ package body SDL.Video.Windows is
    begin
       SDL_Get_Window_Size (Self.Internal, W, H);
 
-      return Sizes'(Width => Positive (W), Height => Positive (H));
+      return SDL.Sizes'(Width => W, Height => H);
    end Get_Size;
 
-   procedure Set_Size (Self : in out Window; Size : in Sizes) is
+   procedure Set_Size (Self : in out Window; Size : in SDL.Sizes) is
       procedure SDL_Get_Window_Size (Win : in SDL.C_Pointers.Windows_Pointer; W, H : in C.int) with
         Import        => True,
         Convention    => C,

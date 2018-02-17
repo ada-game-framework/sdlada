@@ -405,9 +405,9 @@ package body SDL.Video.Renderers is
       end if;
    end Set_Clip;
 
-   procedure Get_Logical_Size (Self : in Renderer; Size : out SDL.Video.Sizes) is
+   procedure Get_Logical_Size (Self : in Renderer; Size : out SDL.Sizes) is
       procedure SDL_Render_Get_Logical_Size (R : in SDL.C_Pointers.Renderer_Pointer;
-                                             S : out SDL.Video.Sizes) with
+                                             S : out SDL.Sizes) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderGetLogicalSize";
@@ -415,9 +415,9 @@ package body SDL.Video.Renderers is
       SDL_Render_Get_Logical_Size (Self.Internal, Size);
    end Get_Logical_Size;
 
-   procedure Set_Logical_Size (Self : in out Renderer; Size : in SDL.Video.Sizes) is
+   procedure Set_Logical_Size (Self : in out Renderer; Size : in SDL.Sizes) is
       function SDL_Render_Set_Logical_Size (R : in SDL.C_Pointers.Renderer_Pointer;
-                                            S : in SDL.Video.Sizes) return C.int with
+                                            S : in SDL.Sizes) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderSetLogicalSize";

@@ -31,7 +31,7 @@ package SDL.Video.Rectangles is
 
    Rectangle_Error : exception;
 
-   type Size_Arrays is array (C.size_t range <>) of aliased Sizes with
+   type Size_Arrays is array (C.size_t range <>) of aliased SDL.Sizes with
      Convention => C;
 
    type Point is

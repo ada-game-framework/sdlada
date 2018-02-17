@@ -60,7 +60,7 @@ package SDL.Video.Surfaces is
      Inline => True;
 
    --  Get the dimensions of this surface.
-   function Size (Self : in Surface) return Sizes with
+   function Size (Self : in Surface) return SDL.Sizes with
      Inline => True;
 
    --  TODO: Make generic so that we can get access to specific arrays which are mapped onto the Pixels address.
@@ -194,8 +194,8 @@ private
       record
          Flags           : Surface_Flags;           --  Internal, don't touch.
          Pixel_Format    : Pixel_Formats.Pixel_Format_Access;
-         Width           : C.int;
-         Height          : C.int;
+         Width           : SDL.Dimension;
+         Height          : SDL.Dimension;
          Pitch           : C.int;
          Pixels          : System.Address;          --  Pixel data.
          User_Data       : User_Data_Pointer;

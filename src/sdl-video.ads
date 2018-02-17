@@ -24,14 +24,14 @@
 --
 --  Common display and video driver functionality.
 --------------------------------------------------------------------------------------------------------------------
+with Interfaces.C;
+
 package SDL.Video is
+   package C renames Interfaces.C;
+
    Video_Error : exception;
 
-   type Sizes is
-      record
-         Width  : Positive;
-         Height : Positive;
-      end record;
+   --  subtype Coordinate is C.int;
 
    type Blend_Modes is (None, Alpha_Blend, Additive, Colour_Modulate) with
      Convention => C;

@@ -26,8 +26,6 @@ with Ada.Text_IO; use Ada.Text_IO;
 with SDL.Error;
 
 package body SDL.Video is
-   package C renames Interfaces.C;
-
    use type C.int;
 
    function Is_Screen_Saver_Enabled return Boolean is

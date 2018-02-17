@@ -203,39 +203,37 @@ package body SDL.TTFs is
       return C.Strings.Value (TTF_Font_Face_Style_Name (Self.Internal));
    end Face_Style_Name;
 
-   function Size_Latin_1 (Self : in Fonts; Text : in String) return Video.Sizes is
+   function Size_Latin_1 (Self : in Fonts; Text : in String) return SDL.Sizes is
       function TTF_Size_Text (Font : in Fonts_Ref;
                               Text : in C.Strings.chars_ptr;
-                              W    : out C.int;
-                              H    : out C.int) return C.int with
+                              W    : out Dimension;
+                              H    : out Dimension) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "TTF_SizeText";
 
-      Width  : C.int               := 0;
-      Height : C.int               := 0;
+      Size   : SDL.Sizes           := SDL.Zero_Size;
       C_Text : C.Strings.chars_ptr := C.Strings.New_String (Text);
-      Result : C.int               := TTF_Size_Text (Self.Internal, C_Text, Width, Height);
+      Result : C.int               := TTF_Size_Text (Self.Internal, C_Text, Size.Width, Size.Height);
    begin
       C.Strings.Free (C_Text);
 
-      return Video.Sizes'(Positive (Width), Positive (Height));
+      return Size;
    end Size_Latin_1;
 
-   function Size_UTF_8 (Self : in Fonts; Text : in UTF_Strings.UTF_8_String) return Video.Sizes is
+   function Size_UTF_8 (Self : in Fonts; Text : in UTF_Strings.UTF_8_String) return SDL.Sizes is
       function TTF_Size_UTF_8 (Font : in Fonts_Ref;
                                Text : in C.Strings.chars_ptr;
-                               W    : out C.int;
-                               H    : out C.int) return C.int with
+                               W    : out Dimension;
+                               H    : out Dimension) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "TTF_SizeUTF8";
 
-      Width  : C.int               := 0;
-      Height : C.int               := 0;
+      Size   : SDL.Sizes           := SDL.Zero_Size;
       C_Text : C.Strings.chars_ptr := C.Strings.New_String (Text);
-      Result : C.int               := TTF_Size_UTF_8 (Self.Internal, C_Text, Width, Height);
+      Result : C.int               := TTF_Size_UTF_8 (Self.Internal, C_Text, Size.Width, Size.Height);
    begin
-      return Video.Sizes'(Positive (Width), Positive (Height));
+      return Size;
    end Size_UTF_8;
 end SDL.TTFs;

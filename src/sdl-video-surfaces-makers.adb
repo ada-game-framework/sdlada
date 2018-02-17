@@ -23,7 +23,7 @@
 with Ada.Finalization;
 package body SDL.Video.Surfaces.Makers is
    procedure Create (Self       : in out Surface;
-                     Size       : in SDL.Video.Sizes;
+                     Size       : in SDL.Sizes;
                      BPP        : in Pixel_Depths;
                      Red_Mask   : in Colour_Masks;
                      Blue_Mask  : in Colour_Masks;
@@ -42,8 +42,8 @@ package body SDL.Video.Surfaces.Makers is
         Convention    => C,
         External_Name => "SDL_CreateRGBSurface";
    begin
-      Self.Internal := SDL_Create_RGB_Surface (Width      => C.int (Size.Width),
-                                               Height     => C.int (Size.Height),
+      Self.Internal := SDL_Create_RGB_Surface (Width      => Size.Width,
+                                               Height     => Size.Height,
                                                Depth      => BPP,
                                                Red_Mask   => Red_Mask,
                                                Green_Mask => Green_Mask,

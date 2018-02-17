@@ -26,7 +26,7 @@
 --------------------------------------------------------------------------------------------------------------------
 package SDL.Video.Surfaces.Makers is
    procedure Create (Self       : in out Surface;
-                     Size       : in SDL.Video.Sizes;
+                     Size       : in SDL.Sizes;
                      BPP        : in Pixel_Depths;
                      Red_Mask   : in Colour_Masks;
                      Blue_Mask  : in Colour_Masks;

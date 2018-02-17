@@ -45,7 +45,7 @@ package body SDL.Video.Textures.Makers is
       Renderer : in SDL.Video.Renderers.Renderer;
       Format   : in SDL.Video.Pixel_Formats.Pixel_Format_Names;
       Kind     : in Kinds;
-      Size     : in SDL.Video.Sizes) is
+      Size     : in SDL.Sizes) is
 
       --  Convert the Pixel_Format_Name to an Unsigned_32 because the compiler is changing the value somewhere along
       --  the lines from the start of this procedure to calling SDL_Create_Texture.
@@ -65,8 +65,8 @@ package body SDL.Video.Textures.Makers is
       Tex.Internal := SDL_Create_Texture (Get_Internal_Renderer (Renderer),
                                           To_Unsigned32 (Format),
                                           Kind,
-                                          C.int (Size.Width),
-                                          C.int (Size.Height));
+                                          Size.Width,
+                                          Size.Height);
 
       if Tex.Internal = null then
          raise Texture_Error with SDL.Error.Get;

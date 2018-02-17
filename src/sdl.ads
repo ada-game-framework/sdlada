@@ -27,6 +27,8 @@
 with Interfaces.C;
 
 package SDL is
+   package C renames Interfaces.C;
+
    type Init_Flags is mod 2 ** 32 with
      Convention => C;
 
@@ -42,6 +44,19 @@ package SDL is
    Enable_Everything      : constant Init_Flags :=
      Enable_Timer or Enable_Audio or Enable_Screen or Enable_Joystick or Enable_Haptic or
      Enable_Game_Controller or Enable_Events or Enable_No_Parachute;
+
+   subtype Dimension is C.int;
+   subtype Natural_Dimension is Dimension range 0 .. Dimension'Last;
+   subtype Positive_Dimension is Dimension range 1 .. Dimension'Last;
+
+   type Sizes is
+      record
+         Width  : Natural_Dimension;
+         Height : Natural_Dimension;
+      end record with
+     Convention => C;
+
+   Zero_Size : constant Sizes := (others => Natural_Dimension'First);
 
    function Initialise (Flags : in Init_Flags := Enable_Everything) return Boolean;
 

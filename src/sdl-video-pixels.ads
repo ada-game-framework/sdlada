@@ -64,10 +64,10 @@ package SDL.Video.Pixels is
          Alpha at 0 range 24 .. 31;
       end record;
 
-   type ARGB_8888_Array is array (Positive range <>) of aliased ARGB_8888;
+   type ARGB_8888_Array is array (SDL.Dimension range <>) of aliased ARGB_8888;
 
    package ARGB_8888_Access is new Interfaces.C.Pointers
-     (Index              => Positive,
+     (Index              => SDL.Dimension,
       Element            => ARGB_8888,
       Element_Array      => ARGB_8888_Array,
       Default_Terminator => ARGB_8888'(others => SDL.Video.Palettes.Colour_Component'First));

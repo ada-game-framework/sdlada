@@ -33,10 +33,10 @@ package body SDL.Video.Windows.Makers is
    procedure Create
      (Win    : in out Window;
       Title  : in Ada.Strings.UTF_Encoding.UTF_8_String;
-      X      : in Integer;
-      Y      : in Integer;
-      Width  : in Integer;
-      Height : in Integer;
+      X      : in SDL.Natural_Dimension;
+      Y      : in SDL.Natural_Dimension;
+      Width  : in SDL.Positive_Dimension;
+      Height : in SDL.Positive_Dimension;
       Flags  : in Window_Flags := OpenGL) is
 
       function SDL_Create
@@ -49,7 +49,7 @@ package body SDL.Video.Windows.Makers is
 
       C_Title_Str : C.Strings.chars_ptr := C.Strings.New_String (Title);
    begin
-      Win.Internal := SDL_Create (C_Title_Str, C.int (X), C.int (Y), C.int (Width), C.int (Height), Flags);
+      Win.Internal := SDL_Create (C_Title_Str, X, Y, Width, Height, Flags);
 
       C.Strings.Free (C_Title_Str);
 

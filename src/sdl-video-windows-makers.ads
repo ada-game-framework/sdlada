@@ -28,10 +28,10 @@ package SDL.Video.Windows.Makers is
    procedure Create
      (Win    : in out Window;
       Title  : in Ada.Strings.UTF_Encoding.UTF_8_String;
-      X      : in Integer;
-      Y      : in Integer;
-      Width  : in Integer;
-      Height : in Integer;
+      X      : in SDL.Natural_Dimension;
+      Y      : in SDL.Natural_Dimension;
+      Width  : in SDL.Positive_Dimension;
+      Height : in SDL.Positive_Dimension;
       Flags  : in Window_Flags := OpenGL);
 
    --  Create a window from an existing window created in some other way.

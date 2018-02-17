@@ -580,13 +580,13 @@ package body SDL.Video.GL is
       end if;
    end Bind_Texture;
 
-   procedure Bind_Texture (Texture : in SDL.Video.Textures.Texture; Size : out SDL.Video.Sizes) is
+   procedure Bind_Texture (Texture : in SDL.Video.Textures.Texture; Size : out SDL.Sizes) is
       function SDL_GL_Bind_Texture (T : in SDL.C_Pointers.Texture_Pointer; W, H : out C.int) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GL_BindTexture";
    begin
-      if SDL_GL_Bind_Texture (Get_Internal_Texture (Texture), C.int (Size.Width), C.int (Size.Height)) /= SDL.Success then
+      if SDL_GL_Bind_Texture (Get_Internal_Texture (Texture), Size.Width, Size.Height) /= SDL.Success then
          raise SDL_GL_Error with "Cannot bind texture, unsupported operation in this context.";
       end if;
    end Bind_Texture;

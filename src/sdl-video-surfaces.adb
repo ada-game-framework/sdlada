@@ -31,9 +31,9 @@ package body SDL.Video.Surfaces is
       return Self.Internal.Pixel_Format;
    end Pixel_Format;
 
-   function Size (Self : in Surface) return Sizes is
+   function Size (Self : in Surface) return SDL.Sizes is
    begin
-      return Sizes'(Positive (Self.Internal.Width), Positive (Self.Internal.Height));
+      return SDL.Sizes'(Self.Internal.Width, Self.Internal.Height);
    end Size;
 
    function Pixels (Self : in Surface) return System.Address is

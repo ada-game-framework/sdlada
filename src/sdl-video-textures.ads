@@ -102,11 +102,11 @@ package SDL.Video.Textures is
    procedure Query (Self              : in Texture;
                     Pixel_Format_Name : out SDL.Video.Pixel_Formats.Pixel_Format_Names;
                     Kind              : out Kinds;
-                    Size              : out SDL.Video.Sizes);
+                    Size              : out SDL.Sizes);
 
    function Get_Pixel_Format (Self : in Texture) return SDL.Video.Pixel_Formats.Pixel_Format_Names;
    function Get_Kind (Self : in Texture) return Kinds;
-   function Get_Size (Self : in Texture) return SDL.Video.Sizes;
+   function Get_Size (Self : in Texture) return SDL.Sizes;
 
    --  SDL_UpdateTexture
    --  SDL_UpdateYUVTexture
@@ -116,7 +116,7 @@ private
          Internal     : SDL.C_Pointers.Texture_Pointer             := null;
          Owns         : Boolean                                    := True;
          Locked       : Boolean                                    := False;
-         Size         : SDL.Video.Sizes                            := (Positive'First, Positive'First);
+         Size         : SDL.Sizes                                  := SDL.Zero_Size;
          Pixel_Format : SDL.Video.Pixel_Formats.Pixel_Format_Names := SDL.Video.Pixel_Formats.Pixel_Format_Unknown;
       end record;
 
@@ -130,7 +130,7 @@ private
    Null_Texture : constant Texture := (Ada.Finalization.Limited_Controlled with
                                        Internal     => null,
                                        Owns         => True,
-                                       Size         => (Positive'First, Positive'First),
+                                       Size         => SDL.Zero_Size,
                                        Pixel_Format => Pixel_Formats.Pixel_Format_Unknown,
                                        Locked       => False);
 end SDL.Video.Textures;

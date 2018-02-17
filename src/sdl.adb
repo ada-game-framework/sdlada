@@ -21,8 +21,6 @@
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
 package body SDL is
-   package C renames Interfaces.C;
-
    use type C.int;
 
    function Initialise (Flags : in Init_Flags := Enable_Everything) return Boolean is

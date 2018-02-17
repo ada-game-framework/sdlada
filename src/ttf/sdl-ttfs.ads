@@ -126,10 +126,10 @@ package SDL.TTFs is
    function Face_Style_Name (Self : in Fonts) return String with
      Inline => True;
 
-   function Size_Latin_1 (Self : in Fonts; Text : in String) return Video.Sizes with
+   function Size_Latin_1 (Self : in Fonts; Text : in String) return SDL.Sizes with
      Inline => True;
 
-   function Size_UTF_8 (Self : in Fonts; Text : in UTF_Strings.UTF_8_String) return Video.Sizes with
+   function Size_UTF_8 (Self : in Fonts; Text : in UTF_Strings.UTF_8_String) return SDL.Sizes with
      Inline => True;
 private
    type Internal_Fonts is null record;
