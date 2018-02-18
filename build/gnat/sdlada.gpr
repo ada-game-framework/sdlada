@@ -19,19 +19,17 @@ library project SDLAda is
    for Library_Kind use "static";
 
    package Compiler is
-      C_Switches   := ("-ffunction-sections", "-fdata-sections");
-      Ada_Switches := ("-ffunction-sections", "-fdata-sections",
-                       "-gnat2012", "-gnata", "-gnato", "-gnatE",
-                       "-gnaty", "-gnaty-s", "-gnatyO", "-gnatyM120", "-gnatyx");
+      Common_Switches := ("-ffunction-sections", "-fdata-sections");
+      C_Switches      := ();
+      Ada_Switches    := ("-gnat2012", "-gnata", "-gnato", "-gnatE",
+                          "-gnaty", "-gnaty-s", "-gnatyO", "-gnatyM120", "-gnatyx");
 
       case Mode is
          when "debug" =>
-            C_Switches   := C_Switches & ("-O0", "-g");
-            Ada_Switches := Ada_Switches & ("-O0", "-g");
+            Common_Switches := Common_Switches  & ("-O0", "-g", "-ggdb");
 
          when "release" =>
-            C_Switches   := C_Switches & ("-O2");
-            Ada_Switches := Ada_Switches & ("-O2");
+            Common_Switches := Common_Switches & ("-O2");
       end case;
 
       --  These flags require checking on all platforms as they're taken directly from sdl2-config.
@@ -43,8 +41,8 @@ library project SDLAda is
             null;
       end case;
 
-      for Default_Switches ("C") use C_Switches;
-      for Default_Switches ("Ada") use Ada_Switches;
+      for Default_Switches ("C") use Common_Switches & C_Switches;
+      for Default_Switches ("Ada") use Common_Switches & Ada_Switches;
    end Compiler;
 
    package Linker is
