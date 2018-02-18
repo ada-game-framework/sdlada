@@ -79,14 +79,6 @@ package SDL.Events.Mice is
      (Convert (Interfaces.Shift_Left (1, Buttons'Pos (X_2)))) with
    Inline => True;
 
-   type Window_Coordinates is range -2 ** 31 .. 2 ** 31 - 1 with
-     Convention => C,
-     Size       => 32;
-
-   type Screen_Coordinates is range -2 ** 31 .. 2 ** 31 - 1 with
-     Convention => C,
-     Size       => 32;
-
    type Movement_Values is range -2 ** 31 .. 2 ** 31 - 1 with
      Convention => C,
      Size       => 32;
@@ -99,8 +91,8 @@ package SDL.Events.Mice is
          Window     : SDL.Video.Windows.ID;
          Which      : IDs;
          Mask       : Button_Masks;
-         X          : Window_Coordinates;
-         Y          : Window_Coordinates;
+         X          : SDL.Natural_Coordinate;  -- Relative to the left of the window.
+         Y          : SDL.Natural_Coordinate;  -- Relative to the top of the window.
          X_Relative : Movement_Values;
          Y_Relative : Movement_Values;
       end record with
@@ -121,14 +113,20 @@ package SDL.Events.Mice is
          State      : Button_State;
          Clicks     : Button_Clicks;
          Padding_1  : Padding_8;
-         X          : Window_Coordinates;
-         Y          : Window_Coordinates;
+         X          : SDL.Natural_Coordinate;  -- Relative to the left of the window.
+         Y          : SDL.Natural_Coordinate;  -- Relative to the top of the window.
       end record with
      Convention => C;
 
-   type Wheel_Values is range -2 ** 31 .. 2 ** 31 - 1 with
+   type Wheel_Values is range -1 .. 1 with
      Convention => C,
      Size       => 32;
+
+   function Flip_Wheel_Value (Value : in Wheel_Values) return Wheel_Values is
+     (Value * Wheel_Values'First);
+
+   type Wheel_Directions is (Normal, Flipped) with
+     Convention => C;
 
    type Wheel_Events is
       record
@@ -139,6 +137,7 @@ package SDL.Events.Mice is
          Which      : IDs;
          X          : Wheel_Values;
          Y          : Wheel_Values;
+         Direction  : Wheel_Directions;
       end record with
      Convention => C;
 private
