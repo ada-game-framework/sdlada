@@ -29,6 +29,8 @@ with Interfaces.C;
 package SDL is
    package C renames Interfaces.C;
 
+   use type C.int;
+
    type Init_Flags is mod 2 ** 32 with
      Convention => C;
 
@@ -45,18 +47,49 @@ package SDL is
      Enable_Timer or Enable_Audio or Enable_Screen or Enable_Joystick or Enable_Haptic or
      Enable_Game_Controller or Enable_Events or Enable_No_Parachute;
 
+   --  Coordinates are for positioning things.
+   subtype Coordinate is C.int;
+   subtype Natural_Coordinate is Coordinate range 0 .. Coordinate'Last;
+   subtype Positive_Coordinate is Coordinate range 1 .. Coordinate'Last;
+
+   Centre_Coordinate : constant Coordinate := 0;
+
+   type Coordinates is
+      record
+         X : SDL.Coordinate;
+         Y : SDL.Coordinate;
+      end record with
+     Convention => C;
+
+   Zero_Coordinate : constant Coordinates := (others => 0);
+
+   subtype Natural_Coordinates is Coordinates with
+     Dynamic_Predicate =>
+       Natural_Coordinates.X >= Natural_Coordinate'First and Natural_Coordinates.Y >= Natural_Coordinate'First;
+
+   subtype Positive_Coordinates is Coordinates with
+     Dynamic_Predicate =>
+       Positive_Coordinates.X >= Positive_Coordinate'First and Positive_Coordinates.Y >= Positive_Coordinate'First;
+
+   --  Dimensions are for sizing things.
    subtype Dimension is C.int;
    subtype Natural_Dimension is Dimension range 0 .. Dimension'Last;
    subtype Positive_Dimension is Dimension range 1 .. Dimension'Last;
 
    type Sizes is
       record
-         Width  : Natural_Dimension;
-         Height : Natural_Dimension;
+         Width  : Dimension;
+         Height : Dimension;
       end record with
      Convention => C;
 
    Zero_Size : constant Sizes := (others => Natural_Dimension'First);
+
+   subtype Natural_Sizes is Sizes with
+     Dynamic_Predicate => Natural_Sizes.Width >= 0 and Natural_Sizes.Height >= 0;
+
+   subtype Positive_Sizes is Sizes with
+     Dynamic_Predicate => Positive_Sizes.Width >= 1 and Positive_Sizes.Height >= 1;
 
    function Initialise (Flags : in Init_Flags := Enable_Everything) return Boolean;
 

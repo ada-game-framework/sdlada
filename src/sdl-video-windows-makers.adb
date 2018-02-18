@@ -31,13 +31,11 @@ package body SDL.Video.Windows.Makers is
    use type SDL.C_Pointers.Windows_Pointer;
 
    procedure Create
-     (Win    : in out Window;
-      Title  : in Ada.Strings.UTF_Encoding.UTF_8_String;
-      X      : in SDL.Natural_Dimension;
-      Y      : in SDL.Natural_Dimension;
-      Width  : in SDL.Positive_Dimension;
-      Height : in SDL.Positive_Dimension;
-      Flags  : in Window_Flags := OpenGL) is
+     (Win      : in out Window;
+      Title    : in Ada.Strings.UTF_Encoding.UTF_8_String;
+      Position : in SDL.Natural_Coordinates;
+      Size     : in SDL.Positive_Sizes;
+      Flags    : in Window_Flags := OpenGL) is
 
       function SDL_Create
         (Title      : C.Strings.chars_ptr;
@@ -49,7 +47,7 @@ package body SDL.Video.Windows.Makers is
 
       C_Title_Str : C.Strings.chars_ptr := C.Strings.New_String (Title);
    begin
-      Win.Internal := SDL_Create (C_Title_Str, X, Y, Width, Height, Flags);
+      Win.Internal := SDL_Create (C_Title_Str, Position.X, Position.Y, Size.Width, Size.Height, Flags);
 
       C.Strings.Free (C_Title_Str);
 
@@ -58,6 +56,18 @@ package body SDL.Video.Windows.Makers is
       end if;
 
       Increment_Windows;
+   end Create;
+
+   procedure Create
+     (Win    : in out Window;
+      Title  : in Ada.Strings.UTF_Encoding.UTF_8_String;
+      X      : in SDL.Natural_Coordinate;
+      Y      : in SDL.Natural_Coordinate;
+      Width  : in SDL.Positive_Dimension;
+      Height : in SDL.Positive_Dimension;
+      Flags  : in Window_Flags := OpenGL) is
+   begin
+      Create (Win, Title, SDL.Natural_Coordinates'(X, Y), SDL.Positive_Sizes'(Width, Height), Flags);
    end Create;
 
    procedure Create (Win : in out Window; Native : in Native_Window) is

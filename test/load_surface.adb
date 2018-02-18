@@ -24,20 +24,17 @@ with System.Address_To_Access_Conversions;
 procedure Load_Surface is
    use type Interfaces.C.int;
 
-   W             : SDL.Video.Windows.Window;
-   Window_Width  : constant := 800;
-   Window_Height : constant := 640;
+   W           : SDL.Video.Windows.Window;
+   Window_Size : constant SDL.Positive_Sizes := (Width => 800, Height => 640);
 begin
    SDL.Log.Set (Category => SDL.Log.Application, Priority => SDL.Log.Debug);
 
    if SDL.Initialise (Flags => SDL.Enable_Screen) = True and SDL.Images.Initialise then
-      SDL.Video.Windows.Makers.Create (Win    => W,
-                                       Title  => "Surface (Esc to exit)",
-                                       X      => 100,
-                                       Y      => 100,
-                                       Width  => Window_Width,
-                                       Height => Window_Height,
-                                       Flags  => SDL.Video.Windows.Resizable);
+      SDL.Video.Windows.Makers.Create (Win      => W,
+                                       Title    => "Surface (Esc to exit)",
+                                       Position => SDL.Natural_Coordinates'(X => 100, Y => 100),
+                                       Size     => Window_Size,
+                                       Flags    => SDL.Video.Windows.Resizable);
 
       --  Main loop.
       declare
@@ -45,8 +42,8 @@ begin
          Window_Surface   : SDL.Video.Surfaces.Surface;
          Image_Surface    : SDL.Video.Surfaces.Surface;
          Image_Area       : SDL.Video.Rectangles.Rectangle := (X => 0, Y => 0, Width => 400, Height => 300);
-         Image_Dest_Area  : SDL.Video.Rectangles.Rectangle := (X      => Window_Width / 2 - Image_Area.Width / 2,
-                                                               Y      => Window_Height / 2 - Image_Area.Height / 2,
+         Image_Dest_Area  : SDL.Video.Rectangles.Rectangle := (X      => Window_Size.Width / 2 - Image_Area.Width / 2,
+                                                               Y      => Window_Size.Height / 2 - Image_Area.Height / 2,
                                                                Width  => 400,
                                                                Height => 300);
          Finished         : Boolean := False;

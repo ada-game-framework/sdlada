@@ -11,12 +11,10 @@ begin
    SDL.Log.Set (Category => SDL.Log.Application, Priority => SDL.Log.Debug);
 
    if SDL.Initialise = True then
-      SDL.Video.Windows.Makers.Create (Win    => W,
-                                       Title  => "Test SDLAda 2.0 - हिन्दी समाचार",
-                                       X      => 100,
-                                       Y      => 100,
-                                       Width  => 800,
-                                       Height => 640);
+      SDL.Video.Windows.Makers.Create (Win      => W,
+                                       Title    => "Test SDLAda 2.0 - हिन्दी समाचार",
+                                       Position => SDL.Natural_Coordinates'(X => 100, Y => 100),
+                                       Size     => SDL.Positive_Sizes'(800, 640));
 
       delay 2.0;
 

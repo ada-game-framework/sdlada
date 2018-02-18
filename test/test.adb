@@ -45,12 +45,10 @@ begin
 
       SDL.Log.Put_Debug ("Error           : " & SDL.Error.Get);
 
-      SDL.Video.Windows.Makers.Create (Win    => W,
-                                       Title  => "Test SDLAda 2.0 - हिन्दी समाचार",
-                                       X      => 100,
-                                       Y      => 100,
-                                       Width  => 800,
-                                       Height => 640);
+      SDL.Video.Windows.Makers.Create (Win      => W,
+                                       Title    => "Test SDLAda 2.0 - हिन्दी समाचार",
+                                       Position => SDL.Natural_Coordinates'(X => 100, Y => 100),
+                                       Size     => SDL.Positive_Sizes'(800, 640));
 
       SDL.Log.Put_Debug ("Window Grabbed  : " & Boolean'Image (W.Is_Grabbed));
 
@@ -171,8 +169,8 @@ begin
                   when SDL.Events.Mice.Motion =>
                      SDL.Log.Put_Debug
                        ("Mouse motion event (ID = " & SDL.Events.Mice.IDs'Image (Event.Mouse_Motion.Which) &
-                          "): (X => " & SDL.Events.Mice.Window_Coordinates'Image (Event.Mouse_Motion.X) &
-                          "): (Y => " & SDL.Events.Mice.Window_Coordinates'Image (Event.Mouse_Motion.Y) &
+                          "): (X => " & SDL.Coordinate'Image (Event.Mouse_Motion.X) &
+                          "): (Y => " & SDL.Coordinate'Image (Event.Mouse_Motion.Y) &
                           "): (X Rel => " & SDL.Events.Mice.Movement_Values'Image (Event.Mouse_Motion.X_Relative) &
                           ", Y Rel => " & SDL.Events.Mice.Movement_Values'Image (Event.Mouse_Motion.Y_Relative) &
                           ")");
@@ -183,9 +181,18 @@ begin
                           "): Button = " & SDL.Events.Mice.Buttons'Image (Event.Mouse_Button.Button) &
                           "    State: " & SDL.Events.Button_State'Image (Event.Mouse_Button.State) &
                           "    Clicks: " & SDL.Events.Mice.Button_Clicks'Image (Event.Mouse_Button.Clicks) &
-                          "    (X => " & SDL.Events.Mice.Window_Coordinates'Image (Event.Mouse_Button.X) &
-                          ", Y => " & SDL.Events.Mice.Window_Coordinates'Image (Event.Mouse_Button.Y) &
+                          "    (X => " & SDL.Coordinate'Image (Event.Mouse_Button.X) &
+                          ", Y => " & SDL.Coordinate'Image (Event.Mouse_Button.Y) &
                           ")");
+
+                  when SDL.Events.Mice.Wheel =>
+                     SDL.Log.Put_Debug
+                       ("Mouse wheel event (ID = " & SDL.Events.Mice.IDs'Image (Event.Mouse_Wheel.Which) &
+                          "): (X => " & SDL.Events.Mice.Wheel_Values'Image (Event.Mouse_Wheel.X) &
+                          "): (Y => " & SDL.Events.Mice.Wheel_Values'Image (Event.Mouse_Wheel.Y) &
+                          "): (Direction => " & SDL.Events.Mice.Wheel_Directions'Image (Event.Mouse_Wheel.Direction) &
+                          ")");
+
                   when others =>
                      null;
                end case;

@@ -301,26 +301,26 @@ package body SDL.Video.Windows is
       return SDL_Get_Window_Pixel_Format (Self.Internal);
    end Pixel_Format;
 
-   function Get_Position (Self : in Window) return Positions is
+   function Get_Position (Self : in Window) return SDL.Natural_Coordinates is
       procedure SDL_Get_Window_Position (W : in SDL.C_Pointers.Windows_Pointer; X, Y : out C.int) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetWindowPosition";
 
-      X, Y : C.int := 0;
+      Position : SDL.Natural_Coordinates := SDL.Zero_Coordinate;
    begin
-      SDL_Get_Window_Position (Self.Internal, X, Y);
+      SDL_Get_Window_Position (Self.Internal, Position.X, Position.Y);
 
-      return Positions'(Positive (X), Positive (Y));
+      return Position;
    end Get_Position;
 
-   procedure Set_Position (Self : in out Window; Position : Positions) is
+   procedure Set_Position (Self : in out Window; Position : SDL.Natural_Coordinates) is
       procedure SDL_Set_Window_Position (W : in SDL.C_Pointers.Windows_Pointer; X, Y : in C.int) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_SetWindowPosition";
    begin
-      SDL_Set_Window_Position (Self.Internal, C.int (Position.X), C.int (Position.Y));
+      SDL_Set_Window_Position (Self.Internal, Position.X, Position.Y);
    end Set_Position;
 
    function Get_Size (Self : in Window) return SDL.Sizes is

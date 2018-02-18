@@ -61,12 +61,6 @@ package SDL.Video.Windows is
    type ID is mod 2 ** 32 with
      Convention => C;
 
-   type Positions is
-      record
-         X : Positive;
-         Y : Positive;
-      end record;
-
    type Native_Window is private;
 
    --  Allow users to derive new types from this.
@@ -127,8 +121,8 @@ package SDL.Video.Windows is
    function Pixel_Format (Self : in Window) return SDL.Video.Pixel_Formats.Pixel_Format with
      Inline => True;
 
-   function Get_Position (Self : in Window) return Positions;
-   procedure Set_Position (Self : in out Window; Position : Positions) with
+   function Get_Position (Self : in Window) return SDL.Natural_Coordinates;
+   procedure Set_Position (Self : in out Window; Position : SDL.Natural_Coordinates) with
      Inline => True;
 
    function Get_Size (Self : in Window) return SDL.Sizes;

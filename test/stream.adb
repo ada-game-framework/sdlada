@@ -24,7 +24,7 @@ procedure Stream is
    type Moose_Palette_Array is array (Moose_Colour_Index'Range) of SDL.Video.Palettes.RGB_Colour;
 
    W                : SDL.Video.Windows.Window;
-   Moose_Size       : SDL.Sizes                    := (64, 88);
+   Moose_Size       : SDL.Positive_Sizes           := (64, 88);
    Moose_Frame_Size : constant SDL.Dimension       := (Moose_Size.Width * Moose_Size.Height) - 1;
    Moose_Frame      : Moose_Frames                 := Moose_Frames'First;
    Moose_Palette    : constant Moose_Palette_Array :=
@@ -192,13 +192,11 @@ begin
    Cache_Moose (Cache, Moose_Frame_Data, Moose_Palette);
 
    if SDL.Initialise = True then
-      SDL.Video.Windows.Makers.Create (Win    => W,
-                                       Title  => "Stream (Moose animation)",
-                                       X      => 100,
-                                       Y      => 100,
-                                       Width  => Moose_Size.Width * 4,
-                                       Height => Moose_Size.Height * 4,
-                                       Flags  => SDL.Video.Windows.Resizable);
+      SDL.Video.Windows.Makers.Create (Win      => W,
+                                       Title    => "Stream (Moose animation)",
+                                       Position => SDL.Natural_Coordinates'(X => 100, Y => 100),
+                                       Size     => SDL.Positive_Sizes'(Moose_Size.Width * 4, Moose_Size.Height * 4),
+                                       Flags    => SDL.Video.Windows.Resizable);
 
       SDL.Video.Renderers.Makers.Create (Renderer, W);
 

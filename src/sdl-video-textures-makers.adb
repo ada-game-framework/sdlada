@@ -45,7 +45,7 @@ package body SDL.Video.Textures.Makers is
       Renderer : in SDL.Video.Renderers.Renderer;
       Format   : in SDL.Video.Pixel_Formats.Pixel_Format_Names;
       Kind     : in Kinds;
-      Size     : in SDL.Sizes) is
+      Size     : in SDL.Positive_Sizes) is
 
       --  Convert the Pixel_Format_Name to an Unsigned_32 because the compiler is changing the value somewhere along
       --  the lines from the start of this procedure to calling SDL_Create_Texture.
