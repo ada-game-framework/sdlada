@@ -15,6 +15,7 @@ with System;
 
 procedure Stream2 is
    use type SDL.Dimension;
+   use type SDL.Positive_Sizes;
 
    type Moose_Frames is mod 10;
    --     type Moose_Frames is range 1 .. 10;
@@ -121,7 +122,7 @@ begin
       SDL.Video.Windows.Makers.Create (Win      => W,
                                        Title    => "Stream (Moose animation)",
                                        Position => SDL.Natural_Coordinates'(X => 100, Y => 100),
-                                       Size     => SDL.Positive_Sizes'(Moose_Size.Width * 4, Moose_Size.Height * 4),
+                                       Size     => Moose_Size * 4,
                                        Flags    => SDL.Video.Windows.Resizable);
 
       SDL.Video.Renderers.Makers.Create (Renderer, W);

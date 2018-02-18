@@ -91,6 +91,12 @@ package SDL is
    subtype Positive_Sizes is Sizes with
      Dynamic_Predicate => Positive_Sizes.Width >= 1 and Positive_Sizes.Height >= 1;
 
+   function "*" (Left : in Sizes; Scale : in Positive_Dimension) return Sizes is
+     (Sizes'(Width => Left.Width * Scale, Height => Left.Height * Scale));
+
+   function "/" (Left : in Sizes; Scale : in Positive_Dimension) return Sizes is
+     (Sizes'(Width => Left.Width / Scale, Height => Left.Height / Scale));
+
    function Initialise (Flags : in Init_Flags := Enable_Everything) return Boolean;
 
    procedure Finalise with
