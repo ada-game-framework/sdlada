@@ -60,7 +60,9 @@ package SDL.Video.Palettes is
          Red   : Colour_Component;
          Green : Colour_Component;
          Blue  : Colour_Component;
-      end record;
+      end record with
+     Convention => C,
+     Size       => Colour_Component'Size * 4;
 
    Null_RGB_Colour : constant RGB_Colour := RGB_Colour'(others => Colour_Component'First);
 
