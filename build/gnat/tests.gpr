@@ -8,7 +8,10 @@ project Tests is
                         "stream.adb", "stream2.adb", "surface.adb", "rwops.adb",
 
                         --  For SDL.Image.
-                        "load_surface.adb");
+                        "load_surface.adb",
+
+                        --  For SDL.TTF.
+                        "ttf.adb");
 
    package Compiler renames SDLAda.Compiler;
 
