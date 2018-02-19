@@ -63,6 +63,8 @@ package body SDL.TTFs.Makers is
 
       if Font.Internal = null then
          raise TTF_Error with Error.Get;
+      else
+         Font.Source_Freed := Free_Source;
       end if;
    end Create;
 end SDL.TTFs.Makers;
