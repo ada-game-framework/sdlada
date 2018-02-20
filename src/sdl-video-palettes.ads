@@ -42,16 +42,8 @@ package SDL.Video.Palettes is
          Blue  : Colour_Component;
          Alpha : Colour_Component;
       end record with
-     Convention => C,
+     Convention => C_Pass_by_Copy,
      Size       => Colour_Component'Size * 4;
-
-   for Colour use
-      record
-         Red   at 0 range  0 ..  7;
-         Green at 0 range  8 .. 15;
-         Blue  at 0 range 16 .. 23;
-         Alpha at 0 range 24 .. 31;
-      end record;
 
    Null_Colour : constant Colour := Colour'(others => Colour_Component'First);
 
@@ -61,7 +53,7 @@ package SDL.Video.Palettes is
          Green : Colour_Component;
          Blue  : Colour_Component;
       end record with
-     Convention => C,
+     Convention => C_Pass_by_Copy,
      Size       => Colour_Component'Size * 4;
 
    Null_RGB_Colour : constant RGB_Colour := RGB_Colour'(others => Colour_Component'First);
