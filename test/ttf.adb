@@ -48,15 +48,24 @@ begin
          SDL.TTFs.Makers.Create (Font, Ada.Command_Line.Argument (1), 36);
 
          Text_Surface := Font.Render_Solid (Text   => "Hello from SDLAda",
-                                            Colour => SDL.Video.Palettes.Colour'(Alpha => 255, others => 0));
+                                            Colour => SDL.Video.Palettes.Colour'(Red   => 0,
+                                                                                 Green => 200,
+                                                                                 Blue  => 200,
+                                                                                 Alpha => 255));
 
-         Text_Surface.Set_Blend_Mode (SDL.Video.None);
+         --  Text_Surface.Set_Blend_Mode (SDL.Video.None);
 --           Text_Surface := Font.Render_Shaded (Text              => "Hello from SDLAda",
---                                               Colour            => SDL.Video.Palettes.Colour'(others => 255),
---                                               Background_Colour => SDL.Video.Palettes.Colour'(0, 0, 0, 0));
+--                                               Colour            => SDL.Video.Palettes.Colour'(Red   => 255,
+--                                                                                               Green => 255,
+--                                                                                               Blue  => 255,
+--                                                                                               Alpha => 255),
+--                                               Background_Colour => SDL.Video.Palettes.Colour'(Red   => 0,
+--                                                                                               Green => 20,
+--                                                                                               Blue  => 250,
+--                                                                                               Alpha => 255));
 
 --           Text_Surface := Font.Render_Blended (Text   => "Hello from SDLAda",
---                                                Colour => SDL.Video.Palettes.Colour'(others => 255));
+--                                                Colour => SDL.Video.Palettes.Colour'(Red => 50, others => 255));
 
 --           SDL.Video.Textures.Makers.Create (Text_Texture, Renderer, Text_Surface);
 
