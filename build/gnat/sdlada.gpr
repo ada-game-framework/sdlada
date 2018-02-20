@@ -50,7 +50,13 @@ library project SDLAda is
 
       case Platform is
          when "linux" | "bsd" | "android" | "windows" =>
-            Ada_Switches := Ada_Switches & ("-lSDL2", "-lSDL2_ttf", "-lSDL2_image");
+            case Mode is
+            when "debug" =>
+            Ada_Switches := Ada_Switches & ("-Wl,--enable-new-dtags", "-lSDL2", "-lSDL2_ttf", "-lSDL2_image");
+
+            when "release" =>
+               Ada_Switches := Ada_Switches & ("-lSDL2", "-lSDL2_ttf", "-lSDL2_image");
+            end case;
 
          when "macosx" | "ios" =>
             Ada_Switches := Ada_Switches & ("-framework", "SDL2", "-framework", "SDL2_image", "-framework", "SDL2_ttf");
