@@ -5,7 +5,7 @@ project Tests is
    for Object_Dir  use "gen/" & SDLAda.Mode & "/test/.obj";
    for Exec_Dir    use "gen/" & SDLAda.Mode & "/test";
    for Main        use ("test.adb", "version.adb", "platform.adb", "error.adb", "libraries.adb", "clipboard.adb",
-                        "stream.adb", "stream2.adb", "surface.adb", "rwops.adb",
+                        "stream.adb", "stream2.adb", "surface.adb", "rwops.adb", "timers.adb",
 
                         --  For SDL.Image.
                         "load_surface.adb",
