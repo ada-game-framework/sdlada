@@ -36,6 +36,17 @@ with System;
 package SDL.Video.Windows is
    Window_Error : exception;
 
+   --  Return a special coordinate value to indicate that you don't care what
+   --  the window position is. Note that you can still specify a target
+   --  display.
+   function Undefined_Window_Position
+     (Display : Natural := 0) return SDL.Natural_Coordinate;
+
+   --  Return a special coordinate value to indicate that the window position
+   --  should be centered.
+   function Centered_Window_Position
+     (Display : Natural := 0) return SDL.Natural_Coordinate;
+
    type Window_Flags is mod 2 ** 32 with
      Convention => C;
 
