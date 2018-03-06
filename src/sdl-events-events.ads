@@ -122,5 +122,11 @@ package SDL.Events.Events is
      Unchecked_Union,
      Convention => C;
 
+   --  Poll for currently pending events.
+   --
+   --  If the are any pending events, the next event is removed from the queue
+   --  and stored in Event, and then this returns True. Otherwise, this does
+   --  nothing and returns False.
    function Poll (Event : out Events) return Boolean;
+
 end SDL.Events.Events;
