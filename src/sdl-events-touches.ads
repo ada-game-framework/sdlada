@@ -88,7 +88,7 @@ package SDL.Events.Touches is
 
    subtype Finger_Pinches is Interfaces.C.C_float;
 
-   type Fingers_Touching is range 0 .. 2 ** 16 -1 with
+   type Fingers_Touching is range 0 .. 2 ** 16 - 1 with
      Convention => C,
      Size       => 16;
 

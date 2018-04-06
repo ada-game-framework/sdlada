@@ -21,6 +21,7 @@
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Unchecked_Conversion;
+with Interfaces;
 with Interfaces.C;
 with Interfaces.C.Strings;
 with SDL.Error;
@@ -30,9 +31,26 @@ with SDL.Error;
 package body SDL.Video.Windows is
    package C renames Interfaces.C;
 
+   use type Interfaces.Unsigned_32;
    use type C.int;
    use type SDL.C_Pointers.Windows_Pointer;
    use type System.Address;
+
+   function Undefined_Window_Position
+     (Display : Natural := 0) return SDL.Natural_Coordinate
+   is
+      Mask : constant Interfaces.Unsigned_32 := 16#1FFF_0000#;
+   begin
+      return C.int (Interfaces.Unsigned_32 (Display) or Mask);
+   end Undefined_Window_Position;
+
+   function Centered_Window_Position
+     (Display : Natural := 0) return SDL.Natural_Coordinate
+   is
+      Mask : constant Interfaces.Unsigned_32 := 16#2FFF_0000#;
+   begin
+      return C.int (Interfaces.Unsigned_32 (Display) or Mask);
+   end Centered_Window_Position;
 
    procedure Increment_Windows is
    begin
