@@ -127,9 +127,9 @@ package SDL.Events.Events is
 
    --  Poll for currently pending events.
    --
-   --  If there are any pending events, the next event is removed from
-   --  the queue and stored in Event, and then this returns
-   --  True. Otherwise, this does nothing and returns False.
+   --  If the are any pending events, the next event is removed from the queue
+   --  and stored in Event, and then this returns True. Otherwise, this does
+   --  nothing and returns False.
    function Poll (Event : out Events) return Boolean;
 
    --  Wait until an event is pending.
