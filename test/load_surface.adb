@@ -38,15 +38,23 @@ begin
 
       --  Main loop.
       declare
-         Event            : SDL.Events.Events.Events;
-         Window_Surface   : SDL.Video.Surfaces.Surface;
-         Image_Surface    : SDL.Video.Surfaces.Surface;
-         Image_Area       : SDL.Video.Rectangles.Rectangle := (X => 0, Y => 0, Width => 400, Height => 300);
-         Image_Dest_Area  : SDL.Video.Rectangles.Rectangle := (X      => Window_Size.Width / 2 - Image_Area.Width / 2,
-                                                               Y      => Window_Size.Height / 2 - Image_Area.Height / 2,
-                                                               Width  => 400,
-                                                               Height => 300);
-         Finished         : Boolean := False;
+         Event              : SDL.Events.Events.Events;
+         Window_Surface     : SDL.Video.Surfaces.Surface;
+         Image_Surface      : SDL.Video.Surfaces.Surface;
+         Image_Area         : SDL.Video.Rectangles.Rectangle := (X => 0, Y => 0, Width => 400, Height => 300);
+         Image_Dest_Area    : SDL.Video.Rectangles.Rectangle := (X      => Window_Size.Width / 2 - Image_Area.Width / 2,
+                                                                 Y      => Window_Size.Height / 2 - Image_Area.Height / 2,
+                                                                 Width  => 400,
+                                                                 Height => 300);
+         Scaled_Dest_Area   : SDL.Video.Rectangles.Rectangle := (X      => 10,
+                                                                 Y      => 10,
+                                                                 Width  => Image_Area.Width / 4,
+                                                                 Height => Image_Area.Height / 4);
+         Scaled_Dest_Area_2 : SDL.Video.Rectangles.Rectangle := (X      => 10,
+                                                                 Y      => 100,
+                                                                 Width  => Image_Area.Width / 4,
+                                                                 Height => Image_Area.Height / 4);
+         Finished           : Boolean := False;
 
          use type SDL.Events.Event_Types;
          use type SDL.Events.Keyboards.Key_Codes;
@@ -59,6 +67,17 @@ begin
          Window_Surface.Blit (Self_Area   => Image_Dest_Area,
                               Source      => Image_Surface,
                               Source_Area => Image_Area);
+
+         Window_Surface.Blit_Scaled (Self_Area   => Scaled_Dest_Area,
+                                     Source      => Image_Surface,
+                                     Source_Area => SDL.Video.Rectangles.Null_Rectangle);
+
+         Window_Surface.Blit_Scaled (Self_Area   => Scaled_Dest_Area_2,
+                                     Source      => Image_Surface,
+                                     Source_Area => SDL.Video.Rectangles.Rectangle'(X      => 0,
+                                                                                    Y      => 0,
+                                                                                    Width  => Image_Area.Width / 2,
+                                                                                    Height => Image_Area.Height /2));
 
          W.Update_Surface;
 

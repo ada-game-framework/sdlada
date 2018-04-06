@@ -140,12 +140,18 @@ package body SDL.Video.Surfaces is
       end if;
    end Blit_Scaled;
 
+   --  Blit_Scaled
+   --
+   --  Self        : The destination surface to blit onto.
+   --  Self_Area   : The coordinates and size of the area to blit into.
+   --  Source      : The surface to blit onto Self.
+   --  Source_Area : The coordinates and size of the area to blit from.
    procedure Blit_Scaled (Self        : in out Surface;
                           Self_Area   : in out Rectangles.Rectangle;
                           Source      : in Surface;
                           Source_Area : in Rectangles.Rectangle := Rectangles.Null_Rectangle) is
       function SDL_Blit_Scaled (S  : in Internal_Surface_Pointer;
-                                SR : in Rectangles.Rectangle;
+                                SR : access Rectangles.Rectangle;
                                 D  : in Internal_Surface_Pointer;
                                 DR : access Rectangles.Rectangle) return C.int with
         Import        => True,
@@ -153,13 +159,22 @@ package body SDL.Video.Surfaces is
         External_Name => "SDL_UpperBlitScaled";  --  SDL_BlitScaled is a macro in SDL_surface.h
       use type Rectangles.Rectangle;
 
-      Result : C.int := 0;
-      Area   : aliased Rectangles.Rectangle;
+      Result   : C.int                        := 0;
+      Area     : aliased Rectangles.Rectangle := Self_Area;
+      Src_Area : aliased Rectangles.Rectangle := Source_Area;
    begin
       if Self_Area = Rectangles.Null_Rectangle then
-         Result := SDL_Blit_Scaled (Source.Internal, Source_Area, Self.Internal, null);
+         if Source_Area = Rectangles.Null_Rectangle then
+            Result := SDL_Blit_Scaled (Source.Internal, null, Self.Internal, null);
+         else
+            Result := SDL_Blit_Scaled (Source.Internal, Src_Area'Access, Self.Internal, null);
+         end if;
       else
-         Result := SDL_Blit_Scaled (Source.Internal, Source_Area, Self.Internal, Area'Access);
+         if Source_Area = Rectangles.Null_Rectangle then
+            Result := SDL_Blit_Scaled (Source.Internal, null, Self.Internal, Area'Access);
+         else
+            Result := SDL_Blit_Scaled (Source.Internal, Src_Area'Access, Self.Internal, Area'Access);
+         end if;
 
          Self_Area := Area;
       end if;
