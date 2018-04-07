@@ -122,11 +122,20 @@ package SDL.Events.Events is
      Unchecked_Union,
      Convention => C;
 
+   --  Some error occurred while polling/waiting for events.
+   Event_Error : exception;
+
    --  Poll for currently pending events.
    --
    --  If the are any pending events, the next event is removed from the queue
    --  and stored in Event, and then this returns True. Otherwise, this does
    --  nothing and returns False.
    function Poll (Event : out Events) return Boolean;
+
+   --  Wait until an event is pending.
+   --
+   --  If there are any pending events, the next event is removed from
+   --  the queue and stored in Event.
+   procedure Wait (Event : out Events);
 
 end SDL.Events.Events;

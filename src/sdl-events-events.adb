@@ -21,6 +21,7 @@
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C;
+with SDL.Error;
 
 package body SDL.Events.Events is
    function Poll (Event : out Events) return Boolean is
@@ -39,4 +40,19 @@ package body SDL.Events.Events is
 
       return False;
    end Poll;
+
+   procedure Wait (Event : out Events) is
+      --  int SDL_WaitEvent(SDL_Event *event);
+
+      use type Interfaces.C.int;
+      function SDL_Wait_Event (Event : out Events) return Interfaces.C.int
+      with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_WaitEvent";
+   begin
+      if SDL_Wait_Event (Event) = 0 then
+         raise Event_Error with SDL.Error.Get;
+      end if;
+   end Wait;
 end SDL.Events.Events;
