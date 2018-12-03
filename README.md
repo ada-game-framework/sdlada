@@ -25,8 +25,8 @@ Building
 
 There are a number of variables which can be set to control the compilation:
 
-SDL_PLATFORM = Can be set to one of the following values: linux, windows, macosx, ios or android
-SDL_MODE     = Can be one of: debug or release. Defaults to debug.
+* SDL_PLATFORM = Can be set to one of the following values: linux, windows, macosx, ios or android
+* SDL_MODE     = Can be one of: debug or release. Defaults to debug.
 
 ```
 cd build/gnat
@@ -48,7 +48,7 @@ Copyright (C) 2013-2018 by Luke A. Guest
 Thanks to
 =========
 
-Michael B for providing an initial implementation of RWops.
+To everyone who has provided patches, pull requests, typo fixes, etc.
 
 WARNING!!!
 ==========
