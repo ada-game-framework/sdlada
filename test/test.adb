@@ -94,7 +94,7 @@ begin
 
                SDL.Log.Put_Debug ("Joystick              : (" & SDL.Inputs.Joysticks.Devices'Image (Joystick) & ") - " &
                                     SDL.Inputs.Joysticks.Name (Joystick) & " - " &
-                                    Integer'Image (SDL.Inputs.Joysticks.GUIDs'Size) & " - GUID: " &
+                                    Integer'Image (SDL.Inputs.Joysticks.GUIDs'Size) & " - GUID: " & ' ' &
                                     SDL.Inputs.Joysticks.Image (GUID_1));
 
                SDL.Inputs.Joysticks.Makers.Create (Device => Joystick, Actual_Stick => Stick);
