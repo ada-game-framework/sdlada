@@ -5,7 +5,7 @@ This is a new variable thickness Ada 2012 binding to SDL 2.x.y (http://www.libsd
 wrapped when they need to be into a thicker binding and those things that can just be imported, are.
 
 There will still be a need to use conditional compilation for the various platforms as there will be
-some platform specifics which cannot be abstracted out leanly, but this will be reduced as much as possible.
+some platform specifics which cannot be abstracted out cleanly, but this will be reduced as much as possible.
 
 The bindings are only generated for the specific parts of SDL which Ada does not already have support for, i.e.
 threads are not bound as Ada has tasking support built in.
@@ -13,9 +13,9 @@ threads are not bound as Ada has tasking support built in.
 Usage, Licence & Attribution
 ============================
 
-SDLAda is distributed under the same zlib licence as the SDL libary is. You may use this library as in any way
+SDLAda is distributed under the same zlib licence as the SDL library is. You may use this library in any way
 you like whether free or commercial. I would add that whilst you don't have to state that your game uses this
-library, I would it would be nice if you did, it's all good advertising for Ada :)
+library, it would be nice if you did, it's all good advertising for Ada :)
 
 You do not need to complete any copyright assignment forms, the licence will not change from zlib as I want people to be
 able to use the library however they wish without restrictions.
