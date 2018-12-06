@@ -678,12 +678,21 @@ package body SDL.Video.GL is
       SDL_GL_Swap_Window (Get_Internal_Window (Window));
    end Swap;
 
-   procedure Load_Library (Path : in String) is
-      function SDL_GL_Load_Library (P : in C.Strings.chars_ptr) return C.int with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_GL_LoadLibrary";
+   function SDL_GL_Load_Library (P : in C.Strings.chars_ptr) return C.int with
+     Import        => True,
+     Convention    => C,
+     External_Name => "SDL_GL_LoadLibrary";
 
+   --  Load the default OpenGL library.
+   procedure Load_Library is
+      Result : C.int := SDL_GL_Load_Library (C.Strings.Null_Ptr);
+   begin
+      if Result /= SDL.Success then
+         raise SDL_GL_Error with "Unable to load the default OpenGL library";
+      end if;
+   end Load_Library;
+
+   procedure Load_Library (Path : in String) is
       C_Name_Str : C.Strings.chars_ptr := C.Strings.New_String (Path);
       Result     : C.int               := SDL_GL_Load_Library (C_Name_Str);
    begin

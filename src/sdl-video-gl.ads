@@ -175,6 +175,7 @@ package SDL.Video.GL is
    procedure Swap (Window : in out SDL.Video.Windows.Window) with
      Inline => True;
 
+   procedure Load_Library;
    procedure Load_Library (Path : in String);
    procedure Unload_Library with
      Inline => True;
