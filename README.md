@@ -37,7 +37,7 @@ Installation
 ============
 
 ```
-make SDL_PLATFORM=linux SDL_MODE=release DESTDIR=/myprefix install
+make SDL_PLATFORM=linux SDL_MODE=release DESTDIR=$HOME/opt/sdlada install
 ```
 
 Copyright

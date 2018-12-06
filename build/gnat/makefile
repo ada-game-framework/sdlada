@@ -111,7 +111,7 @@ clean-unit_tests:
 .PHONY: install
 
 install: all
-	$(GPRINSTALL) --prefix=$(DESTDIR)/sdlada --build-name=$(SDL_MODE) -p -f \
+	$(GPRINSTALL) --prefix=$(DESTDIR) --build-name=$(SDL_MODE) -p -f \
 		-XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
 		-Psdlada.gpr
 
