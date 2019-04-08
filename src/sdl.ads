@@ -126,4 +126,10 @@ private
    --  The next value is used in mapping the Ada types onto the C types, it is the word size used for all data
    --  in SDL, i.e. all data is 4 byte aligned so it works with 32-bit architectures.
    Word      : constant := 4;
+
+   --  These constants are internal to the events system.
+   SDL_Query   : constant C.int := -1;
+   SDL_Ignore  : constant C.int :=  0;
+   SDL_Disable : constant C.int :=  0;
+   SDL_Enable  : constant C.int :=  1;
 end SDL;

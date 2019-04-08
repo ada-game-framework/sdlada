@@ -34,8 +34,8 @@ package SDL.Inputs.Mice is
 
    type Supported is (Yes, No);
 
-   --  TODO: Re-enable this when the library links against 2.0.4!
-   --     function Capture (Enabled : in Boolean) return Supported;
+   function Capture (Enabled : in Boolean) return Supported with
+     Inline;
 
    --  SDL_CreateColorCursor
    --  SDL_CreateCursor
@@ -44,30 +44,34 @@ package SDL.Inputs.Mice is
    --  SDL_GetCursor
    --  SDL_GetDefaultCursor
 
-   --  TODO: Re-enable this when the library links against 2.0.4!
-   --     function Get_Global_State (X_Relative, Y_Relative : out SDL.Events.Mice.Movement_Values) return
-   --       SDL.Events.Mice.Button_Masks;
+   function Get_Global_State (X_Relative, Y_Relative : out SDL.Events.Mice.Movement_Values) return
+     SDL.Events.Mice.Button_Masks;
 
    --  SDL_GetMouseFocus
 
    function Get_State (X_Relative, Y_Relative : out SDL.Events.Mice.Movement_Values) return
      SDL.Events.Mice.Button_Masks;
 
-   function In_Relative_Mode return Boolean;
+   function In_Relative_Mode return Boolean with
+     Inline;
 
    function Get_Relative_State (X_Relative, Y_Relative : out SDL.Events.Mice.Movement_Values) return
      SDL.Events.Mice.Button_Masks;
 
    --  SDL_SetCursor
 
-   procedure Set_Relative_Mode (Enable : in Boolean);
+   procedure Set_Relative_Mode (Enable : in Boolean := True) with
+     Inline;
 
-   --  SDL_ShowCursor
+   procedure Show_Cursor (Enable : in Boolean := True) with
+     Inline;
 
-   --  TODO: Re-enable this when the library links against 2.0.4!
+   function Is_Cursor_Shown return Boolean;
+
    --  Move the mouse to (x, y) on the screen.
-   --     procedure Warp (X, Y : in SDL.Events.Mice.Screen_Coordinates);
+   --  If in relative mode, the co-ordinates can be negative.
+   procedure Warp (To : in SDL.Coordinates);
    --
    --  Move the mouse to (x, y) in the specified window.
-   --  procedure Warp (Window : in SDL.Video.Windows.Window; X, Y : in SDL.Events.Mice.Window_Coordinates);
+   procedure Warp (Window : in SDL.Video.Windows.Window; To : in SDL.Coordinates);
 end SDL.Inputs.Mice;
