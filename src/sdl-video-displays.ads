@@ -48,15 +48,20 @@ package SDL.Video.Displays is
    type Access_Mode is access all Mode with
      Convention => C;
 
-   function Closest_Mode (Display : in Natural; Wanted : in Mode; Target : out Mode) return Boolean;
+   --  Video displays.
+   type Display_Indices is new Positive;
 
-   function Current_Mode (Display : in Natural; Target : out Mode) return Boolean;
+   function Total return Display_Indices;
 
-   function Desktop_Mode (Display : in Natural; Target : out Mode) return Boolean;
+   function Closest_Mode (Display : in Display_Indices; Wanted : in Mode; Target : out Mode) return Boolean;
 
-   function Display_Mode (Display : in Natural; Index : in Natural; Target : out Mode) return Boolean;
+   function Current_Mode (Display : in Display_Indices; Target : out Mode) return Boolean;
 
-   function Total_Display_Modes (Display : in Natural; Total : out Positive) return Boolean;
+   function Desktop_Mode (Display : in Display_Indices; Target : out Mode) return Boolean;
 
-   function Display_Bounds (Display : in Natural; Bounds : out Rectangles.Rectangle) return Boolean;
+   function Display_Mode (Display : in Display_Indices; Index : in Natural; Target : out Mode) return Boolean;
+
+   function Total_Display_Modes (Display : in Display_Indices; Total : out Positive) return Boolean;
+
+   function Display_Bounds (Display : in Display_Indices; Bounds : out Rectangles.Rectangle) return Boolean;
 end SDL.Video.Displays;

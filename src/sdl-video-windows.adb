@@ -143,7 +143,7 @@ package body SDL.Video.Windows is
       return Previous_Data;
    end Set_Data;
 
-   function Display_Index (Self : in Window) return Positive is
+   function Display_Index (Self : in Window) return SDL.Video.Displays.Display_Indices is
       function SDL_Get_Window_Display_Index (W : in SDL.C_Pointers.Windows_Pointer) return C.int with
         Import        => True,
         Convention    => C,
@@ -155,7 +155,7 @@ package body SDL.Video.Windows is
          raise Window_Error with SDL.Error.Get;
       end if;
 
-      return Positive (Total);
+      return SDL.Video.Displays.Display_Indices (Total + 1);
    end Display_Index;
 
    procedure Get_Display_Mode (Self : in Window; Mode : out SDL.Video.Displays.Mode) is

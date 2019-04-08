@@ -3,10 +3,12 @@ with SDL.Error;
 with SDL.Events.Events;
 with SDL.Events.Keyboards;
 with SDL.Events.Joysticks;
+with SDL.Events.Windows;
 with SDL.Inputs.Joysticks.Makers;
 with SDL.Inputs.Joysticks.Game_Controllers;
 with SDL.Events.Mice;
 with SDL.Log;
+with SDL.Video.Displays;
 with SDL.Video.Windows;
 with SDL.Video.Windows.Makers;
 with SDL.Video.Windows.Manager;
@@ -39,7 +41,7 @@ begin
 
    if SDL.Initialise = True then
       SDL.Log.Put_Debug ("Current driver  : " & SDL.Video.Current_Driver_Name);
-      SDL.Log.Put_Debug ("Total displays  : " & Positive'Image (SDL.Video.Total_Displays));
+      SDL.Log.Put_Debug ("Total displays  : " & SDL.Video.Displays.Display_Indices'Image (SDL.Video.Displays.Total));
 
       SDL.Error.Clear;
 
@@ -57,6 +59,8 @@ begin
       SDL.Log.Put_Debug ("Window Grabbed  : " & Boolean'Image (W.Is_Grabbed));
       SDL.Log.Put_Debug ("Window ID       : " & SDL.Video.Windows.ID'Image (W.Get_ID));
       SDL.Log.Put_Debug ("Window Title    : " & W.Get_Title);
+
+      SDL.Log.Put_Debug ("Window on display : " & SDL.Video.Displays.Display_Indices'Image (W.Display_Index));
 
       --  W.Set_Mode (SDL.Video.Windows.Full_Screen);
 
@@ -143,6 +147,7 @@ begin
 
          use type SDL.Events.Event_Types;
          use type SDL.Events.Keyboards.Key_Codes;
+         use type SDL.Events.Windows.Window_Event_ID;
       begin
          loop
             while SDL.Events.Events.Poll (Event) loop
@@ -192,6 +197,12 @@ begin
                           "): (Y => " & SDL.Events.Mice.Wheel_Values'Image (Event.Mouse_Wheel.Y) &
                           "): (Direction => " & SDL.Events.Mice.Wheel_Directions'Image (Event.Mouse_Wheel.Direction) &
                           ")");
+
+                  when SDL.Events.Windows.Window =>
+                     if Event.Window.Event_ID = SDL.Events.Windows.Moved then
+                        SDL.Log.Put_Debug ("Window on display : " &
+                          SDL.Video.Displays.Display_Indices'Image (W.Display_Index));
+                     end if;
 
                   when others =>
                      null;

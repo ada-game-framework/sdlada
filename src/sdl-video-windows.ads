@@ -100,7 +100,7 @@ package SDL.Video.Windows is
    function Get_Data (Self : in Window; Name : in String) return User_Data_Access;
    function Set_Data (Self : in out Window; Name : in String; Item : in User_Data_Access) return User_Data_Access;
 
-   function Display_Index (Self : in Window) return Positive;
+   function Display_Index (Self : in Window) return SDL.Video.Displays.Display_Indices;
 
    procedure Get_Display_Mode (Self : in Window; Mode : out SDL.Video.Displays.Mode);
    procedure Set_Display_Mode (Self : in out Window; Mode : in SDL.Video.Displays.Mode);

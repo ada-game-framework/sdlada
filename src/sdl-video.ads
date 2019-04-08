@@ -69,7 +69,4 @@ package SDL.Video is
    function Driver_Name (Index : in Positive) return String;
 
    function Current_Driver_Name return String;
-
-   --  Videe displays.
-   function Total_Displays return Positive;
 end SDL.Video;
