@@ -32,6 +32,8 @@ with SDL.Video.Windows;
 with SDL.Video.Textures;
 
 package SDL.Video.GL is
+   pragma Preelaborate;
+
    SDL_GL_Error : exception;
 
    type Colour_Bit_Size is range 0 .. 8 with

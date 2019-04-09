@@ -25,6 +25,8 @@
 --  Message logging.
 --------------------------------------------------------------------------------------------------------------------
 package SDL.Log is
+   pragma Preelaborate;
+
    --  Messages longer than Max_Length will be truncated.
    --  TODO: Import this from a C constant set from SDL_MAX_LOG_MESSAGE.
    Max_Length : constant Integer := 4096;

@@ -25,6 +25,8 @@
 --  Constructor subprograms for Renderers.
 --------------------------------------------------------------------------------------------------------------------
 package SDL.Video.Renderers.Makers is
+   pragma Preelaborate;
+
    procedure Create
      (Rend   : in out Renderer;
       Window : in out SDL.Video.Windows.Window;
