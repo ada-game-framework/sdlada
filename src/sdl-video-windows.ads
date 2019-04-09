@@ -78,6 +78,7 @@ package SDL.Video.Windows is
    type User_Data is tagged private;
 
    type User_Data_Access is access all User_Data'Class;
+   pragma No_Strict_Aliasing (User_Data_Access);
 
    --  TODO: Check this type!
    type Brightness is digits 3 range 0.0 .. 1.0;
