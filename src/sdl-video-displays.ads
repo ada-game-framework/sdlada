@@ -30,6 +30,8 @@ with SDL.Video.Rectangles;
 with System;
 
 package SDL.Video.Displays is
+   pragma Preelaborate;
+
    package C renames Interfaces.C;
 
    type Refresh_Rates is range 0 .. 400 with

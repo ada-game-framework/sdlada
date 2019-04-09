@@ -25,6 +25,8 @@
 --  Library version information.
 --------------------------------------------------------------------------------------------------------------------
 package SDL.Versions is
+   pragma Preelaborate;
+
    type Version_Level is mod 2 ** 8 with
      Size       => 8,
      Convention => C;
@@ -56,7 +58,11 @@ package SDL.Versions is
      Convention    => C,
      External_Name => "SDL_Ada_Patch_Version";
 
-   Compiled : constant Version := (Major => Compiled_Major, Minor => Compiled_Minor, Patch => Compiled_Patch);
+   function Compiled return Version is
+     (Major => Compiled_Major,
+      Minor => Compiled_Minor,
+      Patch => Compiled_Patch)
+   with Inline => True;
 
    function Revision return String with
      Inline => True;
@@ -64,4 +70,5 @@ package SDL.Versions is
    function Revision return Revision_Level;
 
    procedure Linked_With (Info : in out Version);
+
 end SDL.Versions;
