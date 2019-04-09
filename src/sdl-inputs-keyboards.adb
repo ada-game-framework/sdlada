@@ -65,11 +65,7 @@ package body SDL.Inputs.Keyboards is
 
       Result : SDL_Bool := SDL_Has_Screen_Keyboard_Support;
    begin
-      if Result = SDL_True then
-         return True;
-      end if;
-
-      return False;
+      return Result = SDL_True;
    end Supports_Screen_Keyboard;
 
    function Is_Screen_Keyboard_Visible (Window : in SDL.Video.Windows.Window) return Boolean is

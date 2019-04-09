@@ -34,11 +34,7 @@ package body SDL.Events.Events is
         Convention    => C,
         External_Name => "SDL_PollEvent";
    begin
-      if SDL_Poll_Event (Event) = 1 then
-         return True;
-      end if;
-
-      return False;
+      return SDL_Poll_Event (Event) = 1;
    end Poll;
 
    procedure Wait (Event : out Events) is
