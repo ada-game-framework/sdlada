@@ -118,7 +118,7 @@ package SDL.Events.Mice is
       end record with
      Convention => C;
 
-   type Wheel_Values is range -1 .. 1 with
+   type Wheel_Values is range -2 ** 31 .. 2 ** 31 - 1 with
      Convention => C,
      Size       => 32;
 
