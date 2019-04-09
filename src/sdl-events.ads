@@ -31,6 +31,8 @@
 with Ada.Unchecked_Conversion;
 
 package SDL.Events is
+   pragma Preelaborate;
+
    type Event_Types is mod 2 ** 32 with
      Convention => C;
 

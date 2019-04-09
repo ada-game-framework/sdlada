@@ -31,6 +31,8 @@ with Interfaces.C;
 with SDL.Video.Palettes;
 
 package SDL.Video.Pixel_Formats is
+   pragma Preelaborate;
+
    package C renames Interfaces.C;
 
    type Pixel_Types is

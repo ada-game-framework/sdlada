@@ -32,6 +32,8 @@ with SDL.Video.Pixels;
 with SDL.Video.Rectangles;
 
 package SDL.Video.Textures is
+   pragma Preelaborate;
+
    Texture_Error : exception;
 
    --  Was SDL_TextureAccess.
@@ -40,7 +42,7 @@ package SDL.Video.Textures is
 
    type Texture is new Ada.Finalization.Limited_Controlled with private;
 
-   Null_Texture : constant Texture;
+   function Null_Texture return Texture;
 
    procedure Destroy (Self : in out Texture);
 
@@ -123,10 +125,10 @@ private
      Export     => True,
      Convention => Ada;
 
-   Null_Texture : constant Texture := (Ada.Finalization.Limited_Controlled with
+   function Null_Texture return Texture is (Texture'(Ada.Finalization.Limited_Controlled with
                                        Internal     => null,
                                        Owns         => True,
                                        Size         => SDL.Zero_Size,
                                        Pixel_Format => Pixel_Formats.Pixel_Format_Unknown,
-                                       Locked       => False);
+                                       Locked       => False));
 end SDL.Video.Textures;

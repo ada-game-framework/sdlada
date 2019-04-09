@@ -32,6 +32,8 @@ with SDL.Video.Textures;
 with SDL.Video.Windows;
 
 package SDL.Video.Renderers is
+   pragma Preelaborate;
+
    --  TODO: Finish this.
 
    Renderer_Error : exception;

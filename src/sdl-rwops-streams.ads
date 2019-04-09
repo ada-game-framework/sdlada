@@ -27,6 +27,8 @@
 with Ada.Streams;
 
 package SDL.RWops.Streams is
+   pragma Preelaborate;
+
    type RWops_Stream is new Ada.Streams.Root_Stream_Type with private;
 
    function Open (Op : in RWops) return RWops_Stream;

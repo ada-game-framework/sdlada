@@ -25,6 +25,8 @@
 --  Determine which platform we are running on.
 --------------------------------------------------------------------------------------------------------------------
 package SDL.Platform is
+   pragma Preelaborate;
+
    type Platforms is (Windows, Mac_OS_X, Linux, BSD, iOS, Android);
 
    function Get return Platforms with

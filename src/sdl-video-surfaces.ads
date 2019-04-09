@@ -34,6 +34,8 @@ with SDL.Video.Pixel_Formats;
 with SDL.Video.Rectangles;
 
 package SDL.Video.Surfaces is
+   pragma Preelaborate;
+
    package C renames Interfaces.C;
 
    Surface_Error : exception;

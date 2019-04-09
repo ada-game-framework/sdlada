@@ -25,6 +25,8 @@
 --  This private package contains all the types representing the internal C pointers for various objects.
 --------------------------------------------------------------------------------------------------------------------
 private package SDL.C_Pointers is
+   pragma Preelaborate;
+
    type Windows is null record;
    type Windows_Pointer is access all Windows with
      Convention => C;

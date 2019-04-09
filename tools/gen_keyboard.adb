@@ -658,6 +658,7 @@ begin
    New_Line;
 
    Put_Line ("package SDL.Events.Keyboards is");
+   Put_Line ("   pragma Preelaborate;");
 
    Put_Line ("   --  Keyboard events.");
    Put_Line ("   Key_Down                         : constant Event_Types := 16#0000_0300#;");

@@ -25,6 +25,8 @@
 --  Joystick specific events.
 --------------------------------------------------------------------------------------------------------------------
 package SDL.Events.Joysticks is
+   pragma Preelaborate;
+
    --  Joystick events.
    Axis_Motion       : constant Event_Types := 16#0000_0600#;
    Ball_Motion       : constant Event_Types := Axis_Motion + 1;
