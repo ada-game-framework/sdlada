@@ -22,7 +22,6 @@
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C;
 with Interfaces.C.Strings;
-with Ada.Text_IO; use Ada.Text_IO;
 with SDL.Error;
 
 package body SDL.Video is
