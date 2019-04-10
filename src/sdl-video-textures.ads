@@ -130,9 +130,9 @@ private
      Convention => Ada;
 
    function Null_Texture return Texture is (Texture'(Ada.Finalization.Limited_Controlled with
-                                       Internal     => null,
-                                       Owns         => True,
-                                       Size         => SDL.Zero_Size,
-                                       Pixel_Format => Pixel_Formats.Pixel_Format_Unknown,
-                                       Locked       => False));
+                                            Internal     => null,
+                                            Owns         => True,
+                                            Size         => SDL.Zero_Size,
+                                            Pixel_Format => Pixel_Formats.Pixel_Format_Unknown,
+                                            Locked       => False));
 end SDL.Video.Textures;
