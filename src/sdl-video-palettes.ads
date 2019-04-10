@@ -29,6 +29,8 @@ with Ada.Iterator_Interfaces;
 with Interfaces.C.Pointers;
 
 package SDL.Video.Palettes is
+   pragma Preelaborate;
+
    package C renames Interfaces.C;
 
    type Colour_Component is range 0 .. 255 with
@@ -91,6 +93,7 @@ package SDL.Video.Palettes is
 
    Empty_Palette : constant Palette;
 private
+
    type Colour_Array is array (C.size_t range <>) of aliased Colour with
      Convention => C;
 
@@ -98,7 +101,7 @@ private
      (Index              => C.size_t,
       Element            => Colour,
       Element_Array      => Colour_Array,
-      Default_Terminator => Null_Colour);
+      Default_Terminator => (others => Colour_Component'First));
 
    type Internal_Palette is
       record

@@ -33,6 +33,8 @@ with SDL.Video.Pixel_Formats;
 with SDL.Video.Palettes;
 
 package SDL.Video.Pixels is
+   pragma Preelaborate;
+
    package C renames Interfaces.C;
 
    --  Define pixel data access. Each pixel can be of any pixel format type.
