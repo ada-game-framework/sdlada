@@ -1,1 +1,4 @@
 build/gnat/gen
+thirdparty
+*~
+design_briefs

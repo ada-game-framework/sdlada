@@ -67,7 +67,8 @@ package SDL.Video.Palettes is
 
    function Element (Position : in Cursor) return Colour;
 
-   function Has_Element (Position : Cursor) return Boolean;
+   function Has_Element (Position : in Cursor) return Boolean with
+     Inline;
 
    --  Create the iterator interface package.
    package Palette_Iterator_Interfaces is new

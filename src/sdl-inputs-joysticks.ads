@@ -84,8 +84,13 @@ package SDL.Inputs.Joysticks is
    function Hats (Self : in Joystick) return SDL.Events.Joysticks.Hats;
    function Name (Self : in Joystick) return String;
    function Is_Haptic (Self : in Joystick) return Boolean;
-   function Is_Attached (Self : in Joystick) return Boolean;
-   function GUID (Self : in Joystick) return GUIDs;
+
+   function Is_Attached (Self : in Joystick) return Boolean with
+     Inline => True;
+
+   function GUID (Self : in Joystick) return GUIDs with
+     Inline => True;
+
    function Instance (Self : in Joystick) return Instances;
 
    --  Data.

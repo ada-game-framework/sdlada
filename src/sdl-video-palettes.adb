@@ -84,7 +84,7 @@ package body SDL.Video.Palettes is
       return Colour_Array_Pointer.Value (Position.Current) (0);
    end Element;
 
-   function Has_Element (Position : Cursor) return Boolean is
+   function Has_Element (Position : in Cursor) return Boolean is
    begin
       return Position.Index <= Natural (Position.Container.Data.Total);
    end Has_Element;

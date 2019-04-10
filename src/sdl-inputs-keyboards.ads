@@ -43,11 +43,16 @@ package SDL.Inputs.Keyboards is
      Inline => True;
 
    --  Screen keyboard.
-   function Supports_Screen_Keyboard return Boolean;
-   function Is_Screen_Keyboard_Visible (Window : in SDL.Video.Windows.Window) return Boolean;
+   function Supports_Screen_Keyboard return Boolean with
+     Inline => True;
+
+   function Is_Screen_Keyboard_Visible (Window : in SDL.Video.Windows.Window) return Boolean with
+     Inline => True;
 
    --  Text input.
-   function Is_Text_Input_Enabled return Boolean;
+   function Is_Text_Input_Enabled return Boolean with
+     Inline => True;
+
    procedure Set_Text_Input_Rectangle (Rectangle : in SDL.Video.Rectangles.Rectangle) with
      Inline => True;
 

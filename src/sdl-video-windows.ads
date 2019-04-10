@@ -179,7 +179,8 @@ package SDL.Video.Windows is
    procedure Update_Surface_Rectangles (Self : in Window; Rectangles : in SDL.Video.Rectangles.Rectangle_Arrays);
 
    --  Determine whether any windows have been created.
-   function Exist return Boolean;
+   function Exist return Boolean with
+     Inline => True;
 private
    --  TODO: Make this a proper type.
    type Native_Window is new System.Address;

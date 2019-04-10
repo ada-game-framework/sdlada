@@ -24,11 +24,9 @@ with Interfaces.C;
 with SDL.Error;
 
 package body SDL.Events.Events is
+   use type Interfaces.C.int;
+
    function Poll (Event : out Events) return Boolean is
-      --  int SDL_PollEvent(SDL_Event* event)
-
-      use type Interfaces.C.int;
-
       function SDL_Poll_Event (Event : out Events) return Interfaces.C.int with
         Import        => True,
         Convention    => C,
@@ -38,11 +36,7 @@ package body SDL.Events.Events is
    end Poll;
 
    procedure Wait (Event : out Events) is
-      --  int SDL_WaitEvent(SDL_Event *event);
-
-      use type Interfaces.C.int;
-      function SDL_Wait_Event (Event : out Events) return Interfaces.C.int
-      with
+      function SDL_Wait_Event (Event : out Events) return Interfaces.C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_WaitEvent";

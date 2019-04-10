@@ -102,10 +102,15 @@ package SDL.Inputs.Joysticks.Game_Controllers is
    function Image (Axis : in SDL.Events.Joysticks.Game_Controllers.Axes) return String;
    function Image (Button : in SDL.Events.Joysticks.Game_Controllers.Buttons) return String;
 
-   function Is_Attached (Self : in Game_Controller) return Boolean;
+   function Is_Attached (Self : in Game_Controller) return Boolean with
+     Inline => True;
+
    function Is_Button_Pressed (Self : in Game_Controller; Button : in SDL.Events.Joysticks.Buttons)
-                               return SDL.Events.Button_State;
-   function Is_Game_Controller (Device : in Devices) return Boolean;
+                               return SDL.Events.Button_State with
+     Inline => True;
+
+   function Is_Game_Controller (Device : in Devices) return Boolean with
+     Inline => True;
 private
    type Game_Controller is new Ada.Finalization.Limited_Controlled with
       record

@@ -274,11 +274,9 @@ package body SDL.Inputs.Joysticks.Game_Controllers is
 
    function Is_Button_Pressed (Self : in Game_Controller; Button : in SDL.Events.Joysticks.Buttons)
                               return SDL.Events.Button_State is
-      function SDL_Game_Controller_Get_Button
-        (Controller : in SDL.C_Pointers.Game_Controller_Pointer;
-         Button     : in SDL.Events.Joysticks.Buttons)
-        return SDL.Events.Button_State with
-
+      function SDL_Game_Controller_Get_Button (Controller : in SDL.C_Pointers.Game_Controller_Pointer;
+                                               Button     : in SDL.Events.Joysticks.Buttons)
+                                                 return SDL.Events.Button_State with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GameControllerGetButton";
