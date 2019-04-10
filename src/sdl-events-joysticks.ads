@@ -149,7 +149,8 @@ package SDL.Events.Joysticks is
      Convention    => C,
      External_Name => "SDL_JoystickUpdate";
 
-   function Is_Polling_Enabled return Boolean;
+   function Is_Polling_Enabled return Boolean with
+     Inline => True;
 
    procedure Enable_Polling with
      Inline => True;

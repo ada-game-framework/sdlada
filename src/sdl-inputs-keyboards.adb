@@ -62,14 +62,8 @@ package body SDL.Inputs.Keyboards is
         Import        => True,
         Convention    => C,
         External_Name => "SDL_HasScreenKeyboardSupport";
-
-      Result : SDL_Bool := SDL_Has_Screen_Keyboard_Support;
    begin
-      if Result = SDL_True then
-         return True;
-      end if;
-
-      return False;
+      return SDL_Has_Screen_Keyboard_Support = SDL_True;
    end Supports_Screen_Keyboard;
 
    function Is_Screen_Keyboard_Visible (Window : in SDL.Video.Windows.Window) return Boolean is
@@ -81,14 +75,8 @@ package body SDL.Inputs.Keyboards is
         Import        => True,
         Convention    => C,
         External_Name => "SDL_IsScreenKeyboardShown";
-
-      Result : SDL_Bool := SDL_Screen_Keyboard_Shown (Get_Internal_Window (Window));
    begin
-      if Result = SDL_True then
-         return True;
-      end if;
-
-      return False;
+      return SDL_Screen_Keyboard_Shown (Get_Internal_Window (Window)) = SDL_True;
    end Is_Screen_Keyboard_Visible;
 
    function Is_Text_Input_Enabled return Boolean is
@@ -96,14 +84,8 @@ package body SDL.Inputs.Keyboards is
         Import        => True,
         Convention    => C,
         External_Name => "SDL_IsTextInputActive";
-
-      Result : SDL_Bool := SDL_Is_Text_Input_Active;
    begin
-      if Result = SDL_True then
-         return True;
-      end if;
-
-      return False;
+      return SDL_Is_Text_Input_Active = SDL_True;
    end Is_Text_Input_Enabled;
 
    procedure Set_Text_Input_Rectangle (Rectangle : in SDL.Video.Rectangles.Rectangle) is

@@ -269,20 +269,14 @@ package body SDL.Inputs.Joysticks.Game_Controllers is
         Convention    => C,
         External_Name => "SDL_GameControllerGetAttached";
    begin
-      if SDL_Game_Controller_Is_Attached (Self.Internal) = SDL_True then
-         return True;
-      end if;
-
-      return False;
+      return SDL_Game_Controller_Is_Attached (Self.Internal) = SDL_True;
    end Is_Attached;
 
    function Is_Button_Pressed (Self : in Game_Controller; Button : in SDL.Events.Joysticks.Buttons)
                               return SDL.Events.Button_State is
-      function SDL_Game_Controller_Get_Button
-        (Controller : in SDL.C_Pointers.Game_Controller_Pointer;
-         Button     : in SDL.Events.Joysticks.Buttons)
-        return SDL.Events.Button_State with
-
+      function SDL_Game_Controller_Get_Button (Controller : in SDL.C_Pointers.Game_Controller_Pointer;
+                                               Button     : in SDL.Events.Joysticks.Buttons)
+                                                 return SDL.Events.Button_State with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GameControllerGetButton";
@@ -296,10 +290,6 @@ package body SDL.Inputs.Joysticks.Game_Controllers is
         Convention    => C,
         External_Name => "SDL_IsGameController";
    begin
-      if SDL_Is_Game_Controller (C.int (Device) - 1) = SDL_True then
-         return True;
-      end if;
-
-      return False;
+      return SDL_Is_Game_Controller (C.int (Device) - 1) = SDL_True;
    end Is_Game_Controller;
 end SDL.Inputs.Joysticks.Game_Controllers;

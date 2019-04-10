@@ -532,11 +532,7 @@ package body SDL.Video.Windows is
 
    function Exist return Boolean is
    begin
-      if Total_Windows_Created /= Natural'First then
-         return True;
-      end if;
-
-      return False;
+      return Total_Windows_Created /= Natural'First;
    end Exist;
 
    function Get_Internal_Window (Self : in Window) return SDL.C_Pointers.Windows_Pointer is

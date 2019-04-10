@@ -42,13 +42,8 @@ package body SDL.Events.Joysticks is
      External_Name => "SDL_JoystickEventState";
 
    function Is_Polling_Enabled return Boolean is
-      Result : C.int := SDL_Joystick_Event_State (Query);
    begin
-      if Result = Enable then
-         return True;
-      end if;
-
-      return False;
+      return SDL_Joystick_Event_State (Query) = Enable;
    end Is_Polling_Enabled;
 
    procedure Enable_Polling is
