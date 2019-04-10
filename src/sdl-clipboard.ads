@@ -27,6 +27,8 @@
 with Ada.Strings.UTF_Encoding;
 
 package SDL.Clipboard is
+   pragma Preelaborate;
+
    Clipboard_Error : exception;
 
    function Get return Ada.Strings.UTF_Encoding.UTF_8_String;

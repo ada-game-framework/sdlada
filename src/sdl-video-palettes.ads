@@ -29,6 +29,8 @@ with Ada.Iterator_Interfaces;
 with Interfaces.C.Pointers;
 
 package SDL.Video.Palettes is
+   pragma Preelaborate;
+
    package C renames Interfaces.C;
 
    type Colour_Component is range 0 .. 255 with
@@ -37,26 +39,26 @@ package SDL.Video.Palettes is
 
    type Colour is
       record
-         Red   : Colour_Component;
-         Green : Colour_Component;
-         Blue  : Colour_Component;
-         Alpha : Colour_Component;
+         Red   : Colour_Component := Colour_Component'First;
+         Green : Colour_Component := Colour_Component'First;
+         Blue  : Colour_Component := Colour_Component'First;
+         Alpha : Colour_Component := Colour_Component'First;
       end record with
      Convention => C_Pass_by_Copy,
      Size       => Colour_Component'Size * 4;
 
-   Null_Colour : constant Colour := Colour'(others => Colour_Component'First);
+   Null_Colour : constant Colour := (others => <>);
 
    type RGB_Colour is
       record
-         Red   : Colour_Component;
-         Green : Colour_Component;
-         Blue  : Colour_Component;
+         Red   : Colour_Component := Colour_Component'First;
+         Green : Colour_Component := Colour_Component'First;
+         Blue  : Colour_Component := Colour_Component'First;
       end record with
      Convention => C_Pass_by_Copy,
      Size       => Colour_Component'Size * 4;
 
-   Null_RGB_Colour : constant RGB_Colour := RGB_Colour'(others => Colour_Component'First);
+   Null_RGB_Colour : constant RGB_Colour := (others => <>);
 
    --  Cursor type for our iterator.
    type Cursor is private;
@@ -91,6 +93,7 @@ package SDL.Video.Palettes is
 
    Empty_Palette : constant Palette;
 private
+
    type Colour_Array is array (C.size_t range <>) of aliased Colour with
      Convention => C;
 
@@ -98,7 +101,7 @@ private
      (Index              => C.size_t,
       Element            => Colour,
       Element_Array      => Colour_Array,
-      Default_Terminator => Null_Colour);
+      Default_Terminator => (others => Colour_Component'First));
 
    type Internal_Palette is
       record

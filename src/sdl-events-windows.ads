@@ -25,6 +25,8 @@
 --  Window specific events.
 --------------------------------------------------------------------------------------------------------------------
 package SDL.Events.Windows is
+   pragma Preelaborate;
+
    --  Window events.
    Window                     : constant Event_Types := 16#0000_0200#;
    System_Window_Manager      : constant Event_Types := Window + 1;
