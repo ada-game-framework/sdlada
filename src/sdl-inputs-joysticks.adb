@@ -90,11 +90,7 @@ package body SDL.Inputs.Joysticks is
    function "=" (Left, Right : in Joystick) return Boolean is
       use type SDL.C_Pointers.Joystick_Pointer;
    begin
-      if Left.Internal = Right.Internal and then Left.Owns = Right.Owns then
-         return True;
-      end if;
-
-      return False;
+      return Left.Internal = Right.Internal and then Left.Owns = Right.Owns;
    end "=";
 
    procedure Close (Self : in out Joystick) is
@@ -202,11 +198,7 @@ package body SDL.Inputs.Joysticks is
         Convention    => C,
         External_Name => "SDL_JoystickGetAttached";
    begin
-      if SDL_Joystick_Is_Attached (Self.Internal) = SDL_True then
-         return True;
-      end if;
-
-      return False;
+      return SDL_Joystick_Is_Attached (Self.Internal) = SDL_True;
    end Is_Attached;
 
    function GUID (Self : in Joystick) return GUIDs is

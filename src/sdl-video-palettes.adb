@@ -86,11 +86,7 @@ package body SDL.Video.Palettes is
 
    function Has_Element (Position : Cursor) return Boolean is
    begin
-      if Position.Index <= Natural (Position.Container.Data.Total) then
-         return True;
-      end if;
-
-      return False;
+      return Position.Index <= Natural (Position.Container.Data.Total);
    end Has_Element;
 
    function Constant_Reference

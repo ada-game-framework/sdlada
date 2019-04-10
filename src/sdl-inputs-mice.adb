@@ -88,11 +88,7 @@ package body SDL.Inputs.Mice is
         Convention    => C,
         External_Name => "SDL_GetRelativeMouseMode";
    begin
-      if SDL_Get_Relative_Mouse_Mode = SDL_True then
-         return True;
-      end if;
-
-      return False;
+      return SDL_Get_Relative_Mouse_Mode = SDL_True;
    end In_Relative_Mode;
 
    function Get_Relative_State (X_Relative, Y_Relative : out SDL.Events.Mice.Movement_Values) return

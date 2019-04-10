@@ -44,11 +44,7 @@ package body SDL.Events.Joysticks.Game_Controllers is
    function Is_Polling_Enabled return Boolean is
       Result : C.int := SDL_Game_Controller_Event_State (Query);
    begin
-      if Result = Enable then
-         return True;
-      end if;
-
-      return False;
+      return Result = Enable;
    end Is_Polling_Enabled;
 
    procedure Enable_Polling is
