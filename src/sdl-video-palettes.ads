@@ -39,26 +39,26 @@ package SDL.Video.Palettes is
 
    type Colour is
       record
-         Red   : Colour_Component;
-         Green : Colour_Component;
-         Blue  : Colour_Component;
-         Alpha : Colour_Component;
+         Red   : Colour_Component := Colour_Component'First;
+         Green : Colour_Component := Colour_Component'First;
+         Blue  : Colour_Component := Colour_Component'First;
+         Alpha : Colour_Component := Colour_Component'First;
       end record with
      Convention => C_Pass_by_Copy,
      Size       => Colour_Component'Size * 4;
 
-   Null_Colour : constant Colour := Colour'(others => Colour_Component'First);
+   Null_Colour : constant Colour := (others => <>);
 
    type RGB_Colour is
       record
-         Red   : Colour_Component;
-         Green : Colour_Component;
-         Blue  : Colour_Component;
+         Red   : Colour_Component := Colour_Component'First;
+         Green : Colour_Component := Colour_Component'First;
+         Blue  : Colour_Component := Colour_Component'First;
       end record with
      Convention => C_Pass_by_Copy,
      Size       => Colour_Component'Size * 4;
 
-   Null_RGB_Colour : constant RGB_Colour := RGB_Colour'(others => Colour_Component'First);
+   Null_RGB_Colour : constant RGB_Colour := (others => <>);
 
    --  Cursor type for our iterator.
    type Cursor is private;
