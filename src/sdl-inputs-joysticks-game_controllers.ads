@@ -25,8 +25,6 @@
 with SDL.Events.Joysticks.Game_Controllers;
 
 package SDL.Inputs.Joysticks.Game_Controllers is
-   pragma Preelaborate;
-
    type Bind_Types is (None, Button, Axis, Hat) with
      Convention => C;
 

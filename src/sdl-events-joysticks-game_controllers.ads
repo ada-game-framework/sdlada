@@ -27,8 +27,6 @@
 with Interfaces;
 
 package SDL.Events.Joysticks.Game_Controllers is
-   pragma Preelaborate;
-
    type Axes is (Invalid,
                  Left_X,
                  Left_Y,

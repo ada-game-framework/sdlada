@@ -27,8 +27,6 @@
 with Interfaces.C;
 
 package SDL.Video.Rectangles is
-   pragma Preelaborate;
-
    package C renames Interfaces.C;
 
    Rectangle_Error : exception;

@@ -27,7 +27,6 @@
 with Interfaces;
 
 package SDL.Timers is
-   pragma Preelaborate;
 
    type Milliseconds is new Interfaces.Unsigned_32;
 

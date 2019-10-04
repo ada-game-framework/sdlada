@@ -29,8 +29,6 @@ with Interfaces.C;
 private with System;
 
 package SDL.RWops is
-   pragma Preelaborate;
-
    package C renames Interfaces.C;
    package UTF_Strings renames Ada.Strings.UTF_Encoding;
 

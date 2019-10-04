@@ -25,8 +25,6 @@
 --  Platform CPU information retrieval.
 --------------------------------------------------------------------------------------------------------------------
 package SDL.CPUS is
-   pragma Preelaborate;
-
    --  TODO: Add a subprogram to return CPU architecture as not all platforms will have the same one, i.e.
    --  Android on ARM, MIPS, x86.
 

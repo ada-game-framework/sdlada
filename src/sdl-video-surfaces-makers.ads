@@ -25,8 +25,6 @@
 --  Functions to create surface objects.
 --------------------------------------------------------------------------------------------------------------------
 package SDL.Video.Surfaces.Makers is
-   pragma Preelaborate;
-
    procedure Create (Self       : in out Surface;
                      Size       : in SDL.Sizes;
                      BPP        : in Pixel_Depths;

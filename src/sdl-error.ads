@@ -25,8 +25,6 @@
 --  Error message handling.
 --------------------------------------------------------------------------------------------------------------------
 package SDL.Error is
-   pragma Preelaborate;
-
    procedure Clear with
      Import        => True,
      Convention    => C,

@@ -27,8 +27,6 @@
 with Interfaces.C;
 
 package SDL.Video is
-   pragma Preelaborate;
-
    package C renames Interfaces.C;
 
    Video_Error : exception;

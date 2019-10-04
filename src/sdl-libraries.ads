@@ -27,8 +27,6 @@
 with Ada.Finalization;
 
 package SDL.Libraries is
-   pragma Preelaborate;
-
    Library_Error : exception;
 
    type Handles is new Ada.Finalization.Limited_Controlled with private;

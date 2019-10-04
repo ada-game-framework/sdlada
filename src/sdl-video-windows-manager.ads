@@ -33,8 +33,6 @@ with Interfaces.C;
 with SDL.Versions;
 
 package SDL.Video.Windows.Manager is
-   pragma Preelaborate;
-
    type WM_Types is (WM_Unknown,
                      WM_Windows,
                      WM_X11,

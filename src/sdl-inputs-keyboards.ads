@@ -27,8 +27,6 @@ with SDL.Video.Rectangles;
 with SDL.Video.Windows;
 
 package SDL.Inputs.Keyboards is
-   pragma Preelaborate;
-
    function Get_Focus return SDL.Video.Windows.ID with
      Inline => True;
 
