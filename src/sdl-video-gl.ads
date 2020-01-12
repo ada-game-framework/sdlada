@@ -136,6 +136,9 @@ package SDL.Video.GL is
    function Context_Profile return Profiles;
    procedure Set_Context_Profile (Profile : in Profiles);
 
+   --  Utility subprograms.
+   procedure Set_Core_Context_Profile (Major : in Major_Versions; Minor : Minor_Versions);
+
    function Is_Sharing_With_Current_Context return Boolean;
    procedure Set_Share_With_Current_Context (On : in Boolean);
 

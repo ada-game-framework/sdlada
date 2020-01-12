@@ -474,6 +474,28 @@ package body SDL.Video.GL is
       end if;
    end Set_Context_Profile;
 
+   procedure Set_Core_Context_Profile (Major : in Major_Versions; Minor : Minor_Versions) is
+      Result : C.int;
+   begin
+      Result := SDL_GL_Set_Attribute (Attribute_Context_Profile, To_int (Core));
+
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      Result := SDL_GL_Get_Attribute (Attribute_Context_Major_Version, C.int (Major));
+
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+
+      Result := SDL_GL_Get_Attribute (Attribute_Context_Minor_Version, C.int (Minor));
+
+      if Result /= Success then
+         raise SDL_GL_Error with SDL.Error.Get;
+      end if;
+   end Set_Core_Context_Profile;
+
    function Is_Sharing_With_Current_Context return Boolean is
       Data   : C.int;
       Result : C.int := SDL_GL_Get_Attribute (Attribute_Share_With_Current_Context, Data);
