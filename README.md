@@ -43,7 +43,7 @@ make SDL_PLATFORM=linux SDL_MODE=release DESTDIR=$HOME/opt/sdlada install
 Copyright
 =========
 
-Copyright (C) 2013-2018 by Luke A. Guest
+Copyright (C) 2013-2020, Luke A. Guest
 
 Thanks to
 =========

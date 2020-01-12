@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------------------------------------------
---  Copyright (c) 2014 Luke A. Guest
+--  Copyright (c) 2013-2020,  Luke A. Guest
 --
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
@@ -38,7 +38,7 @@ procedure Gen_Keyboard is
    function To_US (Str : in String) return Unbounded_String renames To_Unbounded_String;
 
    License : constant array (Positive range <>) of Unbounded_String :=
-     (To_US ("Copyright (c) 2014 Luke A. Guest"),
+     (To_US ("Copyright (c) 2013-2020,  Luke A. Guest"),
       To_US (""),
       To_US ("This software is provided 'as-is', without any express or implied"),
       To_US ("warranty. In no event will the authors be held liable for any damages"),
