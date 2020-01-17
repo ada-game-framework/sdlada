@@ -44,7 +44,9 @@ package SDL.Events.Windows is
       Leave,
       Focus_Gained,
       Focus_Lost,
-      Close) with
+      Close,
+      Take_Focus,
+      Hit_Test) with
      Convention => C;
 
    type Window_Events is
