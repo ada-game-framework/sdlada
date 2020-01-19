@@ -1,5 +1,4 @@
-SDLAda
-======
+# SDLAda
 
 This is a new variable thickness Ada 2012 binding to SDL 2.x.y (http://www.libsdl.org). This means that things are
 wrapped when they need to be into a thicker binding and those things that can just be imported, are.
@@ -10,8 +9,7 @@ some platform specifics which cannot be abstracted out cleanly, but this will be
 The bindings are only generated for the specific parts of SDL which Ada does not already have support for, i.e.
 threads are not bound as Ada has tasking support built in.
 
-Usage, Licence & Attribution
-============================
+## Usage, Licence & Attribution
 
 SDLAda is distributed under the same zlib licence as the SDL library is. You may use this library in any way
 you like whether free or commercial. I would add that whilst you don't have to state that your game uses this
@@ -20,8 +18,7 @@ library, it would be nice if you did, it's all good advertising for Ada :)
 You do not need to complete any copyright assignment forms, the licence will not change from zlib as I want people to be
 able to use the library however they wish without restrictions.
 
-Building
-========
+## Building
 
 There are a number of variables which can be set to control the compilation:
 
@@ -33,31 +30,26 @@ cd build/gnat
 make SDL_PLATFORM=linux SDL_MODE=release
 ```
 
-Installation
-============
+## Installation
 
 ```
 make SDL_PLATFORM=linux SDL_MODE=release DESTDIR=$HOME/opt/sdlada install
 ```
 
-Copyright
-=========
+## Copyright
 
 Copyright (C) 2013-2020, Luke A. Guest
 
-Thanks to
-=========
+## Thanks to
 
 To everyone who has provided patches, pull requests, typo fixes, etc.
 
-WARNING!!!
-==========
+## WARNING!!!
 
 I have tried to model the types correctly, but remember SDL is a C library and some things may not make sense. Please
 file a bug report if you use this library and find that a type does not cover enough values for cross-platform use.
 
-TODO
-====
+## TODO
 
 Anything listed here is a question of whether it's required.
 
@@ -73,13 +65,11 @@ Anything listed here is a question of whether it's required.
   library and distribute SDL2 libs only.
 * Hide the RWops stuff maybe? Should really be using Ada streams and files.
 
-[Current version](http://www.semver.org)
-========================================
+## [Current version](http://www.semver.org)
 
-v2.3.0
+v2.3.1
 
-Versions tested against
-=======================
+## Versions tested against
 
 Library   | Version
 ----------|--------
@@ -87,8 +77,9 @@ SDL       | 2.0.7
 SDL_image | 2.0.2
 SDL_ttf   | 2.0.14
 
-Bound functions
-===============
+## Bound functions
+
+### SDL
 
 Name                                  | Bound | Won't bind
 --------------------------------------|-------|-----------
@@ -607,8 +598,7 @@ SDL_assert                            |   n   |
 SDL_assert_paranoid                   |   n   |
 SDL_assert_release                    |   n   |
 
-SDL_image
-=========
+### SDL_image
 
 Name                                  | Bound | Won't bind
 --------------------------------------|-------|-----------
@@ -654,8 +644,7 @@ IMG_SavePNG_RW                        |   n   |
 IMG_SetError                          |   n   |      *
 IMG_GetError                          |   n   |      *
 
-SDL_ttf
-=======
+### SDL_ttf
 
 Name                                  | Bound | Won't bind
 --------------------------------------|-------|-----------
