@@ -26,7 +26,6 @@
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Characters.Latin_1;
 with Ada.Unchecked_Conversion;
-with Interfaces;
 with Interfaces.C;
 with SDL.Video.Palettes;
 
