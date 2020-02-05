@@ -33,6 +33,10 @@ with SDL.Video.Palettes;
 package SDL.Video.Pixel_Formats is
    package C renames Interfaces.C;
 
+   subtype Unsigned_8  is Interfaces.Unsigned_8;
+   subtype Unsigned_16 is Interfaces.Unsigned_16;
+   subtype Unsigned_32 is Interfaces.Unsigned_32;
+
    type Pixel_Types is
      (Unknown,
       Index_1,
