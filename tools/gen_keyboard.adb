@@ -365,7 +365,7 @@ procedure Gen_Keyboard is
    type Key_Codes is mod 2 ** 32 with
      Convention => C,
      Size       => 32;
-   Internal_To_Key_Code_Mask : constant Key_Codes := 16#2000_0000#;
+   Internal_To_Key_Code_Mask : constant Key_Codes := 16#4000_0000#;
 
    package Key_Codes_IO is new Modular_IO (Key_Codes);
    use Key_Codes_IO;
