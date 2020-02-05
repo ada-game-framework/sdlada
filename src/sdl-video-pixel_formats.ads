@@ -645,7 +645,7 @@ package SDL.Video.Pixel_Formats is
          Palette      : Palettes.Palette_Access;
          Bits         : Bits_Per_Pixels;
          Bytes        : Bytes_Per_Pixels;
-         Padding      : Interfaces.Unsigned_16;
+         Padding      : Unsigned_16;
          Red_Mask     : Colour_Mask;
          Green_Mask   : Colour_Mask;
          Blue_Mask    : Colour_Mask;
@@ -676,7 +676,7 @@ package SDL.Video.Pixel_Formats is
    --  External_Name => "SDL_GetPixelFormatName";
 
    procedure To_Components
-     (Pixel  : in  Interfaces.Unsigned_32;
+     (Pixel  : in  Unsigned_32;
       Format : in  Pixel_Format_Access;
       Red    : out Palettes.Colour_Component;
       Green  : out Palettes.Colour_Component;
@@ -686,7 +686,7 @@ package SDL.Video.Pixel_Formats is
      External_Name => "SDL_GetRGB";
 
    procedure To_Components
-     (Pixel  : in  Interfaces.Unsigned_32;
+     (Pixel  : in  Unsigned_32;
       Format : in  Pixel_Format_Access;
       Red    : out Palettes.Colour_Component;
       Green  : out Palettes.Colour_Component;
@@ -700,7 +700,7 @@ package SDL.Video.Pixel_Formats is
      (Format : in Pixel_Format_Access;
       Red    : in Palettes.Colour_Component;
       Green  : in Palettes.Colour_Component;
-      Blue   : in Palettes.Colour_Component) return Interfaces.Unsigned_32 with
+      Blue   : in Palettes.Colour_Component) return Unsigned_32 with
      Import        => True,
      Convention    => C,
      External_Name => "SDL_MapRGB";
@@ -710,15 +710,15 @@ package SDL.Video.Pixel_Formats is
       Red    : in Palettes.Colour_Component;
       Green  : in Palettes.Colour_Component;
       Blue   : in Palettes.Colour_Component;
-      Alpha  : in Palettes.Colour_Component) return Interfaces.Unsigned_32 with
+      Alpha  : in Palettes.Colour_Component) return Unsigned_32 with
      Import        => True,
      Convention    => C,
      External_Name => "SDL_MapRGBA";
 
-   function To_Colour (Pixel : in Interfaces.Unsigned_32; Format : in Pixel_Format_Access) return Palettes.Colour with
+   function To_Colour (Pixel : in Unsigned_32; Format : in Pixel_Format_Access) return Palettes.Colour with
      Inline => True;
 
-   function To_Pixel (Colour : in Palettes.Colour; Format : in Pixel_Format_Access) return Interfaces.Unsigned_32 with
+   function To_Pixel (Colour : in Palettes.Colour; Format : in Pixel_Format_Access) return Unsigned_32 with
      Inline => True;
 
    function To_Name
@@ -755,14 +755,14 @@ private
    --  The following fields are defined as "internal use" in the SDL docs.
    type Private_Pixel_Format is
       record
-         Rred_Loss   : Interfaces.Unsigned_8;
-         Green_Loss  : Interfaces.Unsigned_8;
-         Blue_Loss   : Interfaces.Unsigned_8;
-         Alpha_Loss  : Interfaces.Unsigned_8;
-         Red_Shift   : Interfaces.Unsigned_8;
-         Green_Shift : Interfaces.Unsigned_8;
-         Blue_Shift  : Interfaces.Unsigned_8;
-         Alpha_Shift : Interfaces.Unsigned_8;
+         Rred_Loss   : Unsigned_8;
+         Green_Loss  : Unsigned_8;
+         Blue_Loss   : Unsigned_8;
+         Alpha_Loss  : Unsigned_8;
+         Red_Shift   : Unsigned_8;
+         Green_Shift : Unsigned_8;
+         Blue_Shift  : Unsigned_8;
+         Alpha_Shift : Unsigned_8;
          Ref_Count   : C.int;
          Next        : Pixel_Format_Access;
       end record with
