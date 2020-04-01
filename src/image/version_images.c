@@ -23,7 +23,7 @@
 #ifdef __APPLE__
 #include <SDL2_image/SDL_image.h>
 #else
-#include <SDL_image.h>
+#include <SDL2/SDL_image.h>
 #endif
 
 /* We need to define some constants here so we can get access to the values that in #define form from Ada.
