@@ -483,13 +483,13 @@ package body SDL.Video.GL is
          raise SDL_GL_Error with SDL.Error.Get;
       end if;
 
-      Result := SDL_GL_Get_Attribute (Attribute_Context_Major_Version, C.int (Major));
+      Result := SDL_GL_Set_Attribute (Attribute_Context_Major_Version, C.int (Major));
 
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
       end if;
 
-      Result := SDL_GL_Get_Attribute (Attribute_Context_Minor_Version, C.int (Minor));
+      Result := SDL_GL_Set_Attribute (Attribute_Context_Minor_Version, C.int (Minor));
 
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
