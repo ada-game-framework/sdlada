@@ -15,10 +15,4 @@ project Tests is
                         "ttf.adb");
 
    package Compiler renames SDLAda.Compiler;
-
-   package Linker renames SDLAda.Linker;
-
-   --     package Builder is
-   --        for Default_Switches ("Ada") use ("-gnat2012", "-gnata"); --, "-gnatG");
-   --     end Builder;
 end Tests;

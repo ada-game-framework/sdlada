@@ -44,28 +44,4 @@ library project SDLAda is
       for Default_Switches ("C") use Common_Switches & C_Switches;
       for Default_Switches ("Ada") use Common_Switches & Ada_Switches;
    end Compiler;
-
-   package Linker is
-      Ada_Switches := ();
-
-      case Platform is
-         when "linux" | "bsd" | "android" | "windows" =>
-            case Mode is
-            when "debug" =>
-            Ada_Switches := Ada_Switches & ("-Wl,--enable-new-dtags", "-lSDL2", "-lSDL2_ttf", "-lSDL2_image");
-
-            when "release" =>
-               Ada_Switches := Ada_Switches & ("-lSDL2", "-lSDL2_ttf", "-lSDL2_image");
-            end case;
-
-         when "macosx" | "ios" =>
-            Ada_Switches := Ada_Switches & ("-framework", "SDL2", "-framework", "SDL2_image", "-framework", "SDL2_ttf");
-      end case;
-
-      for Linker_Options use Ada_Switches;
-    end Linker;
-
-   --  package Builder is
-   --     for Default_Switches ("Ada") use ("-gnat2012", "-gnata", "-gnato", "-gnatE", "-gnaty", "-gnatyO");
-   --  end Builder;
 end SDLAda;

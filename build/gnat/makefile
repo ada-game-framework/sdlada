@@ -25,6 +25,13 @@ TESTS_SRCS	=	$(SRC_DIR)/test/clipboard.adb \
 
 GEN_KB		=	gen/src/sdl-events-keyboards.ads
 
+#ifeq ($(shell [[ $(SDL_PLATFORM) == "linux" || $(SDL_PLATFORM) == "windows" || $(SDL_PLATFORM) == "bsd" || $(SDL_PLATFORM) == "android" ]] && echo true), true)
+ifeq (,$(filter $(SDL_PLATFORM), "linux" "windows" "bsd" "android"))
+SDL2_CONFIG	=	-cargs `sdl2-config --cflags` -largs `sdl2-config --libs` -lSDL2_ttf -lSDL2_image
+else ifeq ($(SDL_PLATFORM),macosx)
+SDL2_CONFIG	=
+endif
+
 # With GNAT, all static libs end with .a
 LIB_NAME	=	lib/libadasdl.a
 
@@ -79,7 +86,7 @@ tests: $(LIB_NAME) tests.gpr $(TESTS_SRCS)
 
 tests.gpr: $(TESTS_SRCS) gen/$(SDL_MODE)/test/libtestmaths.so
 	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
-		-Ptests.gpr
+		-Ptests.gpr ${SDL2_CONFIG}
 
 # Maths library
 
