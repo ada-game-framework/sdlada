@@ -137,9 +137,9 @@ package SDL.TTFs is
                           Text   : in String;
                           Colour : in SDL.Video.Palettes.Colour) return SDL.Video.Surfaces.Surface;
 
-   function Render_UTF8_Solid (Self     : in Fonts;
-                               Text     : in String;
-                               Colour   : in SDL.Video.Palettes.Colour) return SDL.Video.Surfaces.Surface;
+   function Render_UTF_8_Solid (Self     : in Fonts;
+                                Text     : in String;
+                                Colour   : in SDL.Video.Palettes.Colour) return SDL.Video.Surfaces.Surface;
 
    function Render_Shaded (Self              : in Fonts;
                            Text              : in String;
