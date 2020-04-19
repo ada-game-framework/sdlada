@@ -137,10 +137,6 @@ package SDL.TTFs is
                           Text   : in String;
                           Colour : in SDL.Video.Palettes.Colour) return SDL.Video.Surfaces.Surface;
 
-   function Render_UTF_8_Solid (Self     : in Fonts;
-                                Text     : in String;
-                                Colour   : in SDL.Video.Palettes.Colour) return SDL.Video.Surfaces.Surface;
-
    function Render_Shaded (Self              : in Fonts;
                            Text              : in String;
                            Colour            : in SDL.Video.Palettes.Colour;
@@ -149,6 +145,19 @@ package SDL.TTFs is
    function Render_Blended (Self   : in Fonts;
                             Text   : in String;
                             Colour : in SDL.Video.Palettes.Colour) return SDL.Video.Surfaces.Surface;
+
+   function Render_UTF_8_Solid (Self     : in Fonts;
+                                Text     : in String;
+                                Colour   : in SDL.Video.Palettes.Colour) return SDL.Video.Surfaces.Surface;
+
+   function Render_UTF_8_Shaded (Self              : in Fonts;
+                                 Text              : in String;
+                                 Colour            : in SDL.Video.Palettes.Colour;
+                                 Background_Colour : in SDL.Video.Palettes.Colour) return SDL.Video.Surfaces.Surface;
+
+   function Render_UTF_8_Blended (Self              : in Fonts;
+                                  Text              : in String;
+                                  Colour            : in SDL.Video.Palettes.Colour) return SDL.Video.Surfaces.Surface;
 private
    type Internal_Fonts is null record;
    type Fonts_Pointer is access all Internal_Fonts with
