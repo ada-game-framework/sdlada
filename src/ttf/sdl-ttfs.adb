@@ -272,9 +272,9 @@ package body SDL.TTFs is
       end return;
    end Render_Solid;
 
-   function Render_UTF8_Solid (Self     : in Fonts;
-                               Text     : in String;
-                               Colour   : in SDL.Video.Palettes.Colour) return SDL.Video.Surfaces.Surface is
+   function Render_UTF_8_Solid (Self     : in Fonts;
+                                Text     : in String;
+                                Colour   : in SDL.Video.Palettes.Colour) return SDL.Video.Surfaces.Surface is
       function TTF_RenderUTF8_Solid (Font    : in Fonts_Ref;
                                      Text    : in C.Strings.chars_ptr;
                                      Colour  : in SDL.Video.Palettes.Colour)
@@ -291,7 +291,7 @@ package body SDL.TTFs is
       do
          C.Strings.Free (C_Text);
       end return;
-   end Render_UTF8_Solid;
+   end Render_UTF_8_Solid;
 
 
    function Render_Shaded (Self              : in Fonts;
