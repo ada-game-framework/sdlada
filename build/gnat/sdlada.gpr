@@ -34,8 +34,13 @@ library project SDLAda is
 
       --  These flags require checking on all platforms as they're taken directly from sdl2-config.
       case Platform is
-         when "linux" | "bsd" | "android" | "windows" =>
+         when "linux" | "bsd" | "android" =>
             C_Switches   := C_Switches & ("-I/usr/include/SDL2", "-D_REENTRANT");
+
+         when "windows" =>
+            C_Switches := C_Switches & ("-I../../../../../../../SDL/SDL2-2.0.12/x86_64-w64-mingw32/include/SDL2/", "-I../../../../../../../SDL/SDL2_ttf-2.0.15/x86_64-w64-mingw32/include/SDL2/",
+            "-I../../../../../../../SDL/SDL2_image-2.0.5/x86_64-w64-mingw32/include/SDL2/",
+            "-D_REENTRANT");
 
          when others =>
             null;

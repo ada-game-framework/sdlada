@@ -272,6 +272,28 @@ package body SDL.TTFs is
       end return;
    end Render_Solid;
 
+   function Render_UTF8_Solid (Self     : in Fonts;
+                               Text     : in String;
+                               Colour   : in SDL.Video.Palettes.Colour) return SDL.Video.Surfaces.Surface is
+      function TTF_RenderUTF8_Solid (Font    : in Fonts_Ref;
+                                     Text    : in C.Strings.chars_ptr;
+                                     Colour  : in SDL.Video.Palettes.Colour)
+                                     return Video.Surfaces.Internal_Surface_Pointer with
+        Import        => True,
+        Convention    => C,
+        External_Name => "TTF_RenderUTF8_Solid";
+
+      C_Text : C.Strings.chars_ptr := C.Strings.New_String (Text);
+   begin
+      return S : SDL.Video.Surfaces.Surface :=
+        Make_Surface_From_Pointer (S    => TTF_RenderUTF8_Solid (Self.Internal, C_Text, Colour),
+                                   Owns => True)
+      do
+         C.Strings.Free (C_Text);
+      end return;
+   end Render_UTF8_Solid;
+
+
    function Render_Shaded (Self              : in Fonts;
                            Text              : in String;
                            Colour            : in SDL.Video.Palettes.Colour;
