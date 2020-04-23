@@ -22,6 +22,8 @@
 --------------------------------------------------------------------------------------------------------------------
 --  SDL.Inputs.Mice
 --------------------------------------------------------------------------------------------------------------------
+with Ada.Finalization;
+private with SDL.C_Pointers;
 with SDL.Events.Mice;
 with SDL.Video.Windows;
 
@@ -34,15 +36,27 @@ package SDL.Inputs.Mice is
 
    type Supported is (Yes, No);
 
+   type Cursor is new Ada.Finalization.Limited_Controlled with private;
+
+   overriding
+   procedure Finalize (Self : in out Cursor);
+
+   type System_Cursors is (ARROW, IBEAM, WAIT, CROSSHAIR, WAITARROW, SIZENWSE,
+     SIZENESW, SIZEWE, SIZENS, SIZEALL, NO, HAND) with Convention => C;
+
    function Capture (Enabled : in Boolean) return Supported with
      Inline;
 
    --  SDL_CreateColorCursor
    --  SDL_CreateCursor
-   --  SDL_CreateSystemCursor
-   --  SDL_FreeCursor
-   --  SDL_GetCursor
-   --  SDL_GetDefaultCursor
+
+   procedure Create_System_Cursor (Self : in out Cursor; Cursor_Name : System_Cursors);
+
+   procedure Get_Cursor(Self : in out Cursor);
+
+   procedure Set_Cursor (Self : in Cursor);
+
+   procedure Free_Cursor (Self : in out Cursor);
 
    function Get_Global_State (X_Relative, Y_Relative : out SDL.Events.Mice.Movement_Values) return
      SDL.Events.Mice.Button_Masks;
@@ -74,4 +88,11 @@ package SDL.Inputs.Mice is
    --
    --  Move the mouse to (x, y) in the specified window.
    procedure Warp (Window : in SDL.Video.Windows.Window; To : in SDL.Coordinates);
+
+private
+   type Cursor is new Ada.Finalization.Limited_Controlled with
+      record
+         Internal : SDL.C_Pointers.Cursor_Pointer := null;
+         Owns     : Boolean                       := True;
+      end record;
 end SDL.Inputs.Mice;

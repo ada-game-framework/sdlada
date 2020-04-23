@@ -48,4 +48,8 @@ private package SDL.C_Pointers is
    type Game_Controller is null record;
    type Game_Controller_Pointer is access all Game_Controller with
      Convention => C;
+
+   type Cursors is null record;
+   type Cursor_Pointer is access all Cursors with
+     Convention => C;
 end SDL.C_Pointers;
