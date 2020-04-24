@@ -54,41 +54,41 @@ package body SDL.Inputs.Mice is
    end Capture;
 
    procedure Create_System_Cursor (Self : in out Cursor; Cursor_Name : System_Cursors) is
-      function SDL_CreateSystemCursor (Cursor_Name : in System_Cursors) return SDL.C_Pointers.Cursor_Pointer with
+      function SDL_Create_System_Cursor (Cursor_Name : in System_Cursors) return SDL.C_Pointers.Cursor_Pointer with
          Import        => True,
          Convention    => C,
          External_Name => "SDL_CreateSystemCursor";
    begin
-      Self.Internal := SDL_CreateSystemCursor (Cursor_Name);
+      Self.Internal := SDL_Create_System_Cursor (Cursor_Name);
       Self.Owns := True;
    end Create_System_Cursor;
 
    procedure Get_Cursor (Self : in out Cursor) is
-      function SDL_GetCursor return SDL.C_Pointers.Cursor_Pointer with
+      function SDL_Get_Cursor return SDL.C_Pointers.Cursor_Pointer with
          Import        => True,
          Convention    => C,
          External_Name => "SDL_GetCursor";
    begin
-      Self.Internal := SDL_GetCursor;
+      Self.Internal := SDL_Get_Cursor;
       Self.Owns := False;
    end Get_Cursor;
 
    procedure Set_Cursor (Self : in Cursor) is
-      procedure SDL_SetCursor (C : in SDL.C_Pointers.Cursor_Pointer) with
+      procedure SDL_Set_Cursor (C : in SDL.C_Pointers.Cursor_Pointer) with
          Import        => True,
          Convention    => C,
          External_Name => "SDL_SetCursor";
    begin
-      SDL_SetCursor (Self.Internal);
+      SDL_Set_Cursor (Self.Internal);
    end Set_Cursor;
 
    procedure Free_Cursor (Self : in out Cursor) is
-      procedure SDL_FreeCursor (C : in SDL.C_Pointers.Cursor_Pointer) with
+      procedure SDL_Free_Cursor (C : in SDL.C_Pointers.Cursor_Pointer) with
          Import        => True,
          Convention    => C,
          External_Name => "SDL_FreeCursor";
    begin
-      SDL_FreeCursor (Self.Internal);
+      SDL_Free_Cursor (Self.Internal);
    end Free_Cursor;
 
    function Get_Global_State (X_Relative, Y_Relative : out SDL.Events.Mice.Movement_Values) return
