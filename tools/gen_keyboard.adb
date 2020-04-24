@@ -362,6 +362,7 @@ procedure Gen_Keyboard is
       (New_Line_Scan_Code),
       (Output,   To_US ("Scan_Code_Total"),                  512,             Null_Unbounded_String));
 
+   --  See SDL_SCANCODE_TO_KEYCODE in include/SDL_keycode.h
    type Key_Codes is mod 2 ** 32 with
      Convention => C,
      Size       => 32;
