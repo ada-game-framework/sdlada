@@ -64,7 +64,7 @@ package SDL.Inputs.Mice is
 
    procedure Create_System_Cursor (Self : in out Cursor; Cursor_Name : System_Cursors);
 
-   procedure Get_Cursor(Self : in out Cursor);
+   procedure Get_Cursor (Self : in out Cursor);
 
    procedure Set_Cursor (Self : in Cursor);
 
