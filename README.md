@@ -67,7 +67,7 @@ Anything listed here is a question of whether it's required.
 
 ## [Current version](http://www.semver.org)
 
-v2.5.0
+v2.5.1
 
 ## Versions tested against
 

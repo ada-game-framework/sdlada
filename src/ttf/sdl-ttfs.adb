@@ -317,7 +317,7 @@ package body SDL.TTFs is
    end Render_Blended;
 
    function Render_UTF_8_Solid (Self     : in Fonts;
-                                Text     : in String;
+                                Text     : in UTF_Strings.UTF_8_String;
                                 Colour   : in SDL.Video.Palettes.Colour) return SDL.Video.Surfaces.Surface is
       function TTF_Render_UTF_8_Solid (Font    : in Fonts_Ref;
                                        Text    : in C.Strings.chars_ptr;
@@ -338,7 +338,7 @@ package body SDL.TTFs is
    end Render_UTF_8_Solid;
 
    function Render_UTF_8_Shaded (Self              : in Fonts;
-                                 Text              : in String;
+                                 Text              : in UTF_Strings.UTF_8_String;
                                  Colour            : in SDL.Video.Palettes.Colour;
                                  Background_Colour : in SDL.Video.Palettes.Colour) return SDL.Video.Surfaces.Surface is
       function TTF_Render_UTF_8_Shaded (Font              : in Fonts_Ref;
@@ -361,7 +361,7 @@ package body SDL.TTFs is
    end Render_UTF_8_Shaded;
 
    function Render_UTF_8_Blended (Self              : in Fonts;
-                                  Text              : in String;
+                                  Text              : in UTF_Strings.UTF_8_String;
                                   Colour            : in SDL.Video.Palettes.Colour) return SDL.Video.Surfaces.Surface is
       function TTF_Render_UTF_8_Blended (Font   : in Fonts_Ref;
                                          Text   : in C.Strings.chars_ptr;
