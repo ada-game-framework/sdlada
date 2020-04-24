@@ -41,8 +41,20 @@ package SDL.Inputs.Mice is
    overriding
    procedure Finalize (Self : in out Cursor);
 
-   type System_Cursors is (ARROW, IBEAM, WAIT, CROSSHAIR, WAITARROW, SIZENWSE,
-     SIZENESW, SIZEWE, SIZENS, SIZEALL, NO, HAND) with Convention => C;
+   type System_Cursors is
+     (Arrow,
+      I_Beam,
+      Wait,
+      Cross_Hair,
+      Wait_Arrow,
+      Size_NWSE,
+      Size_NESW,
+      Size_WE,
+      size_NS,
+      Size_All,
+      No,
+      Hand) with
+     Convention => C;
 
    function Capture (Enabled : in Boolean) return Supported with
      Inline;
