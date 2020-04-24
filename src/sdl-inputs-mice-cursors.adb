@@ -54,20 +54,15 @@ package body SDL.Inputs.Mice.Cursors is
       SDL_Set_Cursor (Self.Internal);
    end Set_Cursor;
 
-   procedure Free_Cursor (Self : in out Cursor) is
+   overriding
+   procedure Finalize (Self : in out Cursor) is
       procedure SDL_Free_Cursor (C : in SDL.C_Pointers.Cursor_Pointer) with
          Import        => True,
          Convention    => C,
          External_Name => "SDL_FreeCursor";
    begin
-      SDL_Free_Cursor (Self.Internal);
-   end Free_Cursor;
-
-   overriding
-   procedure Finalize (Self : in out Cursor) is
-   begin
       if Self.Internal /= null and then Self.Owns then
-         Free_Cursor (Self);
+         SDL_Free_Cursor (Self.Internal);
       end if;
    end Finalize;
 end SDL.Inputs.Mice.Cursors;

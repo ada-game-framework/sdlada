@@ -55,9 +55,6 @@ package SDL.Inputs.Mice.Cursors is
    procedure Get_Cursor (Self : in out Cursor);
 
    procedure Set_Cursor (Self : in Cursor);
-
-   procedure Free_Cursor (Self : in out Cursor);
-
 private
    type Cursor is new Ada.Finalization.Limited_Controlled with
       record
