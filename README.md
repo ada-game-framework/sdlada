@@ -137,7 +137,7 @@ SDL_CreateRGBSurfaceFrom              |   n   |
 SDL_CreateRenderer                    |   y   |
 SDL_CreateSemaphore                   |   n   |
 SDL_CreateSoftwareRenderer            |   y   |
-SDL_CreateSystemCursor                |   n   |
+SDL_CreateSystemCursor                |   y   |
 SDL_CreateTexture                     |   y   |
 SDL_CreateTextureFromSurface          |   y   |
 SDL_CreateThread                      |   n   |
@@ -165,7 +165,7 @@ SDL_FillRects                         |   y   |
 SDL_FilterEvents                      |   n   |
 SDL_FlushEvent                        |   n   |
 SDL_FlushEvents                       |   n   |
-SDL_FreeCursor                        |   n   |
+SDL_FreeCursor                        |   y   |
 SDL_FreeFormat                        |   y   |
 SDL_FreePalette                       |   y   |
 SDL_FreeRW                            |   n   |      * (implicitly called by RWclose)
@@ -226,7 +226,7 @@ SDL_GetColorKey                       |   y   |
 SDL_GetCurrentAudioDriver             |   n   |
 SDL_GetCurrentDisplayMode             |   y   |
 SDL_GetCurrentVideoDriver             |   y   |
-SDL_GetCursor                         |   n   |
+SDL_GetCursor                         |   y   |
 SDL_GetDefaultAssertionHandler        |   n   |
 SDL_GetDefaultCursor                  |   n   |
 SDL_GetDesktopDisplayMode             |   y   |
@@ -500,7 +500,7 @@ SDL_SetAssertionHandler               |   n   |
 SDL_SetClipRect                       |   y   |
 SDL_SetClipboardText                  |   y   |
 SDL_SetColorKey                       |   y   |
-SDL_SetCursor                         |   n   |
+SDL_SetCursor                         |   y   |
 SDL_SetError                          |   y   |
 SDL_SetEventFilter                    |   n   |
 SDL_SetHint                           |   y   |
