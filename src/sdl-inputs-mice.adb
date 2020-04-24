@@ -30,15 +30,6 @@ package body SDL.Inputs.Mice is
 
    use type C.int;
    use type C.unsigned;
-   use type SDL.C_Pointers.Cursor_Pointer;
-
-   overriding
-   procedure Finalize (Self : in out Cursor) is
-   begin
-      if Self.Internal /= null and then Self.Owns then
-         Free_Cursor (Self);
-      end if;
-   end Finalize;
 
    function Capture (Enabled : in Boolean) return Supported is
       function SDL_Capture_Mouse (Enabled : in C.unsigned) return C.int with
@@ -52,44 +43,6 @@ package body SDL.Inputs.Mice is
 
       return Yes;
    end Capture;
-
-   procedure Create_System_Cursor (Self : in out Cursor; Cursor_Name : System_Cursors) is
-      function SDL_Create_System_Cursor (Cursor_Name : in System_Cursors) return SDL.C_Pointers.Cursor_Pointer with
-         Import        => True,
-         Convention    => C,
-         External_Name => "SDL_CreateSystemCursor";
-   begin
-      Self.Internal := SDL_Create_System_Cursor (Cursor_Name);
-      Self.Owns := True;
-   end Create_System_Cursor;
-
-   procedure Get_Cursor (Self : in out Cursor) is
-      function SDL_Get_Cursor return SDL.C_Pointers.Cursor_Pointer with
-         Import        => True,
-         Convention    => C,
-         External_Name => "SDL_GetCursor";
-   begin
-      Self.Internal := SDL_Get_Cursor;
-      Self.Owns := False;
-   end Get_Cursor;
-
-   procedure Set_Cursor (Self : in Cursor) is
-      procedure SDL_Set_Cursor (C : in SDL.C_Pointers.Cursor_Pointer) with
-         Import        => True,
-         Convention    => C,
-         External_Name => "SDL_SetCursor";
-   begin
-      SDL_Set_Cursor (Self.Internal);
-   end Set_Cursor;
-
-   procedure Free_Cursor (Self : in out Cursor) is
-      procedure SDL_Free_Cursor (C : in SDL.C_Pointers.Cursor_Pointer) with
-         Import        => True,
-         Convention    => C,
-         External_Name => "SDL_FreeCursor";
-   begin
-      SDL_Free_Cursor (Self.Internal);
-   end Free_Cursor;
 
    function Get_Global_State (X_Relative, Y_Relative : out SDL.Events.Mice.Movement_Values) return
      SDL.Events.Mice.Button_Masks is
