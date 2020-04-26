@@ -1,0 +1,9 @@
+aggregate project All_Tests is
+
+  for Project_Files use
+    ("tests.gpr",
+     "tests_image.gpr",
+     "tests_ttf.gpr",
+     "unit_tests.gpr");
+
+end All_Tests;

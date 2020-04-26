@@ -1,17 +1,16 @@
-with "sdlada.gpr";
-with "sdlada_image.gpr";
+with "sdlada";
+with "sdlada_ttf";
 with "shared";
 
-project Tests_Image is
+standard project Tests_TTF is
+
    for Source_Dirs use ("../test");
+   for Main        use ("ttf.adb");
+
    for Object_Dir  use Shared.Gen_Prefix & "obj-" & Project'Name;
    for Exec_Dir    use Shared.Gen_Prefix & "exe-" & Project'Name;
-   for Main        use ("load_surface.adb");
 
    package Compiler renames Shared.Compiler;
    package Linker   renames Shared.Linker;
 
-   --     package Builder is
-   --        for Default_Switches ("Ada") use ("-gnat2012", "-gnata"); --, "-gnatG");
-   --     end Builder;
-end Tests_Image;
+end Tests_TTF;

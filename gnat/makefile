@@ -1,128 +1,64 @@
-DESTDIR		?=	/opt
+# Portable Makefile for SDLAda.
 
-GPRMAKE		=	gprbuild
-GPRINSTALL	=	gprinstall
-GPRCLEAN	=	gprclean
-INSTALL		=	install
+# This part should be kept in sync with README.md.
 
-SDL_MODE	?=	debug
-SDL_PLATFORM	?=	linux
+# These variables are intended for override on the Make command line.
+SDL_PLATFORM                  = linux
+SDL_MODE                      = debug
+GPRBUILD                      = gprbuild
+GPRBUILD_OPTIONS              =
+GPRINSTALL                    = gprinstall
+GPRINSTALL_OPTIONS            =
+PKG_CONFIG                    = pkg-config
+DESTDIR                       = /opt
 
-SRC_DIR		=	../..
+# Build flags and shared object names only affect projects. If they
+# exist in the environment, gprbuild will see them too.  If the Make
+# command line contains overrides, Make will export them.
 
-SRCS		=	src/sdl.ads
+.PHONY: all all-dynamic check check-dynamic install install-dynamic clean
 
-TESTS_SRCS	=	$(SRC_DIR)/test/clipboard.adb \
-			$(SRC_DIR)/test/error.adb \
-			$(SRC_DIR)/test/libraries.adb \
-			$(SRC_DIR)/test/platform.adb \
-			$(SRC_DIR)/test/stream.adb \
-			$(SRC_DIR)/test/stream2.adb \
-			$(SRC_DIR)/test/test.adb \
-			$(SRC_DIR)/test/version.adb \
-			$(SRC_DIR)/test/maths/maths.ad[sb] \
-			$(SRC_DIR)/test/maths/maths.c
+######################################################################
+# This script provides the traditional Make interface, but might as
+# well be implemented in any script language, since all dependency
+# handling is delegated to gprbuild.
 
-GEN_KB		=	gen/src/sdl-events-keyboards.ads
+# The purpose of aggregate projects is to avoid unneeded executions of
+# gprbuild, with the slow initialization phase.
 
-ifeq (,$(filter $(SDL_PLATFORM), "linux" "windows" "bsd" "android"))
-SDL2_CONFIG	=	-cargs `sdl2-config --cflags` -largs `sdl2-config --libs` -lSDL2_ttf -lSDL2_image
-else ifeq ($(SDL_PLATFORM),macosx)
-SDL2_CONFIG	=
-endif
+pkgconfig_modules = sdl2 SDL2_image SDL2_ttf
+assignments = \
+  -XSDL_PLATFORM='$(SDL_PLATFORM)' \
+  -XSDL_MODE='$(SDL_MODE)' \
+  -Xpkgconfig_cflags="`$(PKG_CONFIG) --cflags $(pkgconfig_modules)`" \
+  -Xpkgconfig_libs="`$(PKG_CONFIG) --libs $(pkgconfig_modules)`"
 
-# With GNAT, all static libs end with .a
-LIB_NAME	=	lib/libadasdl.a
+# -m matters because we always rewrite the generated source.
+build_opts = -m -p $(GPRBUILD_OPTIONS) $(assignments)
+all: generate-keys
+	$(GPRBUILD) all_libraries.gpr -Xlibrary_kind=static $(build_opts)
+all-dynamic: generate-keys
+	$(GPRBUILD) all_libraries.gpr -Xlibrary_kind=dynamic $(build_opts)
+check: generate-keys
+	$(GPRBUILD) all_tests.gpr -Xlibrary_kind=static $(build_opts) \
+	  -largs `$(PKG_CONFIG) --libs --static $(pkgconfig_modules)`
 
-.PHONY: sdlada.gpr test_maths_build.gpr test.gpr tools.gpr
+check-dynamic: generate-keys
+	$(GPRBUILD) all_tests.gpr -Xlibrary_kind=dynamic $(build_opts)
 
-all: tools $(LIB_NAME) tests
+generator = gen/$(SDL_MODE)-$(SDL_PLATFORM)-static-exe-tools/gen_keyboard
+generated = gen/sdl-events-keyboards.ads
+.PHONY: generate-keys
+generate-keys:
+	$(GPRBUILD) tools.gpr -Xlibrary_kind=static $(build_opts)
+	$(generator) > $(generated)
 
-# TODO: Fix the compiler so we actually get shared libs!
-#
-
-#####################################################################################
-# SDL library
-
-$(LIB_NAME): sdlada.gpr $(GEN_KB)
-	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
-		-Psdlada.gpr
-
-.PHONY: clean-lib
-
-clean-lib:
-	$(GPRCLEAN) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
-		-Psdlada.gpr
-
-
-#####################################################################################
-# Tools
-
-tools: $(GEN_KB)
-
-$(GEN_KB): gen/$(SDL_MODE)/tools/gen_keyboard
-	./gen/$(SDL_MODE)/tools/gen_keyboard > $@
-
-gen/$(SDL_MODE)/tools/gen_keyboard:
-	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
-		-Ptools.gpr
-
-.PHONY: clean-kb clean-tools
-
-clean-kb:
-	-rm $(GEN_KB)
-
-clean-tools:
-
-	$(GPRCLEAN) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptools.gpr
-
-#####################################################################################
-# Tests
-
-tests: $(LIB_NAME) tests.gpr $(TESTS_SRCS)
-
-.PHONY: $(TESTS_SRCS)
-
-tests.gpr: $(TESTS_SRCS) gen/$(SDL_MODE)/test/libtestmaths.so
-	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
-		-Ptests.gpr ${SDL2_CONFIG}
-
-# Maths library
-
-gen/$(SDL_MODE)/test/libtestmaths.so: $(SRC_DIR)/test/maths/maths.ad[sb] $(SRC_DIR)/test/maths/maths.c
-	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
-		-Ptest_maths_build.gpr
-
-.PHONY: clean-tests
-
-clean-tests:
-	$(GPRCLEAN) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptests.gpr
-	$(GPRCLEAN) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptest_maths_build.gpr
-
-#####################################################################################
-# Unit tests
-
-unit_tests: $(LIB_NAME) build_unit_tests/unit_tests
-
-build_unit_tests/unit_tests:
-	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
-		-Punit_tests.gpr
-
-.PHONY: clean-unit_tests
-
-clean-unit_tests:
-	-$(GPRCLEAN) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Punit_tests.gpr
-
-#####################################################################################
-.PHONY: install
-
+install_opts = -f -p --prefix=$(DESTDIR) --build-name=$(SDL_MODE) \
+  $(GPRINSTALL_OPTIONS) $(assignments)
+install-dynamic: all-dynamic
+	$(GPRINSTALL) all_libraries.gpr -Xlibrary_kind=dynamic $(install_opts)
 install: all
-	$(GPRINSTALL) --prefix=$(DESTDIR) --build-name=$(SDL_MODE) -p -f \
-		-XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
-		-Psdlada.gpr
+	$(GPRINSTALL) all_libraries.gpr -Xlibrary_kind=static $(install_opts)
 
-#####################################################################################
-
-.PHONY: clean
-
-clean: clean-kb clean-tools clean-tests clean-unit_tests clean-lib
+clean:
+	rm -fr gen

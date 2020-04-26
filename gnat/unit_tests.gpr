@@ -1,11 +1,12 @@
 with "sdlada";
 with "aunit";
+with "shared";
 
 project Unit_Tests is
    for Languages   use ("Ada", "C");
-   for Source_Dirs use ("../../unit_tests");
-   for Object_Dir  use "gen/" & SDLAda.Build & "." & SDLAda.Mode &  "/lib/unit_tests/.obj";
-   for Exec_Dir    use "gen/" & SDLAda.Build & "." & SDLAda.Mode &  "/lib/unit_tests";
+   for Source_Dirs use ("../unit_tests");
+   for Object_Dir  use Shared.Gen_Prefix & "obj-" & Project'Name;
+   for Exec_Dir    use Shared.Gen_Prefix & "exe-" & Project'Name;
    for Main        use ("unit_tests.adb");
 
    -- package Ide is
@@ -16,11 +17,6 @@ project Unit_Tests is
    --    for Compiler_Command ("c") use "/home/laguest/opt/tinyada/bin/c++";
    -- end Ide;
 
-  package Compiler is
-     for Default_Switches ("Ada") use ("-O0", "-g", "-ffunction-sections", "-fdata-sections");
-  end Compiler;
-
-  package Builder is
-     for Default_Switches ("Ada") use ("-gnat2012", "-gnata");
-  end Builder;
+   package Compiler renames Shared.Compiler;
+   package Linker renames Shared.Linker;
 end Unit_Tests;

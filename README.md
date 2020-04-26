@@ -20,20 +20,41 @@ able to use the library however they wish without restrictions.
 
 ## Building
 
+A Makefile provides these targets:
+`all all-dynamic check check-dynamic install install-dynamic clean`.
+The `gprinstall` tool is not intended for installation of both a
+shared library and a static archive on the same system, so unless you
+use the `-dynamic` variant, only static archives are built and
+installed
+
 There are a number of variables which can be set to control the compilation:
 
-* SDL_PLATFORM = Can be set to one of the following values: linux, windows, macosx, ios or android
-* SDL_MODE     = Can be one of: debug or release. Defaults to debug.
+Variable            | Description                     | Allowed values                   | Default value
+------------------- |---------------------------------|----------------------------------|------------------
+SDL_PLATFORM        |                                 | linux windows macosx ios android | linux
+SDL_MODE            |                                 | debug release                    | debug
+sdlada_soname       | shared object name              |                                  | libsdlada.so.0
+sdlada_image_soname | shared object name              |                                  | libsdlada_image.0
+sdlada_ttf_soname   | shared object name              |                                  | libsdlada_ttf.0
+ADAFLAGS            | Options for the Ada compiler    | space-separated list             |
+CFLAGS              | Options for the C compiler      | space-separated list             |
+CPPFLAGS            | Options for the C preprocessor  | space-separated list             |
+LDFLAGS             | Options for the linker          | space-separated list             |
+GPRBUILD            | gprbuild executable             |                                  | gprbuild
+GPRBUILD_OPTIONS    | Options for gprbuild            | space-separated list             |
+GPRINSTALL          | gprinstall executable           |                                  | gprinstall
+GPRINSTALL_OPTIONS  | Options for gprinstall          |                                  |
+PKG_CONFIG          | pkg-Config executable           |                                  | pkg-config
+DESTDIR             | Gprinstall --prefix option      | path                             | /opt
 
 ```
-cd build/gnat
-make SDL_PLATFORM=linux SDL_MODE=release
+make -Cgnat SDL_PLATFORM=linux SDL_MODE=release
 ```
 
 ## Installation
 
 ```
-make SDL_PLATFORM=linux SDL_MODE=release DESTDIR=$HOME/opt/sdlada install
+make -Cgnat SDL_PLATFORM=linux SDL_MODE=release DESTDIR=$HOME/opt/sdlada install
 ```
 
 ## Copyright

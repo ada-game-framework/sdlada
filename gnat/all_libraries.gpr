@@ -1,0 +1,8 @@
+aggregate project All_Libraries is
+
+  for Project_Files use
+    ("sdlada.gpr",
+     "sdlada_image.gpr",
+     "sdlada_ttf.gpr");
+
+end All_Libraries;

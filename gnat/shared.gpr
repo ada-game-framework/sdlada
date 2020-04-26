@@ -1,0 +1,72 @@
+abstract project Shared is
+
+   --  No default value is declared here.  It is expected that this
+   --  project is driven by makefile, and setting default values in
+   --  two distinct places would be confusing.
+   --  Moreover, Make explicitly displays the value in build logs.
+
+   type Platform_Type is ("linux", "bsd", "windows", "macosx", "ios", "android");
+   Platform : Platform_Type             := External ("SDL_PLATFORM");
+
+   type Mode_Type is ("debug", "release");
+   Mode : Mode_Type                     := External ("SDL_MODE");
+
+   Adaflags                             := External_As_List ("ADAFLAGS", " ");
+   Cflags                               := External_As_List ("CFLAGS", " ");
+   Cppflags                             := External_As_List ("CPPFLAGS", " ");
+   Ldflags                              := External_As_List ("LDFLAGS", " ");
+
+   type Library_Kind_Type is ("dynamic", "static");
+   Kind : Library_Kind_Type             := External ("library_kind");
+
+   Gen_Prefix := "gen/" & Mode & "-" & Platform & "-" & Kind & "-";
+   --  Other projects are expected to set this.
+   --  for Exec_Dir    use Shared.Gen_Prefix & "exe-" & Project_Name;
+   --  for Library_Dir use Shared.Gen_Prefix & "lib-" & Project_Name;
+   --  for Object_Dir  use Shared.Gen_Prefix & "obj-" & Project_Name;
+
+   --  Pass all C flags for all dependencies to each compilation
+   --  command, unappropriate flags will be ignored.
+   Pkgconfig_Cflags                     := External_As_List ("pkgconfig_cflags", " ");
+   --  The same holds for shared objects thanks to --as-needed below.
+   Pkgconfig_Libs                       := External_As_List ("pkgconfig_libs", " ");
+
+   Safe_Ldflags :=
+     ("-Wl,--as-needed",
+      "-Wl,--no-undefined",
+      "-Wl,--no-copy-dt-needed-entries",
+      "-Wl,--no-allow-shlib-undefined");
+
+   package Compiler is
+      --  Template Compiler package for standard and library projects.
+
+      --  ADAFLAGS and friends reflect the end-user preferences, they
+      --  should come last and take precedence.
+
+      Common_Switches :=                   --  Flags for Ada and C.
+        ("-ffunction-sections",
+         "-fdata-sections");
+      case Mode is
+         when "debug" =>
+            Common_Switches := Common_Switches  & ("-O0", "-g", "-ggdb");
+         when "release" =>
+            Common_Switches := Common_Switches & ("-O2");
+      end case;
+
+      for Switches ("C") use Common_Switches & Pkgconfig_Cflags & Cflags & Cppflags;
+
+      for Switches ("Ada") use Common_Switches
+        & ("-gnat2012",
+           "-gnata",
+           "-gnato",
+           "-gnatE",
+           "-gnaty", "-gnaty-s", "-gnatyO", "-gnatyM120", "-gnatyx")
+        & Adaflags;
+   end Compiler;
+
+   package Linker is
+      --  Template Linker package for standard projects.
+      for Switches ("Ada") use Safe_Ldflags & Ldflags;
+   end Linker;
+
+end Shared;
