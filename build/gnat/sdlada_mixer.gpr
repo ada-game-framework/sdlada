@@ -1,0 +1,14 @@
+with "sdlada.gpr";
+
+library project SDLAda_Mixer is
+   Version := "2.2.0";
+
+   for Languages    use ("Ada", "C");
+   for Source_Dirs  use ("../../src/mixer");
+   for Library_Name use "sdlada_mixer";
+   for Object_Dir   use "gen/" & SDLAda.Build & "." & SDLAda.Mode & "/lib/.obj";
+   for Library_Dir  use "gen/" & SDLAda.Build & "." & SDLAda.Mode &  "/lib";
+   for Library_Version use "libsdlada_mixer.so." & Version;
+
+   package Compiler renames SDLAda.Compiler;
+end SDLAda_Mixer;
