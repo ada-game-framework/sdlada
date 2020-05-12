@@ -21,8 +21,6 @@
 --  SDL.Mixer
 --------------------------------------------------------------------------------------------------------------------
 
-with SDL.Audio;
-
 with Interfaces;
 with System;
 
@@ -42,14 +40,44 @@ package SDL.Mixer is
    procedure Initialise (Flags : in Init_Flag);
    procedure Quit;
 
-   subtype Sample_Rate  is SDL.Audio.Sample_Rate;
-   subtype Audio_Format is SDL.Audio.Audio_Format;
+   type Sample_Rate     is new Interfaces.Integer_32;
+   type Bits_Per_Sample is new Interfaces.Unsigned_8;
+
+   type Audio_Format is
+      record
+         Bits       : Bits_Per_Sample;
+         Float      : Boolean;
+         Padding_1  : Boolean := False;
+         Padding_2  : Boolean := False;
+         Padding_3  : Boolean := False;
+         Big_Endian : Boolean;
+         Padding_4  : Boolean := False;
+         Padding_5  : Boolean := False;
+         Signed     : Boolean;
+      end record
+      with Size => 16, Convention => C_Pass_By_Copy;
+
+   for Audio_Format use
+      record
+         Bits       at 0 range 0 .. 7;
+         Float      at 0 range 8 .. 8;
+         Padding_1  at 0 range 9 .. 9;
+         Padding_2  at 0 range 10 .. 10;
+         Padding_3  at 0 range 11 .. 11;
+         Big_Endian at 0 range 12 .. 12;
+         Padding_4  at 0 range 13 .. 13;
+         Padding_5  at 0 range 14 .. 14;
+         Signed     at 0 range 15 .. 15;
+      end record;
+
    type Channel_Count   is range 1 .. 8;
    type Volume_Type     is range 0 .. 128
      with Size => 8;
 
    Default_Frequency : constant Sample_Rate   := 22_050;
-   Default_Format    : constant Audio_Format  := Audio_S16_SYS;
+   Default_Format    : constant Audio_Format  := (Bits   => 16,
+                                                  Signed => True,
+                                                  others => False);
    Default_Channels  : constant Channel_Count := 2;
    Max_Volume        : constant Volumen_Type  := Volumen_Type'Last;
 
