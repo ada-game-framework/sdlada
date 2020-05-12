@@ -1,0 +1,34 @@
+--
+--
+
+with "sdlada.gpr";
+with "sdlada_mixer.gpr";
+
+project Tests_Mixer is
+
+   for Source_Dirs use ("../../test/mixer/");
+   for Object_Dir  use "gen/" & SDLAda.Build & "." & SDLAda.Mode & "/lib/test/.obj";
+   for Exec_Dir    use "gen/" & SDLAda.Build & "." & SDLAda.Mode & "/lib/test";
+   for Main        use ("mix_inspection.adb",
+                        "play_channels.adb",
+                        "play_group.adb",
+                        "play_efects.adb",
+                        "play_music.adb");
+
+   package Builder is
+
+      for Default_Switches ("Ada") use
+        ("-g",
+         "-gnateE",
+         "-gnatf",
+         "-gnatwa",
+         "-gnatwj",
+         "-gnatw.x",
+         "-gnat2012",
+         "-gnaty",
+         "-gnatyM99"
+        );
+
+   end Builder;
+
+end Tests_Mixer;
