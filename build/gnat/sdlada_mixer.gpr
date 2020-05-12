@@ -1,14 +1,47 @@
-with "sdlada.gpr";
+--
+--
+--
+
+with "sdlada_common.gpr";
 
 library project SDLAda_Mixer is
-   Version := "2.2.0";
+
+   Version := "2.0.4";
 
    for Languages    use ("Ada", "C");
    for Source_Dirs  use ("../../src/mixer");
    for Library_Name use "sdlada_mixer";
-   for Object_Dir   use "gen/" & SDLAda.Build & "." & SDLAda.Mode & "/lib/.obj";
-   for Library_Dir  use "gen/" & SDLAda.Build & "." & SDLAda.Mode &  "/lib";
-   for Library_Version use "libsdlada_mixer.so." & Version;
+   for Object_Dir   use "gen/" & SDLAda_Common.Mode & "/lib/mixer/.obj";
+   for Library_Dir  use "gen/" & SDLAda_Common.Mode &  "/lib/mixer/";
+   for Library_Kind use "static";
+   for Create_Missing_Dirs use "True";
 
-   package Compiler renames SDLAda.Compiler;
+   package Builder is
+      for Default_Switches ("Ada") use ("-F/Library/Frameworks",
+                                        "-framework", "SDL_mixer");
+
+   end Builder;
+
+   package Compiler is
+      Common_Switches := ("-ffunction-sections", "-fdata-sections");
+      C_Switches      := ();
+      Ada_Switches    := ("-gnat2012", "-gnata", "-gnato", "-gnatE",
+                          "-gnaty", "-gnaty-s", "-gnatyO", "-gnatyM120", "-gnatyx");
+
+      case SDLada_Common.Platform is
+
+         when "macosx" =>
+            C_Switches := C_Switches & ("-F/Library/Frameworks",
+                                        "-framework", "SDL_mixer");
+
+         when others =>
+            null;
+
+      end case;
+
+      for Default_Switches ("C")   use Common_Switches & C_Switches;
+      for Default_Switches ("Ada") use Common_Switches & Ada_Switches;
+
+   end Compiler;
+
 end SDLAda_Mixer;
