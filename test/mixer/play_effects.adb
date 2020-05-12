@@ -41,7 +41,7 @@ begin
    end if;
 
    Open (Frequency  => Default_Frequency,
-         Format     => 16#8010#,
+         Format     => (Bits => 16, Signed => True, others => False),  -- 16#8010#,
          Channels   => 2,
          Chunk_Size => 2048);
    Initialise (Init_Flac + Init_MOD + Init_MP3 + Init_OGG + Init_MID + Init_Opus);
