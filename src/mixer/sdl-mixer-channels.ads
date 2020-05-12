@@ -22,7 +22,6 @@
 --------------------------------------------------------------------------------------------------------------------
 
 package SDL.Mixer.Channels is
-   pragma Preelaborate;
 
    type Channel_Index is new Integer;
    All_Channels : constant Channel_Index := -1;

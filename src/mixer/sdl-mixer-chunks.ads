@@ -24,7 +24,6 @@
 with SDL.RWops;
 
 package SDL.Mixer.Chunks is
-   pragma Preelaborate;
 
    procedure Load_WAV_RW (Source      : in out SDL.RWops.RWops;
                           Free_Source : in     Boolean;

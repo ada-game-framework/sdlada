@@ -25,7 +25,6 @@
 with SDL.Versions;
 
 package SDL.Mixer.Versions is
-   pragma Preelaborate;
 
    --  These allow the user to determine which version of SDLAda_Mixer they compiled with.
    Compiled_Major : constant SDL.Versions.Version_Level with

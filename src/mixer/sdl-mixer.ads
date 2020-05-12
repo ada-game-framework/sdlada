@@ -25,7 +25,6 @@ with Interfaces;
 with System;
 
 package SDL.Mixer is
-   pragma Preelaborate;
 
    Mixer_Error : exception;
 

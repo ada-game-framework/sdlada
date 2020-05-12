@@ -24,7 +24,6 @@
 with SDL.Mixer.Channels;
 
 package SDL.Mixer.Groups is
-   pragma Preelaborate;
 
    use SDL.Mixer.Channels;
 

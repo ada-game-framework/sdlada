@@ -24,7 +24,6 @@
 with SDL.RWops;
 
 package SDL.Mixer.Music is
-   pragma Preelaborate;
 
    type Music_Type_Type is (None, CMD, WAV, Mod_C, MID, OGG, MP3,
                             MP3_Mad_Unused, Flac, MUS_MODPLUG_Unused, Opus);
