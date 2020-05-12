@@ -78,7 +78,7 @@ package SDL.Mixer is
                                                   Signed => True,
                                                   others => False);
    Default_Channels  : constant Channel_Count := 2;
-   Max_Volume        : constant Volumen_Type  := Volumen_Type'Last;
+   Max_Volume        : constant Volume_Type   := Volume_Type'Last;
 
    type Chunk_Type is private;
 
