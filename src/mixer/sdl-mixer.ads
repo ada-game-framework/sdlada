@@ -57,23 +57,23 @@ package SDL.Mixer is
 
    type Fading_Type is (No_Fading, Fading_Out, Fading_In);
 
-   procedure Open (Frequency  : in Sample_Rate;  -- Integer
-                   Format     : in Audio_Format; -- Interfaces.Unsigned_16;
-                   Channels   : in Channel_Count;  --  Integer;
+   procedure Open (Frequency  : in Sample_Rate;
+                   Format     : in Audio_Format;
+                   Channels   : in Channel_Count;
                    Chunk_Size : in Integer);
 
-   procedure Open (Frequency       : in Sample_Rate;   -- Integer;
-                   Format          : in Audio_Format;  -- Interfaces.Unsigned_16;
-                   Channels        : in Channel_Count; -- Integer;
+   procedure Open (Frequency       : in Sample_Rate;
+                   Format          : in Audio_Format;
+                   Channels        : in Channel_Count;
                    Chunk_Size      : in Integer;
                    Device_Name     : in String;
                    Allowed_Changes : in Integer);
 
    procedure Close;
 
-   procedure Query_Spec (Frequency : out Sample_Rate;  -- Integer;
-                         Format    : out Audio_Format; -- Interfaces.Unsigned_16;
-                         Channels  : out Channel_Count);  -- Integer);
+   procedure Query_Spec (Frequency : out Sample_Rate;
+                         Format    : out Audio_Format;
+                         Channels  : out Channel_Count);
 
 private
 
