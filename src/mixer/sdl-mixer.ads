@@ -1,4 +1,6 @@
 --------------------------------------------------------------------------------------------------------------------
+--  Copyright (C) 1997-2018 Sam Lantinga <slouken@libsdl.org>
+--
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
 --  arising from the use of this software.
@@ -37,7 +39,11 @@ package SDL.Mixer is
    Init_Opus : constant Init_Flag := 16#0000_0040#;
 
    procedure Initialise (Flags : in Init_Flag);
+   --  Loads dynamic libraries and prepares them for use. Flags should be no or
+   --  more flags from Init_Flags OR'd together. Raises Mixer_Error on failure.
+
    procedure Quit;
+   --  Unloads libraries loaded with Initialize.
 
    type Sample_Rate     is new Interfaces.Integer_32;
    type Bits_Per_Sample is new Interfaces.Unsigned_8;
@@ -83,11 +89,13 @@ package SDL.Mixer is
    type Chunk_Type is private;
 
    type Fading_Type is (No_Fading, Fading_Out, Fading_In);
+   --  The different fading types supported
 
    procedure Open (Frequency  : in Sample_Rate;
                    Format     : in Audio_Format;
                    Channels   : in Channel_Count;
                    Chunk_Size : in Integer);
+   --  Open the mixer with a certain audio format
 
    procedure Open (Frequency       : in Sample_Rate;
                    Format          : in Audio_Format;
@@ -95,6 +103,7 @@ package SDL.Mixer is
                    Chunk_Size      : in Integer;
                    Device_Name     : in String;
                    Allowed_Changes : in Integer);
+   --  Open the mixer with specific device and certain audio format
 
    procedure Close;
 
@@ -109,8 +118,9 @@ private
          Allocated : Boolean;
          Abuf      : System.Address;
          Alen      : Interfaces.Unsigned_32;
-         Volume    : Volume_Type;
+         Volume    : Volume_Type;            -- Per-sample volume, 0-128
       end record;
+   --  The internal format for an audio chunk
 
    type Chunk_Type is access all Chunk_Record;
 

@@ -181,9 +181,6 @@ package body SDL.Mixer.Music is
    end Fade_In_Pos;
 
 
---   procedure Hook;
-
-
    procedure Volume (New_Volume : in     Volume_Type;
                      Old_Volume :    out Volume_Type)
    is
@@ -316,9 +313,6 @@ package body SDL.Mixer.Music is
    end Fade_Out;
 
 
---   procedure Hook_Finished;
-
-
    function Get_Type (Music : in Music_Type) return Music_Type_Type
    is
       function Mix_Get_Music_Type (Music : in Music_Type) return C.int
@@ -370,7 +364,6 @@ package body SDL.Mixer.Music is
       return Fading_Type'Val (Result);
    end Fading;
 
---   function Get_Hook_Data return Unsigned_32;
 
 end SDL.Mixer.Music;
 

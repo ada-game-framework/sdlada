@@ -1,4 +1,6 @@
 --------------------------------------------------------------------------------------------------------------------
+--  Copyright (C) 1997-2018 Sam Lantinga <slouken@libsdl.org>
+--
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
 --  arising from the use of this software.
@@ -32,13 +34,35 @@ package SDL.Mixer.Groups is
 
    procedure Reserve_Channels (Desired_Channels : in     Natural;
                                Got_Channels     :    out Natural);
-   procedure Channel_To_Group (Channel : in Channel_Index; Group : in Group_Number);
-   procedure Channels_To_Group (From, To : in Channel_Index; Group : in Group_Number);
+   --  Reserve the first channels (0 -> n-1) for the application, i.e. don't
+   --  allocate them dynamically to the next sample if requested with a -1
+   --  value below. Returns the number of reserved channels.
+
+   procedure Channel_To_Group (Channel : in Channel_Index;
+                               Group   : in Group_Number);
+   procedure Channels_To_Group (From, To : in Channel_Index;
+                                Group    : in Group_Number);
+
    function Count (Group : in Group_Number) return Natural;
+   --  Finds the "oldest" sample playing in a group of channels
+
    function Available (Group : in Group_Number) return Channel_Index;
+   --  Returns the number of channels in a group. This is also a subtle
+   --  way to get the total number of channels when 'tag' is -1
+
    function Oldest (Group : in Group_Number) return Channel_Index;
+
    function Newer (Group : in Group_Number) return Channel_Index;
-   procedure Fade_Out (Group : in Group_Number; Ms : in Integer);
+   --  Finds the "most recent" (i.e. last) sample playing in a group of
+   --  channels
+
+   procedure Fade_Out (Group : in Group_Number;
+                       Ms    : in Integer);
+   --  Halt a channel, fading it out progressively till it's silent
+   --  The Ms parameter indicates the number of milliseconds the fading
+   --  will take.
+
    procedure Halt (Group : in Group_Number);
+   --  Halt playing of a particular channel
 
 end SDL.Mixer.Groups;
