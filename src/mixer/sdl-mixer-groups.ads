@@ -40,8 +40,12 @@ package SDL.Mixer.Groups is
 
    procedure Channel_To_Group (Channel : in Channel_Index;
                                Group   : in Group_Number);
+   --  Assign several consecutive channels to a group
+
    procedure Channels_To_Group (From, To : in Channel_Index;
                                 Group    : in Group_Number);
+   --  Finds the first available channel in a group of channels.
+   --  Raising Mixer_Error if none are available.
 
    function Count (Group : in Group_Number) return Natural;
    --  Finds the "oldest" sample playing in a group of channels

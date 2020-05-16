@@ -76,9 +76,10 @@ package body SDL.Mixer.Groups is
       Channel_Count : constant C.int := Mix_Group_Channels (C.int (From),
                                                             C.int (To),
                                                             C.int (Group));
-      pragma Unreferenced (Channel_Count);
    begin
-      null;
+      if Channel_Count = -1 then
+         raise Mixer_Error with SDL.Error.Get;
+      end if;
    end Channels_To_Group;
 
    -----------
