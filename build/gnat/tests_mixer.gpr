@@ -12,7 +12,6 @@ project Tests_Mixer is
    for Main        use ("mix_inspection.adb",
                         "play_channels.adb",
                         "play_group.adb",
-                        "play_effects.adb",
                         "play_music.adb");
 
    for Create_Missing_Dirs use "True";
