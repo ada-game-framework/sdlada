@@ -106,10 +106,12 @@ package SDL.Mixer is
    --  Open the mixer with specific device and certain audio format
 
    procedure Close;
+   --  Close the mixer, halting all playing audio
 
    procedure Query_Spec (Frequency : out Sample_Rate;
                          Format    : out Audio_Format;
                          Channels  : out Channel_Count);
+   --  Find out what the actual audio device parameters are
 
 private
 
