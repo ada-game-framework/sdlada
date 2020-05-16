@@ -23,6 +23,9 @@ with SDL.Error;
 
 package body SDL.Mixer.Groups is
 
+   ----------------------
+   -- Reverse_Channels --
+   ----------------------
 
    procedure Reserve_Channels (Desired_Channels : in     Natural;
                                Got_Channels     :    out Natural)
@@ -37,6 +40,9 @@ package body SDL.Mixer.Groups is
       Got_Channels := Natural (Got);
    end Reserve_Channels;
 
+   ----------------------
+   -- Channel_To_Group --
+   ----------------------
 
    procedure Channel_To_Group (Channel : in Channel_Index; Group : in Group_Number)
    is
@@ -54,6 +60,9 @@ package body SDL.Mixer.Groups is
       end if;
    end Channel_To_Group;
 
+   -----------------------
+   -- Channels_To_Group --
+   -----------------------
 
    procedure Channels_To_Group (From, To : in Channel_Index; Group : in Group_Number)
    is
@@ -72,6 +81,9 @@ package body SDL.Mixer.Groups is
       null;
    end Channels_To_Group;
 
+   -----------
+   -- Count --
+   -----------
 
    function Count (Group : in Group_Number) return Natural
    is
@@ -85,6 +97,9 @@ package body SDL.Mixer.Groups is
       return Natural (Channel_Count);
    end Count;
 
+   ---------------
+   -- Available --
+   ---------------
 
    function Available (Group : in Group_Number) return Channel_Index
    is
@@ -101,6 +116,9 @@ package body SDL.Mixer.Groups is
       return Channel_Index (Channel_Found);
    end Available;
 
+   ------------
+   -- Oldest --
+   ------------
 
    function Oldest (Group : in Group_Number) return Channel_Index
    is
@@ -117,6 +135,9 @@ package body SDL.Mixer.Groups is
       return Channel_Index (Channel_Found);
    end Oldest;
 
+   -----------
+   -- Newer --
+   -----------
 
    function Newer (Group : in Group_Number) return Channel_Index
    is
@@ -133,6 +154,9 @@ package body SDL.Mixer.Groups is
       return Channel_Index (Channel_Found);
    end Newer;
 
+   --------------
+   -- Fade_Out --
+   --------------
 
    procedure Fade_Out (Group : in Group_Number; Ms : in Integer)
    is
@@ -149,6 +173,9 @@ package body SDL.Mixer.Groups is
       null;
    end Fade_Out;
 
+   ----------
+   -- Halt --
+   ----------
 
    procedure Halt (Group : in Group_Number)
    is

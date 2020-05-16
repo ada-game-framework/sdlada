@@ -25,6 +25,9 @@ with Interfaces.C.Strings;
 
 package body SDL.Mixer.Music is
 
+   ------------------------
+   -- Number_Of_Decoders --
+   ------------------------
 
    function Number_Of_Decoders return Natural
    is
@@ -37,6 +40,9 @@ package body SDL.Mixer.Music is
       return Natural (Mix_Get_Num_Music_Decoders);
    end Number_Of_Decoders;
 
+   -----------------
+   -- Decode_Name --
+   -----------------
 
    function Decoder_Name (Index : in Positive) return String
    is
@@ -51,6 +57,9 @@ package body SDL.Mixer.Music is
       return Value (Mix_Get_Music_Decoder_Name (Index_C));
    end Decoder_Name;
 
+   --------------
+   -- Load_MUS --
+   --------------
 
    procedure Load_MUS (Filename : in     String;
                        Music    :    out Music_Type)
@@ -70,6 +79,9 @@ package body SDL.Mixer.Music is
       Music := Music_C;
    end Load_MUS;
 
+   -----------------
+   -- Load_MUS_RW --
+   -----------------
 
    procedure Load_MUS_RW (Source      : in out SDL.RWops.RWops;
                           Free_Source : in     Boolean;
@@ -89,6 +101,9 @@ package body SDL.Mixer.Music is
       Music := Music_C;
    end Load_MUS_RW;
 
+   ----------------------
+   -- Load_MUS_Type_RW --
+   ----------------------
 
    procedure Load_MUS_Type_RW (Source      : in out SDL.RWops.RWops;
                                Typ         : in     Music_Type_Type;
@@ -111,6 +126,9 @@ package body SDL.Mixer.Music is
       Music := Music_C;
    end Load_MUS_Type_RW;
 
+   ----------
+   -- Free --
+   ----------
 
    procedure Free (Music : in out Music_Type)
    is
@@ -123,6 +141,9 @@ package body SDL.Mixer.Music is
       Mix_Free_Music (Music);
    end Free;
 
+   ----------
+   -- Play --
+   ----------
 
    procedure Play (Music : in Music_Type; Loops : in Loop_Count)
    is
@@ -139,6 +160,9 @@ package body SDL.Mixer.Music is
       end if;
    end Play;
 
+   -------------
+   -- Fade_In --
+   -------------
 
    procedure Fade_In (Music : in Music_Type; Loops : in Loop_Count; Ms : in Integer)
    is
@@ -156,6 +180,9 @@ package body SDL.Mixer.Music is
       end if;
    end Fade_In;
 
+   -----------------
+   -- Fade_In_Pos --
+   -----------------
 
    procedure Fade_In_Pos (Music    : in Music_Type;
                           Loops    : in Loop_Count;
@@ -180,6 +207,9 @@ package body SDL.Mixer.Music is
       end if;
    end Fade_In_Pos;
 
+   ------------
+   -- Volume --
+   ------------
 
    procedure Volume (New_Volume : in     Volume_Type;
                      Old_Volume :    out Volume_Type)
@@ -196,6 +226,9 @@ package body SDL.Mixer.Music is
       Old_Volume := Volume_Type (Old_Volume_C);
    end Volume;
 
+   ------------
+   -- Volume --
+   ------------
 
    procedure Volume (New_Volume : in Volume_Type)
    is
@@ -205,6 +238,9 @@ package body SDL.Mixer.Music is
       Volume (New_Volume, Dummy);
    end Volume;
 
+   ----------------
+   -- Get_Volume --
+   ----------------
 
    function Get_Volume return Volume_Type
    is
@@ -219,6 +255,9 @@ package body SDL.Mixer.Music is
       return Volume_Type (Old_Volume_C);
    end Get_Volume;
 
+   -----------
+   -- Pause --
+   -----------
 
    procedure Pause
    is
@@ -231,6 +270,9 @@ package body SDL.Mixer.Music is
       Mix_Pause_Music;
    end Pause;
 
+   ------------
+   -- Resume --
+   ------------
 
    procedure Resume
    is
@@ -243,6 +285,9 @@ package body SDL.Mixer.Music is
       Mix_Resume_Music;
    end Resume;
 
+   ------------
+   -- Rewind --
+   ------------
 
    procedure Rewind
    is
@@ -255,6 +300,9 @@ package body SDL.Mixer.Music is
       Mix_Rewind_Music;
    end Rewind;
 
+   ------------------
+   -- Set_Position --
+   ------------------
 
    procedure Set_Position (Position : in Long_Float) is
       function Mix_Set_Music_Position (Position : in Long_Float) return C.int
@@ -268,6 +316,10 @@ package body SDL.Mixer.Music is
          raise Mixer_Error with SDL.Error.Get;
       end if;
    end Set_Position;
+
+   -------------
+   -- Set_CMD --
+   -------------
 
    procedure Set_CMD (Command : in String)
    is
@@ -285,6 +337,9 @@ package body SDL.Mixer.Music is
       end if;
    end Set_CMD;
 
+   ----------
+   -- Halt --
+   ----------
 
    procedure Halt is
       function Mix_Halt_Music return C.int
@@ -298,6 +353,9 @@ package body SDL.Mixer.Music is
       null;
    end Halt;
 
+   --------------
+   -- Fade_Out --
+   --------------
 
    procedure Fade_Out (Ms : in Integer) is
       function Mix_Fade_Out_Music (Ms : in C.int) return C.int
@@ -312,6 +370,9 @@ package body SDL.Mixer.Music is
       end if;
    end Fade_Out;
 
+   --------------
+   -- Get_Type --
+   --------------
 
    function Get_Type (Music : in Music_Type) return Music_Type_Type
    is
@@ -325,6 +386,9 @@ package body SDL.Mixer.Music is
       return Music_Type_Type'Val (Result);
    end Get_Type;
 
+   ----------------
+   -- Is_Playing --
+   ----------------
 
    function Is_Playing return Boolean
    is
@@ -338,6 +402,9 @@ package body SDL.Mixer.Music is
       return Result /= 0;
    end Is_Playing;
 
+   ---------------
+   -- Is_Paused --
+   ---------------
 
    function Is_Paused return Boolean
    is
@@ -351,6 +418,9 @@ package body SDL.Mixer.Music is
       return Result /= 0;
    end Is_Paused;
 
+   ------------
+   -- Fading --
+   ------------
 
    function Fading return Fading_Type
    is

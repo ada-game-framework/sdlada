@@ -23,6 +23,9 @@ with Interfaces.C.Strings;
 
 package body SDL.Mixer is
 
+   ----------------
+   -- Initialise --
+   ----------------
 
    procedure Initialise (Flags : in Init_Flag)
    is
@@ -39,6 +42,9 @@ package body SDL.Mixer is
       end if;
    end Initialise;
 
+   ----------
+   -- Quit --
+   ----------
 
    procedure Quit
    is
@@ -51,6 +57,9 @@ package body SDL.Mixer is
       Mix_Quit;
    end Quit;
 
+   ----------
+   -- Open --
+   ----------
 
    procedure Open (Frequency  : in Sample_Rate;
                    Format     : in Audio_Format;
@@ -58,7 +67,7 @@ package body SDL.Mixer is
                    Chunk_Size : in Integer)
    is
       function Mix_Open_Audio (Frequency  : in C.int;
-                               Format     : in Audio_Format; -- Interfaces.Unsigned_16;
+                               Format     : in Audio_Format;
                                Channels   : in C.int;
                                Chunk_Size : in C.int)
                               return C.int
@@ -76,6 +85,9 @@ package body SDL.Mixer is
       end if;
    end Open;
 
+   ----------
+   -- Open --
+   ----------
 
    procedure Open (Frequency       : in Sample_Rate;
                    Format          : in Audio_Format;
@@ -86,7 +98,7 @@ package body SDL.Mixer is
    is
       use Interfaces.C.Strings;
       function Mix_Open_Audio_Device (Frequency       : in C.int;
-                                      Format          : in Audio_Format; -- Interfaces.Unsigned_16;
+                                      Format          : in Audio_Format;
                                       Channels        : in C.int;
                                       Chunk_Size      : in C.int;
                                       Device_Name     : in chars_ptr;
@@ -108,6 +120,9 @@ package body SDL.Mixer is
       end if;
    end Open;
 
+   -----------
+   -- Close --
+   -----------
 
    procedure Close
    is
@@ -120,6 +135,9 @@ package body SDL.Mixer is
       Mix_Close_Audio;
    end Close;
 
+   ----------------
+   -- Query_Spec --
+   ----------------
 
    procedure Query_Spec (Frequency : out Sample_Rate;
                          Format    : out Audio_Format;
@@ -127,14 +145,14 @@ package body SDL.Mixer is
    is
       use Interfaces;
       procedure Mix_Query_Spec (Frequency : out C.int;
-                                Format    : out Audio_Format; -- Unsigned_16;
+                                Format    : out Audio_Format;
                                 Channels  : out C.int)
         with
         Import        => True,
         Convention    => C,
         External_Name => "Mix_QuerySpec";
       Frequency_C : C.int;
-      Format_C    : Audio_Format; -- Unsigned_16;
+      Format_C    : Audio_Format;
       Channels_C  : C.int;
    begin
       Mix_Query_Spec (Frequency_C, Format_C, Channels_C);

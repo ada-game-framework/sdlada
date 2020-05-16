@@ -23,6 +23,9 @@ with SDL.Error;
 
 package body SDL.Mixer.Channels is
 
+   --------------
+   -- Allocate --
+   --------------
 
    procedure Allocate (Channel_Count : in Positive)
    is
@@ -37,6 +40,9 @@ package body SDL.Mixer.Channels is
       null;
    end Allocate;
 
+   ------------
+   -- Volume --
+   ------------
 
    procedure Volume (Channel : in Channel_Index; New_Volume : in Volume_Type)
    is
@@ -53,6 +59,9 @@ package body SDL.Mixer.Channels is
       null;
    end Volume;
 
+   ----------
+   -- Play --
+   ----------
 
    procedure Play (Channel : in Channel_Index; Chunk : in Chunk_Type; Loops : in Loop_Count)
    is
@@ -60,6 +69,9 @@ package body SDL.Mixer.Channels is
       Play_Timed (Channel, Chunk, Loops, Ticks => -1);
    end Play;
 
+   ----------------
+   -- Play_Timed --
+   ----------------
 
    procedure Play_Timed (Channel : in Channel_Index;
                          Chunk   : in Chunk_Type;
@@ -83,6 +95,9 @@ package body SDL.Mixer.Channels is
       null;
    end Play_Timed;
 
+   -------------
+   -- Fade_In --
+   -------------
 
    procedure Fade_In (Channel : in Channel_Index;
                       Chunk   : in Chunk_Type;
@@ -93,6 +108,9 @@ package body SDL.Mixer.Channels is
       Fade_In_Timed (Channel, Chunk, Loops, Ms, Ticks => -1);
    end Fade_In;
 
+   -------------------
+   -- Fade_In_Timed --
+   -------------------
 
    procedure Fade_In_Timed (Channel : in Channel_Index;
                             Chunk   : in Chunk_Type;
@@ -119,6 +137,9 @@ package body SDL.Mixer.Channels is
       null;
    end Fade_In_Timed;
 
+   -----------
+   -- Pause --
+   -----------
 
    procedure Pause (Channel : in Channel_Index)
    is
@@ -131,6 +152,9 @@ package body SDL.Mixer.Channels is
       Mix_Pause (C.int (Channel));
    end Pause;
 
+   ------------
+   -- Resume --
+   ------------
 
    procedure Resume (Channel : in Channel_Index)
    is
@@ -143,6 +167,9 @@ package body SDL.Mixer.Channels is
       Mix_Resume (C.int (Channel));
    end Resume;
 
+   ----------
+   -- Halt --
+   ----------
 
    procedure Halt (Channel : in Channel_Index)
    is
@@ -157,6 +184,9 @@ package body SDL.Mixer.Channels is
       null;
    end Halt;
 
+   ------------
+   -- Expire --
+   ------------
 
    procedure Expire (Channel : in Channel_Index; Ticks : in Ticks_Count)
    is
@@ -171,6 +201,9 @@ package body SDL.Mixer.Channels is
       null;
    end Expire;
 
+   --------------
+   -- Fade_Out --
+   --------------
 
    procedure Fade_Out (Channel : in Channel_Index; Ms : in Time_Ms)
    is
@@ -187,9 +220,9 @@ package body SDL.Mixer.Channels is
       null;
    end Fade_Out;
 
-
---   procedure Finished;
-
+   ----------------
+   -- Is_Playing --
+   ----------------
 
    function Is_Playing (Channel : in Channel_Index) return Boolean
    is
@@ -203,6 +236,9 @@ package body SDL.Mixer.Channels is
       return Result /= 0;
    end Is_Playing;
 
+   -------------------
+   -- Playing_Count --
+   -------------------
 
    function Playing_Count return Natural
    is
@@ -216,6 +252,9 @@ package body SDL.Mixer.Channels is
       return Natural (Result);
    end Playing_Count;
 
+   ---------------
+   -- Is_Paused --
+   ---------------
 
    function Is_Paused (Channel : in Channel_Index) return Boolean
    is
@@ -229,6 +268,9 @@ package body SDL.Mixer.Channels is
       return Result /= 0;
    end Is_Paused;
 
+   ------------------
+   -- Paused_Count --
+   ------------------
 
    function Paused_Count return Natural
    is
@@ -242,6 +284,9 @@ package body SDL.Mixer.Channels is
       return Natural (Result);
    end Paused_Count;
 
+   ------------
+   -- Fading --
+   ------------
 
    function Fading (Channel : in Channel_Index) return Fading_Type
    is
@@ -255,6 +300,9 @@ package body SDL.Mixer.Channels is
       return Fading_Type'Val (Result);
    end Fading;
 
+   ---------------
+   -- Get_Chunk --
+   ---------------
 
    function Get_Chunk (Channel : in Channel_Index) return Chunk_Type
    is

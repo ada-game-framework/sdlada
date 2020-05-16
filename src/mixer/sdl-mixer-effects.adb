@@ -23,6 +23,9 @@ with SDL.Error;
 
 package body SDL.Mixer.Effects is
 
+   --------------
+   -- Register --
+   --------------
 
    procedure Register (Channel  : in Channel_Index;
                        Effect   : in Effect_Function_Access;
@@ -46,6 +49,9 @@ package body SDL.Mixer.Effects is
       end if;
    end Register;
 
+   ----------------
+   -- Unregister --
+   ----------------
 
    procedure Unregister (Channel : in Channel_Index;
                          Effect  : in Effect_Function_Access)
@@ -64,6 +70,9 @@ package body SDL.Mixer.Effects is
       end if;
    end Unregister;
 
+   --------------------
+   -- Unregister_All --
+   --------------------
 
    procedure Unregister_All (Channel : in Channel_Index)
    is
@@ -79,6 +88,9 @@ package body SDL.Mixer.Effects is
       end if;
    end Unregister_All;
 
+   ------------------
+   -- Set_Post_Mix --
+   ------------------
 
    procedure Set_Post_Mix (Mix_Function : in Mix_Function_Access; Argument : in Integer)
    is
@@ -95,6 +107,9 @@ package body SDL.Mixer.Effects is
       end if;
    end Set_Post_Mix;
 
+   -----------------
+   -- Set_Panning --
+   -----------------
 
    procedure Set_Panning (Channel : in Channel_Index; Left, Right : in Volumen_Type)
    is
@@ -115,6 +130,9 @@ package body SDL.Mixer.Effects is
       end if;
    end Set_Panning;
 
+   ------------------
+   -- Set_Distance --
+   ------------------
 
    procedure Set_Distance (Channel : in Channel_Index; Distance : in Distance_Type)
    is
@@ -132,6 +150,9 @@ package body SDL.Mixer.Effects is
       end if;
    end Set_Distance;
 
+   ------------------
+   -- Set_Position --
+   ------------------
 
    procedure Set_Position (Channel  : in Channel_Index;
                            Angle    : in Angle_Type;
@@ -154,6 +175,9 @@ package body SDL.Mixer.Effects is
       end if;
    end Set_Position;
 
+   ------------------------
+   -- Set_Reverse_Stereo --
+   ------------------------
 
    procedure Set_Reverse_Stereo (Channel : in Channel_Index; Flip : in Boolean)
    is

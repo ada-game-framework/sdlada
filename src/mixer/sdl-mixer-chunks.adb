@@ -25,6 +25,9 @@ with Interfaces.C.Strings;
 
 package body SDL.Mixer.Chunks is
 
+   -----------------
+   -- Load_WAV_RW --
+   -----------------
 
    procedure Load_WAV_RW (Source      : in out SDL.RWops.RWops;
                           Free_Source : in     Boolean;
@@ -45,6 +48,9 @@ package body SDL.Mixer.Chunks is
       Chunk := Chunk_C;
    end Load_WAV_RW;
 
+   --------------
+   -- Load_WAV --
+   --------------
 
    procedure Load_WAV (Filename : in     String;
                        Chunk    :    out Chunk_Type)
@@ -55,6 +61,9 @@ package body SDL.Mixer.Chunks is
       Load_WAV_RW (Ops, True, Chunk);
    end Load_WAV;
 
+   --------------------
+   -- Quick_Load_WAV --
+   --------------------
 
    procedure Quick_Load_WAV (Mem   : in     System.Address;
                              Chunk :    out Chunk_Type)
@@ -72,6 +81,9 @@ package body SDL.Mixer.Chunks is
       Chunk := Result;
    end Quick_Load_WAV;
 
+   --------------------
+   -- Quick_Load_RAW --
+   --------------------
 
    procedure Quick_Load_RAW (Mem   : in     System.Address;
                              Len   : in     Byte_Count;
@@ -92,6 +104,9 @@ package body SDL.Mixer.Chunks is
       Chunk := Result;
    end Quick_Load_RAW;
 
+   ----------
+   -- Free --
+   ----------
 
    procedure Free (Chunk : in out Chunk_Type)
    is
@@ -104,6 +119,9 @@ package body SDL.Mixer.Chunks is
       Mix_Free_Chunk (Chunk);
    end Free;
 
+   ------------------------
+   -- Number_Of_Decoders --
+   ------------------------
 
    function Number_Of_Decoders return Natural
    is
@@ -116,6 +134,9 @@ package body SDL.Mixer.Chunks is
       return Natural (Mix_Get_Num_Chunk_Decoders);
    end Number_Of_Decoders;
 
+   ------------------
+   -- Decoder_Name --
+   ------------------
 
    function Decoder_Name (Index : in Positive) return String
    is
@@ -130,6 +151,9 @@ package body SDL.Mixer.Chunks is
       return Value (Mix_Get_Chunk_Decoder_Name (Index_C));
    end Decoder_Name;
 
+   -----------------
+   -- Has_Decoder --
+   -----------------
 
    function Has_Decoder (Name : in String) return Boolean
    is

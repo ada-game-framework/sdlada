@@ -25,6 +25,10 @@ with System;
 package body SDL.Mixer.Versions is
    package C renames Interfaces.C;
 
+   -----------------
+   -- Linked_With --
+   -----------------
+
    procedure Linked_With (Info : in out SDL.Versions.Version) is
       function IMG_Linked_Version return access SDL.Versions.Version with
         Import        => True,
