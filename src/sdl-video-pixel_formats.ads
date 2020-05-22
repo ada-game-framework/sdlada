@@ -649,8 +649,8 @@ package SDL.Video.Pixel_Formats is
 
          --  This is mainly padding to make sure the record size matches what is expected from C.
          Private_Part : Private_Pixel_Format;
-      end record with
-     Convention => C;
+      end record;
+   pragma Convention (C, Pixel_Format);
 
    --  TODO: Possibly change this to a controlled type.
    type Pixel_Format_Access is access all Pixel_Format with
