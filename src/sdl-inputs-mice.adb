@@ -21,6 +21,7 @@
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C;
+private with SDL.C_Pointers;
 with SDL.Error;
 
 package body SDL.Inputs.Mice is

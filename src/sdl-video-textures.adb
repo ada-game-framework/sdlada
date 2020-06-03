@@ -21,6 +21,7 @@
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C;
+with System;
 with Ada.Unchecked_Conversion;
 with SDL.Error;
 
