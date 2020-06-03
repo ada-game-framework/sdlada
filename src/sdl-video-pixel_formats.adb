@@ -32,7 +32,7 @@ package body SDL.Video.Pixel_Formats is
         Convention    => C,
         External_Name => "SDL_GetPixelFormatName";
 
-      C_Str : C.Strings.chars_ptr := SDL_Get_Pixel_Format_Name (Format);
+      C_Str : constant C.Strings.chars_ptr := SDL_Get_Pixel_Format_Name (Format);
    begin
       return C.Strings.Value (C_Str);
    end Image;
@@ -78,7 +78,7 @@ package body SDL.Video.Pixel_Formats is
         Convention    => C,
         External_Name => "SDL_PixelFormatEnumToMasks";
 
-      Error : C.int := SDL_Pixel_Format_Enum_To_Masks
+      Error : constant C.int := SDL_Pixel_Format_Enum_To_Masks
         (Format,
          Bits,
          Red_Mask,

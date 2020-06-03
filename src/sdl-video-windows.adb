@@ -98,7 +98,7 @@ package body SDL.Video.Windows is
         Convention    => C,
         External_Name => "SDL_SetWindowBrightness";
 
-      Result : C.int := SDL_Set_Brightness (Self.Internal, C.C_float (How_Bright));
+      Result : constant C.int := SDL_Set_Brightness (Self.Internal, C.C_float (How_Bright));
    begin
       if Result /= Success then
          raise Window_Error with SDL.Error.Get;
@@ -117,8 +117,8 @@ package body SDL.Video.Windows is
         Convention    => C,
         External_Name => "SDL_GetWindowData";
 
-      C_Name_Str : C.Strings.chars_ptr := C.Strings.New_String (Name);
-      Item       : User_Data_Access    := To_Data_Access (SDL_Get_Window_Data (Self.Internal, C_Name_Str));
+      C_Name_Str : C.Strings.chars_ptr       := C.Strings.New_String (Name);
+      Item       : constant User_Data_Access := To_Data_Access (SDL_Get_Window_Data (Self.Internal, C_Name_Str));
    begin
       C.Strings.Free (C_Name_Str);
 
@@ -133,10 +133,10 @@ package body SDL.Video.Windows is
         Convention    => C,
         External_Name => "SDL_SetWindowData";
 
-      C_Name_Str    : C.Strings.chars_ptr := C.Strings.New_String (Name);
-      Previous_Data : User_Data_Access    := To_Data_Access (SDL_Set_Window_Data (Self.Internal,
-                                                             C_Name_Str,
-                                                             To_Address (Item)));
+      C_Name_Str    : C.Strings.chars_ptr       := C.Strings.New_String (Name);
+      Previous_Data : constant User_Data_Access := To_Data_Access (SDL_Set_Window_Data (Self.Internal,
+                                                                                        C_Name_Str,
+                                                                                        To_Address (Item)));
    begin
       C.Strings.Free (C_Name_Str);
 
@@ -149,7 +149,7 @@ package body SDL.Video.Windows is
         Convention    => C,
         External_Name => "SDL_GetWindowDisplayIndex";
 
-      Total : C.int := SDL_Get_Window_Display_Index (Self.Internal);
+      Total : constant C.int := SDL_Get_Window_Display_Index (Self.Internal);
    begin
       if Total < 0 then
          raise Window_Error with SDL.Error.Get;
@@ -165,7 +165,7 @@ package body SDL.Video.Windows is
         Convention    => C,
         External_Name => "SDL_GetWindowDisplayMode";
 
-      Result : C.int := SDL_Get_Window_Display_Mode (Self.Internal, Mode);
+      Result : constant C.int := SDL_Get_Window_Display_Mode (Self.Internal, Mode);
    begin
       if Result /= Success then
          raise Window_Error with SDL.Error.Get;
@@ -179,7 +179,7 @@ package body SDL.Video.Windows is
         Convention    => C,
         External_Name => "SDL_SetWindowDisplayMode";
 
-      Result : C.int := SDL_Set_Window_Display_Mode (Self.Internal, Mode);
+      Result : constant C.int := SDL_Set_Window_Display_Mode (Self.Internal, Mode);
    begin
       if Result /= Success then
          raise Window_Error with SDL.Error.Get;
@@ -215,7 +215,7 @@ package body SDL.Video.Windows is
         Convention    => C,
         External_Name => "SDL_GetWindowGammaRamp";
 
-      Result : C.int := SDL_Get_Window_Gamma_Ramp (Self.Internal, Red, Green, Blue);
+      Result : constant C.int := SDL_Get_Window_Gamma_Ramp (Self.Internal, Red, Green, Blue);
    begin
       if Result /= Success then
          raise Window_Error with SDL.Error.Get;
@@ -229,7 +229,7 @@ package body SDL.Video.Windows is
         Convention    => C,
         External_Name => "SDL_SetWindowGammaRamp";
 
-      Result : C.int := SDL_Set_Window_Gamma_Ramp (Self.Internal, Red, Green, Blue);
+      Result : constant C.int := SDL_Set_Window_Gamma_Ramp (Self.Internal, Red, Green, Blue);
    begin
       if Result /= Success then
          raise Window_Error with SDL.Error.Get;
@@ -372,7 +372,7 @@ package body SDL.Video.Windows is
 
       use type SDL.Video.Surfaces.Internal_Surface_Pointer;
 
-      S : SDL.Video.Surfaces.Internal_Surface_Pointer := SDL_Get_Window_Surface (Self.Internal);
+      S : constant SDL.Video.Surfaces.Internal_Surface_Pointer := SDL_Get_Window_Surface (Self.Internal);
 
       function Make_Surface_From_Pointer (S : in SDL.Video.Surfaces.Internal_Surface_Pointer)
                                           return SDL.Video.Surfaces.Surface with
@@ -465,7 +465,7 @@ package body SDL.Video.Windows is
         Convention    => C,
         External_Name => "SDL_SetWindowFullscreen";
 
-      Result : C.int := SDL_Window_Full_Screen (Self.Internal, Flags);
+      Result : constant C.int := SDL_Window_Full_Screen (Self.Internal, Flags);
    begin
       if Result /= Success then
          raise Window_Error with SDL.Error.Get;
@@ -493,7 +493,7 @@ package body SDL.Video.Windows is
         Convention    => C,
         External_Name => "SDL_UpdateWindowSurface";
 
-      Result : C.int := SDL_Update_Window_Surface (Self.Internal);
+      Result : constant C.int := SDL_Update_Window_Surface (Self.Internal);
    begin
       if Result /= Success then
          raise Window_Error with SDL.Error.Get;
@@ -508,7 +508,7 @@ package body SDL.Video.Windows is
         Convention    => C,
         External_Name => "SDL_UpdateWindowSurfaceRects";
 
-      Result : C.int := SDL_Update_Window_Surface_Rects (Self.Internal, Rectangle, 1);
+      Result : constant C.int := SDL_Update_Window_Surface_Rects (Self.Internal, Rectangle, 1);
    begin
       if Result /= Success then
          raise Window_Error with SDL.Error.Get;
@@ -523,7 +523,7 @@ package body SDL.Video.Windows is
         Convention    => C,
         External_Name => "SDL_UpdateWindowSurfaceRects";
 
-      Result : C.int := SDL_Update_Window_Surface_Rects (Self.Internal, Rectangles, Rectangles'Length);
+      Result : constant C.int := SDL_Update_Window_Surface_Rects (Self.Internal, Rectangles, Rectangles'Length);
    begin
       if Result /= Success then
          raise Window_Error with SDL.Error.Get;

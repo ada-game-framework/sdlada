@@ -74,7 +74,7 @@ package body SDL.Video.Surfaces is
         Convention    => C,
         External_Name => "SDL_UpperBlit";  --  SDL_BlitSurface is a macro in SDL_surface.h
 
-      Result : C.int := SDL_Blit_Surface (Source.Internal, null, Self.Internal, null);
+      Result : constant C.int := SDL_Blit_Surface (Source.Internal, null, Self.Internal, null);
    begin
       if Result /= SDL.Success then
          raise Surface_Error with SDL.Error.Get;
@@ -133,7 +133,7 @@ package body SDL.Video.Surfaces is
         Convention    => C,
         External_Name => "SDL_UpperBlitScaled";  --  SDL_BlitScaled is a macro in SDL_surface.h
 
-      Result : C.int := SDL_Blit_Scaled (Source.Internal, null, Self.Internal, null);
+      Result : constant C.int := SDL_Blit_Scaled (Source.Internal, null, Self.Internal, null);
    begin
       if Result /= SDL.Success then
          raise Surface_Error with SDL.Error.Get;
@@ -196,7 +196,7 @@ package body SDL.Video.Surfaces is
         Convention    => C,
         External_Name => "SDL_LowerBlit";
 
-      Result : C.int := SDL_Lower_Blit (Source.Internal, Source_Area, Self.Internal, Self_Area);
+      Result : constant C.int := SDL_Lower_Blit (Source.Internal, Source_Area, Self.Internal, Self_Area);
    begin
       if Result /= SDL.Success then
          raise Surface_Error with SDL.Error.Get;
@@ -215,7 +215,7 @@ package body SDL.Video.Surfaces is
         Convention    => C,
         External_Name => "SDL_LowerBlitScaled";
 
-      Result : C.int := SDL_Lower_Blit_Scaled (Source.Internal, Source_Area, Self.Internal, Self_Area);
+      Result : constant C.int := SDL_Lower_Blit_Scaled (Source.Internal, Source_Area, Self.Internal, Self_Area);
    begin
       if Result /= SDL.Success then
          raise Surface_Error with SDL.Error.Get;
@@ -231,7 +231,7 @@ package body SDL.Video.Surfaces is
         Import        => True,
         Convention    => C,
         External_Name => "SDL_FillRect";
-      Result : C.int := SDL_Fill_Rect (Self.Internal, Area, Colour);
+      Result : constant C.int := SDL_Fill_Rect (Self.Internal, Area, Colour);
    begin
       if Result < SDL.Success then
          raise Surface_Error with SDL.Error.Get;
@@ -249,7 +249,7 @@ package body SDL.Video.Surfaces is
         Convention => C,
         External_Name => "SDL_FillRects";
 
-      Result : C.int := SDL_Fill_Rects (Self.Internal, Areas, Areas'Length, Colour);
+      Result : constant C.int := SDL_Fill_Rects (Self.Internal, Areas, Areas'Length, Colour);
    begin
       if Result < SDL.Success then
          raise Surface_Error with SDL.Error.Get;
@@ -275,7 +275,7 @@ package body SDL.Video.Surfaces is
         Convention    => C,
         External_Name => "SDL_SetClipRect";
 
-      Result : SDL_Bool := SDL_Set_Clip_Rect (S => Self.Internal, R => Now);
+      Result : constant SDL_Bool := SDL_Set_Clip_Rect (S => Self.Internal, R => Now);
    begin
       if Result = SDL_False then
          raise Surface_Error with SDL.Error.Get;
@@ -290,7 +290,7 @@ package body SDL.Video.Surfaces is
         External_Name => "SDL_GetColorKey";
 
       Key    : Interfaces.Unsigned_32;
-      Result : C.int := SDL_Get_Color_Key (Self.Internal, Key);
+      Result : constant C.int := SDL_Get_Color_Key (Self.Internal, Key);
    begin
       if Result < SDL.Success then
          --  TODO: The SDL source does not set an error message, see https://bugzilla.libsdl.org/show_bug.cgi?id=3992
@@ -311,10 +311,10 @@ package body SDL.Video.Surfaces is
         Convention    => C,
         External_Name => "SDL_SetColorKey";
 
-      Result : C.int := SDL_Set_Color_Key (S => Self.Internal,
-                                           F => (if Enable then 1 else 0),
-                                           K => Pixel_Formats.To_Pixel (Colour => Now,
-                                                                        Format => Self.Pixel_Format));
+      Result : constant C.int := SDL_Set_Color_Key (S => Self.Internal,
+                                                    F => (if Enable then 1 else 0),
+                                                    K => Pixel_Formats.To_Pixel (Colour => Now,
+                                                                                 Format => Self.Pixel_Format));
    begin
       if Result < SDL.Success then
          raise Surface_Error with SDL.Error.Get;
@@ -329,7 +329,7 @@ package body SDL.Video.Surfaces is
         External_Name => "SDL_GetSurfaceAlphaMod";
 
       Alpha  : Palettes.Colour_Component;
-      Result : C.int := SDL_Get_Surface_Alpha_Mod (S => Self.Internal, A => Alpha);
+      Result : constant C.int := SDL_Get_Surface_Alpha_Mod (S => Self.Internal, A => Alpha);
    begin
       if Result < SDL.Success then
          raise Surface_Error with SDL.Error.Get;
@@ -345,7 +345,7 @@ package body SDL.Video.Surfaces is
         Convention    => C,
         External_Name => "SDL_SetSurfaceAlphaMod";
 
-      Result : C.int := SDL_Set_Surface_Alpha_Mod (S => Self.Internal, A => Now);
+      Result : constant C.int := SDL_Set_Surface_Alpha_Mod (S => Self.Internal, A => Now);
    begin
       if Result < SDL.Success then
          raise Surface_Error with SDL.Error.Get;
@@ -360,7 +360,7 @@ package body SDL.Video.Surfaces is
         External_Name => "SDL_GetSurfaceAlphaMod";
 
       Blend_Mode : Blend_Modes;
-      Result     : C.int := SDL_Get_Surface_Blend_Mode (S => Self.Internal, B => Blend_Mode);
+      Result     : constant C.int := SDL_Get_Surface_Blend_Mode (S => Self.Internal, B => Blend_Mode);
    begin
       if Result < SDL.Success then
          raise Surface_Error with SDL.Error.Get;
@@ -376,7 +376,7 @@ package body SDL.Video.Surfaces is
         Convention    => C,
         External_Name => "SDL_SetSurfaceBlendMode";
 
-      Result : C.int := SDL_Set_Surface_Blend_Mode (S => Self.Internal, B => Now);
+      Result : constant C.int := SDL_Set_Surface_Blend_Mode (S => Self.Internal, B => Now);
    begin
       if Result < SDL.Success then
          raise Surface_Error with SDL.Error.Get;
@@ -395,7 +395,7 @@ package body SDL.Video.Surfaces is
       Red    : Palettes.Colour_Component;
       Green  : Palettes.Colour_Component;
       Blue   : Palettes.Colour_Component;
-      Result : C.int := SDL_Get_Surface_Color_Mod (S => Self.Internal, R => Red, G => Green, B => Blue);
+      Result : constant C.int := SDL_Get_Surface_Color_Mod (S => Self.Internal, R => Red, G => Green, B => Blue);
    begin
       if Result < SDL.Success then
          raise Surface_Error with SDL.Error.Get;
@@ -413,7 +413,10 @@ package body SDL.Video.Surfaces is
         Convention    => C,
         External_Name => "SDL_SetSurfaceColorMod";
 
-      Result : C.int := SDL_Set_Surface_Color_Mod (S => Self.Internal, R => Now.Red, G => Now.Green, B => Now.Blue);
+      Result : constant C.int := SDL_Set_Surface_Color_Mod (S => Self.Internal,
+                                                            R => Now.Red,
+                                                            G => Now.Green,
+                                                            B => Now.Blue);
    begin
       if Result < SDL.Success then
          raise Surface_Error with SDL.Error.Get;
@@ -426,7 +429,7 @@ package body SDL.Video.Surfaces is
         Convention    => C,
         External_Name => "SDL_LockSurface";
 
-      Result : C.int := SDL_Lock_Surface (Self.Internal);
+      Result : constant C.int := SDL_Lock_Surface (Self.Internal);
    begin
       if Result < SDL.Success then
          raise Surface_Error with SDL.Error.Get;
@@ -448,7 +451,7 @@ package body SDL.Video.Surfaces is
         Convention    => C,
         External_Name => "SDL_SetSurfaceRLE";
 
-      Result : C.int := SDL_Set_Surface_RLE (Self.Internal, C.int (if Enabled then 1 else 0));
+      Result : constant C.int := SDL_Set_Surface_RLE (Self.Internal, C.int (if Enabled then 1 else 0));
    begin
       if Result < SDL.Success then
          raise Surface_Error with SDL.Error.Get;

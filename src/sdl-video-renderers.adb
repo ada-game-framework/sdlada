@@ -58,7 +58,7 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_GetNumRenderDrivers";
 
-      Result : C.int := SDL_Get_Num_Render_Drivers;
+      Result : constant C.int := SDL_Get_Num_Render_Drivers;
    begin
       if Result < C.int (Positive'First) then
          raise Renderer_Error with SDL.Error.Get;
@@ -89,7 +89,7 @@ package body SDL.Video.Renderers is
         External_Name => "SDL_GetRenderDrawBlendMode";
 
       Mode   : Blend_Modes;
-      Result : C.int := SDL_Get_Render_Draw_Blend_Mode (Self.Internal, Mode);
+      Result : constant C.int := SDL_Get_Render_Draw_Blend_Mode (Self.Internal, Mode);
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -105,7 +105,7 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_SetRenderDrawBlendMode";
 
-      Result : C.int := SDL_Set_Render_Draw_Blend_Mode (Self.Internal, Mode);
+      Result : constant C.int := SDL_Set_Render_Draw_Blend_Mode (Self.Internal, Mode);
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -121,7 +121,11 @@ package body SDL.Video.Renderers is
         External_Name => "SDL_GetRenderDrawColor";
 
       Colour : SDL.Video.Palettes.Colour;
-      Result : C.int := SDL_Get_Render_Draw_Color (Self.Internal, Colour.Red, Colour.Green, Colour.Blue, Colour.Alpha);
+      Result : constant C.int := SDL_Get_Render_Draw_Color (Self.Internal,
+                                                            Colour.Red,
+                                                            Colour.Green,
+                                                            Colour.Blue,
+                                                            Colour.Alpha);
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -138,7 +142,11 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_SetRenderDrawColor";
 
-      Result : C.int := SDL_Set_Render_Draw_Color (Self.Internal, Colour.Red, Colour.Green, Colour.Blue, Colour.Alpha);
+      Result : constant C.int := SDL_Set_Render_Draw_Color (Self.Internal,
+                                                            Colour.Red,
+                                                            Colour.Green,
+                                                            Colour.Blue,
+                                                            Colour.Alpha);
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -151,7 +159,7 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_RenderClear";
 
-      Result : C.int := SDL_Render_Clear (Self.Internal);
+      Result : constant C.int := SDL_Render_Clear (Self.Internal);
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -170,10 +178,10 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_RenderCopy";
 
-      Result : C.int := SDL_Render_Copy (Self.Internal,
-                                         Get_Internal_Texture (Copy_From),
-                                         null,
-                                         null);
+      Result : constant C.int := SDL_Render_Copy (Self.Internal,
+                                                  Get_Internal_Texture (Copy_From),
+                                                  null,
+                                                  null);
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -195,10 +203,10 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_RenderCopy";
 
-      Result : C.int := SDL_Render_Copy (Self.Internal,
-                                         Get_Internal_Texture (Copy_From),
-                                         From,
-                                         To);
+      Result : constant C.int := SDL_Render_Copy (Self.Internal,
+                                                  Get_Internal_Texture (Copy_From),
+                                                  From,
+                                                  To);
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -219,10 +227,10 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_RenderCopy";
 
-      Result : C.int := SDL_Render_Copy (Self.Internal,
-                                         Get_Internal_Texture (Copy_From),
-                                         null,
-                                         To);
+      Result : constant C.int := SDL_Render_Copy (Self.Internal,
+                                                  Get_Internal_Texture (Copy_From),
+                                                  null,
+                                                  To);
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -251,13 +259,13 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_RenderCopyEx";
 
-      Result : C.int := SDL_Render_Copy_Ex (Self.Internal,
-                                            Get_Internal_Texture (Copy_From),
-                                            From,
-                                            To,
-                                            C.double (Angle),
-                                            Centre,
-                                            Internal_Flips (Flip));
+      Result : constant C.int := SDL_Render_Copy_Ex (Self.Internal,
+                                                     Get_Internal_Texture (Copy_From),
+                                                     From,
+                                                     To,
+                                                     C.double (Angle),
+                                                     Centre,
+                                                     Internal_Flips (Flip));
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -271,7 +279,11 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_RenderDrawLine";
 
-      Result : C.int := SDL_Render_Draw_Line (Self.Internal, Line.Start.X, Line.Start.Y, Line.Finish.X, Line.Finish.Y);
+      Result : constant C.int := SDL_Render_Draw_Line (Self.Internal,
+                                                       Line.Start.X,
+                                                       Line.Start.Y,
+                                                       Line.Finish.X,
+                                                       Line.Finish.Y);
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -288,7 +300,7 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_RenderDrawLines";
 
-      Result : C.int := SDL_Render_Draw_Lines (Self.Internal, Lines, C.int (Lines'Length * 2));
+      Result : constant C.int := SDL_Render_Draw_Lines (Self.Internal, Lines, C.int (Lines'Length * 2));
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -301,7 +313,7 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_RenderDrawPoint";
 
-      Result : C.int := SDL_Render_Draw_Point (Self.Internal, Point.X, Point.Y);
+      Result : constant C.int := SDL_Render_Draw_Point (Self.Internal, Point.X, Point.Y);
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -316,7 +328,7 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_RenderDrawPoints";
 
-      Result : C.int := SDL_Render_Draw_Points (Self.Internal, Points, C.int (Points'Length));
+      Result : constant C.int := SDL_Render_Draw_Points (Self.Internal, Points, C.int (Points'Length));
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -330,7 +342,7 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_RenderDrawRect";
 
-      Result : C.int := SDL_Render_Draw_Rect (Self.Internal, Rectangle);
+      Result : constant C.int := SDL_Render_Draw_Rect (Self.Internal, Rectangle);
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -345,7 +357,7 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_RenderDrawRects";
 
-      Result : C.int := SDL_Render_Draw_Rects (Self.Internal, Rectangles, C.int (Rectangles'Length));
+      Result : constant C.int := SDL_Render_Draw_Rects (Self.Internal, Rectangles, C.int (Rectangles'Length));
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -359,7 +371,7 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_RenderFillRect";
 
-      Result : C.int := SDL_Render_Fill_Rect (Self.Internal, Rectangle);
+      Result : constant C.int := SDL_Render_Fill_Rect (Self.Internal, Rectangle);
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -374,7 +386,7 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_RenderFillRects";
 
-      Result : C.int := SDL_Render_Fill_Rects (Self.Internal, Rectangles, C.int (Rectangles'Length));
+      Result : constant C.int := SDL_Render_Fill_Rects (Self.Internal, Rectangles, C.int (Rectangles'Length));
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -398,7 +410,7 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_RenderSetClipRect";
 
-      Result : C.int := SDL_Render_Set_Clip_Rect (Self.Internal, Rectangle);
+      Result : constant C.int := SDL_Render_Set_Clip_Rect (Self.Internal, Rectangle);
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -422,7 +434,7 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_RenderSetLogicalSize";
 
-      Result : C.int := SDL_Render_Set_Logical_Size (Self.Internal, Size);
+      Result : constant C.int := SDL_Render_Set_Logical_Size (Self.Internal, Size);
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -444,7 +456,7 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_RenderSetScale";
 
-      Result : C.int := SDL_Render_Set_Scale (Self.Internal, C.C_float (X), C.C_float (Y));
+      Result : constant C.int := SDL_Render_Set_Scale (Self.Internal, C.C_float (X), C.C_float (Y));
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -468,7 +480,7 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_RenderSetViewport";
 
-      Result : C.int := SDL_Render_Set_Viewport (Self.Internal, Rectangle);
+      Result : constant C.int := SDL_Render_Set_Viewport (Self.Internal, Rectangle);
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -500,7 +512,7 @@ package body SDL.Video.Renderers is
         Convention    => C,
         External_Name => "SDL_SetRenderTarget";
 
-      Result : C.int := SDL_Set_Render_Target (Self.Internal, Get_Internal_Texture (Target));
+      Result : constant C.int := SDL_Set_Render_Target (Self.Internal, Get_Internal_Texture (Target));
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;

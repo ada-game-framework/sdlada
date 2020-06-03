@@ -35,7 +35,7 @@ package body SDL.Video.Rectangles is
         Convention    => C,
         External_Name => "SDL_EnclosePoints";
 
-      Result : SDL_Bool := SDL_Enclose_Points (Points, C.int (Points'Length), Clip, Enclosed);
+      Result : constant SDL_Bool := SDL_Enclose_Points (Points, C.int (Points'Length), Clip, Enclosed);
    begin
       return (Result = SDL_True);
    end Enclose;
@@ -49,7 +49,7 @@ package body SDL.Video.Rectangles is
         Convention    => C,
         External_Name => "SDL_EnclosePoints";
 
-      Result : SDL_Bool := SDL_Enclose_Points (Points, C.int (Points'Length), null, Enclosed);
+      Result : constant SDL_Bool := SDL_Enclose_Points (Points, C.int (Points'Length), null, Enclosed);
    begin
       if Result /= SDL_True then
          raise Rectangle_Error with SDL.Error.Get;
@@ -62,7 +62,7 @@ package body SDL.Video.Rectangles is
         Convention    => C,
         External_Name => "SDL_HasIntersection";
 
-      Result : SDL_Bool := SDL_Has_Intersection (A, B);
+      Result : constant SDL_Bool := SDL_Has_Intersection (A, B);
    begin
       return (Result = SDL_True);
    end Has_Intersected;
@@ -73,7 +73,7 @@ package body SDL.Video.Rectangles is
         Convention    => C,
         External_Name => "SDL_IntersectRect";
 
-      Result : SDL_Bool := SDL_Intersect_Rect (A, B, R => Intersection);
+      Result : constant SDL_Bool := SDL_Intersect_Rect (A, B, R => Intersection);
    begin
       return (Result = SDL_True);
    end Intersects;
@@ -84,11 +84,11 @@ package body SDL.Video.Rectangles is
         Convention    => C,
         External_Name => "SDL_IntersectRectAndLine";
 
-      Result : SDL_Bool := SDL_Intersect_Rect_And_Line (Clip_Area,
-                                                        Line.Start.X,
-                                                        Line.Start.Y,
-                                                        Line.Finish.X,
-                                                        Line.Finish.Y);
+      Result : constant SDL_Bool := SDL_Intersect_Rect_And_Line (Clip_Area,
+                                                                 Line.Start.X,
+                                                                 Line.Start.Y,
+                                                                 Line.Finish.X,
+                                                                 Line.Finish.Y);
    begin
       return (Result = SDL_True);
    end Clip_To;
