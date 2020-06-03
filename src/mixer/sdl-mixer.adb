@@ -143,7 +143,6 @@ package body SDL.Mixer is
                          Format    : out Audio_Format;
                          Channels  : out Channel_Count)
    is
-      use Interfaces;
       procedure Mix_Query_Spec (Frequency : out C.int;
                                 Format    : out Audio_Format;
                                 Channels  : out C.int)
