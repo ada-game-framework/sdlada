@@ -25,8 +25,6 @@ with Interfaces.C;
 package body SDL.Events.Joysticks is
    package C renames Interfaces.C;
 
-   use type C.int;
-
    Query  : constant C.int := -1;
    Ignore : constant C.int :=  0;
    Enable : constant C.int :=  1;

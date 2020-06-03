@@ -24,7 +24,6 @@ with Interfaces.C;
 with SDL.Error;
 
 package body SDL.Events.Events is
-   use type Interfaces.C.int;
 
    function Poll (Event : out Events) return Boolean is
       function SDL_Poll_Event (Event : out Events) return Interfaces.C.int with
