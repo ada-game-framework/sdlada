@@ -23,7 +23,6 @@
 with SDL.Error;
 
 package body SDL.TTFs.Makers is
-   use type RWops.RWops;
 
    procedure Create (Font       : in out Fonts;
                      File_Name  : in String;

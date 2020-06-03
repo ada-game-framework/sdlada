@@ -20,10 +20,9 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
-with Interfaces.C;
+--  with Interfaces.C;
 
 package body SDL.TTFs.Versions is
-   package C renames Interfaces.C;
 
    procedure Linked_With (Info : in out SDL.Versions.Version) is
       function TTF_Linked_Version return access SDL.Versions.Version with

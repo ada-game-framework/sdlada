@@ -24,8 +24,6 @@
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C.Strings;
 package body SDL.TTFs is
-   use type C.char_array;
-   use type C.int;
 
    function Initialise return Boolean is
       function TTF_Init return C.int with
