@@ -23,8 +23,6 @@
 --  SDL.TTFs
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C.Strings;
-with SDL.Error;
-
 package body SDL.TTFs is
    use type C.char_array;
    use type C.int;
