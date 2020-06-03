@@ -22,7 +22,6 @@
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C;
 private with SDL.C_Pointers;
-with SDL.Error;
 
 package body SDL.Video.Renderers.Makers is
    package C renames Interfaces.C;

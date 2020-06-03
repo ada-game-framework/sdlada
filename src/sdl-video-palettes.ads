@@ -24,7 +24,7 @@
 --
 --  Palettes, colours and various conversions.
 --------------------------------------------------------------------------------------------------------------------
-with Ada.Finalization;
+
 with Ada.Iterator_Interfaces;
 with Interfaces.C.Pointers;
 

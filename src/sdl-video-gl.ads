@@ -27,7 +27,6 @@
 with Ada.Finalization;
 with Interfaces.C;
 private with SDL.C_Pointers;
-with SDL.Video.Rectangles;
 with SDL.Video.Windows;
 with SDL.Video.Textures;
 
