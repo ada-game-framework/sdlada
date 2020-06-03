@@ -33,7 +33,7 @@ package body SDL.Inputs.Mice is
         Convention    => C,
         External_Name => "SDL_CaptureMouse";
    begin
-      if SDL_Capture_Mouse (if Enabled = True then 1 else 0) /= Success then
+      if SDL_Capture_Mouse (if Enabled then 1 else 0) /= Success then
          return No;
       end if;
 
@@ -112,7 +112,7 @@ package body SDL.Inputs.Mice is
         Convention    => C,
         External_Name => "SDL_SetRelativeMouseMode";
    begin
-      if SDL_Set_Relative_Mouse_Mode (if Enable = True then 1 else 0) /= Success then
+      if SDL_Set_Relative_Mouse_Mode (if Enable then 1 else 0) /= Success then
          raise Mice_Error with SDL.Error.Get;
       end if;
    end Set_Relative_Mode;
@@ -123,7 +123,7 @@ package body SDL.Inputs.Mice is
         Convention    => C,
         External_Name => "SDL_ShowCursor";
    begin
-      SDL_Show_Cursor (if Enable = True then SDL.SDL_Enable else SDL.SDL_Disable);
+      SDL_Show_Cursor (if Enable then SDL.SDL_Enable else SDL.SDL_Disable);
    end Show_Cursor;
 
    function Is_Cursor_Shown return Boolean is

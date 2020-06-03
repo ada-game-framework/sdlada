@@ -56,7 +56,7 @@ package body SDL.TTFs.Makers is
         External_Name => "TTF_OpenFontIndexRW";
    begin
       Font.Internal := TTF_Open_Font_Index_RW (Ops   => Source,
-                                               Free  => (if Free_Source = True then 1 else 0),
+                                               Free  => (if Free_Source then 1 else 0),
                                                Size  => Point_Size,
                                                Index => Font_Index);
 

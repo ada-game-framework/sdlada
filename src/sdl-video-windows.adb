@@ -250,7 +250,7 @@ package body SDL.Video.Windows is
         Convention    => C,
         External_Name => "SDL_SetWindowGrab";
    begin
-      SDL_Set_Window_Grab (Self.Internal, (if Grabbed = True then SDL_True else SDL_False));
+      SDL_Set_Window_Grab (Self.Internal, (if Grabbed then SDL_True else SDL_False));
    end Set_Grabbed;
 
    function Get_ID (Self : in Window) return ID is

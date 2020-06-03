@@ -174,7 +174,7 @@ package body SDL.Video.GL is
    end Is_Double_Buffered;
 
    procedure Set_Double_Buffer (On : in Boolean) is
-      Data   : constant C.int := (if On = True then 1 else 0);
+      Data   : constant C.int := (if On then 1 else 0);
       Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Double_Buffer, Data);
    begin
       if Result /= Success then
@@ -308,7 +308,7 @@ package body SDL.Video.GL is
    end Is_Stereo;
 
    procedure Set_Stereo (On : in Boolean) is
-      Data   : constant C.int := (if On = True then 1 else 0);
+      Data   : constant C.int := (if On then 1 else 0);
       Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Stereo, Data);
    begin
       if Result /= Success then
@@ -328,7 +328,7 @@ package body SDL.Video.GL is
    end Is_Multisampled;
 
    procedure Set_Multisampling (On : in Boolean) is
-      Data   : constant C.int := (if On = True then 1 else 0);
+      Data   : constant C.int := (if On then 1 else 0);
       Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Multisample_Buffers, Data);
    begin
       if Result /= Success then
@@ -367,7 +367,7 @@ package body SDL.Video.GL is
    end Is_Accelerated;
 
    procedure Set_Accelerated (On : in Boolean) is
-      Data   : constant C.int := (if On = True then 1 else 0);
+      Data   : constant C.int := (if On then 1 else 0);
       Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Accelerated, Data);
    begin
       if Result /= Success then
@@ -425,7 +425,7 @@ package body SDL.Video.GL is
    end Is_Context_EGL;
 
    procedure Set_Context_EGL (On : in Boolean) is
-      Data   : constant C.int := (if On = True then 1 else 0);
+      Data   : constant C.int := (if On then 1 else 0);
       Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Context_EGL, Data);
    begin
       if Result /= Success then
@@ -505,7 +505,7 @@ package body SDL.Video.GL is
    end Is_Sharing_With_Current_Context;
 
    procedure Set_Share_With_Current_Context (On : in Boolean) is
-      Data   : constant C.int := (if On = True then 1 else 0);
+      Data   : constant C.int := (if On then 1 else 0);
       Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Share_With_Current_Context, Data);
    begin
       if Result /= Success then

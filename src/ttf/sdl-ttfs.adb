@@ -131,7 +131,7 @@ package body SDL.TTFs is
         External_Name => "TTF_SetFontKerning";
    begin
       TTF_Set_Font_Kerning (Font => Self.Internal,
-                            Now  => (if Now = True then 1 else 0));
+                            Now  => (if Now then 1 else 0));
    end Set_Kerning;
 
    function Height (Self : in Fonts) return Font_Measurements is
