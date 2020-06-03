@@ -20,7 +20,7 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
-with Interfaces.C;
+
 with Interfaces.C.Strings;
 
 package body SDL.Video.Pixel_Formats is

@@ -21,9 +21,7 @@
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Unchecked_Conversion;
-with Interfaces.C;
 with Interfaces.C.Strings;
-private with SDL.C_Pointers;
 with SDL.Error;
 
 package body SDL.Video.GL is
