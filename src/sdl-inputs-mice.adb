@@ -23,7 +23,6 @@
 with Interfaces.C;
 with SDL.C_Pointers;
 with SDL.Error;
-with System;
 
 package body SDL.Inputs.Mice is
    package C renames Interfaces.C;

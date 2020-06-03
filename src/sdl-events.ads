@@ -28,9 +28,7 @@
 --    I wanted to experiment with the event system and possibly hide all this and create an abstraction in another
 --    task so as to separate out the events from the main window. This could change. I really don't know yet.
 --------------------------------------------------------------------------------------------------------------------
-with Ada.Characters.Latin_1;
 with Ada.Unchecked_Conversion;
-with Interfaces;
 with SDL.Video.Windows;
 
 package SDL.Events is

@@ -22,7 +22,6 @@
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C;
 with Interfaces.C.Strings;
-with System;
 
 package body SDL.Versions is
    package C renames Interfaces.C;
