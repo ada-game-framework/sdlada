@@ -27,8 +27,6 @@ with SDL.Error;
 package body SDL.Inputs.Joysticks is
    package C renames Interfaces.C;
 
-   use type C.int;
-
    function Total return All_Devices is
       function SDL_Num_Joysticks return C.int with
         Import        => True,

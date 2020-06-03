@@ -27,9 +27,6 @@ with SDL.Error;
 package body SDL.Inputs.Mice is
    package C renames Interfaces.C;
 
-   use type C.int;
-   use type C.unsigned;
-
    function Capture (Enabled : in Boolean) return Supported is
       function SDL_Capture_Mouse (Enabled : in C.unsigned) return C.int with
         Import        => True,

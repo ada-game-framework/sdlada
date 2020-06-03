@@ -28,9 +28,6 @@ private with SDL.C_Pointers;
 package body SDL.Inputs.Joysticks.Makers is
    package C renames Interfaces.C;
 
-   use type C.int;
-   use type SDL.C_Pointers.Joystick_Pointer;
-
    function SDL_Joystick_Open (Device : in C.int) return SDL.C_Pointers.Joystick_Pointer with
      Import        => True,
      Convention    => C,

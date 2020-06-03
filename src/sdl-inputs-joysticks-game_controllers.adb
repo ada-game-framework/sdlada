@@ -27,7 +27,6 @@ with SDL.RWops;
 package body SDL.Inputs.Joysticks.Game_Controllers is
    package C renames Interfaces.C;
 
-   use type C.int;
    use type C.Strings.chars_ptr;
 
    procedure Add_Mapping (Data : in String; Updated_Existing : out Boolean) is
