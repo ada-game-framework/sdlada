@@ -18,24 +18,20 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
-with Interfaces.C;
-with Interfaces.C.Strings;
-with System;
 
 package body SDL.Mixer.Versions is
-   package C renames Interfaces.C;
 
    -----------------
    -- Linked_With --
    -----------------
 
    procedure Linked_With (Info : in out SDL.Versions.Version) is
-      function IMG_Linked_Version return access SDL.Versions.Version with
+      function Mix_Linked_Version return access SDL.Versions.Version with
         Import        => True,
         Convention    => C,
         External_Name => "Mix_Linked_Version";
 
-      Data : access SDL.Versions.Version := IMG_Linked_Version;
+      Data : constant access SDL.Versions.Version := Mix_Linked_Version;
    begin
       Info := Data.all;
    end Linked_With;
