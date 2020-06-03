@@ -24,7 +24,6 @@ with Ada.Unchecked_Conversion;
 with SDL.Error;
 
 package body SDL.Video.Surfaces is
-   use type C.int;
 
    function Pixel_Format (Self : in Surface) return Pixel_Formats.Pixel_Format_Access is
    begin
@@ -37,7 +36,6 @@ package body SDL.Video.Surfaces is
    end Size;
 
    function Pixels (Self : in Surface) return System.Address is
-      use type C.int;
    begin
       if Must_Lock (Self) and then Self.Internal.Locked <= 0 then
          raise Surface_Error with "Surface must be locked before access can be gained to the pixel data.";

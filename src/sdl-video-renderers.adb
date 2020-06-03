@@ -26,7 +26,6 @@ with SDL.Error;
 package body SDL.Video.Renderers is
    package C renames Interfaces.C;
 
-   use type C.int;
    use type SDL.C_Pointers.Renderer_Pointer;
 
    type Internal_Flip is mod 2 ** 32 with

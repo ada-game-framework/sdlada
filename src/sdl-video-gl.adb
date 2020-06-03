@@ -27,7 +27,6 @@ with SDL.Error;
 package body SDL.Video.GL is
    package C renames Interfaces.C;
 
-   use type C.int;
    use type SDL.C_Pointers.GL_Context_Pointer;
 
    type Attributes is

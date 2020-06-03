@@ -25,7 +25,6 @@ with Interfaces.C.Strings;
 with SDL.Error;
 
 package body SDL.Video is
-   use type C.int;
 
    function Is_Screen_Saver_Enabled return Boolean is
       function SDL_Is_Screen_Saver_Enabled return C.int with

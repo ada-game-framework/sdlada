@@ -28,7 +28,6 @@ with SDL.Error;
 package body SDL.Video.Textures is
    package C renames Interfaces.C;
 
-   use type C.int;
    use type SDL.C_Pointers.Texture_Pointer;
 
    procedure Destroy (Self : in out Texture) is

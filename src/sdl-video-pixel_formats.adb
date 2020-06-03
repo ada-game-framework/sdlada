@@ -24,7 +24,6 @@
 with Interfaces.C.Strings;
 
 package body SDL.Video.Pixel_Formats is
-   use type C.int;
 
    function Image (Format : in Pixel_Format_Names) return String is
       function SDL_Get_Pixel_Format_Name (Format : in Pixel_Format_Names) return C.Strings.chars_ptr with

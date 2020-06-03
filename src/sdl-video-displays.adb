@@ -24,7 +24,6 @@ with SDL.Error;
 with SDL.Video;
 
 package body SDL.Video.Displays is
-   use type C.int;
 
    function Total return Display_Indices is
       --  This function returns a value >= 1, use this as a new lower type bound.

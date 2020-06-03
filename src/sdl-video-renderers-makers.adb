@@ -26,9 +26,6 @@ private with SDL.C_Pointers;
 package body SDL.Video.Renderers.Makers is
    package C renames Interfaces.C;
 
-   use type C.int;
-   use type SDL.C_Pointers.Texture_Pointer;
-
    function Get_Internal_Window (Self : in SDL.Video.Windows.Window) return SDL.C_Pointers.Windows_Pointer with
      Convention => Ada,
      Import     => True;

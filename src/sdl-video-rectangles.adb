@@ -24,7 +24,6 @@ with Ada.Unchecked_Conversion;
 with SDL.Error;
 
 package body SDL.Video.Rectangles is
-   use type C.int;
 
    function Enclose (Points : in Point_Arrays; Clip : in Rectangle; Enclosed : out Rectangle) return Boolean is
       function SDL_Enclose_Points (P    : in Point_Arrays;

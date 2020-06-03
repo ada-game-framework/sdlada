@@ -32,7 +32,6 @@ package body SDL.Video.Windows is
    package C renames Interfaces.C;
 
    use type Interfaces.Unsigned_32;
-   use type C.int;
    use type SDL.C_Pointers.Windows_Pointer;
    use type System.Address;
 
