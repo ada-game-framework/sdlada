@@ -33,7 +33,7 @@ package body SDL.TTFs.Versions is
         Convention    => C,
         External_Name => "TTF_Linked_Version";
 
-      Data : access SDL.Versions.Version := TTF_Linked_Version;
+      Data : constant access SDL.Versions.Version := TTF_Linked_Version;
    begin
       Info := Data.all;
    end Linked_With;
