@@ -117,8 +117,6 @@ package body SDL.Images.IO is
         Convention    => C,
         External_Name => "IMG_SavePNG";
 
-      use type C.int;
-
       Result : constant C.int := IMG_SavePNG (Get_Internal_Surface (Surface), C.To_C (File_Name));
    begin
       if Result < Success then

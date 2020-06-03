@@ -25,7 +25,6 @@
 
 package body SDL.Images is
    use type C.char_array;
-   use type C.int;
 
    Format_Strings : constant Format_String_Arrays :=
      ("TGA"  & C.char'Val (0) & C.char'Val (0),
