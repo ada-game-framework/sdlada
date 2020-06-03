@@ -21,7 +21,6 @@
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
 package body SDL is
-   use type C.int;
 
    function Initialise (Flags : in Init_Flags := Enable_Everything) return Boolean is
       function SDL_Init (Flags : in Init_Flags := Enable_Everything) return C.int with

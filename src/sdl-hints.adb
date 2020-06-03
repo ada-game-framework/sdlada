@@ -27,7 +27,6 @@ with SDL.Error;
 package body SDL.Hints is
    package C renames Interfaces.C;
 
-   use type C.int;
    use type C.Strings.chars_ptr;
 
    Frame_Buffer_Acceleration_Name        : aliased constant String := "SDL_FRAMEBUFFER_ACCELERATION";
