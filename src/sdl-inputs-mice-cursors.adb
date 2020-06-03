@@ -20,7 +20,6 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
-with SDL.C_Pointers;
 
 package body SDL.Inputs.Mice.Cursors is
    use type SDL.C_Pointers.Cursor_Pointer;
