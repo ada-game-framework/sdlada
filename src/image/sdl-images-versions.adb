@@ -21,8 +21,6 @@
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C;
-with Interfaces.C.Strings;
-with System;
 
 package body SDL.Images.Versions is
    package C renames Interfaces.C;
