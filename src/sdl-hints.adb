@@ -103,7 +103,7 @@ package body SDL.Hints is
 
       C_Hint_Str  : C.Strings.chars_ptr := C.Strings.New_String (Hints.Value (Name));
       C_Value_Str : C.Strings.chars_ptr := C.Strings.New_String (Value);
-      Result      : SDL_Bool            := SDL_Set_Hint
+      Result      : constant SDL_Bool   := SDL_Set_Hint
         (Name  => C_Hint_Str,
          Value => C_Value_Str);
    begin
@@ -123,7 +123,7 @@ package body SDL.Hints is
 
       C_Hint_Str  : C.Strings.chars_ptr := C.Strings.New_String (Hints.Value (Name));
       C_Value_Str : C.Strings.chars_ptr := C.Strings.New_String (Value);
-      Result      : SDL_Bool            := SDL_Set_Hint
+      Result      : constant SDL_Bool   := SDL_Set_Hint
         (Name  => C_Hint_Str,
          Value => C_Value_Str,
          P     => Priority);

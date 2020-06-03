@@ -29,7 +29,7 @@ package body SDL is
         Convention    => C,
         External_Name => "SDL_Init";
 
-      Result : C.int := SDL_Init (Flags);
+      Result : constant C.int := SDL_Init (Flags);
    begin
       return (Result = Success);
    end Initialise;
@@ -40,7 +40,7 @@ package body SDL is
         Convention    => C,
         External_Name => "SDL_InitSubSystem";
 
-      Result : C.int := SDL_Init_Sub_System (Flags);
+      Result : constant C.int := SDL_Init_Sub_System (Flags);
    begin
       return (Result = Success);
    end Initialise_Sub_System;
