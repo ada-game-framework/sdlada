@@ -20,7 +20,6 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
---  with Interfaces.C;
 
 package body SDL.TTFs.Versions is
 
