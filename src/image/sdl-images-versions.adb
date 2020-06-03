@@ -33,7 +33,7 @@ package body SDL.Images.Versions is
         Convention    => C,
         External_Name => "IMG_Linked_Version";
 
-      Data : access SDL.Versions.Version := IMG_Linked_Version;
+      Data : constant access SDL.Versions.Version := IMG_Linked_Version;
    begin
       Info := Data.all;
    end Linked_With;

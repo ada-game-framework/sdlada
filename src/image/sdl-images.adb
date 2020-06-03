@@ -52,7 +52,7 @@ package body SDL.Images is
         Convention    => C,
         External_Name => "IMG_Init";
 
-      Result : Init_Image_Flags := IMG_Init (Flags);
+      Result : constant Init_Image_Flags := IMG_Init (Flags);
    begin
       if Result = 0 then
          return False;
