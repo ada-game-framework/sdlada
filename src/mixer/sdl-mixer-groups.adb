@@ -24,7 +24,7 @@ with SDL.Error;
 package body SDL.Mixer.Groups is
 
    ----------------------
-   -- Reverse_Channels --
+   -- Reserve_Channels --
    ----------------------
 
    procedure Reserve_Channels (Desired_Channels : in     Natural;
