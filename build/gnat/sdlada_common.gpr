@@ -1,7 +1,3 @@
---
---
---
-
 project SDLAda_Common is
 
    type Platform_Type is ("linux",
@@ -47,7 +43,7 @@ project SDLAda_Common is
                                           "-D_REENTRANT");
 
          when "macosx" =>
-            C_Switches   := C_Switches & ("-F/Library/Frameworks");
+            null;
 
          when others =>
             null;
