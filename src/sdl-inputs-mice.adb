@@ -53,7 +53,7 @@ package body SDL.Inputs.Mice is
         External_Name => "SDL_GetGlobalMouseState";
 
       X, Y  : C.int;
-      Masks : C.unsigned := SDL_Get_Global_Mouse_State (X, Y);
+      Masks : constant C.unsigned := SDL_Get_Global_Mouse_State (X, Y);
 
       use SDL.Events.Mice;
    begin
@@ -72,7 +72,7 @@ package body SDL.Inputs.Mice is
         External_Name => "SDL_GetMouseState";
 
       X, Y  : C.int;
-      Masks : C.unsigned := SDL_Get_Mouse_State (X, Y);
+      Masks : constant C.unsigned := SDL_Get_Mouse_State (X, Y);
 
       use SDL.Events.Mice;
    begin
@@ -100,7 +100,7 @@ package body SDL.Inputs.Mice is
         External_Name => "SDL_GetRelativeMouseState";
 
       X, Y  : C.int;
-      Masks : C.unsigned := SDL_Get_Relative_Mouse_State (X, Y);
+      Masks : constant C.unsigned := SDL_Get_Relative_Mouse_State (X, Y);
 
       use SDL.Events.Mice;
    begin

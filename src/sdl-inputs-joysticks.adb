@@ -35,7 +35,7 @@ package body SDL.Inputs.Joysticks is
         Convention    => C,
         External_Name => "SDL_NumJoysticks";
 
-      Result : C.int := SDL_Num_Joysticks;
+      Result : constant C.int := SDL_Num_Joysticks;
    begin
       if Result < 0 then
          raise Joystick_Error with SDL.Error.Get;
@@ -71,7 +71,7 @@ package body SDL.Inputs.Joysticks is
         External_Name => "SDL_JoystickGetGUIDString";
 
       Data_Buffer : C.char_array (0 .. 127) := (others => C.nul);
-      L           : C.int := C.int (Data_Buffer'Length);
+      L           : constant C.int          := C.int (Data_Buffer'Length);
    begin
       SDL_Joystick_Get_GUID_String (GUID, Data_Buffer, L);
 
@@ -112,7 +112,7 @@ package body SDL.Inputs.Joysticks is
         Convention    => C,
         External_Name => "SDL_JoystickNumAxes";
 
-      Total : C.int := SDL_Joystick_Num_Axes (Self.Internal);
+      Total : constant C.int := SDL_Joystick_Num_Axes (Self.Internal);
    begin
       if Total < 0 then
          raise Joystick_Error with SDL.Error.Get;
@@ -127,7 +127,7 @@ package body SDL.Inputs.Joysticks is
         Convention    => C,
         External_Name => "SDL_JoystickNumBalls";
 
-      Total : C.int := SDL_Joystick_Num_Balls (Self.Internal);
+      Total : constant C.int := SDL_Joystick_Num_Balls (Self.Internal);
    begin
       if Total < 0 then
          raise Joystick_Error with SDL.Error.Get;
@@ -142,7 +142,7 @@ package body SDL.Inputs.Joysticks is
         Convention    => C,
         External_Name => "SDL_JoystickNumButtons";
 
-      Total : C.int := SDL_Joystick_Num_Buttons (Self.Internal);
+      Total : constant C.int := SDL_Joystick_Num_Buttons (Self.Internal);
    begin
       if Total < 0 then
          raise Joystick_Error with SDL.Error.Get;
@@ -157,7 +157,7 @@ package body SDL.Inputs.Joysticks is
         Convention    => C,
         External_Name => "SDL_JoystickNumHats";
 
-      Total : C.int := SDL_Joystick_Num_Hats (Self.Internal);
+      Total : constant C.int := SDL_Joystick_Num_Hats (Self.Internal);
    begin
       if Total < 0 then
          raise Joystick_Error with SDL.Error.Get;
@@ -181,7 +181,7 @@ package body SDL.Inputs.Joysticks is
         Convention    => C,
         External_Name => "SDL_JoystickIsHaptic";
 
-      Result : C.int := SDL_Joystick_Is_Haptic (Self.Internal);
+      Result : constant C.int := SDL_Joystick_Is_Haptic (Self.Internal);
    begin
       if Result < 0 then
          raise Joystick_Error with SDL.Error.Get;
@@ -216,7 +216,7 @@ package body SDL.Inputs.Joysticks is
         Convention    => C,
         External_Name => "SDL_JoystickInstanceID";
 
-      Result : C.int := SDL_Joystick_Instance_ID (Self.Internal);
+      Result : constant C.int := SDL_Joystick_Instance_ID (Self.Internal);
    begin
       if Result < Success then
          raise Joystick_Error with SDL.Error.Get;
@@ -246,7 +246,7 @@ package body SDL.Inputs.Joysticks is
         Convention    => C,
         External_Name => "SDL_JoystickGetBall";
 
-      Result : C.int := SDL_Joystick_Get_Ball (Self.Internal, Ball, Delta_X, Delta_Y);
+      Result : constant C.int := SDL_Joystick_Get_Ball (Self.Internal, Ball, Delta_X, Delta_Y);
    begin
       if Result < Success then
          raise Joystick_Error with SDL.Error.Get;

@@ -38,8 +38,8 @@ package body SDL.Inputs.Joysticks.Makers is
 
    function Create (Device : in Devices) return Joystick is
    begin
-      return J : Joystick := (Ada.Finalization.Limited_Controlled with
-                                Internal => SDL_Joystick_Open (C.int (Device) - 1), Owns => True) do
+      return J : constant Joystick := (Ada.Finalization.Limited_Controlled with
+                                         Internal => SDL_Joystick_Open (C.int (Device) - 1), Owns => True) do
          null;
       end return;
    end Create;
