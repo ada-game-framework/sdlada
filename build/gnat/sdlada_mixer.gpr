@@ -1,7 +1,3 @@
---
---
---
-
 with "sdlada_common.gpr";
 
 library project SDLAda_Mixer is
@@ -17,22 +13,19 @@ library project SDLAda_Mixer is
    for Create_Missing_Dirs use "True";
 
    package Builder is
-      for Default_Switches ("Ada") use ("-F/Library/Frameworks",
-                                        "-framework", "SDL_mixer");
-
+      for Default_Switches ("Ada") use ("-framework", "SDL_mixer");
    end Builder;
 
    package Compiler is
       Common_Switches := ("-ffunction-sections", "-fdata-sections");
       C_Switches      := ();
-      Ada_Switches    := ("-gnat2012", "-gnata", "-gnato", "-gnatE",
+      Ada_Switches    := ("-gnat2012", "-gnata", "-gnato", "-gnatE", "-gnatwa",
                           "-gnaty", "-gnaty-s", "-gnatyO", "-gnatyM120", "-gnatyx");
 
       case SDLada_Common.Platform is
 
          when "macosx" =>
-            C_Switches := C_Switches & ("-F/Library/Frameworks",
-                                        "-framework", "SDL_mixer");
+            C_Switches := C_Switches & ("-framework", "SDL_mixer");
 
          when others =>
             null;
