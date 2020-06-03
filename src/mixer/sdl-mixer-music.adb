@@ -214,7 +214,6 @@ package body SDL.Mixer.Music is
    procedure Volume (New_Volume : in     Volume_Type;
                      Old_Volume :    out Volume_Type)
    is
-      use Interfaces;
       function Mix_Volume_Music (Volume : in C.int) return C.int
         with
         Import        => True,
@@ -436,5 +435,3 @@ package body SDL.Mixer.Music is
 
 
 end SDL.Mixer.Music;
-
-
