@@ -4,8 +4,8 @@ with "sdlada_mixer.gpr";
 project Tests_Mixer is
 
    for Source_Dirs use ("../../test/mixer/");
-   for Object_Dir  use "gen/" & SDLAda_Common.Mode & "/lib/test/mixer/.obj";
-   for Exec_Dir    use "gen/" & SDLAda_Common.Mode & "/lib/test/mixer/";
+   for Object_Dir  use "gen/" & SDLAda_Common.Mode & "/test/mixer/.obj";
+   for Exec_Dir    use "gen/" & SDLAda_Common.Mode & "/test/mixer/";
    for Main        use ("mix_inspection.adb",
                         "play_channels.adb",
                         "play_group.adb",
