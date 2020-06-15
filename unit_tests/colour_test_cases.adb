@@ -27,12 +27,15 @@ with AUnit.Assertions; use AUnit.Assertions;
 package body Colour_Test_Cases is
    overriding
    function Name (Test : Colour_Test_Case) return Message_String is
+      pragma Unreferenced (Test);  --  TODO: Fix me!
    begin
       return Format ("Colour test");
    end Name;
 
    overriding
    procedure Run_Test (Test : in out Colour_Test_Case) is
+      pragma Unreferenced (Test);  --  TODO: Fix me!
+
       use type SDL.Video.Palettes.Colour_Component;
 
       Colour : constant SDL.Video.Palettes.Colour := (Red => 16#FF#, Green => 16#DD#, Blue => 16#AA#, Alpha => 16#88#);
