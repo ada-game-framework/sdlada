@@ -35,7 +35,7 @@ package body Colour_Test_Cases is
    procedure Run_Test (Test : in out Colour_Test_Case) is
       use type SDL.Video.Palettes.Colour_Component;
 
-      Colour : SDL.Video.Palettes.Colour := (Red => 16#FF#, Green => 16#DD#, Blue => 16#AA#, Alpha => 16#88#);
+      Colour : constant SDL.Video.Palettes.Colour := (Red => 16#FF#, Green => 16#DD#, Blue => 16#AA#, Alpha => 16#88#);
    begin
       Assert (Colour.Red = C_Test.Red, "Red values do not match");
       Assert (Colour.Green = C_Test.Green, "Green values do not match");
