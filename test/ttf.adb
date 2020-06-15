@@ -67,9 +67,7 @@ begin
             Event            : SDL.Events.Events.Events;
             Finished         : Boolean := False;
 
-            use type SDL.Events.Event_Types;
             use type SDL.Events.Keyboards.Key_Codes;
---            use type SDL.Events.Keyboards.Scan_Codes;
          begin
             --  W.Update_Surface;  --  Shows the above two calls.
             loop

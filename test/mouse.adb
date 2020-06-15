@@ -9,9 +9,6 @@ with SDL.Video.Textures.Makers;
 with SDL.Video.Windows.Makers;
 
 procedure Mouse is
-   use type SDL.Dimension;
-   use type SDL.Positive_Sizes;
-
    Window_Size : constant SDL.Positive_Sizes := SDL.Positive_Sizes'(800, 640);
 
    W           : SDL.Video.Windows.Window;
@@ -42,10 +39,6 @@ begin
          Mouse_Shown : Boolean := True;
          Warp_Rel    : Boolean := True;
          Warp_Screen : Boolean := False;
-
-         use type SDL.Events.Event_Types;
-         use type SDL.Events.Keyboards.Key_Codes;
-         use type SDL.Events.Keyboards.Scan_Codes;
       begin
          loop
             while SDL.Events.Events.Poll (Event) loop

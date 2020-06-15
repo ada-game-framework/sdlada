@@ -3,8 +3,6 @@ with SDL.Libraries;
 with SDL.Log;
 with System;
 
-use type System.Bit_Order;
-
 --  Run with: LD_LIBRARY_PATH=./gen/debug/test:$LD_LIBRARY_PATH ./gen/debug/test/libraries
 
 procedure Libraries is

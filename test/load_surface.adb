@@ -44,9 +44,7 @@ begin
                                                                  Height => Image_Area.Height / 4);
          Finished           : Boolean := False;
 
-         use type SDL.Events.Event_Types;
          use type SDL.Events.Keyboards.Key_Codes;
-         use type SDL.Events.Keyboards.Scan_Codes;
       begin
          Window_Surface := W.Get_Surface;
 

@@ -3,8 +3,6 @@ with SDL.Error;
 with SDL.Log;
 with System;
 
-use type System.Bit_Order;
-
 procedure Error is
 begin
    SDL.Log.Set (Category => SDL.Log.Application, Priority => SDL.Log.Debug);

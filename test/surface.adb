@@ -42,9 +42,7 @@ begin
            (X => 10, Y => 130, Width => 100, Height => 100);
          Finished         : Boolean := False;
 
-         use type SDL.Events.Event_Types;
          use type SDL.Events.Keyboards.Key_Codes;
-         use type SDL.Events.Keyboards.Scan_Codes;
       begin
          Window_Surface := W.Get_Surface;
 

@@ -81,7 +81,6 @@ procedure Stream2 is
    procedure Lock is new SDL.Video.Textures.Lock (Pixel_Pointer_Type => SDL.Video.Pixels.ARGB_8888_Access.Pointer);
 
    use type SDL.Video.Pixels.ARGB_8888_Access.Pointer;
-   use type Ada.Calendar.Time;
 
    type Texture_2D_Array is array (SDL.Natural_Dimension range <>, SDL.Natural_Dimension range <>) of
      aliased SDL.Video.Pixels.ARGB_8888;
@@ -137,7 +136,6 @@ begin
          Event    : SDL.Events.Events.Events;
          Finished : Boolean := False;
 
-         use type SDL.Events.Event_Types;
          use type SDL.Events.Keyboards.Key_Codes;
          use type SDL.Events.Keyboards.Scan_Codes;
       begin
