@@ -654,6 +654,9 @@ begin
 
    Comment_Dash (117);
 
+   Put_Line ("with SDL.Video.Windows;");
+   New_Line;
+
    Put_Line ("package SDL.Events.Keyboards is");
 
    Put_Line ("   --  Keyboard events.");
