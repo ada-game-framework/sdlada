@@ -659,6 +659,7 @@ package body SDL.Video.GL is
    end Get_Swap_Interval;
 
    function Set_Swap_Interval (Interval : in Allowed_Swap_Intervals; Late_Swap_Tear : in Boolean) return Boolean is
+      pragma Unreferenced (Interval);  --  TODO: Fix me!
       function SDL_GL_Set_Swap_Interval (Interval : in Swap_Intervals) return C.int with
         Import        => True,
         Convention    => C,
