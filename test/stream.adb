@@ -2,6 +2,7 @@ with Ada.Calendar;
 with Ada.Directories;
 with Ada.Text_IO.Text_Streams;
 with Ada.Unchecked_Conversion;
+with Interfaces.C;
 with SDL;
 with SDL.Log;
 with SDL.Video.Palettes;

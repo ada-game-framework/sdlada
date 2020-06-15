@@ -26,6 +26,7 @@
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Unchecked_Conversion;
 with Interfaces;
+with SDL.Video.Windows;
 
 package SDL.Events.Mice is
    --  Mouse events.

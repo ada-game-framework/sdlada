@@ -24,6 +24,8 @@
 --
 --  Constructor subprograms for Renderers.
 --------------------------------------------------------------------------------------------------------------------
+with SDL.Video.Surfaces;
+
 package SDL.Video.Renderers.Makers is
    procedure Create
      (Rend   : in out Renderer;
