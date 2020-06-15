@@ -1,15 +1,12 @@
 with SDL;
-with SDL.Error;
 with SDL.Events.Events;
 with SDL.Events.Keyboards;
 with SDL.Inputs.Mice;
 with SDL.Log;
-with SDL.Video.Palettes;
 with SDL.Video.Pixel_Formats;
 with SDL.Video.Renderers.Makers;
 with SDL.Video.Textures.Makers;
 with SDL.Video.Windows.Makers;
-with SDL.Versions;
 
 procedure Mouse is
    use type SDL.Dimension;

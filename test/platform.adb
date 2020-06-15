@@ -1,6 +1,5 @@
 with SDL;
 with SDL.CPUS;
-with SDL.Error;
 with SDL.Log;
 with SDL.Platform;
 with System;

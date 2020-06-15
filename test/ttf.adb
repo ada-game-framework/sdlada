@@ -1,24 +1,13 @@
 with Ada.Command_Line;
 with Ada.Text_IO;
---  with Ada.Unchecked_Conversion;
---  with Interfaces.C.Pointers;
 with SDL;
-with SDL.Error;
 with SDL.Events.Events;
 with SDL.Events.Keyboards;
 with SDL.Log;
 with SDL.TTFs.Makers;
 with SDL.Video.Palettes;
-with SDL.Video.Pixel_Formats;
---  with SDL.Video.Pixels;
-with SDL.Video.Rectangles;
---  with SDL.Video.Renderers.Makers;
---  with SDL.Video.Textures.Makers;
 with SDL.Video.Surfaces;
 with SDL.Video.Windows.Makers;
-with SDL.Versions;
-with System;
-with System.Address_To_Access_Conversions;
 
 procedure TTF is
    W              : SDL.Video.Windows.Window;

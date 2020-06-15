@@ -29,7 +29,6 @@
 --    task so as to separate out the events from the main window. This could change. I really don't know yet.
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Unchecked_Conversion;
-with SDL.Video.Windows;
 
 package SDL.Events is
    type Event_Types is mod 2 ** 32 with
