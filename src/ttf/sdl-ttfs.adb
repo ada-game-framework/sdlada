@@ -220,7 +220,7 @@ package body SDL.TTFs is
       Size   : SDL.Sizes           := SDL.Zero_Size;
       C_Text : C.Strings.chars_ptr := C.Strings.New_String (Text);
       Result : C.int               := TTF_Size_Text (Self.Internal, C_Text, Size.Width, Size.Height);
-      pragma Unreferenced (Result);
+      pragma Unreferenced (Result);  --  TODO: Fix me!
    begin
       C.Strings.Free (C_Text);
 
@@ -239,7 +239,7 @@ package body SDL.TTFs is
       Size   : SDL.Sizes                    := SDL.Zero_Size;
       C_Text : constant C.Strings.chars_ptr := C.Strings.New_String (Text);
       Result : C.int                        := TTF_Size_UTF_8 (Self.Internal, C_Text, Size.Width, Size.Height);
-      pragma Unreferenced (Result);
+      pragma Unreferenced (Result);  --  TODO: Fix me!
    begin
       return Size;
    end Size_UTF_8;

@@ -135,6 +135,8 @@ procedure Stream is
       Default_Terminator => SDL.Video.Pixels.ARGB_8888'(others => SDL.Video.Palettes.Colour_Component'First));
 
    procedure Update_Texture_2 (Pointer : in Texture_2D.Pointer) is
+      pragma Unreferenced (Pointer);  --  TODO: Fix me!
+
       function To_Address is new Ada.Unchecked_Conversion (Source => SDL.Video.Pixels.ARGB_8888_Access.Pointer,
                                                            Target => System.Address);
 

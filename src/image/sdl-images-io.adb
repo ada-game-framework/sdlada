@@ -80,6 +80,8 @@ package body SDL.Images.IO is
    procedure Create (Texture   : in out Video.Textures.Texture;
                      Renderer  : in Video.Renderers.Renderer;
                      File_Name : in String) is
+      pragma Unreferenced (Texture);  --  TODO: Fix me!
+
       function IMG_Load (R    : in SDL.C_Pointers.Renderer_Pointer;
                          Name : in C.char_array) return C_Pointers.Texture_Pointer with
         Import        => True,
