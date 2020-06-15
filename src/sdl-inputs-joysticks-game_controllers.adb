@@ -149,8 +149,7 @@ package body SDL.Inputs.Joysticks.Game_Controllers is
           Import        => True,
           External_Name => "SDL_GameControllerGetButtonFromString";
    begin
-      return SDL.Events.Joysticks.Game_Controllers.Buttons
-        (SDL_Game_Controller_Get_Button_From_String (C.To_C (Button_Name)));
+      return SDL_Game_Controller_Get_Button_From_String (C.To_C (Button_Name));
    end Get_Button;
 
    function Get_Joystick (Self : in Game_Controller) return Joystick is
