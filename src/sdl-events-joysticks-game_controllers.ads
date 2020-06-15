@@ -24,7 +24,6 @@
 --
 --  Game controller specific events.
 --------------------------------------------------------------------------------------------------------------------
-with Interfaces;
 
 package SDL.Events.Joysticks.Game_Controllers is
    type Axes is (Invalid,

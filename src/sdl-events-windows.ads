@@ -24,6 +24,8 @@
 --
 --  Window specific events.
 --------------------------------------------------------------------------------------------------------------------
+with SDL.Video.Windows;
+
 package SDL.Events.Windows is
    --  Window events.
    Window                     : constant Event_Types := 16#0000_0200#;

@@ -26,6 +26,7 @@
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Unchecked_Conversion;
 with Interfaces;
+with SDL.Video.Windows;
 
 package SDL.Events.Mice is
    --  Mouse events.
@@ -179,5 +180,6 @@ private
          Which      at 3 * SDL.Word range  0 .. 31;
          X          at 4 * SDL.Word range  0 .. 31;
          Y          at 5 * SDL.Word range  0 .. 31;
+         Direction  at 6 * SDL.Word range  0 .. 31;
       end record;
 end SDL.Events.Mice;

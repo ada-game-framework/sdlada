@@ -25,8 +25,6 @@ with Interfaces.C;
 package body SDL.Power is
    package C renames Interfaces.C;
 
-   use type C.int;
-
    procedure Info (Data : in out Battery_Info) is
       function SDL_GetPowerInfo (Seconds, Percent : out C.int) return State with
         Import        => True,

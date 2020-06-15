@@ -41,7 +41,7 @@ package body SDL.Error is
         Convention    => C,
         External_Name => "SDL_GetError";
 
-      C_Str : C.Strings.chars_ptr := SDL_Get_Error;
+      C_Str : constant C.Strings.chars_ptr := SDL_Get_Error;
    begin
       return C.Strings.Value (C_Str);
    end Get;

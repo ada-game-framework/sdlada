@@ -20,12 +20,11 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
-with Interfaces.C;
+
 with Interfaces.C.Strings;
 with SDL.Error;
 
 package body SDL.Video is
-   use type C.int;
 
    function Is_Screen_Saver_Enabled return Boolean is
       function SDL_Is_Screen_Saver_Enabled return C.int with
@@ -80,7 +79,7 @@ package body SDL.Video is
         External_Name => "SDL_GetVideoDriver";
 
       --  Index is zero based, so need to subtract 1 to correct it.
-      C_Str : C.Strings.chars_ptr := SDL_Get_Video_Driver (C.int (Index) - 1);
+      C_Str : constant C.Strings.chars_ptr := SDL_Get_Video_Driver (C.int (Index) - 1);
    begin
       return C.Strings.Value (C_Str);
    end Driver_Name;

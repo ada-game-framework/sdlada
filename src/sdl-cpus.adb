@@ -25,8 +25,6 @@ with Interfaces.C;
 package body SDL.CPUS is
    package C renames Interfaces.C;
 
-   use type C.int;
-
    function Count return Positive is
       function SDL_Get_CPU_Count return C.int with
         Import        => True,

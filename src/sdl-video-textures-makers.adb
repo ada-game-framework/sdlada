@@ -28,7 +28,6 @@ with SDL.Error;
 package body SDL.Video.Textures.Makers is
    package C renames Interfaces.C;
 
-   use type C.int;
    use type SDL.C_Pointers.Texture_Pointer;
 
    function Get_Internal_Surface (Self : in SDL.Video.Surfaces.Surface)

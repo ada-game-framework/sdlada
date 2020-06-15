@@ -64,7 +64,7 @@ package body Utils is
                            Indent    : in Natural;
                            Separator : in String := " ";
                            Truncate  : in Boolean := False) is
-      Field_Index : Positive_Count := Col;
+      Field_Index : constant Positive_Count := Col;
    begin
       if Indent > 0 then
          for Index in 1 .. Indent loop

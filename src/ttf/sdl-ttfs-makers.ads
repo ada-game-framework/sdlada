@@ -24,7 +24,7 @@
 --
 --  Constructor subprograms which don't dispatch for font types.
 --------------------------------------------------------------------------------------------------------------------
-with Interfaces.C;
+
 with SDL.RWops;
 
 package SDL.TTFs.Makers is

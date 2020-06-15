@@ -23,6 +23,7 @@
 --  SDL.Inputs.Mice.Cursors
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Finalization;
+private with SDL.C_Pointers;
 
 package SDL.Inputs.Mice.Cursors is
    --  Don't confuse this package with any type of Ada iterator, this is for visual mouse cursors.

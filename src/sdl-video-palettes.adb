@@ -92,6 +92,7 @@ package body SDL.Video.Palettes is
    function Constant_Reference
      (Container : aliased Palette;
       Position  : Cursor) return Colour is
+      pragma Unreferenced (Container);  --  TODO: Fix me!
    begin
       --  Put_Line ("Constant_Reference" & Natural'Image (Position.Index));
 
