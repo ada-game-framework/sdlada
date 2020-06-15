@@ -25,8 +25,8 @@
 --  Tests to check the Ada 2012 bindings for correctness.
 --------------------------------------------------------------------------------------------------------------------
 with AUnit; use AUnit;
-with Pixel_Format_Test_Cases; use Pixel_Format_Test_Cases;
-with Colour_Test_Cases; use Colour_Test_Cases;
+with Pixel_Format_Test_Cases;
+with Colour_Test_Cases;
 
 package body SDL_Suites is
    use Test_Suites;

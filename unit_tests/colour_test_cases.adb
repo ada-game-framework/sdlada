@@ -23,7 +23,6 @@
 --  Colour_Test_Cases
 --------------------------------------------------------------------------------------------------------------------
 with AUnit.Assertions; use AUnit.Assertions;
-with SDL.Video.Palettes;
 
 package body Colour_Test_Cases is
    overriding

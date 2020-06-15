@@ -25,7 +25,6 @@
 with Ada.Unchecked_Conversion;
 with Ada.Strings.Fixed; use Ada.Strings.Fixed;
 use Ada.Strings;
-with Interfaces.C;
 with SDL.Video.Pixel_Formats; use SDL.Video.Pixel_Formats;
 with AUnit.Assertions; use AUnit.Assertions;
 with Ada.Text_Io; -- use Ada.Text_Io;
