@@ -17,7 +17,7 @@ with System;
 
 procedure Test is
    W              : SDL.Video.Windows.Window;
-   Total_Drivers  : Positive := SDL.Video.Total_Drivers;
+   Total_Drivers  : constant Positive := SDL.Video.Total_Drivers;
    Linked_Version : SDL.Versions.Version;
 begin
    SDL.Log.Set (Category => SDL.Log.Application, Priority => SDL.Log.Debug);
@@ -65,15 +65,15 @@ begin
       --  W.Set_Mode (SDL.Video.Windows.Full_Screen);
 
       declare
-         ID : SDL.Video.Windows.ID     := SDL.Video.Windows.Get_ID (W);
-         W2 : SDL.Video.Windows.Window := SDL.Video.Windows.From_ID (ID);
+         ID : constant SDL.Video.Windows.ID     := SDL.Video.Windows.Get_ID (W);
+         W2 : constant SDL.Video.Windows.Window := SDL.Video.Windows.From_ID (ID);
       begin
          SDL.Video.Windows.Set_Title (W2, "Grabbed second window!");
       end;
 
       --  Joysticks.
       declare
-         Total_Sticks : SDL.Inputs.Joysticks.All_Devices := SDL.Inputs.Joysticks.Total;
+         Total_Sticks : constant SDL.Inputs.Joysticks.All_Devices := SDL.Inputs.Joysticks.Total;
          Stick        : SDL.Inputs.Joysticks.Joystick;
          GUID_1       : SDL.Inputs.Joysticks.GUIDs;
          GUID_2       : SDL.Inputs.Joysticks.GUIDs;

@@ -24,16 +24,22 @@ begin
       declare
          Event            : SDL.Events.Events.Events;
          Window_Surface   : SDL.Video.Surfaces.Surface;
-         Area             : SDL.Video.Rectangles.Rectangle        := (X => 10, Y => 10, Width => 50, Height => 50);
-         Areas            : SDL.Video.Rectangles.Rectangle_Arrays := ((X => 100, Y => 10, Width => 50, Height => 50),
-                                                                      (X => 120, Y => 20, Width => 50, Height => 50),
-                                                                      (X => 160, Y => 40, Width => 50, Height => 50));
-         Green_Area       : SDL.Video.Rectangles.Rectangle        := (X => 15, Y => 15, Width => 10, Height => 10);
-         Blue_Areas       : SDL.Video.Rectangles.Rectangle_Arrays := ((X => 150, Y => 15, Width => 10, Height => 10),
-                                                                      (X => 125, Y => 25, Width => 10, Height => 10),
-                                                                      (X => 165, Y => 45, Width => 10, Height => 10));
-         Blit_Copy_Area   : SDL.Video.Rectangles.Rectangle        := (X => 10, Y => 10, Width => 150, Height => 70);
-         Blit_Dest_Area   : SDL.Video.Rectangles.Rectangle        := (X => 10, Y => 130, Width => 100, Height => 100);
+         Area             : constant SDL.Video.Rectangles.Rectangle :=
+           (X => 10, Y => 10, Width => 50, Height => 50);
+         Areas            : constant SDL.Video.Rectangles.Rectangle_Arrays :=
+           ((X => 100, Y => 10, Width => 50, Height => 50),
+            (X => 120, Y => 20, Width => 50, Height => 50),
+            (X => 160, Y => 40, Width => 50, Height => 50));
+         Green_Area       : constant SDL.Video.Rectangles.Rectangle :=
+           (X => 15, Y => 15, Width => 10, Height => 10);
+         Blue_Areas       : constant SDL.Video.Rectangles.Rectangle_Arrays :=
+           ((X => 150, Y => 15, Width => 10, Height => 10),
+            (X => 125, Y => 25, Width => 10, Height => 10),
+            (X => 165, Y => 45, Width => 10, Height => 10));
+         Blit_Copy_Area   : constant SDL.Video.Rectangles.Rectangle :=
+           (X => 10, Y => 10, Width => 150, Height => 70);
+         Blit_Dest_Area   : SDL.Video.Rectangles.Rectangle :=
+           (X => 10, Y => 130, Width => 100, Height => 100);
          Finished         : Boolean := False;
 
          use type SDL.Events.Event_Types;

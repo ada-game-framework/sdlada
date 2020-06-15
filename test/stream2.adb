@@ -23,7 +23,7 @@ procedure Stream2 is
    type Moose_Palette_Array is array (Moose_Colour_Index'Range) of SDL.Video.Palettes.RGB_Colour;
 
    W                : SDL.Video.Windows.Window;
-   Moose_Size       : SDL.Positive_Sizes              := (64, 88);
+   Moose_Size       : constant SDL.Positive_Sizes     := (64, 88);
    Moose_Frame_Size : constant SDL.Positive_Dimension := (Moose_Size.Width * Moose_Size.Height) - 1;
    Moose_Frame      : Moose_Frames                    := Moose_Frames'First;
    Moose_Palette    : constant Moose_Palette_Array    :=
@@ -54,7 +54,7 @@ procedure Stream2 is
    Moose_Frame_Data : Moose_Frame_Data_Array;
 
    procedure Load_Moose_Data (Data : out Moose_Frame_Data_Array) is
-      Actual_Name : String := "../../test/moose.dat";
+      Actual_Name : constant String := "../../test/moose.dat";
       Data_File   : Ada.Text_IO.File_Type;
       Stream      : Ada.Text_IO.Text_Streams.Stream_Access := null;
 
