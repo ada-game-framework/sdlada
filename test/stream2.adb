@@ -109,8 +109,7 @@ procedure Stream2 is
       end loop;
    end Cache_Moose;
 
-   Cache    : Cached_Moose_Frame_Array;
-   Finished : Boolean := False;
+   Cache : Cached_Moose_Frame_Array;
 begin
    SDL.Log.Set (Category => SDL.Log.Application, Priority => SDL.Log.Debug);
 

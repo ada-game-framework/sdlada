@@ -56,7 +56,6 @@ procedure Stream is
       package Dirs renames Ada.Directories;
 
       Actual_Name : constant String := "../../test/moose.dat";
-      Size        : Dirs.File_Size := Dirs.Size (Actual_Name);
       Data_File   : Ada.Text_IO.File_Type;
       Stream      : Ada.Text_IO.Text_Streams.Stream_Access := null;
 
@@ -82,17 +81,12 @@ procedure Stream is
 
    procedure Lock is new SDL.Video.Textures.Lock (Pixel_Pointer_Type => SDL.Video.Pixels.ARGB_8888_Access.Pointer);
 
-   type Pixel_Array is new SDL.Video.Pixels.ARGB_8888_Array (1 .. Moose_Frame_Size);
-
    use type SDL.Video.Pixels.ARGB_8888_Access.Pointer;
    use type Ada.Calendar.Time;
 
    --  This uses the same algorithm as the original teststream.c. It copies 1 pixel at a time, indexing into the moose
    --  palette using the data from moose.dat.
    procedure Update_Texture_1 (Pointer : in SDL.Video.Pixels.ARGB_8888_Access.Pointer) is
-      function To_Address is new Ada.Unchecked_Conversion (Source => SDL.Video.Pixels.ARGB_8888_Access.Pointer,
-                                                           Target => System.Address);
-
       Start_Time       : Ada.Calendar.Time;
       End_Time         : Ada.Calendar.Time;
       Colour           : SDL.Video.Palettes.RGB_Colour;
