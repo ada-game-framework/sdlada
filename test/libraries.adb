@@ -1,7 +1,6 @@
 with SDL;
 with SDL.Libraries;
 with SDL.Log;
-with System;
 
 --  Run with: LD_LIBRARY_PATH=./gen/debug/test:$LD_LIBRARY_PATH ./gen/debug/test/libraries
 

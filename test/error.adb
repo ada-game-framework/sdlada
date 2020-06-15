@@ -1,7 +1,6 @@
 with SDL;
 with SDL.Error;
 with SDL.Log;
-with System;
 
 procedure Error is
 begin
