@@ -69,11 +69,9 @@ begin
                                                                                     Width  => Image_Area.Width / 2,
                                                                                     Height => Image_Area.Height / 2));
 
-         W.Update_Surface;
-
-         SDL.Images.IO.Write_PNG (Window_Surface, "load_surface.png");
-
          loop
+            W.Update_Surface;
+
             while SDL.Events.Events.Poll (Event) loop
                case Event.Common.Event_Type is
                   when SDL.Events.Quit =>
