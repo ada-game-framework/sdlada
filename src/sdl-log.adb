@@ -160,4 +160,5 @@ package body SDL.Log is
          Priority,
          C.Strings.Value (Message));
    end Local_Callback;
+   pragma Unreferenced (Local_Callback);  --  TODO: Fix me!
 end SDL.Log;

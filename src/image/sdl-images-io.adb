@@ -37,7 +37,7 @@ package body SDL.Images.IO is
         Convention    => C,
         External_Name => "IMG_Load";
 
-      Result : Video.Surfaces.Internal_Surface_Pointer := IMG_Load (Name => C.To_C (File_Name));
+      Result : constant Video.Surfaces.Internal_Surface_Pointer := IMG_Load (Name => C.To_C (File_Name));
    begin
       if Result = null then
          raise Image_Error with Error.Get;
@@ -57,9 +57,10 @@ package body SDL.Images.IO is
         Convention    => C,
         External_Name => "IMG_LoadTyped_RW";
 
-      Result : Video.Surfaces.Internal_Surface_Pointer := IMG_Load_Typed_RW (Ops   => Source,
-                                                                             Free  => (if Free_Source then 1 else 0),
-                                                                             Which => Format_String (Format));
+      Result : constant Video.Surfaces.Internal_Surface_Pointer := IMG_Load_Typed_RW
+        (Ops   => Source,
+         Free  => (if Free_Source then 1 else 0),
+         Which => Format_String (Format));
    begin
       if Result = null then
          raise Image_Error with Error.Get;
@@ -79,6 +80,8 @@ package body SDL.Images.IO is
    procedure Create (Texture   : in out Video.Textures.Texture;
                      Renderer  : in Video.Renderers.Renderer;
                      File_Name : in String) is
+      pragma Unreferenced (Texture);  --  TODO: Fix me!
+
       function IMG_Load (R    : in SDL.C_Pointers.Renderer_Pointer;
                          Name : in C.char_array) return C_Pointers.Texture_Pointer with
         Import        => True,
@@ -87,8 +90,8 @@ package body SDL.Images.IO is
 
       use type C_Pointers.Texture_Pointer;
 
-      Result : C_Pointers.Texture_Pointer := IMG_Load (R    => Get_Internal_Renderer (Renderer),
-                                                       Name => C.To_C (File_Name));
+      Result : constant C_Pointers.Texture_Pointer := IMG_Load (R    => Get_Internal_Renderer (Renderer),
+                                                                Name => C.To_C (File_Name));
    begin
       if Result = null then
          raise Image_Error with Error.Get;
@@ -116,9 +119,7 @@ package body SDL.Images.IO is
         Convention    => C,
         External_Name => "IMG_SavePNG";
 
-      use type C.int;
-
-      Result : C.int := IMG_SavePNG (Get_Internal_Surface (Surface), C.To_C (File_Name));
+      Result : constant C.int := IMG_SavePNG (Get_Internal_Surface (Surface), C.To_C (File_Name));
    begin
       if Result < Success then
          raise Image_Error with Error.Get;

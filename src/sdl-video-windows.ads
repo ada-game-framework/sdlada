@@ -34,6 +34,8 @@ with SDL.Video.Surfaces;
 with System;
 
 package SDL.Video.Windows is
+   pragma Preelaborate;
+
    Window_Error : exception;
 
    --  Return a special coordinate value to indicate that you don't care what

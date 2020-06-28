@@ -24,7 +24,6 @@ with SDL.Error;
 with SDL.Video;
 
 package body SDL.Video.Displays is
-   use type C.int;
 
    function Total return Display_Indices is
       --  This function returns a value >= 1, use this as a new lower type bound.
@@ -48,7 +47,7 @@ package body SDL.Video.Displays is
         Convention    => C,
         External_Name => "SDL_GetClosestDisplayMode";
 
-      Result : Access_Mode := SDL_Get_Closest_Display_Mode (C.int (Display - 1), Wanted, Target);
+      Result : constant Access_Mode := SDL_Get_Closest_Display_Mode (C.int (Display - 1), Wanted, Target);
    begin
       return (Result = null);
    end Closest_Mode;
@@ -59,7 +58,7 @@ package body SDL.Video.Displays is
         Convention    => C,
         External_Name => "SDL_GetCurrentDisplayMode";
 
-      Result : C.int := SDL_Get_Current_Display_Mode (C.int (Display - 1), Target);
+      Result : constant C.int := SDL_Get_Current_Display_Mode (C.int (Display - 1), Target);
    begin
       return (Result = Success);
    end Current_Mode;
@@ -70,7 +69,7 @@ package body SDL.Video.Displays is
         Convention    => C,
         External_Name => "SDL_GetDesktopDisplayMode";
 
-      Result : C.int := SDL_Get_Desktop_Display_Mode (C.int (Display - 1), Target);
+      Result : constant C.int := SDL_Get_Desktop_Display_Mode (C.int (Display - 1), Target);
    begin
       return (Result = Success);
    end Desktop_Mode;
@@ -81,7 +80,7 @@ package body SDL.Video.Displays is
         Convention    => C,
         External_Name => "SDL_GetDisplayMode";
 
-      Result : C.int := SDL_Get_Display_Mode (C.int (Display - 1), C.int (Index), Target);
+      Result : constant C.int := SDL_Get_Display_Mode (C.int (Display - 1), C.int (Index), Target);
    begin
       return (Result = Success);
    end Display_Mode;
@@ -92,7 +91,7 @@ package body SDL.Video.Displays is
         Convention    => C,
         External_Name => "SDL_GetNumDisplayModes";
 
-      Result : C.int := SDL_Get_Num_Display_Modes (C.int (Display - 1));
+      Result : constant C.int := SDL_Get_Num_Display_Modes (C.int (Display - 1));
    begin
       if Result >= 1 then
          Total := Positive (Result);
@@ -109,7 +108,7 @@ package body SDL.Video.Displays is
         Convention    => C,
         External_Name => "SDL_GetDisplayBounds";
 
-      Result : C.int := SDL_Get_Display_Bounds (C.int (Display - 1), Bounds);
+      Result : constant C.int := SDL_Get_Display_Bounds (C.int (Display - 1), Bounds);
    begin
       return (Result = Success);
    end Display_Bounds;

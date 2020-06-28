@@ -106,7 +106,7 @@ unit_tests: $(LIB_NAME) build_unit_tests/unit_tests
 
 build_unit_tests/unit_tests:
 	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
-		-Punit_tests.gpr
+		-Punit_tests.gpr ${SDL2_CONFIG}
 
 .PHONY: clean-unit_tests
 

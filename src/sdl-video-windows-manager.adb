@@ -27,7 +27,7 @@ package body SDL.Video.Windows.Manager is
         Convention    => C,
         External_Name => "SDL_GetWindowWMInfo";
 
-      Result : SDL_Bool := SDL_Get_Window_WM_Info (Win.Internal, Info);
+      Result : constant SDL_Bool := SDL_Get_Window_WM_Info (Win.Internal, Info);
    begin
       return (if Result = SDL_True then True else False);
    end Get_WM_Info;

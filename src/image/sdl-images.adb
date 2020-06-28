@@ -22,11 +22,9 @@
 --------------------------------------------------------------------------------------------------------------------
 --  SDL.Images
 --------------------------------------------------------------------------------------------------------------------
-with SDL.Error;
 
 package body SDL.Images is
    use type C.char_array;
-   use type C.int;
 
    Format_Strings : constant Format_String_Arrays :=
      ("TGA"  & C.char'Val (0) & C.char'Val (0),
@@ -52,7 +50,7 @@ package body SDL.Images is
         Convention    => C,
         External_Name => "IMG_Init";
 
-      Result : Init_Image_Flags := IMG_Init (Flags);
+      Result : constant Init_Image_Flags := IMG_Init (Flags);
    begin
       if Result = 0 then
          return False;

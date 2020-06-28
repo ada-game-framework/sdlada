@@ -21,7 +21,7 @@ library project SDLAda is
    package Compiler is
       Common_Switches := ("-ffunction-sections", "-fdata-sections");
       C_Switches      := ();
-      Ada_Switches    := ("-gnat2012", "-gnata", "-gnato", "-gnatE",
+      Ada_Switches    := ("-gnat2012", "-gnata", "-gnato", "-gnatE", "-gnatwa",
                           "-gnaty", "-gnaty-s", "-gnatyO", "-gnatyM120", "-gnatyx");
 
       case Mode is

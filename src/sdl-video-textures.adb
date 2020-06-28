@@ -21,13 +21,13 @@
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C;
+with System;
 with Ada.Unchecked_Conversion;
 with SDL.Error;
 
 package body SDL.Video.Textures is
    package C renames Interfaces.C;
 
-   use type C.int;
    use type SDL.C_Pointers.Texture_Pointer;
 
    procedure Destroy (Self : in out Texture) is
@@ -49,7 +49,7 @@ package body SDL.Video.Textures is
         External_Name => "SDL_GetTextureAlphaMod";
 
       Data   : SDL.Video.Palettes.Colour_Component;
-      Result : C.int := SDL_Get_Texture_Alpha_Mod (Self.Internal, Data);
+      Result : constant C.int := SDL_Get_Texture_Alpha_Mod (Self.Internal, Data);
    begin
       if Result /= Success then
          raise Texture_Error with SDL.Error.Get;
@@ -65,7 +65,7 @@ package body SDL.Video.Textures is
         Convention    => C,
         External_Name => "SDL_SetTextureAlphaMod";
 
-      Result : C.int := SDL_Set_Texture_Alpha_Mod (Self.Internal, Alpha);
+      Result : constant C.int := SDL_Set_Texture_Alpha_Mod (Self.Internal, Alpha);
    begin
       if Result /= Success then
          raise Texture_Error with SDL.Error.Get;
@@ -80,7 +80,7 @@ package body SDL.Video.Textures is
         External_Name => "SDL_GetTextureBlendMode";
 
       Data   : Blend_Modes;
-      Result : C.int := SDL_Get_Texture_Blend_Mode (Self.Internal, Data);
+      Result : constant C.int := SDL_Get_Texture_Blend_Mode (Self.Internal, Data);
    begin
       if Result /= Success then
          raise Texture_Error with SDL.Error.Get;
@@ -96,7 +96,7 @@ package body SDL.Video.Textures is
         Convention    => C,
         External_Name => "SDL_SetTextureBlendMode";
 
-      Result : C.int := SDL_Set_Texture_Blend_Mode (Self.Internal, Mode);
+      Result : constant C.int := SDL_Set_Texture_Blend_Mode (Self.Internal, Mode);
    begin
       if Result /= Success then
          raise Texture_Error with SDL.Error.Get;
@@ -111,7 +111,7 @@ package body SDL.Video.Textures is
         External_Name => "SDL_GetTextureColorMod";
 
       Data   : SDL.Video.Palettes.RGB_Colour;
-      Result : C.int := SDL_Get_Texture_Color_Mod (Self.Internal, Data.Red, Data.Green, Data.Blue);
+      Result : constant C.int := SDL_Get_Texture_Color_Mod (Self.Internal, Data.Red, Data.Green, Data.Blue);
    begin
       if Result /= Success then
          raise Texture_Error with SDL.Error.Get;
@@ -127,7 +127,7 @@ package body SDL.Video.Textures is
         Convention    => C,
         External_Name => "SDL_SetTextureColorMod";
 
-      Result : C.int := SDL_Set_Texture_Color_Mod (Self.Internal, Colour.Red, Colour.Green, Colour.Blue);
+      Result : constant C.int := SDL_Set_Texture_Color_Mod (Self.Internal, Colour.Red, Colour.Green, Colour.Blue);
    begin
       if Result /= Success then
          raise Texture_Error with SDL.Error.Get;
@@ -172,7 +172,7 @@ package body SDL.Video.Textures is
 
       --  Don't care about Pitch value.
       Dummy  : SDL.Video.Pixels.Pitches := 0;
-      Result : C.int := SDL_Lock_Texture (Self.Internal, System.Null_Address, Pixels, Dummy);
+      Result : constant C.int := SDL_Lock_Texture (Self.Internal, System.Null_Address, Pixels, Dummy);
    begin
       if Result /= Success then
          raise Texture_Error with SDL.Error.Get;
@@ -193,7 +193,7 @@ package body SDL.Video.Textures is
         Convention    => C,
         External_Name => "SDL_LockTexture";
 
-      Result : C.int := SDL_Lock_Texture (Self.Internal, Area, Pixels, Pitch);
+      Result : constant C.int := SDL_Lock_Texture (Self.Internal, Area, Pixels, Pitch);
    begin
       if Result /= Success then
          raise Texture_Error with SDL.Error.Get;
@@ -228,9 +228,9 @@ package body SDL.Video.Textures is
         Convention    => C,
         External_Name => "SDL_QueryTexture";
 
-      W      : SDL.Dimension := 0;
-      H      : SDL.Dimension := 0;
-      Result : C.int         := SDL_Query_Texture (Self.Internal, Pixel_Format_Name, Kind, W, H);
+      W      : SDL.Dimension  := 0;
+      H      : SDL.Dimension  := 0;
+      Result : constant C.int := SDL_Query_Texture (Self.Internal, Pixel_Format_Name, Kind, W, H);
    begin
       if Result /= Success then
          raise Texture_Error with SDL.Error.Get;
@@ -250,7 +250,7 @@ package body SDL.Video.Textures is
         External_Name => "SDL_QueryTexture";
 
       Format_Name : SDL.Video.Pixel_Formats.Pixel_Format_Names;
-      Result      : C.int := SDL_Query_Texture (T => Self.Internal, Pixel_Format_Name => Format_Name);
+      Result      : constant C.int := SDL_Query_Texture (T => Self.Internal, Pixel_Format_Name => Format_Name);
    begin
       if Result /= Success then
          raise Texture_Error with SDL.Error.Get;
@@ -270,7 +270,7 @@ package body SDL.Video.Textures is
         External_Name => "SDL_QueryTexture";
 
       Kind   : Kinds;
-      Result : C.int := SDL_Query_Texture (T => Self.Internal, Kind => Kind);
+      Result : constant C.int := SDL_Query_Texture (T => Self.Internal, Kind => Kind);
    begin
       if Result /= Success then
          raise Texture_Error with SDL.Error.Get;
@@ -289,8 +289,8 @@ package body SDL.Video.Textures is
         Convention    => C,
         External_Name => "SDL_QueryTexture";
 
-      Size   : SDL.Sizes := SDL.Zero_Size;
-      Result : C.int     := SDL_Query_Texture (T => Self.Internal, Width => Size.Width, Height => Size.Height);
+      Size   : SDL.Sizes      := SDL.Zero_Size;
+      Result : constant C.int := SDL_Query_Texture (T => Self.Internal, Width => Size.Width, Height => Size.Height);
    begin
       if Result /= Success then
          raise Texture_Error with SDL.Error.Get;

@@ -32,6 +32,8 @@
 with Interfaces.C;
 
 package SDL.Events.Touches is
+   pragma Preelaborate;
+
    --  Touch events.
    Finger_Down                : constant Event_Types := 16#0000_0700#;
    Finger_Up                  : constant Event_Types := Finger_Down + 1;

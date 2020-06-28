@@ -24,15 +24,14 @@
 --
 --  Access to pixel data.
 --------------------------------------------------------------------------------------------------------------------
-with Ada.Finalization;
 with Interfaces;
 with Interfaces.C;
 with Interfaces.C.Pointers;
-with SDL.Video.Windows;
-with SDL.Video.Pixel_Formats;
 with SDL.Video.Palettes;
 
 package SDL.Video.Pixels is
+   pragma Preelaborate;
+
    package C renames Interfaces.C;
 
    --  Define pixel data access. Each pixel can be of any pixel format type.

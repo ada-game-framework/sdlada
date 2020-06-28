@@ -21,15 +21,11 @@
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C;
-with SDL.C_Pointers;
+private with SDL.C_Pointers;
 with SDL.Error;
-with System;
 
 package body SDL.Inputs.Mice is
    package C renames Interfaces.C;
-
-   use type C.int;
-   use type C.unsigned;
 
    function Capture (Enabled : in Boolean) return Supported is
       function SDL_Capture_Mouse (Enabled : in C.unsigned) return C.int with
@@ -37,7 +33,7 @@ package body SDL.Inputs.Mice is
         Convention    => C,
         External_Name => "SDL_CaptureMouse";
    begin
-      if SDL_Capture_Mouse (if Enabled = True then 1 else 0) /= Success then
+      if SDL_Capture_Mouse (if Enabled then 1 else 0) /= Success then
          return No;
       end if;
 
@@ -53,7 +49,7 @@ package body SDL.Inputs.Mice is
         External_Name => "SDL_GetGlobalMouseState";
 
       X, Y  : C.int;
-      Masks : C.unsigned := SDL_Get_Global_Mouse_State (X, Y);
+      Masks : constant C.unsigned := SDL_Get_Global_Mouse_State (X, Y);
 
       use SDL.Events.Mice;
    begin
@@ -72,7 +68,7 @@ package body SDL.Inputs.Mice is
         External_Name => "SDL_GetMouseState";
 
       X, Y  : C.int;
-      Masks : C.unsigned := SDL_Get_Mouse_State (X, Y);
+      Masks : constant C.unsigned := SDL_Get_Mouse_State (X, Y);
 
       use SDL.Events.Mice;
    begin
@@ -100,7 +96,7 @@ package body SDL.Inputs.Mice is
         External_Name => "SDL_GetRelativeMouseState";
 
       X, Y  : C.int;
-      Masks : C.unsigned := SDL_Get_Relative_Mouse_State (X, Y);
+      Masks : constant C.unsigned := SDL_Get_Relative_Mouse_State (X, Y);
 
       use SDL.Events.Mice;
    begin
@@ -116,7 +112,7 @@ package body SDL.Inputs.Mice is
         Convention    => C,
         External_Name => "SDL_SetRelativeMouseMode";
    begin
-      if SDL_Set_Relative_Mouse_Mode (if Enable = True then 1 else 0) /= Success then
+      if SDL_Set_Relative_Mouse_Mode (if Enable then 1 else 0) /= Success then
          raise Mice_Error with SDL.Error.Get;
       end if;
    end Set_Relative_Mode;
@@ -127,7 +123,7 @@ package body SDL.Inputs.Mice is
         Convention    => C,
         External_Name => "SDL_ShowCursor";
    begin
-      SDL_Show_Cursor (if Enable = True then SDL.SDL_Enable else SDL.SDL_Disable);
+      SDL_Show_Cursor (if Enable then SDL.SDL_Enable else SDL.SDL_Disable);
    end Show_Cursor;
 
    function Is_Cursor_Shown return Boolean is

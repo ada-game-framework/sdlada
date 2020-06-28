@@ -25,14 +25,14 @@
 with Ada.Unchecked_Conversion;
 with Ada.Strings.Fixed; use Ada.Strings.Fixed;
 use Ada.Strings;
-with Interfaces.C;
 with SDL.Video.Pixel_Formats; use SDL.Video.Pixel_Formats;
 with AUnit.Assertions; use AUnit.Assertions;
-with Ada.Text_Io; -- use Ada.Text_Io;
+with Ada.Text_IO; -- use Ada.Text_Io;
 
 package body Pixel_Format_Test_Cases is
    overriding
    function Name (Test : Pixel_Format_Test_Case) return Message_String is
+      pragma Unreferenced (Test);  --  TODO: Fix me!
    begin
       return Format ("Pixel format test");
    end Name;
@@ -53,6 +53,7 @@ package body Pixel_Format_Test_Cases is
 
    overriding
    procedure Run_Test (Test : in out Pixel_Format_Test_Case) is
+      pragma Unreferenced (Test);  --  TODO: Fix me!
    begin
       declare
          Ada_Value : constant String := To_Binary (To_int (Pixel_Format_Unknown));

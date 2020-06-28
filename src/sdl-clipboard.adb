@@ -28,8 +28,6 @@ with SDL.Video.Windows;
 package body SDL.Clipboard is
    package C renames Interfaces.C;
 
-   use type C.int;
-
    procedure Check_For_Window is
       Init_Value : constant SDL.Init_Flags := SDL.Was_Initialised and SDL.Enable_Screen;
    begin
