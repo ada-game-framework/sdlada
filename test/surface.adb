@@ -1,24 +1,12 @@
-with Ada.Calendar;
-with Ada.Directories;
-with Ada.Text_IO.Text_Streams;
 with Ada.Unchecked_Conversion;
-with Interfaces.C.Pointers;
 with SDL;
-with SDL.Error;
 with SDL.Events.Events;
 with SDL.Events.Keyboards;
 with SDL.Log;
---  with SDL.Video.Palettes;
 with SDL.Video.Pixel_Formats;
---  with SDL.Video.Pixels;
 with SDL.Video.Rectangles;
---  with SDL.Video.Renderers.Makers;
---  with SDL.Video.Textures.Makers;
 with SDL.Video.Surfaces;
 with SDL.Video.Windows.Makers;
-with SDL.Versions;
-with System;
-with System.Address_To_Access_Conversions;
 
 procedure Surface is
    W : SDL.Video.Windows.Window;
@@ -36,21 +24,25 @@ begin
       declare
          Event            : SDL.Events.Events.Events;
          Window_Surface   : SDL.Video.Surfaces.Surface;
-         Area             : SDL.Video.Rectangles.Rectangle        := (X => 10, Y => 10, Width => 50, Height => 50);
-         Areas            : SDL.Video.Rectangles.Rectangle_Arrays := ((X => 100, Y => 10, Width => 50, Height => 50),
-                                                                      (X => 120, Y => 20, Width => 50, Height => 50),
-                                                                      (X => 160, Y => 40, Width => 50, Height => 50));
-         Green_Area       : SDL.Video.Rectangles.Rectangle        := (X => 15, Y => 15, Width => 10, Height => 10);
-         Blue_Areas       : SDL.Video.Rectangles.Rectangle_Arrays := ((X => 150, Y => 15, Width => 10, Height => 10),
-                                                                      (X => 125, Y => 25, Width => 10, Height => 10),
-                                                                      (X => 165, Y => 45, Width => 10, Height => 10));
-         Blit_Copy_Area   : SDL.Video.Rectangles.Rectangle        := (X => 10, Y => 10, Width => 150, Height => 70);
-         Blit_Dest_Area   : SDL.Video.Rectangles.Rectangle        := (X => 10, Y => 130, Width => 100, Height => 100);
+         Area             : constant SDL.Video.Rectangles.Rectangle :=
+           (X => 10, Y => 10, Width => 50, Height => 50);
+         Areas            : constant SDL.Video.Rectangles.Rectangle_Arrays :=
+           ((X => 100, Y => 10, Width => 50, Height => 50),
+            (X => 120, Y => 20, Width => 50, Height => 50),
+            (X => 160, Y => 40, Width => 50, Height => 50));
+         Green_Area       : constant SDL.Video.Rectangles.Rectangle :=
+           (X => 15, Y => 15, Width => 10, Height => 10);
+         Blue_Areas       : constant SDL.Video.Rectangles.Rectangle_Arrays :=
+           ((X => 150, Y => 15, Width => 10, Height => 10),
+            (X => 125, Y => 25, Width => 10, Height => 10),
+            (X => 165, Y => 45, Width => 10, Height => 10));
+         Blit_Copy_Area   : constant SDL.Video.Rectangles.Rectangle :=
+           (X => 10, Y => 10, Width => 150, Height => 70);
+         Blit_Dest_Area   : SDL.Video.Rectangles.Rectangle :=
+           (X => 10, Y => 130, Width => 100, Height => 100);
          Finished         : Boolean := False;
 
-         use type SDL.Events.Event_Types;
          use type SDL.Events.Keyboards.Key_Codes;
-         use type SDL.Events.Keyboards.Scan_Codes;
       begin
          Window_Surface := W.Get_Surface;
 

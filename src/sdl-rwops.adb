@@ -24,7 +24,6 @@ with Interfaces.C.Strings;
 with SDL.Error;
 
 package body SDL.RWops is
-   use type C.int;
    use type C.size_t;
    use type C.Strings.chars_ptr;
 

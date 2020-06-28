@@ -27,6 +27,8 @@ private with SDL.C_Pointers;
 with SDL.Events.Joysticks;
 
 package SDL.Inputs.Joysticks is
+   pragma Preelaborate;
+
    Joystick_Error : exception;
 
    --  Use to determine whether there are no joysticks.

@@ -1,6 +1,5 @@
 with SDL;
 with SDL.Clipboard;
-with SDL.Error;
 with SDL.Log;
 with SDL.Video.Windows;
 with SDL.Video.Windows.Makers;

@@ -1,25 +1,13 @@
-with Ada.Calendar;
-with Ada.Directories;
-with Ada.Text_IO.Text_Streams;
 with Ada.Unchecked_Conversion;
-with Interfaces.C.Pointers;
+with Interfaces.C;
 with SDL;
-with SDL.Error;
 with SDL.Events.Events;
 with SDL.Events.Keyboards;
 with SDL.Images.IO;
 with SDL.Log;
---  with SDL.Video.Palettes;
-with SDL.Video.Pixel_Formats;
---  with SDL.Video.Pixels;
 with SDL.Video.Rectangles;
---  with SDL.Video.Renderers.Makers;
---  with SDL.Video.Textures.Makers;
 with SDL.Video.Surfaces;
 with SDL.Video.Windows.Makers;
-with SDL.Versions;
-with System;
-with System.Address_To_Access_Conversions;
 
 procedure Load_Surface is
    use type Interfaces.C.int;
@@ -41,24 +29,26 @@ begin
          Event              : SDL.Events.Events.Events;
          Window_Surface     : SDL.Video.Surfaces.Surface;
          Image_Surface      : SDL.Video.Surfaces.Surface;
-         Image_Area         : SDL.Video.Rectangles.Rectangle := (X => 0, Y => 0, Width => 400, Height => 300);
-         Image_Dest_Area    : SDL.Video.Rectangles.Rectangle := (X      => Window_Size.Width / 2 - Image_Area.Width / 2,
-                                                                 Y      => Window_Size.Height / 2 - Image_Area.Height / 2,
-                                                                 Width  => 400,
-                                                                 Height => 300);
-         Scaled_Dest_Area   : SDL.Video.Rectangles.Rectangle := (X      => 10,
-                                                                 Y      => 10,
-                                                                 Width  => Image_Area.Width / 4,
-                                                                 Height => Image_Area.Height / 4);
-         Scaled_Dest_Area_2 : SDL.Video.Rectangles.Rectangle := (X      => 10,
-                                                                 Y      => 100,
-                                                                 Width  => Image_Area.Width / 4,
-                                                                 Height => Image_Area.Height / 4);
+         Image_Area         : SDL.Video.Rectangles.Rectangle :=
+           (X => 0, Y => 0, Width => 400, Height => 300);
+         Image_Dest_Area    : SDL.Video.Rectangles.Rectangle :=
+           (X      => Window_Size.Width / 2 - Image_Area.Width / 2,
+            Y      => Window_Size.Height / 2 - Image_Area.Height / 2,
+            Width  => 400,
+            Height => 300);
+         Scaled_Dest_Area   : SDL.Video.Rectangles.Rectangle :=
+           (X      => 10,
+            Y      => 10,
+            Width  => Image_Area.Width / 4,
+            Height => Image_Area.Height / 4);
+         Scaled_Dest_Area_2 : SDL.Video.Rectangles.Rectangle :=
+           (X      => 10,
+            Y      => 100,
+            Width  => Image_Area.Width / 4,
+            Height => Image_Area.Height / 4);
          Finished           : Boolean := False;
 
-         use type SDL.Events.Event_Types;
          use type SDL.Events.Keyboards.Key_Codes;
-         use type SDL.Events.Keyboards.Scan_Codes;
       begin
          Window_Surface := W.Get_Surface;
 
@@ -77,13 +67,11 @@ begin
                                      Source_Area => SDL.Video.Rectangles.Rectangle'(X      => 0,
                                                                                     Y      => 0,
                                                                                     Width  => Image_Area.Width / 2,
-                                                                                    Height => Image_Area.Height /2));
-
-         W.Update_Surface;
-
-         SDL.Images.IO.Write_PNG (Window_Surface, "load_surface.png");
+                                                                                    Height => Image_Area.Height / 2));
 
          loop
+            W.Update_Surface;
+
             while SDL.Events.Events.Poll (Event) loop
                case Event.Common.Event_Type is
                   when SDL.Events.Quit =>

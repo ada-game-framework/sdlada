@@ -27,7 +27,6 @@ with SDL.RWops;
 package body SDL.Inputs.Joysticks.Game_Controllers is
    package C renames Interfaces.C;
 
-   use type C.int;
    use type C.Strings.chars_ptr;
 
    procedure Add_Mapping (Data : in String; Updated_Existing : out Boolean) is
@@ -36,7 +35,7 @@ package body SDL.Inputs.Joysticks.Game_Controllers is
         Import        => True,
         External_Name => "SDL_GameControllerAddMapping";
 
-      Result : C.int := SDL_Game_Controller_Add_Mapping (C.To_C (Data));
+      Result : constant C.int := SDL_Game_Controller_Add_Mapping (C.To_C (Data));
    begin
       if Result = -1 then
          raise Mapping_Error with SDL.Error.Get;
@@ -53,8 +52,8 @@ package body SDL.Inputs.Joysticks.Game_Controllers is
            Import        => True,
            External_Name => "SDL_GameControllerAddMappingsFromRW";
 
-      RW : SDL.RWops.RWops := SDL.RWops.From_File (Database_Filename,
-                                                   Mode => SDL.RWops.Read);
+      RW : constant SDL.RWops.RWops := SDL.RWops.From_File (Database_Filename,
+                                                            Mode => SDL.RWops.Read);
 
       Result : constant Integer
         := Integer (SDL_Game_Controller_Add_Mappings_From_RW (RW,
@@ -150,8 +149,7 @@ package body SDL.Inputs.Joysticks.Game_Controllers is
           Import        => True,
           External_Name => "SDL_GameControllerGetButtonFromString";
    begin
-      return SDL.Events.Joysticks.Game_Controllers.Buttons
-        (SDL_Game_Controller_Get_Button_From_String (C.To_C (Button_Name)));
+      return SDL_Game_Controller_Get_Button_From_String (C.To_C (Button_Name));
    end Get_Button;
 
    function Get_Joystick (Self : in Game_Controller) return Joystick is
@@ -162,8 +160,8 @@ package body SDL.Inputs.Joysticks.Game_Controllers is
           Import        => True,
           External_Name => "SDL_GameControllerGetJoystick";
    begin
-      return J : Joystick := (Ada.Finalization.Limited_Controlled with
-                              Internal => SDL_Game_Controller_Get_Joystick (Self.Internal), Owns => False) do
+      return J : constant Joystick := (Ada.Finalization.Limited_Controlled with
+                                         Internal => SDL_Game_Controller_Get_Joystick (Self.Internal), Owns => False) do
          null;
       end return;
    end Get_Joystick;
@@ -175,7 +173,7 @@ package body SDL.Inputs.Joysticks.Game_Controllers is
           Import        => True,
           External_Name => "SDL_GameControllerMapping";
 
-      Result : C.Strings.chars_ptr := SDL_Game_Controller_Mapping (Self.Internal);
+      Result : constant C.Strings.chars_ptr := SDL_Game_Controller_Mapping (Self.Internal);
    begin
       if Result = C.Strings.Null_Ptr then
          return "";
@@ -190,7 +188,7 @@ package body SDL.Inputs.Joysticks.Game_Controllers is
         Import        => True,
         External_Name => "SDL_GameControllerMappingForGUID";
 
-      Result : C.Strings.chars_ptr := SDL_Game_Controller_Mapping_For_GUID (Controller);
+      Result : constant C.Strings.chars_ptr := SDL_Game_Controller_Mapping_For_GUID (Controller);
    begin
       if Result = C.Strings.Null_Ptr then
          return "";
@@ -206,7 +204,7 @@ package body SDL.Inputs.Joysticks.Game_Controllers is
           Import        => True,
           External_Name => "SDL_GameControllerName";
 
-      Result : C.Strings.chars_ptr := SDL_Game_Controller_Name (Self.Internal);
+      Result : constant C.Strings.chars_ptr := SDL_Game_Controller_Name (Self.Internal);
    begin
       if Result = C.Strings.Null_Ptr then
          return "";
@@ -221,7 +219,7 @@ package body SDL.Inputs.Joysticks.Game_Controllers is
           Import        => True,
           External_Name => "SDL_GameControllerNameForIndex";
 
-      Result : C.Strings.chars_ptr := SDL_Game_Controller_Name_For_Index (C.int (Device) - 1);
+      Result : constant C.Strings.chars_ptr := SDL_Game_Controller_Name_For_Index (C.int (Device) - 1);
    begin
       if Result = C.Strings.Null_Ptr then
          return "";
@@ -237,7 +235,7 @@ package body SDL.Inputs.Joysticks.Game_Controllers is
           Import        => True,
           External_Name => "SDL_GameControllerGetStringForAxis";
 
-      Result : C.Strings.chars_ptr := SDL_Game_Controller_Get_String_For_Axis (Axis);
+      Result : constant C.Strings.chars_ptr := SDL_Game_Controller_Get_String_For_Axis (Axis);
    begin
       if Result = C.Strings.Null_Ptr then
          return "";
@@ -253,7 +251,7 @@ package body SDL.Inputs.Joysticks.Game_Controllers is
           Import        => True,
           External_Name => "SDL_GameControllerGetStringForButton";
 
-      Result : C.Strings.chars_ptr := SDL_Game_Controller_Get_String_For_Button (Button);
+      Result : constant C.Strings.chars_ptr := SDL_Game_Controller_Get_String_For_Button (Button);
    begin
       if Result = C.Strings.Null_Ptr then
          return "";

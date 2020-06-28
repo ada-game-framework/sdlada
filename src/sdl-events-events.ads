@@ -34,6 +34,8 @@ with SDL.Events.Touches;
 with SDL.Events.Files;
 
 package SDL.Events.Events is
+   pragma Preelaborate;
+
    type Event_Selector is (Is_Event,
                            Is_Window_Event,
                            Is_Keyboard_Event,

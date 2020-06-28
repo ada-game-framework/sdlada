@@ -27,7 +27,6 @@ with SDL.Error;
 package body SDL.Hints is
    package C renames Interfaces.C;
 
-   use type C.int;
    use type C.Strings.chars_ptr;
 
    Frame_Buffer_Acceleration_Name        : aliased constant String := "SDL_FRAMEBUFFER_ACCELERATION";
@@ -103,7 +102,7 @@ package body SDL.Hints is
 
       C_Hint_Str  : C.Strings.chars_ptr := C.Strings.New_String (Hints.Value (Name));
       C_Value_Str : C.Strings.chars_ptr := C.Strings.New_String (Value);
-      Result      : SDL_Bool            := SDL_Set_Hint
+      Result      : constant SDL_Bool   := SDL_Set_Hint
         (Name  => C_Hint_Str,
          Value => C_Value_Str);
    begin
@@ -123,7 +122,7 @@ package body SDL.Hints is
 
       C_Hint_Str  : C.Strings.chars_ptr := C.Strings.New_String (Hints.Value (Name));
       C_Value_Str : C.Strings.chars_ptr := C.Strings.New_String (Value);
-      Result      : SDL_Bool            := SDL_Set_Hint
+      Result      : constant SDL_Bool   := SDL_Set_Hint
         (Name  => C_Hint_Str,
          Value => C_Value_Str,
          P     => Priority);

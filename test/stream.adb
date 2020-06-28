@@ -1,10 +1,8 @@
 with Ada.Calendar;
-with Ada.Directories;
 with Ada.Text_IO.Text_Streams;
 with Ada.Unchecked_Conversion;
-with Interfaces.C.Pointers;
+with Interfaces.C;
 with SDL;
-with SDL.Error;
 with SDL.Log;
 with SDL.Video.Palettes;
 with SDL.Video.Pixel_Formats;
@@ -12,9 +10,7 @@ with SDL.Video.Pixels;
 with SDL.Video.Renderers.Makers;
 with SDL.Video.Textures.Makers;
 with SDL.Video.Windows.Makers;
-with SDL.Versions;
 with System;
-with System.Address_To_Access_Conversions;
 
 procedure Stream is
    use type SDL.Dimension;
@@ -25,7 +21,7 @@ procedure Stream is
    type Moose_Palette_Array is array (Moose_Colour_Index'Range) of SDL.Video.Palettes.RGB_Colour;
 
    W                : SDL.Video.Windows.Window;
-   Moose_Size       : SDL.Positive_Sizes           := (64, 88);
+   Moose_Size       : constant SDL.Positive_Sizes  := (64, 88);
    Moose_Frame_Size : constant SDL.Dimension       := (Moose_Size.Width * Moose_Size.Height) - 1;
    Moose_Frame      : Moose_Frames                 := Moose_Frames'First;
    Moose_Palette    : constant Moose_Palette_Array :=
@@ -56,10 +52,7 @@ procedure Stream is
    Moose_Frame_Data : Moose_Frame_Data_Array;
 
    procedure Load_Moose_Data (Data : out Moose_Frame_Data_Array) is
-      package Dirs renames Ada.Directories;
-
-      Actual_Name : String := "../../test/moose.dat";
-      Size        : Dirs.File_Size := Dirs.Size (Actual_Name);
+      Actual_Name : constant String := "../../test/moose.dat";
       Data_File   : Ada.Text_IO.File_Type;
       Stream      : Ada.Text_IO.Text_Streams.Stream_Access := null;
 
@@ -85,17 +78,12 @@ procedure Stream is
 
    procedure Lock is new SDL.Video.Textures.Lock (Pixel_Pointer_Type => SDL.Video.Pixels.ARGB_8888_Access.Pointer);
 
-   type Pixel_Array is new SDL.Video.Pixels.ARGB_8888_Array (1 .. Moose_Frame_Size);
-
    use type SDL.Video.Pixels.ARGB_8888_Access.Pointer;
    use type Ada.Calendar.Time;
 
    --  This uses the same algorithm as the original teststream.c. It copies 1 pixel at a time, indexing into the moose
    --  palette using the data from moose.dat.
    procedure Update_Texture_1 (Pointer : in SDL.Video.Pixels.ARGB_8888_Access.Pointer) is
-      function To_Address is new Ada.Unchecked_Conversion (Source => SDL.Video.Pixels.ARGB_8888_Access.Pointer,
-                                                           Target => System.Address);
-
       Start_Time       : Ada.Calendar.Time;
       End_Time         : Ada.Calendar.Time;
       Colour           : SDL.Video.Palettes.RGB_Colour;
@@ -135,6 +123,8 @@ procedure Stream is
       Default_Terminator => SDL.Video.Pixels.ARGB_8888'(others => SDL.Video.Palettes.Colour_Component'First));
 
    procedure Update_Texture_2 (Pointer : in Texture_2D.Pointer) is
+      pragma Unreferenced (Pointer);  --  TODO: Fix me!
+
       function To_Address is new Ada.Unchecked_Conversion (Source => SDL.Video.Pixels.ARGB_8888_Access.Pointer,
                                                            Target => System.Address);
 

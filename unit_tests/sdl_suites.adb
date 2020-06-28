@@ -25,8 +25,8 @@
 --  Tests to check the Ada 2012 bindings for correctness.
 --------------------------------------------------------------------------------------------------------------------
 with AUnit; use AUnit;
-with Pixel_Format_Test_Cases; use Pixel_Format_Test_Cases;
-with Colour_Test_Cases; use Colour_Test_Cases;
+with Pixel_Format_Test_Cases;
+with Colour_Test_Cases;
 
 package body SDL_Suites is
    use Test_Suites;
@@ -35,7 +35,7 @@ package body SDL_Suites is
    Colour_Tests : aliased Colour_Test_Cases.Colour_Test_Case;
 
    function Suite return Access_Test_Suite is
-      Result : Access_Test_Suite := AUnit.Test_Suites.New_Suite;
+      Result : constant Access_Test_Suite := AUnit.Test_Suites.New_Suite;
    begin
       Result.Add_Test (Pixel_Tests'Access);
       Result.Add_Test (Colour_Tests'Access);

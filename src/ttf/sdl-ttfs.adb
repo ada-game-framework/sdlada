@@ -23,11 +23,7 @@
 --  SDL.TTFs
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C.Strings;
-with SDL.Error;
-
 package body SDL.TTFs is
-   use type C.char_array;
-   use type C.int;
 
    function Initialise return Boolean is
       function TTF_Init return C.int with
@@ -35,7 +31,7 @@ package body SDL.TTFs is
         Convention    => C,
         External_Name => "TTF_Init";
 
-      Result : C.int := TTF_Init;
+      Result : constant C.int := TTF_Init;
    begin
       return (Result = Success);
    end Initialise;
@@ -123,7 +119,7 @@ package body SDL.TTFs is
         Convention    => C,
         External_Name => "TTF_GetFontKerning";
 
-      Enabled : C.int := TTF_Get_Font_Kerning (Self.Internal);
+      Enabled : constant C.int := TTF_Get_Font_Kerning (Self.Internal);
    begin
       return (if Enabled = 0 then False else True);
    end Kerning;
@@ -135,7 +131,7 @@ package body SDL.TTFs is
         External_Name => "TTF_SetFontKerning";
    begin
       TTF_Set_Font_Kerning (Font => Self.Internal,
-                            Now  => (if Now = True then 1 else 0));
+                            Now  => (if Now then 1 else 0));
    end Set_Kerning;
 
    function Height (Self : in Fonts) return Font_Measurements is
@@ -189,7 +185,7 @@ package body SDL.TTFs is
         Convention    => C,
         External_Name => "TTF_FontFaceIsFixedWidth";
 
-      Result : C.int := TTF_Font_Face_Is_Fixed_Width (Self.Internal);
+      Result : constant C.int := TTF_Font_Face_Is_Fixed_Width (Self.Internal);
    begin
       return (if Result > 0 then True else False);
    end Is_Face_Fixed_Width;
@@ -224,6 +220,7 @@ package body SDL.TTFs is
       Size   : SDL.Sizes           := SDL.Zero_Size;
       C_Text : C.Strings.chars_ptr := C.Strings.New_String (Text);
       Result : C.int               := TTF_Size_Text (Self.Internal, C_Text, Size.Width, Size.Height);
+      pragma Unreferenced (Result);  --  TODO: Fix me!
    begin
       C.Strings.Free (C_Text);
 
@@ -239,9 +236,10 @@ package body SDL.TTFs is
         Convention    => C,
         External_Name => "TTF_SizeUTF8";
 
-      Size   : SDL.Sizes           := SDL.Zero_Size;
-      C_Text : C.Strings.chars_ptr := C.Strings.New_String (Text);
-      Result : C.int               := TTF_Size_UTF_8 (Self.Internal, C_Text, Size.Width, Size.Height);
+      Size   : SDL.Sizes                    := SDL.Zero_Size;
+      C_Text : constant C.Strings.chars_ptr := C.Strings.New_String (Text);
+      Result : C.int                        := TTF_Size_UTF_8 (Self.Internal, C_Text, Size.Width, Size.Height);
+      pragma Unreferenced (Result);  --  TODO: Fix me!
    begin
       return Size;
    end Size_UTF_8;
@@ -264,7 +262,7 @@ package body SDL.TTFs is
 
       C_Text : C.Strings.chars_ptr := C.Strings.New_String (Text);
    begin
-      return S : SDL.Video.Surfaces.Surface :=
+      return S : constant SDL.Video.Surfaces.Surface :=
         Make_Surface_From_Pointer (S    => TTF_Render_Text_Solid (Self.Internal, C_Text, Colour),
                                    Owns => True)
       do
@@ -287,7 +285,7 @@ package body SDL.TTFs is
 
       C_Text : C.Strings.chars_ptr := C.Strings.New_String (Text);
    begin
-      return S : SDL.Video.Surfaces.Surface :=
+      return S : constant SDL.Video.Surfaces.Surface :=
         Make_Surface_From_Pointer (S    => TTF_Render_Text_Shaded (Self.Internal, C_Text, Colour, Background_Colour),
                                    Owns => True)
       do
@@ -308,7 +306,7 @@ package body SDL.TTFs is
 
       C_Text : C.Strings.chars_ptr := C.Strings.New_String (Text);
    begin
-      return S : SDL.Video.Surfaces.Surface :=
+      return S : constant SDL.Video.Surfaces.Surface :=
         Make_Surface_From_Pointer (S    => TTF_Render_Text_Blended (Self.Internal, C_Text, Colour),
                                    Owns => True)
       do
@@ -329,7 +327,7 @@ package body SDL.TTFs is
 
       C_Text : C.Strings.chars_ptr := C.Strings.New_String (Text);
    begin
-      return S : SDL.Video.Surfaces.Surface :=
+      return S : constant SDL.Video.Surfaces.Surface :=
         Make_Surface_From_Pointer (S    => TTF_Render_UTF_8_Solid (Self.Internal, C_Text, Colour),
                                    Owns => True)
       do
@@ -352,7 +350,7 @@ package body SDL.TTFs is
 
       C_Text : C.Strings.chars_ptr := C.Strings.New_String (Text);
    begin
-      return S : SDL.Video.Surfaces.Surface :=
+      return S : constant SDL.Video.Surfaces.Surface :=
         Make_Surface_From_Pointer (S    => TTF_Render_UTF_8_Shaded (Self.Internal, C_Text, Colour, Background_Colour),
                                    Owns => True)
       do
@@ -373,7 +371,7 @@ package body SDL.TTFs is
 
       C_Text : C.Strings.chars_ptr := C.Strings.New_String (Text);
    begin
-      return S : SDL.Video.Surfaces.Surface :=
+      return S : constant SDL.Video.Surfaces.Surface :=
         Make_Surface_From_Pointer (S    => TTF_Render_UTF_8_Blended (Self.Internal, C_Text, Colour),
                                    Owns => True)
       do

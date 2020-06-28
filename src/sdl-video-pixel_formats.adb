@@ -20,11 +20,10 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
-with Interfaces.C;
+
 with Interfaces.C.Strings;
 
 package body SDL.Video.Pixel_Formats is
-   use type C.int;
 
    function Image (Format : in Pixel_Format_Names) return String is
       function SDL_Get_Pixel_Format_Name (Format : in Pixel_Format_Names) return C.Strings.chars_ptr with
@@ -32,7 +31,7 @@ package body SDL.Video.Pixel_Formats is
         Convention    => C,
         External_Name => "SDL_GetPixelFormatName";
 
-      C_Str : C.Strings.chars_ptr := SDL_Get_Pixel_Format_Name (Format);
+      C_Str : constant C.Strings.chars_ptr := SDL_Get_Pixel_Format_Name (Format);
    begin
       return C.Strings.Value (C_Str);
    end Image;
@@ -78,7 +77,7 @@ package body SDL.Video.Pixel_Formats is
         Convention    => C,
         External_Name => "SDL_PixelFormatEnumToMasks";
 
-      Error : C.int := SDL_Pixel_Format_Enum_To_Masks
+      Error : constant C.int := SDL_Pixel_Format_Enum_To_Masks
         (Format,
          Bits,
          Red_Mask,

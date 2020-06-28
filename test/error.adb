@@ -1,9 +1,6 @@
 with SDL;
 with SDL.Error;
 with SDL.Log;
-with System;
-
-use type System.Bit_Order;
 
 procedure Error is
 begin

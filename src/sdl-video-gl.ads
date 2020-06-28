@@ -27,11 +27,12 @@
 with Ada.Finalization;
 with Interfaces.C;
 private with SDL.C_Pointers;
-with SDL.Video.Rectangles;
 with SDL.Video.Windows;
 with SDL.Video.Textures;
 
 package SDL.Video.GL is
+   pragma Preelaborate;
+
    SDL_GL_Error : exception;
 
    type Colour_Bit_Size is range 0 .. 8 with

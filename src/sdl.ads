@@ -27,6 +27,8 @@
 with Interfaces.C;
 
 package SDL is
+   pragma Preelaborate;
+
    package C renames Interfaces.C;
 
    use type C.int;

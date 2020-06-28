@@ -24,7 +24,12 @@
 --
 --  Functions to create Texture objects.
 --------------------------------------------------------------------------------------------------------------------
+with SDL.Video.Surfaces;
+with SDL.Video.Renderers;
+
 package SDL.Video.Textures.Makers is
+   pragma Preelaborate;
+
    procedure Create
      (Tex      : in out Texture;
       Renderer : in SDL.Video.Renderers.Renderer;

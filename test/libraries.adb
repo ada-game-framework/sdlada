@@ -1,10 +1,6 @@
 with SDL;
-with SDL.Error;
 with SDL.Libraries;
 with SDL.Log;
-with System;
-
-use type System.Bit_Order;
 
 --  Run with: LD_LIBRARY_PATH=./gen/debug/test:$LD_LIBRARY_PATH ./gen/debug/test/libraries
 
@@ -28,8 +24,8 @@ begin
         (Access_To_Sub_Program => Access_To_Sub,
          Name                  => "sub");
 
-      Add : Access_To_Add := Load (From_Library => Lib);
-      Sub : Access_To_Sub := Load (From_Library => Lib);
+      Add : constant Access_To_Add := Load (From_Library => Lib);
+      Sub : constant Access_To_Sub := Load (From_Library => Lib);
    begin
       SDL.Log.Put_Debug ("1 + 2 = " & Integer'Image (Add (1, 2)));
       SDL.Log.Put_Debug ("5 - 1 = " & Integer'Image (Sub (5, 1)));

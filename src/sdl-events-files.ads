@@ -26,6 +26,8 @@ with Interfaces.C.Strings;
 with System;
 
 package SDL.Events.Files is
+   pragma Preelaborate;
+
    --  Drag and drop events.
    Drop_File : constant Event_Types := 16#0000_1000#;
 

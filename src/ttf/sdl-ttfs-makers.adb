@@ -23,14 +23,13 @@
 with SDL.Error;
 
 package body SDL.TTFs.Makers is
-   use type RWops.RWops;
 
    procedure Create (Font       : in out Fonts;
                      File_Name  : in String;
                      Point_Size : in Point_Sizes;
                      Font_Index : in Font_Faces := Font_Faces'First) is
-      Ops : RWops.RWops := RWops.From_File (File_Name => File_Name,
-                                            Mode      => RWops.Read_Binary);
+      Ops : constant RWops.RWops := RWops.From_File (File_Name => File_Name,
+                                                     Mode      => RWops.Read_Binary);
    begin
       if RWops.Is_Null (Ops) then
          raise TTF_Error with "Unable to open font """ & File_Name & '"';
@@ -57,7 +56,7 @@ package body SDL.TTFs.Makers is
         External_Name => "TTF_OpenFontIndexRW";
    begin
       Font.Internal := TTF_Open_Font_Index_RW (Ops   => Source,
-                                               Free  => (if Free_Source = True then 1 else 0),
+                                               Free  => (if Free_Source then 1 else 0),
                                                Size  => Point_Size,
                                                Index => Font_Index);
 
