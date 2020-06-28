@@ -22,11 +22,13 @@
 --------------------------------------------------------------------------------------------------------------------
 --  SDL.Inputs.Mice
 --------------------------------------------------------------------------------------------------------------------
-private with SDL.C_Pointers;
+
 with SDL.Events.Mice;
 with SDL.Video.Windows;
 
 package SDL.Inputs.Mice is
+   pragma Preelaborate;
+
    Mice_Error : exception;
 
    type Cursor_Toggles is (Off, On);

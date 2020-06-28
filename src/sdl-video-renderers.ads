@@ -28,11 +28,12 @@ with Ada.Finalization;
 private with SDL.C_Pointers;
 with SDL.Video.Palettes;
 with SDL.Video.Rectangles;
-with SDL.Video.Surfaces;
 with SDL.Video.Textures;
 with SDL.Video.Windows;
 
 package SDL.Video.Renderers is
+   pragma Preelaborate;
+
    --  TODO: Finish this.
 
    Renderer_Error : exception;

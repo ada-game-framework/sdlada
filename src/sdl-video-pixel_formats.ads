@@ -31,6 +31,8 @@ with Interfaces.C;
 with SDL.Video.Palettes;
 
 package SDL.Video.Pixel_Formats is
+   pragma Preelaborate;
+
    package C renames Interfaces.C;
 
    subtype Unsigned_32 is Interfaces.Unsigned_32;
@@ -126,6 +128,7 @@ package SDL.Video.Pixel_Formats is
      Convention      => C,
      Size            => 4;
 
+   pragma Warnings (Off, "no component clause given");  --  Stop warning about Pixel_Type having no rep clause.
    for Pixel_Orders use
       record
          Indexed_Order at 0 range 0 .. 2; --  This was 2 as that is the max size required but it causes a bit set bug!
@@ -133,6 +136,7 @@ package SDL.Video.Pixel_Formats is
          Packed_Order  at 0 range 0 .. 3;
          Array_Order   at 0 range 0 .. 3;
       end record;
+   pragma Warnings (On, "no component clause given");
 
    type Planar_Pixels is
       record

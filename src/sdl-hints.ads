@@ -25,6 +25,8 @@
 --  Access to library configuration variables.
 --------------------------------------------------------------------------------------------------------------------
 package SDL.Hints is
+   pragma Preelaborate;
+
    --  TODO: Make this more robust using more functions and platform specific
    --  packages with error checking on returned values?
    --  Would be nice to have the compiler only allow that which is allowed on

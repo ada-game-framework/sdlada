@@ -28,9 +28,6 @@ private with SDL.C_Pointers;
 package body SDL.Inputs.Joysticks.Makers is
    package C renames Interfaces.C;
 
-   use type C.int;
-   use type SDL.C_Pointers.Joystick_Pointer;
-
    function SDL_Joystick_Open (Device : in C.int) return SDL.C_Pointers.Joystick_Pointer with
      Import        => True,
      Convention    => C,
@@ -38,8 +35,8 @@ package body SDL.Inputs.Joysticks.Makers is
 
    function Create (Device : in Devices) return Joystick is
    begin
-      return J : Joystick := (Ada.Finalization.Limited_Controlled with
-                                Internal => SDL_Joystick_Open (C.int (Device) - 1), Owns => True) do
+      return J : constant Joystick := (Ada.Finalization.Limited_Controlled with
+                                         Internal => SDL_Joystick_Open (C.int (Device) - 1), Owns => True) do
          null;
       end return;
    end Create;

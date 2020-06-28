@@ -27,6 +27,8 @@
 with SDL.Events.Joysticks;
 
 package SDL.Events.Controllers is
+   pragma Preelaborate;
+
    --  Game controller events.
    Axis_Motion     : constant Event_Types := 16#0000_0650#;
    Button_Down     : constant Event_Types := Axis_Motion + 1;

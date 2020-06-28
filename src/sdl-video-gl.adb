@@ -21,15 +21,12 @@
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Unchecked_Conversion;
-with Interfaces.C;
 with Interfaces.C.Strings;
-private with SDL.C_Pointers;
 with SDL.Error;
 
 package body SDL.Video.GL is
    package C renames Interfaces.C;
 
-   use type C.int;
    use type SDL.C_Pointers.GL_Context_Pointer;
 
    type Attributes is
@@ -72,7 +69,7 @@ package body SDL.Video.GL is
 
    function Red_Size return Colour_Bit_Size is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Red_Size, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Red_Size, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -82,7 +79,7 @@ package body SDL.Video.GL is
    end Red_Size;
 
    procedure Set_Red_Size (Size : in Colour_Bit_Size) is
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Red_Size, C.int (Size));
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Red_Size, C.int (Size));
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -91,7 +88,7 @@ package body SDL.Video.GL is
 
    function Green_Size return Colour_Bit_Size is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Green_Size, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Green_Size, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -101,7 +98,7 @@ package body SDL.Video.GL is
    end Green_Size;
 
    procedure Set_Green_Size (Size : in Colour_Bit_Size) is
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Green_Size, C.int (Size));
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Green_Size, C.int (Size));
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -110,7 +107,7 @@ package body SDL.Video.GL is
 
    function Blue_Size return Colour_Bit_Size is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Blue_Size, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Blue_Size, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -120,7 +117,7 @@ package body SDL.Video.GL is
    end Blue_Size;
 
    procedure Set_Blue_Size (Size : in Colour_Bit_Size) is
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Blue_Size, C.int (Size));
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Blue_Size, C.int (Size));
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -129,7 +126,7 @@ package body SDL.Video.GL is
 
    function Alpha_Size return Colour_Bit_Size is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Alpha_Size, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Alpha_Size, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -139,7 +136,7 @@ package body SDL.Video.GL is
    end Alpha_Size;
 
    procedure Set_Alpha_Size (Size : in Colour_Bit_Size) is
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Alpha_Size, C.int (Size));
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Alpha_Size, C.int (Size));
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -148,7 +145,7 @@ package body SDL.Video.GL is
 
    function Buffer_Size return Buffer_Sizes is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Buffer_Size, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Buffer_Size, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -158,7 +155,7 @@ package body SDL.Video.GL is
    end Buffer_Size;
 
    procedure Set_Buffer_Size (Size : in Buffer_Sizes) is
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Buffer_Size, C.int (Size));
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Buffer_Size, C.int (Size));
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -167,7 +164,7 @@ package body SDL.Video.GL is
 
    function Is_Double_Buffered return Boolean is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Double_Buffer, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Double_Buffer, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -177,8 +174,8 @@ package body SDL.Video.GL is
    end Is_Double_Buffered;
 
    procedure Set_Double_Buffer (On : in Boolean) is
-      Data   : C.int := (if On = True then 1 else 0);
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Double_Buffer, Data);
+      Data   : constant C.int := (if On then 1 else 0);
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Double_Buffer, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -187,7 +184,7 @@ package body SDL.Video.GL is
 
    function Depth_Buffer_Size return Depth_Buffer_Sizes is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Depth_Buffer_Size, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Depth_Buffer_Size, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -197,7 +194,7 @@ package body SDL.Video.GL is
    end Depth_Buffer_Size;
 
    procedure Set_Depth_Buffer_Size (Size : in Depth_Buffer_Sizes) is
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Depth_Buffer_Size, C.int (Size));
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Depth_Buffer_Size, C.int (Size));
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -206,7 +203,7 @@ package body SDL.Video.GL is
 
    function Stencil_Buffer_Size return Stencil_Buffer_Sizes is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Stencil_Size, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Stencil_Size, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -216,7 +213,7 @@ package body SDL.Video.GL is
    end Stencil_Buffer_Size;
 
    procedure Set_Stencil_Buffer_Size (Size : in Stencil_Buffer_Sizes) is
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Stencil_Size, C.int (Size));
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Stencil_Size, C.int (Size));
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -225,7 +222,7 @@ package body SDL.Video.GL is
 
    function Accumulator_Red_Size return Colour_Bit_Size is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Accumulator_Red_Size, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Accumulator_Red_Size, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -235,7 +232,7 @@ package body SDL.Video.GL is
    end Accumulator_Red_Size;
 
    procedure Set_Accumulator_Red_Size (Size : in Colour_Bit_Size) is
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Accumulator_Red_Size, C.int (Size));
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Accumulator_Red_Size, C.int (Size));
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -244,7 +241,7 @@ package body SDL.Video.GL is
 
    function Accumulator_Green_Size return Colour_Bit_Size is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Accumulator_Green_Size, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Accumulator_Green_Size, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -254,7 +251,7 @@ package body SDL.Video.GL is
    end Accumulator_Green_Size;
 
    procedure Set_Accumulator_Green_Size (Size : in Colour_Bit_Size) is
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Accumulator_Green_Size, C.int (Size));
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Accumulator_Green_Size, C.int (Size));
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -263,7 +260,7 @@ package body SDL.Video.GL is
 
    function Accumulator_Blue_Size return Colour_Bit_Size is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Accumulator_Blue_Size, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Accumulator_Blue_Size, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -273,7 +270,7 @@ package body SDL.Video.GL is
    end Accumulator_Blue_Size;
 
    procedure Set_Accumulator_Blue_Size (Size : in Colour_Bit_Size) is
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Accumulator_Blue_Size, C.int (Size));
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Accumulator_Blue_Size, C.int (Size));
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -282,7 +279,7 @@ package body SDL.Video.GL is
 
    function Accumulator_Alpha_Size return Colour_Bit_Size is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Accumulator_Alpha_Size, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Accumulator_Alpha_Size, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -292,7 +289,7 @@ package body SDL.Video.GL is
    end Accumulator_Alpha_Size;
 
    procedure Set_Accumulator_Alpha_Size (Size : in Colour_Bit_Size) is
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Accumulator_Alpha_Size, C.int (Size));
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Accumulator_Alpha_Size, C.int (Size));
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -301,7 +298,7 @@ package body SDL.Video.GL is
 
    function Is_Stereo return Boolean is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Stereo, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Stereo, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -311,8 +308,8 @@ package body SDL.Video.GL is
    end Is_Stereo;
 
    procedure Set_Stereo (On : in Boolean) is
-      Data   : C.int := (if On = True then 1 else 0);
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Stereo, Data);
+      Data   : constant C.int := (if On then 1 else 0);
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Stereo, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -321,7 +318,7 @@ package body SDL.Video.GL is
 
    function Is_Multisampled return Boolean is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Multisample_Buffers, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Multisample_Buffers, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -331,8 +328,8 @@ package body SDL.Video.GL is
    end Is_Multisampled;
 
    procedure Set_Multisampling (On : in Boolean) is
-      Data   : C.int := (if On = True then 1 else 0);
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Multisample_Buffers, Data);
+      Data   : constant C.int := (if On then 1 else 0);
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Multisample_Buffers, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -341,7 +338,7 @@ package body SDL.Video.GL is
 
    function Multisampling_Samples return Multisample_Samples is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Multisample_Samples, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Multisample_Samples, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -351,7 +348,7 @@ package body SDL.Video.GL is
    end Multisampling_Samples;
 
    procedure Set_Multisampling_Samples (Samples : in Multisample_Samples) is
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Multisample_Samples, C.int (Samples));
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Multisample_Samples, C.int (Samples));
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -360,7 +357,7 @@ package body SDL.Video.GL is
 
    function Is_Accelerated return Boolean is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Accelerated, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Accelerated, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -370,8 +367,8 @@ package body SDL.Video.GL is
    end Is_Accelerated;
 
    procedure Set_Accelerated (On : in Boolean) is
-      Data   : C.int := (if On = True then 1 else 0);
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Accelerated, Data);
+      Data   : constant C.int := (if On then 1 else 0);
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Accelerated, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -380,7 +377,7 @@ package body SDL.Video.GL is
 
    function Context_Major_Version return Major_Versions is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Context_Major_Version, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Context_Major_Version, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -390,7 +387,7 @@ package body SDL.Video.GL is
    end Context_Major_Version;
 
    procedure Set_Context_Major_Version (Version : Major_Versions) is
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Context_Major_Version, C.int (Version));
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Context_Major_Version, C.int (Version));
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -399,7 +396,7 @@ package body SDL.Video.GL is
 
    function Context_Minor_Version return Minor_Versions is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Context_Minor_Version, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Context_Minor_Version, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -409,7 +406,7 @@ package body SDL.Video.GL is
    end Context_Minor_Version;
 
    procedure Set_Context_Minor_Version (Version : Minor_Versions) is
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Context_Minor_Version, C.int (Version));
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Context_Minor_Version, C.int (Version));
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -418,7 +415,7 @@ package body SDL.Video.GL is
 
    function Is_Context_EGL return Boolean is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Context_EGL, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Context_EGL, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -428,8 +425,8 @@ package body SDL.Video.GL is
    end Is_Context_EGL;
 
    procedure Set_Context_EGL (On : in Boolean) is
-      Data   : C.int := (if On = True then 1 else 0);
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Context_EGL, Data);
+      Data   : constant C.int := (if On then 1 else 0);
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Context_EGL, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -438,7 +435,7 @@ package body SDL.Video.GL is
 
    function Context_Flags return Flags is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Context_Flags, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Context_Flags, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -448,7 +445,7 @@ package body SDL.Video.GL is
    end Context_Flags;
 
    procedure Set_Context_Flags (Context_Flags : in Flags) is
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Context_Flags, C.int (Context_Flags));
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Context_Flags, C.int (Context_Flags));
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -457,7 +454,7 @@ package body SDL.Video.GL is
 
    function Context_Profile return Profiles is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Context_Profile, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Context_Profile, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -467,7 +464,7 @@ package body SDL.Video.GL is
    end Context_Profile;
 
    procedure Set_Context_Profile (Profile : in Profiles) is
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Context_Profile, To_int (Profile));
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Context_Profile, To_int (Profile));
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -498,7 +495,7 @@ package body SDL.Video.GL is
 
    function Is_Sharing_With_Current_Context return Boolean is
       Data   : C.int;
-      Result : C.int := SDL_GL_Get_Attribute (Attribute_Share_With_Current_Context, Data);
+      Result : constant C.int := SDL_GL_Get_Attribute (Attribute_Share_With_Current_Context, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -508,8 +505,8 @@ package body SDL.Video.GL is
    end Is_Sharing_With_Current_Context;
 
    procedure Set_Share_With_Current_Context (On : in Boolean) is
-      Data   : C.int := (if On = True then 1 else 0);
-      Result : C.int := SDL_GL_Set_Attribute (Attribute_Share_With_Current_Context, Data);
+      Data   : constant C.int := (if On then 1 else 0);
+      Result : constant C.int := SDL_GL_Set_Attribute (Attribute_Share_With_Current_Context, Data);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -534,7 +531,7 @@ package body SDL.Video.GL is
         Convention    => C,
         External_Name => "SDL_GL_CreateContext";
 
-      C : SDL.C_Pointers.GL_Context_Pointer := SDL_GL_Create_Context (Get_Internal_Window (From));
+      C : constant SDL.C_Pointers.GL_Context_Pointer := SDL_GL_Create_Context (Get_Internal_Window (From));
    begin
       if C = null then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -584,7 +581,7 @@ package body SDL.Video.GL is
         Convention    => C,
         External_Name => "SDL_GL_MakeCurrent";
 
-      Result : C.int := SDL_GL_Make_Current (Get_Internal_Window (To), Self.Internal);
+      Result : constant C.int := SDL_GL_Make_Current (Get_Internal_Window (To), Self.Internal);
    begin
       if Result /= Success then
          raise SDL_GL_Error with SDL.Error.Get;
@@ -630,8 +627,8 @@ package body SDL.Video.GL is
         Convention    => C,
         External_Name => "SDL_GL_GetProcAddress";
 
-      C_Name_Str  : C.Strings.chars_ptr   := C.Strings.New_String (Name);
-      Sub_Program : Access_To_Sub_Program := SDL_GL_Get_Proc_Address (C_Name_Str);
+      C_Name_Str  : C.Strings.chars_ptr            := C.Strings.New_String (Name);
+      Sub_Program : constant Access_To_Sub_Program := SDL_GL_Get_Proc_Address (C_Name_Str);
    begin
       C.Strings.Free (C_Name_Str);
 
@@ -645,7 +642,7 @@ package body SDL.Video.GL is
         External_Name => "SDL_GL_ExtensionSupported";
 
       C_Name_Str : C.Strings.chars_ptr := C.Strings.New_String (Extension);
-      Result     : SDL_Bool            := SDL_GL_Extension_Supported (C_Name_Str);
+      Result     : constant SDL_Bool   := SDL_GL_Extension_Supported (C_Name_Str);
    begin
       C.Strings.Free (C_Name_Str);
 
@@ -662,6 +659,7 @@ package body SDL.Video.GL is
    end Get_Swap_Interval;
 
    function Set_Swap_Interval (Interval : in Allowed_Swap_Intervals; Late_Swap_Tear : in Boolean) return Boolean is
+      pragma Unreferenced (Interval);  --  TODO: Fix me!
       function SDL_GL_Set_Swap_Interval (Interval : in Swap_Intervals) return C.int with
         Import        => True,
         Convention    => C,
@@ -707,7 +705,7 @@ package body SDL.Video.GL is
 
    --  Load the default OpenGL library.
    procedure Load_Library is
-      Result : C.int := SDL_GL_Load_Library (C.Strings.Null_Ptr);
+      Result : constant C.int := SDL_GL_Load_Library (C.Strings.Null_Ptr);
    begin
       if Result /= SDL.Success then
          raise SDL_GL_Error with "Unable to load the default OpenGL library";
@@ -716,7 +714,7 @@ package body SDL.Video.GL is
 
    procedure Load_Library (Path : in String) is
       C_Name_Str : C.Strings.chars_ptr := C.Strings.New_String (Path);
-      Result     : C.int               := SDL_GL_Load_Library (C_Name_Str);
+      Result     : constant C.int      := SDL_GL_Load_Library (C_Name_Str);
    begin
       C.Strings.Free (C_Name_Str);
 

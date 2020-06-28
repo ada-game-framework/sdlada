@@ -20,7 +20,7 @@ procedure Create_Window is
       Position : SDL.Natural_Coordinates;
    end record;
 
-   Tests : array (Positive range <>) of Testcase :=
+   Tests : constant array (Positive range <>) of Testcase :=
      ((+"X: Undefined position (0)",
        (SDL.Video.Windows.Undefined_Window_Position (0), 100)),
       (+"Y: Undefined position (1)",

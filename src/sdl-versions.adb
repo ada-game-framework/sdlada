@@ -22,7 +22,6 @@
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C;
 with Interfaces.C.Strings;
-with System;
 
 package body SDL.Versions is
    package C renames Interfaces.C;
@@ -33,7 +32,7 @@ package body SDL.Versions is
         Convention    => C,
         External_Name => "SDL_GetRevision";
 
-      C_Str : C.Strings.chars_ptr := SDL_Get_Revision;
+      C_Str : constant C.Strings.chars_ptr := SDL_Get_Revision;
    begin
       return C.Strings.Value (C_Str);
    end Revision;

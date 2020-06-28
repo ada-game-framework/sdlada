@@ -1,5 +1,4 @@
 with SDL;
-with SDL.Error;
 with SDL.Log;
 with SDL.Versions;
 

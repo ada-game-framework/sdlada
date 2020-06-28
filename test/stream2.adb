@@ -23,7 +23,7 @@ procedure Stream2 is
    type Moose_Palette_Array is array (Moose_Colour_Index'Range) of SDL.Video.Palettes.RGB_Colour;
 
    W                : SDL.Video.Windows.Window;
-   Moose_Size       : SDL.Positive_Sizes              := (64, 88);
+   Moose_Size       : constant SDL.Positive_Sizes     := (64, 88);
    Moose_Frame_Size : constant SDL.Positive_Dimension := (Moose_Size.Width * Moose_Size.Height) - 1;
    Moose_Frame      : Moose_Frames                    := Moose_Frames'First;
    Moose_Palette    : constant Moose_Palette_Array    :=
@@ -54,7 +54,7 @@ procedure Stream2 is
    Moose_Frame_Data : Moose_Frame_Data_Array;
 
    procedure Load_Moose_Data (Data : out Moose_Frame_Data_Array) is
-      Actual_Name : String := "../../test/moose.dat";
+      Actual_Name : constant String := "../../test/moose.dat";
       Data_File   : Ada.Text_IO.File_Type;
       Stream      : Ada.Text_IO.Text_Streams.Stream_Access := null;
 
@@ -81,7 +81,6 @@ procedure Stream2 is
    procedure Lock is new SDL.Video.Textures.Lock (Pixel_Pointer_Type => SDL.Video.Pixels.ARGB_8888_Access.Pointer);
 
    use type SDL.Video.Pixels.ARGB_8888_Access.Pointer;
-   use type Ada.Calendar.Time;
 
    type Texture_2D_Array is array (SDL.Natural_Dimension range <>, SDL.Natural_Dimension range <>) of
      aliased SDL.Video.Pixels.ARGB_8888;
@@ -109,8 +108,7 @@ procedure Stream2 is
       end loop;
    end Cache_Moose;
 
-   Cache    : Cached_Moose_Frame_Array;
-   Finished : Boolean := False;
+   Cache : Cached_Moose_Frame_Array;
 begin
    SDL.Log.Set (Category => SDL.Log.Application, Priority => SDL.Log.Debug);
 
@@ -138,7 +136,6 @@ begin
          Event    : SDL.Events.Events.Events;
          Finished : Boolean := False;
 
-         use type SDL.Events.Event_Types;
          use type SDL.Events.Keyboards.Key_Codes;
          use type SDL.Events.Keyboards.Scan_Codes;
       begin

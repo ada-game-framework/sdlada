@@ -26,9 +26,6 @@ private with SDL.C_Pointers;
 package body SDL.Inputs.Joysticks.Game_Controllers.Makers is
    package C renames Interfaces.C;
 
-   use type C.int;
-   use type SDL.C_Pointers.Game_Controller_Pointer;
-
    function SDL_Game_Controller_Open (Device : in C.int) return SDL.C_Pointers.Game_Controller_Pointer with
      Import        => True,
      Convention    => C,
@@ -36,8 +33,9 @@ package body SDL.Inputs.Joysticks.Game_Controllers.Makers is
 
    function Create (Device : in Devices) return Game_Controller is
    begin
-      return J : Game_Controller := (Ada.Finalization.Limited_Controlled with
-                                       Internal => SDL_Game_Controller_Open (C.int (Device) - 1), Owns => True) do
+      return J : constant Game_Controller := (Ada.Finalization.Limited_Controlled with
+                                                Internal => SDL_Game_Controller_Open (C.int (Device) - 1), Owns => True)
+      do
          null;
       end return;
    end Create;

@@ -48,8 +48,6 @@ procedure Rwops is
       end;
 
       declare
-         use type SDL.RWops.Offsets;
-
          Op : constant SDL.RWops.RWops := SDL.RWops.From_File ("test.bin", SDL.RWops.Create_To_Write);
       begin
          Text_IO.New_Line;
@@ -63,8 +61,6 @@ procedure Rwops is
       end;
 
       declare
-         use type SDL.RWops.Offsets;
-
          Op       : SDL.RWops.RWops  := SDL.RWops.From_File ("test.bin", SDL.RWops.Read_Binary);
          Result8  : SDL.RWops.Uint8  := 0;
          Result32 : SDL.RWops.Uint32 := 0;
