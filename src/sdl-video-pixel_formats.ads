@@ -643,13 +643,11 @@ package SDL.Video.Pixel_Formats is
    type Pixel_Format_Access is access all Pixel_Format with
      Convention => C;
 
+   --  Nobody needs to use this outside.
    package Internals is
-
       --  These fields are defined as "internal use" in the SDL docs.
       type Private_Pixel_Format is private;
-
    private
-
       type Private_Pixel_Format is
          record
             Rred_Loss   : Interfaces.Unsigned_8;
@@ -664,7 +662,6 @@ package SDL.Video.Pixel_Formats is
             Next        : Pixel_Format_Access;
          end record with
         Convention => C;
-
    end Internals;
 
    type Pixel_Format is
