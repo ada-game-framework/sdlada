@@ -637,7 +637,32 @@ package SDL.Video.Pixel_Formats is
    type Colour_Mask is mod 2 ** 32 with
      Convention => C;
 
-   type Private_Pixel_Format is private;
+   type Pixel_Format;
+
+   --  TODO: Possibly change this to a controlled type.
+   type Pixel_Format_Access is access all Pixel_Format with
+     Convention => C;
+
+   --  Nobody needs to use this outside.
+   package Internals is
+      --  These fields are defined as "internal use" in the SDL docs.
+      type Private_Pixel_Format is private;
+   private
+      type Private_Pixel_Format is
+         record
+            Rred_Loss   : Interfaces.Unsigned_8;
+            Green_Loss  : Interfaces.Unsigned_8;
+            Blue_Loss   : Interfaces.Unsigned_8;
+            Alpha_Loss  : Interfaces.Unsigned_8;
+            Red_Shift   : Interfaces.Unsigned_8;
+            Green_Shift : Interfaces.Unsigned_8;
+            Blue_Shift  : Interfaces.Unsigned_8;
+            Alpha_Shift : Interfaces.Unsigned_8;
+            Ref_Count   : C.int;
+            Next        : Pixel_Format_Access;
+         end record with
+        Convention => C;
+   end Internals;
 
    type Pixel_Format is
       record
@@ -652,12 +677,8 @@ package SDL.Video.Pixel_Formats is
          Alpha_Mask   : Colour_Mask;
 
          --  This is mainly padding to make sure the record size matches what is expected from C.
-         Private_Part : Private_Pixel_Format;
+         Private_Part : Internals.Private_Pixel_Format;
       end record with
-     Convention => C;
-
-   --  TODO: Possibly change this to a controlled type.
-   type Pixel_Format_Access is access all Pixel_Format with
      Convention => C;
 
    function Create (Format : in Pixel_Format_Names) return Pixel_Format_Access with
@@ -751,20 +772,5 @@ package SDL.Video.Pixel_Formats is
      Import        => True,
      Convention    => C,
      External_Name => "SDL_CalculateGammaRamp";
-private
-   --  The following fields are defined as "internal use" in the SDL docs.
-   type Private_Pixel_Format is
-      record
-         Rred_Loss   : Interfaces.Unsigned_8;
-         Green_Loss  : Interfaces.Unsigned_8;
-         Blue_Loss   : Interfaces.Unsigned_8;
-         Alpha_Loss  : Interfaces.Unsigned_8;
-         Red_Shift   : Interfaces.Unsigned_8;
-         Green_Shift : Interfaces.Unsigned_8;
-         Blue_Shift  : Interfaces.Unsigned_8;
-         Alpha_Shift : Interfaces.Unsigned_8;
-         Ref_Count   : C.int;
-         Next        : Pixel_Format_Access;
-      end record with
-     Convention => C;
+
 end SDL.Video.Pixel_Formats;
