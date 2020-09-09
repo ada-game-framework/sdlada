@@ -22,7 +22,7 @@ able to use the library however they wish without restrictions.
 
 There are a number of variables which can be set to control the compilation:
 
-* SDL_PLATFORM = Can be set to one of the following values: linux, windows, macosx, ios or android
+* SDL_PLATFORM = Can be set to one of the following values: linux, windows, macosx, macos_homebrew, ios or android
 * SDL_MODE     = Can be one of: debug or release. Defaults to debug.
 
 ```
