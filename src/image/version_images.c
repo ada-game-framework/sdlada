@@ -20,7 +20,7 @@
  *    3. This notice may not be removed or altered from any source
  *    distribution.
  **********************************************************************************************************************/
-#ifdef __APPLE__
+#if defined(__APPLE__) && !defined (SDL_HOMEBREW)
 #include <SDL2_image/SDL_image.h>
 #else
 #include <SDL_image.h>
