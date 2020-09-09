@@ -1,12 +1,22 @@
 library project SDLAda is
-   type Platform_Type is ("linux", "bsd", "windows", "macosx", "ios", "android");
+   type Platform_Type is ("linux", "bsd", "windows", "macosx", "macos_homebrew", "ios", "android");
    type Mode_Type is ("debug", "release");
 
    Platform : Platform_Type := external ("SDL_PLATFORM", "linux");
    Mode     : Mode_Type     := external ("SDL_MODE", "debug");
+   
+   Source_Platform := "";
+
+   case Platform is
+      when "macos_homebrew" =>
+         Source_Platform := "../../src/macosx";
+
+      when others =>
+         Source_Platform := "../../src/" & Platform;
+   end case;
 
    for Languages    use ("Ada", "C");
-   for Source_Dirs  use ("../../src", "../../src/" & Platform, "gen/src/",
+   for Source_Dirs  use ("../../src", Source_Platform, "gen/src/",
 
                          --  For SDL.Image.
                          "../../src/image",
@@ -36,6 +46,11 @@ library project SDLAda is
       case Platform is
          when "linux" | "bsd" | "android" | "windows" =>
             C_Switches   := C_Switches & ("-I/usr/include/SDL2", "-D_REENTRANT");
+
+         when "macos_homebrew" =>
+            C_Switches   := C_Switches & ("-DSDL_HOMEBREW",
+                                          "-I/usr/local/include/SDL2",
+                                          "-D_REENTRANT");
 
          when others =>
             null;
