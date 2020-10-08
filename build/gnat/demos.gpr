@@ -1,0 +1,10 @@
+with "sdlada.gpr";
+
+project Demos is
+   for Source_Dirs use ("../../demos/pong");
+   for Object_Dir  use "gen/" & SDLAda.Mode & "/demos/.obj";
+   for Exec_Dir    use "gen/" & SDLAda.Mode & "/demos";
+   for Main        use ("pong_demo.adb");
+
+   package Compiler renames SDLAda.Compiler;
+end Demos;

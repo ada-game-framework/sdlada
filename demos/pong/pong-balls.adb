@@ -1,0 +1,150 @@
+--  Pong-Demo for SDLAda, ball actions.
+--  Copyright (C) 2012 - 2020, Vinzent "Jellix" Saranen
+
+with SDL.Video.Surfaces;
+
+package body Pong.Balls is
+
+   use type Interfaces.C.int;
+
+   ---------------------------------------------------------------------
+   --  Create
+   ---------------------------------------------------------------------
+   function Create (Surface : in SDL.Video.Surfaces.Surface;
+                    Initial : in SDL.Video.Rectangles.Rectangle;
+                    Bounds  : in SDL.Video.Rectangles.Rectangle;
+                    Speed   : in Interfaces.C.int) return Ball is
+   begin
+      return Ball'(Old_Pos   => Position'(X => Initial.X,
+                                          Y => Initial.Y),
+                   New_Pos   => Position'(X => Initial.X,
+                                          Y => Initial.Y),
+                   Size      => Dimensions'(W => Initial.Width,
+                                            H => Initial.Height),
+                   Bounds    =>
+                     SDL.Video.Rectangles.Rectangle'(X      => Bounds.X,
+                                                     Y      => Bounds.Y,
+                                                     Width  => Bounds.Width - Initial.Width,
+                                                     Height => Bounds.Height - Initial.Height),
+                   Direction => Position'(X => -1,
+                                          Y => -1),
+                   Black     => 16#00_00_00#,
+                   White     => 16#FF_FF_FF#,
+                   Speed     => Speed);
+   end Create;
+
+   ---------------------------------------------------------------------
+   --  Draw
+   ---------------------------------------------------------------------
+   overriding
+   procedure Draw (This    : in out Ball;
+                   Surface : in out SDL.Video.Surfaces.Surface)
+   is
+      Clear_At : SDL.Video.Rectangles.Rectangle :=
+        SDL.Video.Rectangles.Rectangle'(X      => This.Old_Pos.X,
+                                        Y      => This.Old_Pos.Y,
+                                        Width  => This.Size.W,
+                                        Height => This.Size.H);
+      Draw_At  : SDL.Video.Rectangles.Rectangle :=
+        SDL.Video.Rectangles.Rectangle'(X      => This.New_Pos.X,
+                                        Y      => This.New_Pos.Y,
+                                        Width  => This.Size.W,
+                                        Height => This.Size.H);
+   begin
+      Surface.Fill (Area   => Clear_At,
+                    Colour => This.Black);
+      pragma Unreferenced (Clear_At);
+
+      Surface.Fill (Area   => Draw_At,
+                    Colour => This.White);
+      pragma Unreferenced (Draw_At);
+
+      This.Old_Pos := This.New_Pos;
+   end Draw;
+
+   ---------------------------------------------------------------------
+   --  Move
+   ---------------------------------------------------------------------
+   overriding
+   procedure Move (This    : in out Ball;
+                   Clipped :    out Boolean;
+                   Delta_X : in     Interfaces.C.int := 0;
+                   Delta_Y : in     Interfaces.C.int := 0)
+   is
+      pragma Unreferenced (Delta_X, Delta_Y);
+      Max_X : constant Interfaces.C.int := This.Bounds.X + This.Bounds.Width;
+      Max_Y : constant Interfaces.C.int := This.Bounds.Y + This.Bounds.Height;
+   begin
+      This.New_Pos.X := This.Old_Pos.X + This.Direction.X * This.Speed;
+      This.New_Pos.Y := This.Old_Pos.Y + This.Direction.Y * This.Speed;
+
+      Clipped := False;
+
+      --  Check bounds.
+      if
+        This.New_Pos.X not in This.Bounds.X .. Max_X
+      then
+         Clipped := True;
+
+         Change_Dir (This => This,
+                     X    => True,
+                     Y    => False);
+      end if;
+
+      if
+        This.New_Pos.Y not in This.Bounds.Y .. Max_Y
+      then
+         Clipped := True;
+
+         Change_Dir (This => This,
+                     X    => False,
+                     Y    => True);
+      end if;
+   end Move;
+
+   ---------------------------------------------------------------------
+   --  Warp
+   ---------------------------------------------------------------------
+   procedure Warp (This    : in out Ball;
+                   Initial : in     Position) is
+   begin
+      This.New_Pos := Initial;
+   end Warp;
+
+   ---------------------------------------------------------------------
+   --  Collides
+   ---------------------------------------------------------------------
+   function Collides (This : in Ball;
+                      That : in Display_Object'Class) return Boolean is
+   begin
+      return not ((This.New_Pos.X               >= That.New_Pos.X + That.Size.W) or -- I.Left   >= O.Right
+                  (This.New_Pos.Y               >= That.New_Pos.Y + That.Size.H) or -- I.Top    >= O.Bottom
+                  (This.New_Pos.X + This.Size.W <= That.New_Pos.X) or               -- I.Right  <= O.Left
+                  (This.New_Pos.Y + This.Size.H <= That.New_Pos.Y)                  -- I.Bottom <= O.Top
+                );
+   end Collides;
+
+   ---------------------------------------------------------------------
+   --  Change_Dir
+   ---------------------------------------------------------------------
+   procedure Change_Dir (This : in out Ball;
+                         X    : in     Boolean;
+                         Y    : in     Boolean)
+   is
+      Clipped : Boolean;
+   begin
+      if X then
+         This.Direction.X := -This.Direction.X;
+      end if;
+
+      if Y then
+         This.Direction.Y := -This.Direction.Y;
+      end if;
+
+      if X or Y then
+         Move (This    => This,
+               Clipped => Clipped);
+      end if;
+   end Change_Dir;
+
+end Pong.Balls;
