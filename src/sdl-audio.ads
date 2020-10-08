@@ -105,7 +105,7 @@ package SDL.Audio is
          Len          : Interfaces.C.int;    --  length of original audio buffer
          Len_Cvt      : Interfaces.C.int;    --  length of converted audio buffer
          Len_Mult     : Interfaces.C.int;    --  buffer must be len*len_mult big
-         Len_Ratio    : Interfaces.C.Double; --  Given len, final size is len*len_ratio
+         Len_Ratio    : Interfaces.C.double; --  Given len, final size is len*len_ratio
          Filters      : Filter_Callbacks;
          Filter_Index : Interfaces.C.int;    --  Current audio conversion function
       end record;

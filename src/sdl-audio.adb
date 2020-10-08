@@ -22,9 +22,11 @@
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
 
+with Ada.Exceptions;
 with Interfaces.C;
 
-with SDL.RWops;
+with SDL.Error,
+     SDL.RWops;
 
 use type Interfaces.C.int;
 
@@ -59,7 +61,7 @@ package body SDL.Audio is
                   External_Name => "SDL_ConvertAudio");
 
    ---------------------------------------------------------------------
-   -- C_Free_WAV
+   --  C_Free_WAV
    ---------------------------------------------------------------------
    procedure C_Free_WAV (Audio_Buf : in Audio_Buffer);
    pragma Import (Convention    => C,
@@ -67,9 +69,9 @@ package body SDL.Audio is
                   External_Name => "SDL_FreeWAV");
 
    ---------------------------------------------------------------------
-   -- C_Load_WAV
+   --  C_Load_WAV
    ---------------------------------------------------------------------
-   function C_Load_WAV (Src      : in RWOps.RWops;
+   function C_Load_WAV (Src      : in RWops.RWops;
                         Free_Src : in Bool;
                         Spec     : in System.Address; --  in out Audio_Spec
                         Buf      : in System.Address; --     out Audio_Buffer
@@ -80,7 +82,7 @@ package body SDL.Audio is
                   External_Name => "SDL_LoadWAV_RW");
 
    ---------------------------------------------------------------------
-   -- C_Open
+   --  C_Open
    ---------------------------------------------------------------------
    function C_Open (Desired  : in System.Address;
                     Obtained : in System.Address) return Interfaces.C.int;
@@ -142,22 +144,28 @@ package body SDL.Audio is
                        Spec      :    out Audio_Spec;
                        Audio_Buf :    out Audio_Buffer;
                        Audio_Len :    out Interfaces.Unsigned_32;
-                       Success   :    out Boolean)
-   is
-      File_Ops : constant RWOps.RWops :=
-        RWOps.From_File (File_Name => File_Name,
-                         Mode      => RWOps.Read_Binary);
+                       Success   :    out Boolean) is
    begin
-      Success :=
-        C_Load_WAV (Src      => File_Ops,
-                    Free_Src => True,
-                    Spec     => Spec'Address,
-                    Buf      => Audio_Buf'Address,
-                    Len      => Audio_Len'Address) /= null;
+      declare
+         File_Ops : constant RWops.RWops :=
+           RWops.From_File (File_Name => File_Name,
+                            Mode      => RWops.Read_Binary);
+      begin
+         Success :=
+           C_Load_WAV (Src      => File_Ops,
+                       Free_Src => True,
+                       Spec     => Spec'Address,
+                       Buf      => Audio_Buf'Address,
+                       Len      => Audio_Len'Address) /= null;
+      end;
+   exception
+      when E : SDL.RWops.RWops_Error =>
+         SDL.Error.Set (Ada.Exceptions.Exception_Message (E));
+         Success := False;
    end Load_WAV;
 
    ---------------------------------------------------------------------
-   -- Open
+   --  Open
    ---------------------------------------------------------------------
    procedure Open (Desired  : in out Audio_Spec;
                    Obtained : in out Audio_Spec;
@@ -172,7 +180,7 @@ package body SDL.Audio is
    end Open;
 
    ---------------------------------------------------------------------
-   -- Open
+   --  Open
    ---------------------------------------------------------------------
    procedure Open (Required : in out Audio_Spec;
                    Success  :    out Boolean)
