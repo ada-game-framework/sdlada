@@ -23,6 +23,14 @@ TESTS_SRCS	=	$(SRC_DIR)/test/clipboard.adb \
 			$(SRC_DIR)/test/maths/maths.ad[sb] \
 			$(SRC_DIR)/test/maths/maths.c
 
+DEMOS_SRCS      =       $(SRC_DIR)/demos/pong/game.ads \
+			$(SRC_DIR)/demos/pong/game-audio.ad[bs] \
+			$(SRC_DIR)/demos/pong/game-constants.ads \
+			$(SRC_DIR)/demos/pong/pong.ad[bs] \
+			$(SRC_DIR)/demos/pong/pong-balls.ad[bs] \
+			$(SRC_DIR)/demos/pong/pong-paddles.ad[bs] \
+			$(SRC_DIR)/demos/pong/pong_demo.adb
+
 GEN_KB		=	gen/src/sdl-events-keyboards.ads
 
 ifeq (,$(filter $(SDL_PLATFORM), "linux" "windows" "bsd" "android"))
@@ -34,9 +42,9 @@ endif
 # With GNAT, all static libs end with .a
 LIB_NAME	=	lib/libadasdl.a
 
-.PHONY: sdlada.gpr test_maths_build.gpr test.gpr tools.gpr
+.PHONY: sdlada.gpr test_maths_build.gpr test.gpr demos.gpr tools.gpr
 
-all: tools $(LIB_NAME) tests
+all: tools $(LIB_NAME) tests demos
 
 # TODO: Fix the compiler so we actually get shared libs!
 #
@@ -100,6 +108,24 @@ clean-tests:
 	$(GPRCLEAN) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptest_maths_build.gpr
 
 #####################################################################################
+# Demos
+
+demos: $(LIB_NAME) demos.gpr $(DEMOS_SRCS) wav_files
+
+demos.gpr: $(DEMOS_SRCS)
+	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
+		-Pdemos.gpr ${SDL2_CONFIG}
+
+wav_files: $(SRC_DIR)/demos/pong/data/p[io]ng.wav
+	cp -r $(SRC_DIR)/demos/pong/data/ gen/$(SDL_MODE)/demos/data/
+
+.PHONY: clean-demos
+
+clean-demos:
+	$(GPRCLEAN) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Pdemos.gpr
+	$(GPRCLEAN) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Pdemos.gpr
+
+#####################################################################################
 # Unit tests
 
 unit_tests: $(LIB_NAME) build_unit_tests/unit_tests
@@ -125,4 +151,4 @@ install: all
 
 .PHONY: clean
 
-clean: clean-kb clean-tools clean-tests clean-unit_tests clean-lib
+clean: clean-kb clean-tools clean-tests clean-demos clean-unit_tests clean-lib
