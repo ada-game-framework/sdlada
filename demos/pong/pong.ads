@@ -3,7 +3,7 @@
 
 with Interfaces.C;
 with SDL.Video.Rectangles,
-     SDL.Video.Surfaces;
+     SDL.Video.Renderers;
 
 package Pong is
 
@@ -24,8 +24,8 @@ package Pong is
    ---------------------------------------------------------------------
    --  Draw
    ---------------------------------------------------------------------
-   procedure Draw (This    : in out Display_Object;
-                   Surface : in out SDL.Video.Surfaces.Surface) is abstract;
+   procedure Draw (This     : in out Display_Object;
+                   Renderer : in out SDL.Video.Renderers.Renderer) is abstract;
 
    ---------------------------------------------------------------------
    --  Move

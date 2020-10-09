@@ -11,7 +11,7 @@ with SDL.Error,
      SDL.Events.Events,
      SDL.Events.Keyboards,
      SDL.Video.Rectangles,
-     SDL.Video.Surfaces,
+     SDL.Video.Renderers.Makers,
      SDL.Video.Windows.Makers;
 
 with Pong.Balls,
@@ -32,21 +32,21 @@ procedure Pong_Demo is
    type Object_Ref  is access all Pong.Display_Object'Class;
    type Object_List is array (Natural range <>) of Object_Ref;
 
-   SDL_Error   : exception;
+   SDL_Error     : exception;
 
-   Ball        : aliased Pong.Balls.Ball;
-   Smart_Ass   : aliased Pong.Paddles.Paddle;
-   Player      : aliased Pong.Paddles.Paddle;
-   Objects     : constant Object_List := (0 => Ball'Access,
-                                          1 => Smart_Ass'Access,
-                                          2 => Player'Access);
+   Ball          : aliased Pong.Balls.Ball;
+   Smart_Ass     : aliased Pong.Paddles.Paddle;
+   Player        : aliased Pong.Paddles.Paddle;
+   Objects       : constant Object_List := (0 => Ball'Access,
+                                            1 => Smart_Ass'Access,
+                                            2 => Player'Access);
 
-   Clipped     : Boolean;
-   The_Score   : Score;
-   Event       : SDL.Events.Events.Events;
-   Game_Window : SDL.Video.Windows.Window;
-   Game_Screen : SDL.Video.Surfaces.Surface;
-   Next_Time   : Ada.Real_Time.Time;
+   Clipped       : Boolean;
+   The_Score     : Score;
+   Event         : SDL.Events.Events.Events;
+   Game_Window   : SDL.Video.Windows.Window;
+   Game_Renderer : SDL.Video.Renderers.Renderer;
+   Next_Time     : Ada.Real_Time.Time;
 
    package GC renames Game.Constants;
 begin
@@ -60,13 +60,13 @@ begin
 
    begin
       SDL.Video.Windows.Makers.Create
-        (Win    => Game_Window,
-         Title  => "Ada/SDL Demo - Pong",
-         X      => 0,
-         Y      => 0,
-         Width  => 640,
-         Height => 480,
-         Flags  => SDL.Video.Windows.Full_Screen);
+        (Win      => Game_Window,
+         Title    => "Ada/SDL Demo - Pong",
+         Position => SDL.Coordinates'(X => 0,
+                                      Y => 0),
+         Size     => SDL.Sizes'(Width  => GC.Screen_Width,
+                                Height => GC.Screen_Height),
+         Flags    => SDL.Video.Windows.Full_Screen_Desktop);
    exception
       when others =>
 
@@ -75,13 +75,28 @@ begin
          raise SDL_Error with SDL.Error.Get;
    end;
 
+   SDL.Video.Renderers.Makers.Create
+     (Rend   => Game_Renderer,
+      Window => Game_Window,
+      Flags  => SDL.Video.Renderers.Present_V_Sync);
+   Game_Renderer.Set_Logical_Size
+     (Size => SDL.Sizes'(Width  => GC.Screen_Width,
+                         Height => GC.Screen_Height));
+
+   declare
+      Logical_Size : SDL.Sizes;
+   begin
+      Game_Renderer.Get_Logical_Size (Size => Logical_Size);
+      Ada.Text_IO.Put_Line
+        ("Logical screen size is " &
+           Logical_Size.Width'Image & "x" & Logical_Size.Height'Image & ".");
+   end;
+
    Game.Audio.Initialize;
-   Game_Screen := Game_Window.Get_Surface;
 
    Ball :=
      Pong.Balls.Create
-       (Surface => Game_Screen,
-        Initial => SDL.Video.Rectangles.Rectangle'(X      => GC.Ball_Initial.X,
+       (Initial => SDL.Video.Rectangles.Rectangle'(X      => GC.Ball_Initial.X,
                                                    Y      => GC.Ball_Initial.Y,
                                                    Width  => GC.Ball_Size,
                                                    Height => GC.Ball_Size),
@@ -94,8 +109,7 @@ begin
 
    Smart_Ass :=
      Pong.Paddles.Create
-       (Surface => Game_Screen,
-        Initial =>
+       (Initial =>
           SDL.Video.Rectangles.Rectangle'(X      => 10,
                                           Y      => (GC.Screen_Height / 2 -
                                                          GC.Paddle_Height / 2),
@@ -110,8 +124,7 @@ begin
 
    Player :=
      Pong.Paddles.Create
-       (Surface => Game_Screen,
-        Initial =>
+       (Initial =>
           SDL.Video.Rectangles.Rectangle'(X      => GC.Screen_Width - 10 - GC.Paddle_Width,
                                           Y      => (GC.Screen_Height / 2 -
                                                          GC.Paddle_Height / 2),
@@ -124,8 +137,6 @@ begin
                                           Height => GC.Screen_Height),
         Speed   => GC.Player_Speed);
 
-   Game_Window.Update_Surface;
-
    The_Score := Score'(Computer => 0,
                        Human    => 0);
 
@@ -133,17 +144,18 @@ begin
 
    Game_Loop :
    loop
-      Game_Screen := Game_Window.Get_Surface;
+      Game_Renderer.Set_Draw_Colour (Colour => (0, 0, 0, 16#FF#));
+      Game_Renderer.Clear;
 
       --  Update paddle and ball positions.
       Draw_Objects :
       for O in Objects'Range loop
-         Pong.Draw (This    => Objects (O).all,
-                    Surface => Game_Screen);
+         Pong.Draw (This     => Objects (O).all,
+                    Renderer => Game_Renderer);
       end loop Draw_Objects;
 
       --  Update video display.
-      Game_Window.Update_Surface;
+      Game_Renderer.Present;
 
       delay until Next_Time;
       Next_Time := Next_Time + GC.Game_Speed;
@@ -187,9 +199,9 @@ begin
       Move_Paddle :
       declare
          Ball_Center   : constant Interfaces.C.int :=
-                           Pong.Y_Position (This => Ball) + GC.Ball_Size / 2;
+           Pong.Y_Position (This => Ball) + GC.Ball_Size / 2;
          Paddle_Center : constant Interfaces.C.int :=
-                           Pong.Y_Position (This => Smart_Ass) + GC.Paddle_Height / 2;
+           Pong.Y_Position (This => Smart_Ass) + GC.Paddle_Height / 2;
       begin
          if
            Ball_Center - Paddle_Center < -GC.Threshold
@@ -247,7 +259,7 @@ begin
          if Score_Changed then
             Ada.Text_IO.Put_Line
               (Natural'Image (The_Score (Computer)) & " :" &
-               Natural'Image (The_Score (Human)));
+                 Natural'Image (The_Score (Human)));
 
             Pong.Balls.Warp (This    => Ball,
                              Initial => GC.Ball_Initial);
