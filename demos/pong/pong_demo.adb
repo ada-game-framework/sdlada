@@ -83,15 +83,6 @@ begin
      (Size => SDL.Sizes'(Width  => GC.Screen_Width,
                          Height => GC.Screen_Height));
 
-   declare
-      Logical_Size : SDL.Sizes;
-   begin
-      Game_Renderer.Get_Logical_Size (Size => Logical_Size);
-      Ada.Text_IO.Put_Line
-        ("Logical screen size is " &
-           Logical_Size.Width'Image & "x" & Logical_Size.Height'Image & ".");
-   end;
-
    Game.Audio.Initialize;
 
    Ball :=
@@ -149,9 +140,8 @@ begin
 
       --  Update paddle and ball positions.
       Draw_Objects :
-      for O in Objects'Range loop
-         Pong.Draw (This     => Objects (O).all,
-                    Renderer => Game_Renderer);
+      for O of Objects loop
+         O.all.Draw (Renderer => Game_Renderer);
       end loop Draw_Objects;
 
       --  Update video display.
@@ -177,14 +167,22 @@ begin
                      exit Game_Loop;
 
                   when SDL.Events.Keyboards.Scan_Code_Down =>
-                     Pong.Paddles.Move (This    => Player,
-                                        Clipped => Clipped,
-                                        Delta_Y => +1);
+                     Player.Set_Velocity (Vel => +1);
 
                   when SDL.Events.Keyboards.Scan_Code_Up =>
-                     Pong.Paddles.Move (This    => Player,
-                                        Clipped => Clipped,
-                                        Delta_Y => -1);
+                     Player.Set_Velocity (Vel => -1);
+
+                  when others =>
+                     null;
+               end case;
+
+            when SDL.Events.Keyboards.Key_Up =>
+               case Event.Keyboard.Key_Sym.Scan_Code is
+
+                  --  No movement key(s) pressed anymore, stop movement.
+                  when SDL.Events.Keyboards.Scan_Code_Down |
+                       SDL.Events.Keyboards.Scan_Code_Up =>
+                     Player.Set_Velocity (Vel => 0);
 
                   when others =>
                      null;
@@ -194,6 +192,9 @@ begin
                null;
          end case;
       end if;
+
+      --  Move player paddle according to previously set velocity.
+      Player.Move (Clipped => Clipped);
 
       --  Let computer's paddle simply follow the ball.
       Move_Paddle :
@@ -206,33 +207,33 @@ begin
          if
            Ball_Center - Paddle_Center < -GC.Threshold
          then
-            Pong.Paddles.Move (This    => Smart_Ass,
-                               Clipped => Clipped,
-                               Delta_Y => -1);
+            Smart_Ass.Set_Velocity (Vel => -1);
          elsif
            Ball_Center - Paddle_Center > GC.Threshold
          then
-            Pong.Paddles.Move (This    => Smart_Ass,
-                               Clipped => Clipped,
-                               Delta_Y => +1);
+            Smart_Ass.Set_Velocity (Vel => +1);
+         else
+            Smart_Ass.Set_Velocity (Vel => 0);
          end if;
+
+         --  Do movement according to velocity.
+         Smart_Ass.Move (Clipped => Clipped);
       end Move_Paddle;
 
       --  Check collision with paddles.
       if
-        Pong.Balls.Collides (This => Ball,
-                             That => Smart_Ass) or
-        Pong.Balls.Collides (This => Ball,
-                             That => Player)
+        Ball.Collides (That => Smart_Ass) or
+        Ball.Collides (That => Player)
       then
          Game.Audio.Play_Pong;
 
-         Pong.Balls.Change_Dir (This => Ball,
-                                X    => True,
-                                Y    => False);
+         --  TODO: Warp the ball in the X coordinate to move it out of the way
+         --        of the paddle. Otherwise, the paddle may "push" the ball
+         --        multiple times.
+         Ball.Change_Dir (X => True,
+                          Y => False);
       else
-         Pong.Balls.Move (This    => Ball,
-                          Clipped => Clipped);
+         Ball.Move (Clipped => Clipped);
 
          if Clipped then
             Game.Audio.Play_Ping;
@@ -245,12 +246,12 @@ begin
          Score_Changed : Boolean := False;
       begin
          if
-           Pong.X_Position (This => Ball) < 10
+           Ball.X_Position < 10
          then
             The_Score (Human) := The_Score (Human) + 1;
             Score_Changed := True;
          elsif
-           Pong.X_Position (This => Ball) > GC.Screen_Width - 10 - GC.Ball_Size
+           Ball.X_Position > GC.Screen_Width - 10 - GC.Ball_Size
          then
             The_Score (Computer) := The_Score (Computer) + 1;
             Score_Changed := True;
@@ -261,8 +262,7 @@ begin
               (Natural'Image (The_Score (Computer)) & " :" &
                  Natural'Image (The_Score (Human)));
 
-            Pong.Balls.Warp (This    => Ball,
-                             Initial => GC.Ball_Initial);
+            Ball.Warp (Initial => GC.Ball_Initial);
          end if;
       end Check_Score;
 

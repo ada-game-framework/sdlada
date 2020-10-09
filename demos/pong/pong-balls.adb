@@ -12,19 +12,19 @@ package body Pong.Balls is
                     Bounds  : in SDL.Video.Rectangles.Rectangle;
                     Speed   : in Interfaces.C.int) return Ball is
    begin
-      return Ball'(Old_Pos   => Position'(X => Initial.X,
-                                          Y => Initial.Y),
-                   New_Pos   => Position'(X => Initial.X,
-                                          Y => Initial.Y),
-                   Size      => Dimensions'(W => Initial.Width,
-                                            H => Initial.Height),
+      return Ball'(Old_Pos   => SDL.Coordinates'(X => Initial.X,
+                                                 Y => Initial.Y),
+                   New_Pos   => SDL.Coordinates'(X => Initial.X,
+                                                 Y => Initial.Y),
+                   Size      => SDL.Sizes'(Width  => Initial.Width,
+                                           Height => Initial.Height),
                    Bounds    =>
                      SDL.Video.Rectangles.Rectangle'(X      => Bounds.X,
                                                      Y      => Bounds.Y,
                                                      Width  => Bounds.Width - Initial.Width,
                                                      Height => Bounds.Height - Initial.Height),
-                   Direction => Position'(X => -1,
-                                          Y => -1),
+                   Direction => SDL.Coordinates'(X => -1,
+                                                 Y => -1),
                    Black     => SDL.Video.Palettes.Colour'(Red   => 16#00#,
                                                            Green => 16#00#,
                                                            Blue  => 16#00#,
@@ -46,8 +46,8 @@ package body Pong.Balls is
       Draw_At : constant SDL.Video.Rectangles.Rectangle :=
         SDL.Video.Rectangles.Rectangle'(X      => This.New_Pos.X,
                                         Y      => This.New_Pos.Y,
-                                        Width  => This.Size.W,
-                                        Height => This.Size.H);
+                                        Width  => This.Size.Width,
+                                        Height => This.Size.Height);
    begin
       Renderer.Set_Draw_Colour (Colour => This.White);
       Renderer.Fill (Rectangle => Draw_At);
@@ -60,11 +60,8 @@ package body Pong.Balls is
    ---------------------------------------------------------------------
    overriding
    procedure Move (This    : in out Ball;
-                   Clipped :    out Boolean;
-                   Delta_X : in     Interfaces.C.int := 0;
-                   Delta_Y : in     Interfaces.C.int := 0)
+                   Clipped :    out Boolean)
    is
-      pragma Unreferenced (Delta_X, Delta_Y);
       Max_X : constant Interfaces.C.int := This.Bounds.X + This.Bounds.Width;
       Max_Y : constant Interfaces.C.int := This.Bounds.Y + This.Bounds.Height;
    begin
@@ -99,7 +96,7 @@ package body Pong.Balls is
    --  Warp
    ---------------------------------------------------------------------
    procedure Warp (This    : in out Ball;
-                   Initial : in     Position) is
+                   Initial : in     SDL.Coordinates) is
    begin
       This.New_Pos := Initial;
    end Warp;
@@ -110,10 +107,10 @@ package body Pong.Balls is
    function Collides (This : in Ball;
                       That : in Display_Object'Class) return Boolean is
    begin
-      return not ((This.New_Pos.X               >= That.New_Pos.X + That.Size.W) or -- I.Left   >= O.Right
-                  (This.New_Pos.Y               >= That.New_Pos.Y + That.Size.H) or -- I.Top    >= O.Bottom
-                  (This.New_Pos.X + This.Size.W <= That.New_Pos.X) or               -- I.Right  <= O.Left
-                  (This.New_Pos.Y + This.Size.H <= That.New_Pos.Y)                  -- I.Bottom <= O.Top
+      return not ((This.New_Pos.X               >= That.New_Pos.X + That.Size.Width) or -- I.Left   >= O.Right
+                  (This.New_Pos.Y               >= That.New_Pos.Y + That.Size.Height) or -- I.Top    >= O.Bottom
+                  (This.New_Pos.X + This.Size.Width <= That.New_Pos.X) or               -- I.Right  <= O.Left
+                  (This.New_Pos.Y + This.Size.Height <= That.New_Pos.Y)                  -- I.Bottom <= O.Top
                 );
    end Collides;
 

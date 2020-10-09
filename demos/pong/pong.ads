@@ -7,18 +7,6 @@ with SDL.Video.Rectangles,
 
 package Pong is
 
-   type Position is
-      record
-         X : Interfaces.C.int;
-         Y : Interfaces.C.int;
-      end record;
-
-   type Dimensions is
-      record
-         W : Interfaces.C.int;
-         H : Interfaces.C.int;
-      end record;
-
    type Display_Object is abstract tagged private;
 
    ---------------------------------------------------------------------
@@ -31,9 +19,7 @@ package Pong is
    --  Move
    ---------------------------------------------------------------------
    procedure Move (This    : in out Display_Object;
-                   Clipped :    out Boolean;
-                   Delta_X : in     Interfaces.C.int;
-                   Delta_Y : in     Interfaces.C.int) is abstract;
+                   Clipped :    out Boolean) is abstract;
 
    ---------------------------------------------------------------------
    --  X_Position
@@ -51,9 +37,9 @@ private
 
    type Display_Object is abstract tagged
       record
-         Old_Pos : Position;
-         New_Pos : Position;
-         Size    : Dimensions;
+         Old_Pos : SDL.Coordinates;
+         New_Pos : SDL.Coordinates;
+         Size    : SDL.Sizes;
          Bounds  : SDL.Video.Rectangles.Rectangle;
       end record;
 

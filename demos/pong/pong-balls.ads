@@ -26,15 +26,13 @@ package Pong.Balls is
    ---------------------------------------------------------------------
    overriding
    procedure Move (This    : in out Ball;
-                   Clipped :    out Boolean;
-                   Delta_X : in     Interfaces.C.int := 0;
-                   Delta_Y : in     Interfaces.C.int := 0);
+                   Clipped :    out Boolean);
 
    ---------------------------------------------------------------------
    --  Warp
    ---------------------------------------------------------------------
    procedure Warp (This    : in out Ball;
-                   Initial : in     Position);
+                   Initial : in     SDL.Coordinates);
 
    ---------------------------------------------------------------------
    --  Collides
@@ -54,7 +52,7 @@ private
    type Ball is new Display_Object with
       record
          Speed     : Interfaces.C.int;
-         Direction : Position; --  Actual moving vector.
+         Direction : SDL.Coordinates; --  Actual moving vector.
          Black     : SDL.Video.Palettes.Colour;
          White     : SDL.Video.Palettes.Colour;
       end record;
