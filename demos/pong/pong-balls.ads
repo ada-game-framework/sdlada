@@ -1,7 +1,7 @@
 --  Pong-Demo for SDLAda, ball actions.
 --  Copyright (C) 2012 - 2020, Vinzent "Jellix" Saranen
 
-with SDL.Video;
+with SDL.Video.Palettes;
 
 package Pong.Balls is
 
@@ -10,8 +10,7 @@ package Pong.Balls is
    ---------------------------------------------------------------------
    --  Create
    ---------------------------------------------------------------------
-   function Create (Surface : in SDL.Video.Surfaces.Surface;
-                    Initial : in SDL.Video.Rectangles.Rectangle;
+   function Create (Initial : in SDL.Video.Rectangles.Rectangle;
                     Bounds  : in SDL.Video.Rectangles.Rectangle;
                     Speed   : in Interfaces.C.int) return Ball;
 
@@ -19,8 +18,8 @@ package Pong.Balls is
    --  Draw
    ---------------------------------------------------------------------
    overriding
-   procedure Draw (This    : in out Ball;
-                   Surface : in out SDL.Video.Surfaces.Surface);
+   procedure Draw (This     : in out Ball;
+                   Renderer : in out SDL.Video.Renderers.Renderer);
 
    ---------------------------------------------------------------------
    --  Move
@@ -56,8 +55,8 @@ private
       record
          Speed     : Interfaces.C.int;
          Direction : Position; --  Actual moving vector.
-         Black     : Interfaces.Unsigned_32;
-         White     : Interfaces.Unsigned_32;
+         Black     : SDL.Video.Palettes.Colour;
+         White     : SDL.Video.Palettes.Colour;
       end record;
 
 end Pong.Balls;

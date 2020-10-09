@@ -1,7 +1,7 @@
 --  Pong-Demo for SDLAda, paddle actions.
 --  Copyright (C) 2012 - 2020, Vinzent "Jellix" Saranen
 
-with SDL.Video;
+with SDL.Video.Palettes;
 
 package Pong.Paddles is
 
@@ -10,8 +10,7 @@ package Pong.Paddles is
    ---------------------------------------------------------------------
    --  Create
    ---------------------------------------------------------------------
-   function Create (Surface : in SDL.Video.Surfaces.Surface;
-                    Initial : in SDL.Video.Rectangles.Rectangle;
+   function Create (Initial : in SDL.Video.Rectangles.Rectangle;
                     Bounds  : in SDL.Video.Rectangles.Rectangle;
                     Speed   : in Interfaces.C.unsigned_char) return Paddle;
 
@@ -28,16 +27,16 @@ package Pong.Paddles is
    --  Draw
    ---------------------------------------------------------------------
    overriding
-   procedure Draw (This    : in out Paddle;
-                   Surface : in out SDL.Video.Surfaces.Surface);
+   procedure Draw (This     : in out Paddle;
+                   Renderer : in out SDL.Video.Renderers.Renderer);
 
 private
 
    type Paddle is new Pong.Display_Object with
       record
          Speed : Interfaces.C.unsigned_char;
-         Black : Interfaces.Unsigned_32;
-         White : Interfaces.Unsigned_32;
+         Black : SDL.Video.Palettes.Colour;
+         White : SDL.Video.Palettes.Colour;
       end record;
 
 end Pong.Paddles;

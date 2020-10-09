@@ -1,9 +1,6 @@
 --  Pong-Demo for SDLAda, paddle actions.
 --  Copyright (C) 2012 - 2020, Vinzent "Jellix" Saranen
 
-with SDL.Video.Rectangles,
-     SDL.Video.Surfaces;
-
 package body Pong.Paddles is
 
    use type Interfaces.C.int;
@@ -11,8 +8,7 @@ package body Pong.Paddles is
    ---------------------------------------------------------------------
    --  Create
    ---------------------------------------------------------------------
-   function Create (Surface : in SDL.Video.Surfaces.Surface;
-                    Initial : in SDL.Video.Rectangles.Rectangle;
+   function Create (Initial : in SDL.Video.Rectangles.Rectangle;
                     Bounds  : in SDL.Video.Rectangles.Rectangle;
                     Speed   : in Interfaces.C.unsigned_char) return Paddle is
    begin
@@ -27,8 +23,14 @@ package body Pong.Paddles is
                                                        Y      => Bounds.Y,
                                                        Width  => Bounds.Width - Initial.Width,
                                                        Height => Bounds.Height - Initial.Height),
-                     Black   => 16#00_00_00#,
-                     White   => 16#FF_FF_FF#,
+                     Black   => SDL.Video.Palettes.Colour'(Red   => 16#00#,
+                                                           Green => 16#00#,
+                                                           Blue  => 16#00#,
+                                                           Alpha => 16#FF#),
+                     White   => SDL.Video.Palettes.Colour'(Red   => 16#FF#,
+                                                           Green => 16#FF#,
+                                                           Blue  => 16#FF#,
+                                                           Alpha => 16#FF#),
                      Speed   => Speed);
    end Create;
 
@@ -65,27 +67,17 @@ package body Pong.Paddles is
    --  Draw
    ---------------------------------------------------------------------
    overriding
-   procedure Draw (This    : in out Paddle;
-                   Surface : in out SDL.Video.Surfaces.Surface)
+   procedure Draw (This     : in out Paddle;
+                   Renderer : in out SDL.Video.Renderers.Renderer)
    is
-      Clear_At : SDL.Video.Rectangles.Rectangle :=
-        SDL.Video.Rectangles.Rectangle'(X      => This.Old_Pos.X,
-                                        Y      => This.Old_Pos.Y,
-                                        Width  => This.Size.W,
-                                        Height => This.Size.H);
-      Draw_At  : SDL.Video.Rectangles.Rectangle :=
+      Draw_At  : constant SDL.Video.Rectangles.Rectangle :=
         SDL.Video.Rectangles.Rectangle'(X      => This.New_Pos.X,
                                         Y      => This.New_Pos.Y,
                                         Width  => This.Size.W,
                                         Height => This.Size.H);
    begin
-      Surface.Fill (Area   => Clear_At,
-                    Colour => This.Black);
-      pragma Unreferenced (Clear_At);
-
-      Surface.Fill (Area   => Draw_At,
-                    Colour => This.White);
-      pragma Unreferenced (Draw_At);
+      Renderer.Set_Draw_Colour (Colour => This.White);
+      Renderer.Fill (Rectangle => Draw_At);
 
       This.Old_Pos := This.New_Pos;
    end Draw;
