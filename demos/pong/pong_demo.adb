@@ -49,6 +49,10 @@ procedure Pong_Demo is
    Next_Time     : Ada.Real_Time.Time;
 
    package GC renames Game.Constants;
+
+   --  Some useful game related constants.
+   Left_Goal  : constant := GC.Screen_Width / 16;
+   Right_Goal : constant := GC.Screen_Width - Left_Goal;
 begin
    if
      not SDL.Initialise (Flags => (SDL.Enable_Screen or SDL.Enable_Audio))
@@ -91,41 +95,36 @@ begin
                                                    Y      => GC.Ball_Initial.Y,
                                                    Width  => GC.Ball_Size,
                                                    Height => GC.Ball_Size),
-        Bounds  =>
-          SDL.Video.Rectangles.Rectangle'(X      => 5,
-                                          Y      => 5,
-                                          Width  => GC.Screen_Width  - 10,
-                                          Height => GC.Screen_Height - 10),
+        Bounds  => GC.Ball_Bounds,
+        Colour  => GC.Ball_Colour,
         Speed   => GC.Ball_Speed);
 
    Smart_Ass :=
      Pong.Paddles.Create
        (Initial =>
-          SDL.Video.Rectangles.Rectangle'(X      => 10,
+          SDL.Video.Rectangles.Rectangle'(X      => GC.Screen_Width / 16,
                                           Y      => (GC.Screen_Height / 2 -
                                                          GC.Paddle_Height / 2),
                                           Width  => GC.Paddle_Width,
                                           Height => GC.Paddle_Height),
-        Bounds  =>
-          SDL.Video.Rectangles.Rectangle'(X      => 10,
-                                          Y      => 0,
-                                          Width  => GC.Paddle_Width,
-                                          Height => GC.Screen_Height),
-        Speed   =>  GC.Computer_Speed);
+        Bounds  => GC.Paddle_Bounds,
+        -- Give the human player a winning chance by restricting the movement of
+        -- the computer opponent.
+        Colour  => GC.Paddle_Colour,
+        Speed   => GC.Computer_Speed);
 
    Player :=
      Pong.Paddles.Create
        (Initial =>
-          SDL.Video.Rectangles.Rectangle'(X      => GC.Screen_Width - 10 - GC.Paddle_Width,
-                                          Y      => (GC.Screen_Height / 2 -
-                                                         GC.Paddle_Height / 2),
-                                          Width  => GC.Paddle_Width,
-                                          Height => GC.Paddle_Height),
-        Bounds  =>
-          SDL.Video.Rectangles.Rectangle'(X      => GC.Screen_Width - 10 - GC.Paddle_Width,
-                                          Y      => 0,
-                                          Width  => GC.Paddle_Width,
-                                          Height => GC.Screen_Height),
+          SDL.Video.Rectangles.Rectangle'
+            (X      => GC.Screen_Width - GC.Screen_Width / 16 - GC.Paddle_Width,
+             Y      => (GC.Screen_Height / 2 - GC.Paddle_Height / 2),
+             Width  => GC.Paddle_Width,
+             Height => GC.Paddle_Height),
+        Bounds  => GC.Ball_Bounds,
+        -- Give the human player a winning chance by allowing full movement of
+        -- the human opponent's paddle.
+        Colour  => GC.Paddle_Colour,
         Speed   => GC.Player_Speed);
 
    The_Score := Score'(Computer => 0,
@@ -135,8 +134,14 @@ begin
 
    Game_Loop :
    loop
-      Game_Renderer.Set_Draw_Colour (Colour => (0, 0, 0, 16#FF#));
+      Game_Renderer.Set_Draw_Colour (Colour => GC.Background_Color);
       Game_Renderer.Clear;
+
+      Game_Renderer.Set_Draw_Colour (Colour => GC.Line_Colour);
+      Game_Renderer.Draw (Line => ((Left_Goal, 0),
+                                   (Left_Goal, GC.Screen_Height - 1)));
+      Game_Renderer.Draw (Line => ((Right_Goal, 0),
+                                   (Right_Goal, GC.Screen_Height - 1)));
 
       --  Update paddle and ball positions.
       Draw_Objects :
@@ -167,10 +172,10 @@ begin
                      exit Game_Loop;
 
                   when SDL.Events.Keyboards.Scan_Code_Down =>
-                     Player.Set_Velocity (Vel => +1);
+                     Player.Set_Velocity (Vel => +1.0);
 
                   when SDL.Events.Keyboards.Scan_Code_Up =>
-                     Player.Set_Velocity (Vel => -1);
+                     Player.Set_Velocity (Vel => -1.0);
 
                   when others =>
                      null;
@@ -182,7 +187,7 @@ begin
                   --  No movement key(s) pressed anymore, stop movement.
                   when SDL.Events.Keyboards.Scan_Code_Down |
                        SDL.Events.Keyboards.Scan_Code_Up =>
-                     Player.Set_Velocity (Vel => 0);
+                     Player.Set_Velocity (Vel => 0.0);
 
                   when others =>
                      null;
@@ -200,20 +205,20 @@ begin
       Move_Paddle :
       declare
          Ball_Center   : constant Interfaces.C.int :=
-           Pong.Y_Position (This => Ball) + GC.Ball_Size / 2;
+           Pong.Position (This => Ball).Y + GC.Ball_Size / 2;
          Paddle_Center : constant Interfaces.C.int :=
-           Pong.Y_Position (This => Smart_Ass) + GC.Paddle_Height / 2;
+           Pong.Position (This => Smart_Ass).Y + GC.Paddle_Height / 2;
       begin
          if
            Ball_Center - Paddle_Center < -GC.Threshold
          then
-            Smart_Ass.Set_Velocity (Vel => -1);
+            Smart_Ass.Set_Velocity (Vel => -1.0);
          elsif
            Ball_Center - Paddle_Center > GC.Threshold
          then
-            Smart_Ass.Set_Velocity (Vel => +1);
+            Smart_Ass.Set_Velocity (Vel => +1.0);
          else
-            Smart_Ass.Set_Velocity (Vel => 0);
+            Smart_Ass.Set_Velocity (Vel => 0.0);
          end if;
 
          --  Do movement according to velocity.
@@ -246,12 +251,12 @@ begin
          Score_Changed : Boolean := False;
       begin
          if
-           Ball.X_Position < 10
+           Ball.Position.X < Left_Goal - GC.Ball_Size
          then
             The_Score (Human) := The_Score (Human) + 1;
             Score_Changed := True;
          elsif
-           Ball.X_Position > GC.Screen_Width - 10 - GC.Ball_Size
+           Ball.Position.X > Right_Goal + GC.Ball_Size
          then
             The_Score (Computer) := The_Score (Computer) + 1;
             Score_Changed := True;

@@ -1,7 +1,8 @@
 --  Pong-Demo for SDLAda, ball actions.
 --  Copyright (C) 2012 - 2020, Vinzent "Jellix" Saranen
 
-with SDL.Video.Palettes;
+with SDL.Video.Palettes,
+     SDL.Video.Rectangles;
 
 package Pong.Balls is
 
@@ -9,10 +10,22 @@ package Pong.Balls is
 
    ---------------------------------------------------------------------
    --  Create
+   --
+   --  Initializes and returns the display object.
+   --  Initial is the initial position of this object on the screen.
+   --  Bounds is the area within which the object can move.
+   --  Colour is the display colour of the ball.
+   --  Speed is the speed of the ball.
+   --
+   --  The initial movement vector of the ball is -1/-1 for both X and
+   --  Y.
+   --
+   --  TODO: Randomize starting movement.
    ---------------------------------------------------------------------
    function Create (Initial : in SDL.Video.Rectangles.Rectangle;
                     Bounds  : in SDL.Video.Rectangles.Rectangle;
-                    Speed   : in Interfaces.C.int) return Ball;
+                    Colour  : in SDL.Video.Palettes.Colour;
+                    Speed   : in Float) return Ball;
 
    ---------------------------------------------------------------------
    --  Draw
@@ -51,10 +64,9 @@ private
 
    type Ball is new Display_Object with
       record
-         Speed     : Interfaces.C.int;
-         Direction : SDL.Coordinates; --  Actual moving vector.
-         Black     : SDL.Video.Palettes.Colour;
-         White     : SDL.Video.Palettes.Colour;
+         Bounds    : SDL.Video.Rectangles.Rectangle;
+         Speed     : Float;
+         Direction : Smooth_Coordinates; --  Actual moving vector.
       end record;
 
 end Pong.Balls;

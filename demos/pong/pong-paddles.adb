@@ -8,29 +8,23 @@ package body Pong.Paddles is
    ---------------------------------------------------------------------
    function Create (Initial : in SDL.Video.Rectangles.Rectangle;
                     Bounds  : in SDL.Video.Rectangles.Rectangle;
-                    Speed   : in Interfaces.C.int) return Paddle is
+                    Colour  : in SDL.Video.Palettes.Colour;
+                    Speed   : in Float) return Paddle is
    begin
-      return Paddle'(Old_Pos  => SDL.Coordinates'(X => Initial.X,
-                                                  Y => Initial.Y),
-                     New_Pos  => SDL.Coordinates'(X => Initial.X,
-                                                  Y => Initial.Y),
-                     Size     => SDL.Sizes'(Width  => Initial.Width,
-                                            Height => Initial.Height),
-                     Bounds   =>
+      return Paddle'(Old_Pos   => Smooth_Coordinates'(X => Float (Initial.X),
+                                                      Y => Float (Initial.Y)),
+                     New_Pos   => Smooth_Coordinates'(X => Float (Initial.X),
+                                                      Y => Float (Initial.Y)),
+                     Size      => SDL.Sizes'(Width  => Initial.Width,
+                                             Height => Initial.Height),
+                     Bounds    =>
                        SDL.Video.Rectangles.Rectangle'(X      => Bounds.X,
                                                        Y      => Bounds.Y,
                                                        Width  => Bounds.Width - Initial.Width,
                                                        Height => Bounds.Height - Initial.Height),
-                     Black    => SDL.Video.Palettes.Colour'(Red   => 16#00#,
-                                                            Green => 16#00#,
-                                                            Blue  => 16#00#,
-                                                            Alpha => 16#FF#),
-                     White    => SDL.Video.Palettes.Colour'(Red   => 16#FF#,
-                                                            Green => 16#FF#,
-                                                            Blue  => 16#FF#,
-                                                            Alpha => 16#FF#),
+                     Colour    => Colour,
                      Max_Speed => Speed,
-                     Velocity  => 0);
+                     Velocity  => 0.0);
    end Create;
 
    ---------------------------------------------------------------------
@@ -55,15 +49,15 @@ package body Pong.Paddles is
       This.New_Pos.Y := This.Old_Pos.Y + This.Velocity * This.Max_Speed;
 
       if
-        This.New_Pos.Y > Max_Y
+        SDL.Dimension (This.New_Pos.Y) > Max_Y
       then
          Clipped := True;
-         This.New_Pos.Y := Max_Y;
+         This.New_Pos.Y := Float (Max_Y);
       elsif
-        This.New_Pos.Y < This.Bounds.Y
+        SDL.Dimension (This.New_Pos.Y) < This.Bounds.Y
       then
          Clipped := True;
-         This.New_Pos.Y := This.Bounds.Y;
+         This.New_Pos.Y := Float (This.Bounds.Y);
       else
          Clipped := False;
       end if;
@@ -77,12 +71,12 @@ package body Pong.Paddles is
                    Renderer : in out SDL.Video.Renderers.Renderer)
    is
       Draw_At  : constant SDL.Video.Rectangles.Rectangle :=
-        SDL.Video.Rectangles.Rectangle'(X      => This.New_Pos.X,
-                                        Y      => This.New_Pos.Y,
+        SDL.Video.Rectangles.Rectangle'(X      => SDL.Dimension (This.New_Pos.X),
+                                        Y      => SDL.Dimension (This.New_Pos.Y),
                                         Width  => This.Size.Width,
                                         Height => This.Size.Height);
    begin
-      Renderer.Set_Draw_Colour (Colour => This.White);
+      Renderer.Set_Draw_Colour (Colour => This.Colour);
       Renderer.Fill (Rectangle => Draw_At);
 
       This.Old_Pos := This.New_Pos;

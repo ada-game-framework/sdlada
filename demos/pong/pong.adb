@@ -4,19 +4,12 @@
 package body Pong is
 
    ---------------------------------------------------------------------
-   --  X_Position
+   --  Position
    ---------------------------------------------------------------------
-   function X_Position (This : in Display_Object'Class) return Interfaces.C.int is
+   function Position (This : in Display_Object'Class) return SDL.Coordinates is
    begin
-      return This.New_Pos.X;
-   end X_Position;
-
-   ---------------------------------------------------------------------
-   --  Y_Position
-   ---------------------------------------------------------------------
-   function Y_Position (This : in Display_Object'Class) return Interfaces.C.int is
-   begin
-      return This.New_Pos.Y;
-   end Y_Position;
+      return SDL.Coordinates'(X => SDL.Dimension (This.New_Pos.X),
+                              Y => SDL.Dimension (This.New_Pos.Y));
+   end Position;
 
 end Pong;
