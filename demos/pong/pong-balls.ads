@@ -17,10 +17,8 @@ package Pong.Balls is
    --  Colour is the display colour of the ball.
    --  Speed is the speed of the ball.
    --
-   --  The initial movement vector of the ball is -1/-1 for both X and
-   --  Y.
-   --
-   --  TODO: Randomize starting movement.
+   --  The initial movement vector of the ball is slightly randomized,
+   --  but generally in the -1/-1 direction for both X and Y (left/down).
    ---------------------------------------------------------------------
    function Create (Initial : in SDL.Video.Rectangles.Rectangle;
                     Bounds  : in SDL.Video.Rectangles.Rectangle;
@@ -44,8 +42,8 @@ package Pong.Balls is
    ---------------------------------------------------------------------
    --  Warp
    ---------------------------------------------------------------------
-   procedure Warp (This    : in out Ball;
-                   Initial : in     SDL.Coordinates);
+   procedure Warp (This        : in out Ball;
+                   To_Position : in     SDL.Coordinates);
 
    ---------------------------------------------------------------------
    --  Collides

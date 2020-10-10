@@ -75,7 +75,8 @@ procedure Pong_Demo is
    Game_Renderer : SDL.Video.Renderers.Renderer;
    Next_Time     : Ada.Real_Time.Time;
 
-   Stop_Ball_Until : Ada.Real_Time.Time := Ada.Real_Time.Clock;
+   Stop_Ball_Until    : Ada.Real_Time.Time := Ada.Real_Time.Clock;
+   Collision_Detected : Boolean := False;
 begin
    if
      not SDL.Initialise (Flags => (SDL.Enable_Screen or SDL.Enable_Audio))
@@ -235,28 +236,23 @@ begin
            Ball.Collides (That => Smart_Ass) or
            Ball.Collides (That => Player)
          then
-            Game.Audio.Play_Pong;
+            if not Collision_Detected then
+               --  A collision may occur over multiple frames, so only change
+               --  direction once (in the hopes that the direction change will
+               --  move the ball out of the paddle's way).
+               Collision_Detected := True;
 
-            Ball.Change_Dir (X => True,
-                             Y => False);
+               Game.Audio.Play_Pong;
 
-            --  TODO: Warp the ball in the X coordinate to move it out of the way
-            --        of the paddle. Otherwise, the paddle may "push" the ball
-            --        multiple times.
-            declare
-               Old_Ball_Position : constant SDL.Coordinates := Ball.Position;
-            begin
-               if Old_Ball_Position.X < Left_Goal + GC.Paddle_Width then
-                  Ball.Warp (Initial => (X => Left_Goal + GC.Paddle_Width,
-                                         Y => Old_Ball_Position.Y));
-               elsif Old_Ball_Position.X + GC.Ball_Size > Right_Goal - GC.Paddle_Width then
-                  Ball.Warp (Initial => (X => Right_Goal - GC.Ball_Size - GC.Paddle_Width,
-                                         Y => Old_Ball_Position.Y));
-               end if;
-            end;
+               Ball.Change_Dir (X => True,
+                                Y => False);
+            end if;
 
             Ball.Move (Clipped => Clipped);
          else
+            --  Balls seems free, reset collision detection flag.
+            Collision_Detected := False;
+
             Ball.Move (Clipped => Clipped);
 
             if Clipped then
@@ -287,7 +283,7 @@ begin
               (Natural'Image (The_Score (Computer)) & " :" &
                  Natural'Image (The_Score (Human)));
 
-            Ball.Warp (Initial => GC.Ball_Initial);
+            Ball.Warp (To_Position => GC.Ball_Initial);
 
             --  After placing the ball back into the field, delay ball movement
             --  for a second.

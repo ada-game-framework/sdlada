@@ -15,23 +15,29 @@ package body Pong.Balls is
    function Create (Initial : in SDL.Video.Rectangles.Rectangle;
                     Bounds  : in SDL.Video.Rectangles.Rectangle;
                     Colour  : in SDL.Video.Palettes.Colour;
-                    Speed   : in Float) return Ball is
+                    Speed   : in Float) return Ball
+   is
    begin
-      return Ball'(Old_Pos   => Smooth_Coordinates'(X => Float (Initial.X),
-                                                    Y => Float (Initial.Y)),
-                   New_Pos   => Smooth_Coordinates'(X => Float (Initial.X),
-                                                    Y => Float (Initial.Y)),
-                   Size      => SDL.Sizes'(Width  => Initial.Width,
-                                           Height => Initial.Height),
-                   Bounds    =>
-                     Smooth_Bounds'(Min => (X      => Float (Bounds.X),
-                                            Y      => Float (Bounds.Y)),
-                                    Max => (X => Float (Bounds.X + Bounds.Width - Initial.Width),
-                                            Y => Float (Bounds.Y + Bounds.Height - Initial.Height))),
-                   Direction => Smooth_Coordinates'(X => -1.0,
-                                                    Y => -1.0),
-                   Colour    => Colour,
-                   Speed     => Speed);
+      return Result : Ball do
+         Result :=
+           Ball'(Old_Pos   => Smooth_Coordinates'(X => Float (Initial.X),
+                                                  Y => Float (Initial.Y)),
+                 New_Pos   => Smooth_Coordinates'(X => Float (Initial.X),
+                                                  Y => Float (Initial.Y)),
+                 Size      => SDL.Sizes'(Width  => Initial.Width,
+                                         Height => Initial.Height),
+                 Bounds    =>
+                   Smooth_Bounds'(Min => (X      => Float (Bounds.X),
+                                          Y      => Float (Bounds.Y)),
+                                  Max => (X => Float (Bounds.X + Bounds.Width - Initial.Width),
+                                          Y => Float (Bounds.Y + Bounds.Height - Initial.Height))),
+                 Direction => Smooth_Coordinates'(X => -1.0,
+                                                  Y => -1.0),
+                 Colour    => Colour,
+                 Speed     => Speed);
+         Result.Warp (To_Position => SDL.Coordinates'(X => Initial.X,
+                                                      Y => Initial.Y));
+      end return;
    end Create;
 
    ---------------------------------------------------------------------
@@ -98,11 +104,21 @@ package body Pong.Balls is
    ---------------------------------------------------------------------
    --  Warp
    ---------------------------------------------------------------------
-   procedure Warp (This    : in out Ball;
-                   Initial : in     SDL.Coordinates) is
+   procedure Warp (This        : in out Ball;
+                   To_Position : in     SDL.Coordinates) is
    begin
-      This.New_Pos := Smooth_Coordinates'(X => Float (Initial.X),
-                                          Y => Float (Initial.Y));
+      This.New_Pos := Smooth_Coordinates'(X => Float (To_Position.X),
+                                          Y => Float (To_Position.Y));
+
+      --  Slightly randomize the velocity vector by changing the direction twice
+      --  (which in effect means no direction change at all).  This
+      --  randomization avoids getting stuck in a repeat loop if the ball has a
+      --  velocity vector that doesn't let the computer catch it in the corners
+      --  after it's been placed on the playing field.
+      This.Change_Dir (X => True,
+                       Y => True);
+      This.Change_Dir (X => True,
+                       Y => True);
    end Warp;
 
    ---------------------------------------------------------------------
