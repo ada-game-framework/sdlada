@@ -64,7 +64,6 @@ private
 
    type Ball is new Display_Object with
       record
-         Bounds    : SDL.Video.Rectangles.Rectangle;
          Speed     : Float;
          Direction : Smooth_Coordinates; --  Actual moving vector.
       end record;

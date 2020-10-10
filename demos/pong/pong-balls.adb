@@ -1,9 +1,13 @@
 --  Pong-Demo for SDLAda, ball actions.
 --  Copyright (C) 2012 - 2020, Vinzent "Jellix" Saranen
 
+with Ada.Numerics.Float_Random;
+
 package body Pong.Balls is
 
    use type SDL.Dimension;
+
+   Random : Ada.Numerics.Float_Random.Generator;
 
    ---------------------------------------------------------------------
    --  Create
@@ -20,10 +24,10 @@ package body Pong.Balls is
                    Size      => SDL.Sizes'(Width  => Initial.Width,
                                            Height => Initial.Height),
                    Bounds    =>
-                     SDL.Video.Rectangles.Rectangle'(X      => Bounds.X,
-                                                     Y      => Bounds.Y,
-                                                     Width  => Bounds.Width - Initial.Width,
-                                                     Height => Bounds.Height - Initial.Height),
+                     Smooth_Bounds'(Min => (X      => Float (Bounds.X),
+                                            Y      => Float (Bounds.Y)),
+                                    Max => (X => Float (Bounds.X + Bounds.Width - Initial.Width),
+                                            Y => Float (Bounds.Y + Bounds.Height - Initial.Height))),
                    Direction => Smooth_Coordinates'(X => -1.0,
                                                     Y => -1.0),
                    Colour    => Colour,
@@ -54,10 +58,7 @@ package body Pong.Balls is
    ---------------------------------------------------------------------
    overriding
    procedure Move (This    : in out Ball;
-                   Clipped :    out Boolean)
-   is
-      Max_X : constant SDL.Dimension := This.Bounds.X + This.Bounds.Width;
-      Max_Y : constant SDL.Dimension := This.Bounds.Y + This.Bounds.Height;
+                   Clipped :    out Boolean) is
    begin
       This.New_Pos.X := This.Old_Pos.X + This.Direction.X * This.Speed;
       This.New_Pos.Y := This.Old_Pos.Y + This.Direction.Y * This.Speed;
@@ -65,20 +66,28 @@ package body Pong.Balls is
       Clipped := False;
 
       --  Check bounds.
-      if
-        SDL.Dimension (This.New_Pos.X) not in This.Bounds.X .. Max_X
-      then
+      if This.New_Pos.X not in This.Bounds.Min.X .. This.Bounds.Max.X then
          Clipped := True;
+
+         if This.New_Pos.X < This.Bounds.Min.X then
+            This.New_Pos.X := This.Bounds.Min.X;
+         else
+            This.New_Pos.X := This.Bounds.Max.X;
+         end if;
 
          Change_Dir (This => This,
                      X    => True,
                      Y    => False);
       end if;
 
-      if
-        SDL.Dimension (This.New_Pos.Y) not in This.Bounds.Y .. Max_Y
-      then
+      if This.New_Pos.Y not in This.Bounds.Min.Y .. This.Bounds.Max.Y then
          Clipped := True;
+
+         if This.New_Pos.Y < This.Bounds.Min.Y then
+            This.New_Pos.Y := This.Bounds.Min.Y;
+         else
+            This.New_Pos.Y := This.Bounds.Max.Y;
+         end if;
 
          Change_Dir (This => This,
                      X    => False,
@@ -102,11 +111,16 @@ package body Pong.Balls is
    function Collides (This : in Ball;
                       That : in Display_Object'Class) return Boolean is
    begin
-      return not ((This.New_Pos.X               >= That.New_Pos.X + Float (That.Size.Width)) or -- I.Left   >= O.Right
-                  (This.New_Pos.Y               >= That.New_Pos.Y + Float (That.Size.Height)) or -- I.Top    >= O.Bottom
-                  (This.New_Pos.X + Float (This.Size.Width)  <= That.New_Pos.X) or               -- I.Right  <= O.Left
-                  (This.New_Pos.Y + Float (This.Size.Height) <= That.New_Pos.Y)                  -- I.Bottom <= O.Top
-                );
+      return
+        SDL.Video.Rectangles.Has_Intersected
+          (A => SDL.Video.Rectangles.Rectangle'(X      => This.Position.X,
+                                                Y      => This.Position.Y,
+                                                Width  => This.Size.Width,
+                                                Height => This.Size.Height),
+           B => SDL.Video.Rectangles.Rectangle'(X      => That.Position.X,
+                                                Y      => That.Position.Y,
+                                                Width  => That.Size.Width,
+                                                Height => That.Size.Height));
    end Collides;
 
    ---------------------------------------------------------------------
@@ -114,9 +128,7 @@ package body Pong.Balls is
    ---------------------------------------------------------------------
    procedure Change_Dir (This : in out Ball;
                          X    : in     Boolean;
-                         Y    : in     Boolean)
-   is
-      Clipped : Boolean;
+                         Y    : in     Boolean) is
    begin
       if X then
          This.Direction.X := -This.Direction.X;
@@ -126,10 +138,19 @@ package body Pong.Balls is
          This.Direction.Y := -This.Direction.Y;
       end if;
 
+      --  After a direction change, add a minor fluctuation in direction vector.
       if X or Y then
-         Move (This    => This,
-               Clipped => Clipped);
+         declare
+            Fluctuation : constant Float :=
+              (Ada.Numerics.Float_Random.Random (Gen => Random) - 0.5) / 10.0;
+            --  Get a random number between -0.05 and 0.05
+         begin
+            This.Direction.X := (1.0 + Fluctuation) * This.Direction.X;
+            This.Direction.Y := (1.0 - Fluctuation) * This.Direction.Y;
+         end;
       end if;
    end Change_Dir;
 
+begin
+   Ada.Numerics.Float_Random.Reset (Gen => Random);
 end Pong.Balls;

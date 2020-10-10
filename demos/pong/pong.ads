@@ -41,8 +41,15 @@ private
          Y : Float;
       end record;
 
+   type Smooth_Bounds is
+      record
+         Min : Smooth_Coordinates;
+         Max : Smooth_Coordinates;
+      end record;
+
    type Display_Object is abstract tagged
       record
+         Bounds  : Smooth_Bounds;      --  Area in which movement is allowed.
          Old_Pos : Smooth_Coordinates; --  Retains old position when moved
          New_Pos : Smooth_Coordinates; --  New position after a call to Move
          Size    : SDL.Sizes;          --  Size of object (for collision detection).

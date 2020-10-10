@@ -18,10 +18,10 @@ package body Pong.Paddles is
                      Size      => SDL.Sizes'(Width  => Initial.Width,
                                              Height => Initial.Height),
                      Bounds    =>
-                       SDL.Video.Rectangles.Rectangle'(X      => Bounds.X,
-                                                       Y      => Bounds.Y,
-                                                       Width  => Bounds.Width - Initial.Width,
-                                                       Height => Bounds.Height - Initial.Height),
+                       Smooth_Bounds'(Min => (X => Float (Bounds.X),
+                                              Y => Float (Bounds.Y)),
+                                      Max => (X => Float (Bounds.X + Bounds.Width - Initial.Width),
+                                              Y => Float (Bounds.Y + Bounds.Height - Initial.Height))),
                      Colour    => Colour,
                      Max_Speed => Speed,
                      Velocity  => 0.0);
@@ -42,22 +42,16 @@ package body Pong.Paddles is
    ---------------------------------------------------------------------
    overriding
    procedure Move (This    : in out Paddle;
-                   Clipped :    out Boolean)
-   is
-      Max_Y : constant Interfaces.C.int := This.Bounds.Y + This.Bounds.Height;
+                   Clipped :    out Boolean) is
    begin
       This.New_Pos.Y := This.Old_Pos.Y + This.Velocity * This.Max_Speed;
 
-      if
-        SDL.Dimension (This.New_Pos.Y) > Max_Y
-      then
+      if This.New_Pos.Y > This.Bounds.Max.Y then
          Clipped := True;
-         This.New_Pos.Y := Float (Max_Y);
-      elsif
-        SDL.Dimension (This.New_Pos.Y) < This.Bounds.Y
-      then
+         This.New_Pos.Y := This.Bounds.Max.Y;
+      elsif This.New_Pos.Y < This.Bounds.Min.Y then
          Clipped := True;
-         This.New_Pos.Y := Float (This.Bounds.Y);
+         This.New_Pos.Y := This.Bounds.Min.Y;
       else
          Clipped := False;
       end if;

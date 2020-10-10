@@ -47,7 +47,6 @@ private
 
    type Paddle is new Pong.Display_Object with
       record
-         Bounds    : SDL.Video.Rectangles.Rectangle;
          Max_Speed : Float;
          Velocity  : Pong.Paddles.Velocity;
       end record;

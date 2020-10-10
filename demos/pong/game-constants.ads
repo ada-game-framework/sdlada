@@ -14,8 +14,8 @@ package Game.Constants is
    Game_Speed : constant Ada.Real_Time.Time_Span := Ada.Real_Time.Milliseconds (10);
 
    --  Virtual screen size.
-   Screen_Width  : constant := 160;
-   Screen_Height : constant := 100;
+   Screen_Width  : constant := 1600;
+   Screen_Height : constant := 960;
 
    Background_Color : SDL.Video.Palettes.Colour :=
      SDL.Video.Palettes.Colour'(Red   => 16#00#,

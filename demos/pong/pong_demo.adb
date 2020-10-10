@@ -5,8 +5,6 @@ with Ada.Exceptions,
      Ada.Real_Time,
      Ada.Text_IO;
 
-with Interfaces.C;
-
 with SDL.Error,
      SDL.Events.Events,
      SDL.Events.Keyboards,
@@ -22,15 +20,44 @@ with Game.Audio,
 
 use type Ada.Real_Time.Time;
 
-use type Interfaces.C.int,
+use type SDL.Dimension,
          SDL.Init_Flags;
 
 procedure Pong_Demo is
-   type Players is (Computer, Human);
-   type Score is array (Players) of Natural;
+
+   package GC renames Game.Constants;
+
+   --  Some useful game related constants.
+   Left_Goal  : constant := GC.Screen_Width / 16;
+   Right_Goal : constant := GC.Screen_Width - Left_Goal;
 
    type Object_Ref  is access all Pong.Display_Object'Class;
    type Object_List is array (Natural range <>) of Object_Ref;
+
+   procedure Render_Frame (Renderer : in out SDL.Video.Renderers.Renderer;
+                           Objects  : in     Object_List) is
+   begin
+      Renderer.Set_Draw_Colour (Colour => GC.Background_Color);
+      Renderer.Clear;
+
+      Renderer.Set_Draw_Colour (Colour => GC.Line_Colour);
+      Renderer.Draw (Line => ((Left_Goal, 0),
+                              (Left_Goal, GC.Screen_Height - 1)));
+      Renderer.Draw (Line => ((Right_Goal, 0),
+                              (Right_Goal, GC.Screen_Height - 1)));
+
+      --  Update paddle and ball positions.
+      Draw_Objects :
+      for O of Objects loop
+         O.all.Draw (Renderer => Renderer);
+      end loop Draw_Objects;
+
+      --  Update video display.
+      Renderer.Present;
+   end Render_Frame;
+
+   type Players is (Computer, Human);
+   type Score is array (Players) of Natural;
 
    SDL_Error     : exception;
 
@@ -48,11 +75,7 @@ procedure Pong_Demo is
    Game_Renderer : SDL.Video.Renderers.Renderer;
    Next_Time     : Ada.Real_Time.Time;
 
-   package GC renames Game.Constants;
-
-   --  Some useful game related constants.
-   Left_Goal  : constant := GC.Screen_Width / 16;
-   Right_Goal : constant := GC.Screen_Width - Left_Goal;
+   Stop_Ball_Until : Ada.Real_Time.Time := Ada.Real_Time.Clock;
 begin
    if
      not SDL.Initialise (Flags => (SDL.Enable_Screen or SDL.Enable_Audio))
@@ -102,7 +125,7 @@ begin
    Smart_Ass :=
      Pong.Paddles.Create
        (Initial =>
-          SDL.Video.Rectangles.Rectangle'(X      => GC.Screen_Width / 16,
+          SDL.Video.Rectangles.Rectangle'(X      => Left_Goal + 1,
                                           Y      => (GC.Screen_Height / 2 -
                                                          GC.Paddle_Height / 2),
                                           Width  => GC.Paddle_Width,
@@ -117,7 +140,7 @@ begin
      Pong.Paddles.Create
        (Initial =>
           SDL.Video.Rectangles.Rectangle'
-            (X      => GC.Screen_Width - GC.Screen_Width / 16 - GC.Paddle_Width,
+            (X      => Right_Goal - GC.Paddle_Width,
              Y      => (GC.Screen_Height / 2 - GC.Paddle_Height / 2),
              Width  => GC.Paddle_Width,
              Height => GC.Paddle_Height),
@@ -130,31 +153,11 @@ begin
    The_Score := Score'(Computer => 0,
                        Human    => 0);
 
-   Next_Time := Ada.Real_Time.Clock + GC.Game_Speed;
+   Next_Time       := Ada.Real_Time.Clock + GC.Game_Speed;
+   Stop_Ball_Until := Ada.Real_Time.Clock + Ada.Real_Time.Seconds (1);
 
    Game_Loop :
    loop
-      Game_Renderer.Set_Draw_Colour (Colour => GC.Background_Color);
-      Game_Renderer.Clear;
-
-      Game_Renderer.Set_Draw_Colour (Colour => GC.Line_Colour);
-      Game_Renderer.Draw (Line => ((Left_Goal, 0),
-                                   (Left_Goal, GC.Screen_Height - 1)));
-      Game_Renderer.Draw (Line => ((Right_Goal, 0),
-                                   (Right_Goal, GC.Screen_Height - 1)));
-
-      --  Update paddle and ball positions.
-      Draw_Objects :
-      for O of Objects loop
-         O.all.Draw (Renderer => Game_Renderer);
-      end loop Draw_Objects;
-
-      --  Update video display.
-      Game_Renderer.Present;
-
-      delay until Next_Time;
-      Next_Time := Next_Time + GC.Game_Speed;
-
       if SDL.Events.Events.Poll (Event => Event) then
          case Event.Common.Event_Type is
             when SDL.Events.Quit     =>
@@ -204,9 +207,9 @@ begin
       --  Let computer's paddle simply follow the ball.
       Move_Paddle :
       declare
-         Ball_Center   : constant Interfaces.C.int :=
+         Ball_Center   : constant SDL.Dimension :=
            Pong.Position (This => Ball).Y + GC.Ball_Size / 2;
-         Paddle_Center : constant Interfaces.C.int :=
+         Paddle_Center : constant SDL.Dimension :=
            Pong.Position (This => Smart_Ass).Y + GC.Paddle_Height / 2;
       begin
          if
@@ -225,23 +228,40 @@ begin
          Smart_Ass.Move (Clipped => Clipped);
       end Move_Paddle;
 
-      --  Check collision with paddles.
-      if
-        Ball.Collides (That => Smart_Ass) or
-        Ball.Collides (That => Player)
-      then
-         Game.Audio.Play_Pong;
+      --  Don't move ball until it's time.
+      if Ada.Real_Time.Clock > Stop_Ball_Until then
+         --  Check collision with paddles.
+         if
+           Ball.Collides (That => Smart_Ass) or
+           Ball.Collides (That => Player)
+         then
+            Game.Audio.Play_Pong;
 
-         --  TODO: Warp the ball in the X coordinate to move it out of the way
-         --        of the paddle. Otherwise, the paddle may "push" the ball
-         --        multiple times.
-         Ball.Change_Dir (X => True,
-                          Y => False);
-      else
-         Ball.Move (Clipped => Clipped);
+            Ball.Change_Dir (X => True,
+                             Y => False);
 
-         if Clipped then
-            Game.Audio.Play_Ping;
+            --  TODO: Warp the ball in the X coordinate to move it out of the way
+            --        of the paddle. Otherwise, the paddle may "push" the ball
+            --        multiple times.
+            declare
+               Old_Ball_Position : constant SDL.Coordinates := Ball.Position;
+            begin
+               if Old_Ball_Position.X < Left_Goal + GC.Paddle_Width then
+                  Ball.Warp (Initial => (X => Left_Goal + GC.Paddle_Width,
+                                         Y => Old_Ball_Position.Y));
+               elsif Old_Ball_Position.X + GC.Ball_Size > Right_Goal - GC.Paddle_Width then
+                  Ball.Warp (Initial => (X => Right_Goal - GC.Ball_Size - GC.Paddle_Width,
+                                         Y => Old_Ball_Position.Y));
+               end if;
+            end;
+
+            Ball.Move (Clipped => Clipped);
+         else
+            Ball.Move (Clipped => Clipped);
+
+            if Clipped then
+               Game.Audio.Play_Ping;
+            end if;
          end if;
       end if;
 
@@ -256,7 +276,7 @@ begin
             The_Score (Human) := The_Score (Human) + 1;
             Score_Changed := True;
          elsif
-           Ball.Position.X > Right_Goal + GC.Ball_Size
+           Ball.Position.X > Right_Goal
          then
             The_Score (Computer) := The_Score (Computer) + 1;
             Score_Changed := True;
@@ -268,12 +288,24 @@ begin
                  Natural'Image (The_Score (Human)));
 
             Ball.Warp (Initial => GC.Ball_Initial);
+
+            --  After placing the ball back into the field, delay ball movement
+            --  for a second.
+            Stop_Ball_Until := Ada.Real_Time.Clock + Ada.Real_Time.Seconds (1);
          end if;
       end Check_Score;
 
       exit Game_Loop when
         (abs (The_Score (Computer) - The_Score (Human)) >= GC.Min_Difference) and --  points difference
         Natural'Max (The_Score (Computer), The_Score (Human)) >= GC.Min_Winning_Score;
+
+      --  Render the new frame.
+      Render_Frame (Renderer => Game_Renderer,
+                    Objects  => Objects);
+
+      delay until Next_Time;
+      Next_Time := Next_Time + GC.Game_Speed;
+
    end loop Game_Loop;
 
    SDL.Finalise_Sub_System (Flags => (SDL.Enable_Screen or SDL.Enable_Audio));
