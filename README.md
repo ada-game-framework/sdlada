@@ -110,21 +110,21 @@ SDL_AudioInit                         |   n   |
 SDL_AudioQuit                         |   n   |
 SDL_BlitScaled                        |   y   |
 SDL_BlitSurface                       |   y   |
-SDL_BuildAudioCVT                     |   n   |
+SDL_BuildAudioCVT                     |   y   |
 SDL_COMPILEDVERSION                   |   n   |      *
 SDL_CalculateGammaRamp                |   y   |
 SDL_CaptureMouse                      |   y   |
 SDL_ClearError                        |   y   |
 SDL_ClearHints                        |   y   |
 SDL_ClearQueuedAudio                  |   n   |
-SDL_CloseAudio                        |   n   |
+SDL_CloseAudio                        |   y   |
 SDL_CloseAudioDevice                  |   n   |
 SDL_CompilerBarrier                   |   n   |
 SDL_CondBroadcast                     |   n   |
 SDL_CondSignal                        |   n   |
 SDL_CondWait                          |   n   |
 SDL_CondWaitTimeout                   |   n   |
-SDL_ConvertAudio                      |   n   |
+SDL_ConvertAudio                      |   y   |
 SDL_ConvertPixels                     |   n   |
 SDL_ConvertSurface                    |   n   |
 SDL_ConvertSurfaceFormat              |   n   |
@@ -170,7 +170,7 @@ SDL_FreeFormat                        |   y   |
 SDL_FreePalette                       |   y   |
 SDL_FreeRW                            |   n   |      * (implicitly called by RWclose)
 SDL_FreeSurface                       |   y   |
-SDL_FreeWAV                           |   n   |
+SDL_FreeWAV                           |   y   |
 SDL_GL_BindTexture                    |   y   |
 SDL_GL_CreateContext                  |   y   |
 SDL_GL_DeleteContext                  |   y   |
@@ -215,7 +215,7 @@ SDL_GetAssertionReport                |   n   |
 SDL_GetAudioDeviceName                |   n   |
 SDL_GetAudioDeviceStatus              |   n   |
 SDL_GetAudioDriver                    |   n   |
-SDL_GetAudioStatus                    |   n   |
+SDL_GetAudioStatus                    |   y   |
 SDL_GetBasePath                       |   y   |
 SDL_GetCPUCacheLineSize               |   y   |
 SDL_GetCPUCount                       |   y   |
@@ -386,9 +386,9 @@ SDL_LoadBMP_RW                        |   n   |
 SDL_LoadDollarTemplates               |   n   |
 SDL_LoadFunction                      |   y   |
 SDL_LoadObject                        |   y   |
-SDL_LoadWAV                           |   n   |
-SDL_LoadWAV_RW                        |   n   |
-SDL_LockAudio                         |   n   |
+SDL_LoadWAV                           |   n   | (macro wrapper around SDL_LoadWAV_RW)
+SDL_LoadWAV_RW                        |   y   |
+SDL_LockAudio                         |   y   |
 SDL_LockAudioDevice                   |   n   |
 SDL_LockMutex                         |   n   |
 SDL_LockSurface                       |   y   |
@@ -416,15 +416,15 @@ SDL_MapRGBA                           |   y   |
 SDL_MasksToPixelFormatEnum            |   y   |
 SDL_MaximizeWindow                    |   y   |
 SDL_MinimizeWindow                    |   y   |
-SDL_MixAudio                          |   n   |
+SDL_MixAudio                          |   y   |
 SDL_MixAudioFormat                    |   n   |
 SDL_MostSignificantBitIndex32         |   n   |
 SDL_MouseIsHaptic                     |   n   |
 SDL_NumHaptics                        |   n   |
 SDL_NumJoysticks                      |   y   |
-SDL_OpenAudio                         |   n   |
+SDL_OpenAudio                         |   y   |
 SDL_OpenAudioDevice                   |   n   |
-SDL_PauseAudio                        |   n   |
+SDL_PauseAudio                        |   y   |
 SDL_PauseAudioDevice                  |   n   |
 SDL_PeepEvents                        |   n   |
 SDL_PixelFormatEnumToMasks            |   y   |
@@ -564,7 +564,7 @@ SDL_TriggerBreakpoint                 |   n   |
 SDL_TryLockMutex                      |   n   |
 SDL_UnionRect                         |   n   |
 SDL_UnloadObject                      |   y   |
-SDL_UnlockAudio                       |   n   |
+SDL_UnlockAudio                       |   y   |
 SDL_UnlockAudioDevice                 |   n   |
 SDL_UnlockMutex                       |   n   |
 SDL_UnlockSurface                     |   y   |
