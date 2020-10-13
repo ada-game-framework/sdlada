@@ -353,7 +353,7 @@ package body Pixel_Format_Test_Cases is
       begin
          --  Put_Line (Error);
 
-         Assert (To_int (Pixel_Format_ARGB_8888) /= C_ARGB_8888, Error);
+         Assert (To_int (Pixel_Format_ARGB_8888) = C_ARGB_8888, Error);
       end;
 
       declare
