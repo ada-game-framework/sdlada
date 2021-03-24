@@ -66,7 +66,7 @@ package body SDL.Video.Palettes is
    --        Current   => Curr);
    --  end Next;
 
-   type Iterator (Container : access constant Palette'Class) is new Limited_Controlled and
+   type Iterator (Container : Palette_Constant_Access) is new Limited_Controlled and
      Palette_Iterator_Interfaces.Forward_Iterator with
       record
          Index : Natural;
@@ -107,7 +107,7 @@ package body SDL.Video.Palettes is
 
       return It : constant Iterator :=
         (Limited_Controlled with
-           Container => Container'Access, Index => Natural'First + 1)
+           Container => Container'Unchecked_Access, Index => Natural'First + 1)
       do
          --  Put_Line ("  index = " & Natural'Image(It.Index));
          null;
