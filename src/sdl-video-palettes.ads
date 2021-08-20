@@ -121,7 +121,7 @@ private
          Data : Internal_Palette_Access;
       end record;
 
-   type Palette_Constant_Access is access constant Palette;
+   type Palette_Constant_Access is access constant Palette'Class;
 
    type Cursor is
       record
