@@ -41,5 +41,8 @@ project-files = ["build/gnat/sdlada.gpr"] #, "build/gnat/"]
     # [depends-on.'case(distribution)'.'gentoo']
     #   media-libs/sdl2 = "^2.0.0"
     #   media-libs/sdl2_image = "^2.0.0"
-  # [depends-on.'case(os)'.windows]
+  [depends-on.'case(os)'.windows]
+    mingw-w64-SDL2 = "^2.0.0"
+    mingw-w64-SDL2_image = "^2.0.0"
+    mingw-w64-SDL2_ttf = "^2.0.0"
   # [depends-on.'case(os)'.macos]
