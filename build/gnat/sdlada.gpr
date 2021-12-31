@@ -4,7 +4,7 @@ library project SDLAda is
 
    Platform : Platform_Type := external ("SDL_PLATFORM", "linux");
    Mode     : Mode_Type     := external ("SDL_MODE", "debug");
-   
+
    Source_Platform := "";
 
    case Platform is
@@ -49,7 +49,7 @@ library project SDLAda is
 
          when "macos_homebrew" =>
             C_Switches   := C_Switches & ("-DSDL_HOMEBREW",
-                                          "-I/usr/local/include/SDL2",
+                                          "-I/usr/local/include",
                                           "-D_REENTRANT");
 
          when others =>
