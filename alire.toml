@@ -13,17 +13,32 @@ tags = ["gamedev", "games", "portable", "cross-platform"]
 project-files = ["build/gnat/sdlada.gpr"] #, "build/gnat/"]
 
 [gpr-externals]
-SDL_PLATFORM = ["linux", "bsd", "windows", "macosx", "ios", "android"]
-SDL_MODE = ["debug", "release"]
+  SDL_PLATFORM = ["linux", "bsd", "windows", "macosx", "ios", "android"]
+  SDL_MODE = ["debug", "release"]
 
 [gpr-set-externals]
-BUILD_MODE = "release"
+  BUILD_MODE = "release"
 
 [gpr-set-externals.'case(os)']
-linux   = { SDL_PLATFORM = "linux" }
-windows = { SDL_PLATFORM = "windows" }
+  linux   = { SDL_PLATFORM = "linux" }
+  windows = { SDL_PLATFORM = "windows" }
 
 [[actions]]
-type = "pre-build"
-command = ["make", "-C", "./build/gnat", "tools"]
+  type = "pre-build"
+  command = ["make", "-C", "./build/gnat", "tools"]
 
+[[depends-on]]
+  [depends-on.'case(os)'.linux]
+    [depends-on.'case(distribution)'.'debian|ubuntu']
+      libsdl2 = "^2.0.0"
+      libsdl2_ttf = "^2.0.0"
+      libsdl2_image = "^2.0.0"
+    # [depends-on.'case(distribution)'.'fedora']
+    #   SDL2 = "^2.0.0"
+    #   SDL2_image = "^2.0.0"
+    #   SDL2_ttf = "^2.0.0"
+    # [depends-on.'case(distribution)'.'gentoo']
+    #   media-libs/sdl2 = "^2.0.0"
+    #   media-libs/sdl2_image = "^2.0.0"
+  # [depends-on.'case(os)'.windows]
+  # [depends-on.'case(os)'.macos]
