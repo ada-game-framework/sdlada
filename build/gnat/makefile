@@ -58,7 +58,12 @@ clean-lib:
 #####################################################################################
 # Tools
 
-tools: $(GEN_KB)
+tools: mk_dirs $(GEN_KB)
+
+.PHONY: gen/src
+
+mk_dirs: gen/src
+	mkdir -p gen/src/
 
 $(GEN_KB): gen/$(SDL_MODE)/tools/gen_keyboard
 	./gen/$(SDL_MODE)/tools/gen_keyboard > $@
