@@ -30,6 +30,24 @@ cd build/gnat
 make SDL_PLATFORM=linux SDL_MODE=release
 ```
 
+### Alire
+
+You can build the library with Alire now, by calling the following in the root directory:
+
+```
+alr build
+```
+
+#### MacOS
+
+SDLAda#s alire.toml is set up to use the Homebrew libs, so you need to install those first.
+
+```
+brew install sdl2
+brew install sdl2_ttf
+brew install sdl2_image
+```
+
 ## Installation
 
 ```

@@ -1,6 +1,6 @@
 name = "sdlada"
 description = "Ada 2012 SDL 2.x bindings."
-version = "2.5.4"
+version = "2.5.5"
 
 authors = ["Luke A. Guest"]
 maintainers = ["Luke A. Guest <laguest@archeia.com>"]
@@ -42,7 +42,7 @@ project-files = ["build/gnat/sdlada.gpr"] #, "build/gnat/"]
     #   media-libs/sdl2 = "^2.0.0"
     #   media-libs/sdl2_image = "^2.0.0"
   [depends-on.'case(os)'.windows]
-    mingw-w64-SDL2 = "^2.0.0"
-    mingw-w64-SDL2_image = "^2.0.0"
-    mingw-w64-SDL2_ttf = "^2.0.0"
+    mingw_w64_SDL2 = "^2.0.0"
+    mingw_w64_SDL2_image = "^2.0.0"
+    mingw_w64_SDL2_ttf = "^2.0.0"
   # [depends-on.'case(os)'.macos]
