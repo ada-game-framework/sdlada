@@ -16,8 +16,8 @@ project-files = ["build/gnat/sdlada.gpr"] #, "build/gnat/"]
   SDL_PLATFORM = ["linux", "bsd", "windows", "macosx", "macos_homebrew", "ios", "android"]
   SDL_MODE = ["debug", "release"]
 
-[gpr-set-externals]
-  BUILD_MODE = "release"
+# [gpr-set-externals]
+#   BUILD_MODE = "release"
 
 [gpr-set-externals.'case(os)']
   linux   = { SDL_PLATFORM = "linux" }
@@ -29,11 +29,12 @@ project-files = ["build/gnat/sdlada.gpr"] #, "build/gnat/"]
   command = ["make", "-C", "./build/gnat", "tools"]
 
 [[depends-on]]
-  [depends-on.'case(os)'.linux]
-    [depends-on.'case(distribution)'.'debian|ubuntu']
-      libsdl2 = "^2.0.0"
-      libsdl2_ttf = "^2.0.0"
-      libsdl2_image = "^2.0.0"
+  # [depends-on.'case(os)'.linux]
+    # TODO - Add distribution specific stuff, bug in Alire.
+    # [depends-on.'case(distribution)'.'debian|ubuntu']
+  libsdl2 = "^2.0.0"
+  libsdl2_ttf = "^2.0.0"
+  libsdl2_image = "^2.0.0"
     # [depends-on.'case(distribution)'.'fedora']
     #   SDL2 = "^2.0.0"
     #   SDL2_image = "^2.0.0"
