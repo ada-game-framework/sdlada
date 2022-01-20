@@ -24,7 +24,9 @@ project Tests is
          when "macos_homebrew" =>
             Linker_Switches := Linker_Switches & ("-lSDL2",
                                                   "-lSDL2_ttf",
-                                                  "-lSDL2_image");
+                                                  "-lSDL2_image",
+                                                  "-L/usr/local/lib");
+
          when others =>
             null;
       end case;
