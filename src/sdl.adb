@@ -58,4 +58,10 @@ package body SDL is
    begin
       return (SDL_Was_Initialised (Flags) = Flags);
    end Was_Initialised;
+
+   function To_Bool (Value : in Boolean) return SDL_Bool is
+   begin
+      return (if Value then SDL_True else SDL_False);
+   end To_Bool;
+
 end SDL;

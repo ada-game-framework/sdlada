@@ -6,7 +6,7 @@ project Tests is
    for Exec_Dir    use "gen/" & SDLAda.Mode & "/test";
    for Main        use ("test.adb", "version.adb", "platform.adb", "error.adb", "libraries.adb", "clipboard.adb",
                         "stream.adb", "stream2.adb", "surface.adb", "rwops.adb", "timers.adb", "create_window.adb",
-                        "mouse.adb",
+                        "mouse.adb", "audio.adb",
 
                         --  For SDL.Image.
                         "load_surface.adb",
