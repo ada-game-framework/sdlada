@@ -54,6 +54,10 @@ brew install sdl2_image
 make SDL_PLATFORM=linux SDL_MODE=release DESTDIR=$HOME/opt/sdlada install
 ```
 
+## Examples
+
+You can find more examples hosted on [Rosetta Code](http://www.rosettacode.org/wiki/Category:SDLAda).
+
 ## Copyright
 
 Copyright (C) 2013-2020, Luke A. Guest
