@@ -21,6 +21,8 @@
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Unchecked_Conversion;
+with System.Address_To_Access_Conversions;
+with System.Storage_Elements;
 with SDL.Error;
 
 package body SDL.Video.Surfaces is
@@ -48,6 +50,28 @@ package body SDL.Video.Surfaces is
 
       return Self.Internal.Pixels;
    end Pixels;
+
+   package body Pixel_Data is
+      use System.Storage_Elements;
+      package Convert is new System.Address_To_Access_Conversions (Object => Element);
+
+      function Get (Self : in Surface) return Element_Pointer is
+      begin
+         return Element_Pointer (Convert.To_Pointer (Self.Pixels));
+      end Get;
+
+      function Get_Row (Self : in Surface; Y : in SDL.Coordinate) return Element_Pointer is
+      begin
+         if Y not in 0 .. Self.Internal.Height - 1 then
+            raise Surface_Error with "Access outside of surface.";
+         end if;
+
+         --  Two conversions required, because there's no legal
+         --  direct conversion procedure from System.Address to Interfaces.C.Pointers.Pointer.
+         return Element_Pointer (Convert.To_Pointer (Self.Pixels
+           + Storage_Offset (Self.Internal.Pitch) * Storage_Offset (Y)));
+      end Get_Row;
+   end Pixel_Data;
 
    package body User_Data is
       function Convert is new Ada.Unchecked_Conversion (Source => Data_Pointer,

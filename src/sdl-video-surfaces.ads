@@ -75,6 +75,19 @@ package SDL.Video.Surfaces is
      Inline => True;
 
    generic
+      type Element is private;
+      type Element_Pointer is access all Element;
+   package Pixel_Data is
+      --  Get the starting address of whole data.
+      function Get (Self : in Surface) return Element_Pointer with
+        Inline => True;
+
+      --  Get the starting address of a specific pixel row.
+      function Get_Row (Self : in Surface; Y : in SDL.Coordinate) return Element_Pointer with
+        Inline => True;
+   end Pixel_Data;
+
+   generic
       type Data is private;
       type Data_Pointer is access all Data;
    package User_Data is

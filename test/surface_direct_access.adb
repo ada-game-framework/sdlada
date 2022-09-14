@@ -1,6 +1,4 @@
 with Interfaces.C.Pointers;
-with System.Storage_Elements;
-with System.Address_To_Access_Conversions;
 with SDL.Events.Events;
 with SDL.Events.Keyboards;
 with SDL.Log;
@@ -11,7 +9,6 @@ with SDL.Video.Windows.Makers;
 
 procedure Surface_Direct_Access is
    W : SDL.Video.Windows.Window;
-   use System.Storage_Elements;
 begin
    SDL.Log.Set (Category => SDL.Log.Application, Priority => SDL.Log.Debug);
 
@@ -34,19 +31,14 @@ begin
                                                               Element_Array      => Pixel_Array,
                                                               Default_Terminator => 0);
          use type Pixel_Pointers.Pointer;
-         package Convert is new System.Address_To_Access_Conversions (Object => Pixel);
-         S                : SDL.Video.Surfaces.Surface;
-         Pixels           : System.Address;
-         Pitch            : Interfaces.C.int;
 
+         S                : SDL.Video.Surfaces.Surface;
+
+         package Pixel_Data is new SDL.Video.Surfaces.Pixel_Data (Element         => Pixel,
+                                                                  Element_Pointer => Pixel_Pointers.Pointer);
          --  This procedure writes individual pixel in the surface (no blending or masking)
          procedure Write_Pixel (X, Y : Integer; Colour : Pixel) is
-            Row_Addr : constant System.Address          := Pixels + Storage_Offset (Pitch) * Storage_Offset (Y);
-            --  Get the starting address of a specific pixel row. Note that Pitch parameter is in
-            --  storage elements, not pixels, so computation could be done before the conversion to a typed pointer
-            Row_Ptr  : constant Pixel_Pointers.Pointer  := Pixel_Pointers.Pointer (Convert.To_Pointer (Row_Addr));
-            --  Convert to the pointer. Two conversions required, because there's
-            --  no direct conversion procedure from System.Address to Interfaces.C.Pointers.Pointer.
+            Row_Ptr  : constant Pixel_Pointers.Pointer  := Pixel_Data.Get_Row (S, SDL.Coordinate (Y));
             Ptr      : constant Pixel_Pointers.Pointer  := Row_Ptr + Interfaces.C.ptrdiff_t (X);
          begin
             Ptr.all := Colour;
@@ -67,9 +59,6 @@ begin
                                            Alpha_Mask => 0);  --  a surface with known pixel depth
 
          S.Lock;
-
-         Pixels := S.Pixels;
-         Pitch := S.Pitch;
 
          for X in 0 .. 799 loop
             for Y in 0 .. 639 loop
