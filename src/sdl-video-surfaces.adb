@@ -35,6 +35,11 @@ package body SDL.Video.Surfaces is
       return SDL.Sizes'(Self.Internal.Width, Self.Internal.Height);
    end Size;
 
+   function Pitch (Self : in Surface) return C.int is
+   begin
+      return Self.Internal.Pitch;
+   end Pitch;
+
    function Pixels (Self : in Surface) return System.Address is
    begin
       if Must_Lock (Self) and then Self.Internal.Locked <= 0 then
