@@ -62,10 +62,6 @@ package body SDL.Video.Surfaces is
 
       function Get_Row (Self : in Surface; Y : in SDL.Coordinate) return Element_Pointer is
       begin
-         if Y not in 0 .. Self.Internal.Height - 1 then
-            raise Surface_Error with "Access outside of surface.";
-         end if;
-
          --  Two conversions required, because there's no legal
          --  direct conversion from System.Address and arbitrary Pointer.
          return Element_Pointer (Convert.To_Pointer (Self.Pixels

@@ -83,7 +83,7 @@ package SDL.Video.Surfaces is
 
       --  Get the starting address of a specific pixel row.
       function Get_Row (Self : in Surface; Y : in SDL.Coordinate) return Element_Pointer with
-        Inline => True;
+        Inline => True, Pre => Y in 0 .. Self.Size.Height - 1;
    end Pixel_Data;
 
    generic
