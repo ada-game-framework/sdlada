@@ -67,7 +67,7 @@ package body SDL.Video.Surfaces is
          end if;
 
          --  Two conversions required, because there's no legal
-         --  direct conversion procedure from System.Address to Interfaces.C.Pointers.Pointer.
+         --  direct conversion from System.Address and arbitrary Pointer.
          return Element_Pointer (Convert.To_Pointer (Self.Pixels
            + Storage_Offset (Self.Internal.Pitch) * Storage_Offset (Y)));
       end Get_Row;

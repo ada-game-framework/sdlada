@@ -70,7 +70,6 @@ package SDL.Video.Surfaces is
      Inline => True;
 
    --  Get the address of actual pixels
-   --  TODO: Make generic so that we can get access to specific arrays which are mapped onto the Pixels address.
    function Pixels (Self : in Surface) return System.Address with
      Inline => True;
 
