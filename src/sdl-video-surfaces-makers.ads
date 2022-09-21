@@ -24,6 +24,8 @@
 --
 --  Functions to create surface objects.
 --------------------------------------------------------------------------------------------------------------------
+with System.Storage_Elements;
+
 package SDL.Video.Surfaces.Makers is
    pragma Preelaborate;
 
@@ -34,6 +36,19 @@ package SDL.Video.Surfaces.Makers is
                      Blue_Mask  : in Colour_Masks;
                      Green_Mask : in Colour_Masks;
                      Alpha_Mask : in Colour_Masks);
+
+   generic
+       type Element is private;
+       type Element_Pointer is access all Element;
+   procedure Create_From (Self       : in out Surface;
+                          Pixels     : in Element_Pointer;
+                          Size       : in SDL.Sizes;
+                          BPP        : in Pixel_Depths := Element'Size;
+                          Pitch      : in System.Storage_Elements.Storage_Offset;
+                          Red_Mask   : in Colour_Masks;
+                          Blue_Mask  : in Colour_Masks;
+                          Green_Mask : in Colour_Masks;
+                          Alpha_Mask : in Colour_Masks);
 
    --  TODO: This is likely a temporary place for this. It's likely I will add a Streams package.
    --     procedure Create (Self : in out Surface; File_Name : in String);
