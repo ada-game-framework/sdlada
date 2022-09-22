@@ -21,6 +21,7 @@
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Finalization;
+with System.Address_To_Access_Conversions;
 
 package body SDL.Video.Surfaces.Makers is
    procedure Create (Self       : in out Surface;
@@ -94,8 +95,9 @@ package body SDL.Video.Surfaces.Makers is
                                 Blue_Mask  : in Colour_Masks;
                                 Alpha_Mask : in Colour_Masks) is
       type Element_Pointer_C is access all Element with Convention => C;
+      package Convert is new System.Address_To_Access_Conversions (Element);
       function SDL_Create_RGB_Surface_From
-        (Pixels     : in Element_Pointer_C;
+        (Pixels     : in Element_Pointer_C; -- Note: using System.Address here is not portable
          Width      : in C.int           := 0;
          Height     : in C.int           := 0;
          Depth      : in Pixel_Depths    := 1;
@@ -112,7 +114,7 @@ package body SDL.Video.Surfaces.Makers is
                                        - Pixels (Pixels'First (1), Pixels'First (2))'Address;
    begin
       Self.Internal := SDL_Create_RGB_Surface_From (
-         Pixels     => Pixels (Pixels'First (1), Pixels'First (2))'Access,
+         Pixels     => Element_Pointer_C (Convert.To_Pointer (Pixels (Pixels'First (1), Pixels'First (2))'Address)),
          Width      => Pixels'Length (2),
          Height     => Pixels'Length (1),
          Depth      => Element'Size,

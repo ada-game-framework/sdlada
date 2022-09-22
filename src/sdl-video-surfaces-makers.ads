@@ -53,15 +53,17 @@ package SDL.Video.Surfaces.Makers is
    generic
       type Element is private;
       type Index is (<>);
-      type Element_Array is array (Index range <>, Index range <>) of aliased Element;
+      type Element_Array is array (Index range <>, Index range <>) of Element;
    procedure Create_From_Array (Self       : in out Surface;
                                 Pixels     : access Element_Array;
                                 Red_Mask   : in Colour_Masks;
                                 Green_Mask : in Colour_Masks;
                                 Blue_Mask  : in Colour_Masks;
                                 Alpha_Mask : in Colour_Masks);
-   --  Note: Create_From_Array cannot get packed (1- and 4-bit) array types.
-   --  Also there may be issue with 24-bit pixels (does SDL imply 4-byte alignment in this case?)
+   --  Note: I'm unsure what happen when packed (1- or -4bit) arrays are used here.
+   --        So, at least check that they have whole number of bytes per row
+   --        (E. g. even width in 4-bit)
+   --  Note: There may be issue with 24-bit pixels (does SDL imply 4-byte alignment in this case?)
 
    --  TODO: This is likely a temporary place for this. It's likely I will add a Streams package.
    --     procedure Create (Self : in out Surface; File_Name : in String);
