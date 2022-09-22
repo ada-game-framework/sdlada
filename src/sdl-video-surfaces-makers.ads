@@ -60,7 +60,8 @@ package SDL.Video.Surfaces.Makers is
                                 Green_Mask : in Colour_Masks;
                                 Blue_Mask  : in Colour_Masks;
                                 Alpha_Mask : in Colour_Masks);
-
+   --  Note: Create_From_Array cannot get packed (1- and 4-bit) array types.
+   --  Also there may be issue with 24-bit pixels (does SDL imply 4-byte alignment in this case?)
 
    --  TODO: This is likely a temporary place for this. It's likely I will add a Streams package.
    --     procedure Create (Self : in out Surface; File_Name : in String);
