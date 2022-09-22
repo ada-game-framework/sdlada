@@ -46,9 +46,21 @@ package SDL.Video.Surfaces.Makers is
                           BPP        : in Pixel_Depths := Element'Size;
                           Pitch      : in System.Storage_Elements.Storage_Offset;
                           Red_Mask   : in Colour_Masks;
-                          Blue_Mask  : in Colour_Masks;
                           Green_Mask : in Colour_Masks;
+                          Blue_Mask  : in Colour_Masks;
                           Alpha_Mask : in Colour_Masks);
+
+   generic
+      type Element is private;
+      type Index is (<>);
+      type Element_Array is array (Index range <>, Index range <>) of aliased Element;
+   procedure Create_From_Array (Self       : in out Surface;
+                                Pixels     : access Element_Array;
+                                Red_Mask   : in Colour_Masks;
+                                Green_Mask : in Colour_Masks;
+                                Blue_Mask  : in Colour_Masks;
+                                Alpha_Mask : in Colour_Masks);
+
 
    --  TODO: This is likely a temporary place for this. It's likely I will add a Streams package.
    --     procedure Create (Self : in out Surface; File_Name : in String);

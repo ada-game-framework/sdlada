@@ -12,13 +12,12 @@ procedure Surface_Direct_Access is
    W : SDL.Video.Windows.Window;
    package Sprite is
       subtype Pixel is Interfaces.Unsigned_16;
-      type Pixel_Access is access all Pixel;
-      type Image_Type is array (0 .. 15, 0 .. 15) of aliased Pixel;
+      type Image_Type is array (Integer range <>, Integer range <>) of aliased Pixel;
 
       T : constant := 16#0000#;
       R : constant := 16#F00F#;
       W : constant := 16#FFFF#;
-      Image : Image_Type := (
+      Image : aliased Image_Type := (
          (T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T),
          (T, T, T, R, R, R, T, T, T, R, R, R, T, T, T, T),
          (T, T, R, W, W, R, R, T, R, W, W, R, R, T, T, T),
@@ -37,9 +36,10 @@ procedure Surface_Direct_Access is
          (T, T, T, T, T, T, T, R, T, T, T, T, T, T, T, T)
       );
       S : SDL.Video.Surfaces.Surface;
-      procedure Create_From is new SDL.Video.Surfaces.Makers.Create_From (
+      procedure Create_From is new SDL.Video.Surfaces.Makers.Create_From_Array (
          Element => Pixel,
-         Element_Pointer => Pixel_Access);
+         Index   => Integer,
+         Element_Array => Image_Type);
    end Sprite;
 begin
    SDL.Log.Set (Category => SDL.Log.Application, Priority => SDL.Log.Debug);
@@ -52,11 +52,7 @@ begin
                                        Flags    => SDL.Video.Windows.Resizable);
 
       Sprite.Create_From (Self       => Sprite.S,
-                          Pixels     => Sprite.Image (0, 0)'Access,
-                          Size       => (Width  => Sprite.Image'Length (2),
-                                         Height => Sprite.Image'Length (1)),
-                          BPP        => 16,
-                          Pitch      => 32, -- TODO: calculation
+                          Pixels     => Sprite.Image'Access,
                           Red_Mask   => 16#000F#,
                           Green_Mask => 16#00F0#,
                           Blue_Mask  => 16#0F00#,
