@@ -122,6 +122,8 @@ package body SDL.Video.Surfaces.Makers is
          Blue_Mask  => Blue_Mask,
          Alpha_Mask => Alpha_Mask);
    end Create_From_Array;
+   -- Note: Create_From_Array cannot get packed (1- and 4-bit) array types.
+   -- Also there may be issue with 24-bit pixels (does SDL imply 4-byte alignment in this case?)
 
    --  TODO: SDL_CreateRGBSurfaceFrom
 
