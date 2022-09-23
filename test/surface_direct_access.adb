@@ -1,12 +1,15 @@
 with Interfaces.C.Pointers;
 with SDL.Events.Events;
 with SDL.Events.Keyboards;
+with SDL.Events.Mice;
 with SDL.Log;
 with SDL.Video.Palettes;
 with SDL.Video.Pixel_Formats;
 with SDL.Video.Surfaces.Makers;
 with SDL.Video.Rectangles;
 with SDL.Video.Windows.Makers;
+with Ada.Numerics.Long_Complex_Types;
+use  Ada.Numerics.Long_Complex_Types;
 
 procedure Surface_Direct_Access is
    W : SDL.Video.Windows.Window;
@@ -46,9 +49,9 @@ begin
 
    if SDL.Initialise (Flags => SDL.Enable_Screen) = True then
       SDL.Video.Windows.Makers.Create (Win      => W,
-                                       Title    => "Surface direct access (Esc to exit)",
+                                       Title    => "Surface direct access: Julia set interactive view (Esc to exit)",
                                        Position => SDL.Natural_Coordinates'(X => 100, Y => 100),
-                                       Size     => SDL.Positive_Sizes'(800, 640),
+                                       Size     => SDL.Positive_Sizes'(640, 640),
                                        Flags    => SDL.Video.Windows.Resizable);
 
       Sprite.Create_From (Self       => Sprite.S,
@@ -83,6 +86,81 @@ begin
             Ptr.all := Colour;
          end Write_Pixel;
 
+         Cursor : SDL.Natural_Coordinates;
+
+         N_Max : constant := 63; --  Maximum number of iterations for Julia set
+
+         --  Precalculated map of colours
+         False_Colour : Pixel_Array (0 .. N_Max);
+
+         procedure Make_False_Colour is
+            Z : Complex;
+            A : constant Complex := Compose_From_Polar (1.0, 1.0, 3.0);
+            R, G, B : Integer;
+         begin
+            for I in 0 .. N_Max loop
+               case I is
+                  when 0 .. N_Max - 1 =>
+                     Z := Compose_From_Polar
+                          (127.0, Long_Float (I), Long_Float (N_Max));
+                     B := 127 + Integer (Re (Z));
+                     R := 127 + Integer (Re (Z * A));
+                     G := 127 + Integer (Re (Z * A * A));
+                  when others => -- last iteration means we did'nt reach condition
+                     R := 0;
+                     G := 0;
+                     B := 0;
+               end case;
+               False_Colour (I) := Pixel (SDL.Video.Pixel_Formats.To_Pixel
+                                 (Format => S.Pixel_Format,
+                                  Red    => SDL.Video.Palettes.Colour_Component (R),
+                                  Green  => SDL.Video.Palettes.Colour_Component (G),
+                                  Blue   => SDL.Video.Palettes.Colour_Component (B)));
+            end loop;
+         end Make_False_Colour;
+
+         procedure Render is
+            --  A constant for Julia set iteration
+            C : constant Complex := (
+                (Long_Float (Cursor.X) / 640.0) * 4.0 - 2.0,
+                (Long_Float (Cursor.Y) / 640.0) * 4.0 - 2.0);
+            --  Julia set iteration variable
+            Z : Complex;
+            --  Julia set iteration counter
+            N : Integer;
+         begin
+            S.Lock;
+            for X in 0 .. 639 loop
+               for Y in 0 .. 639 loop
+                  --  Julia set iteration
+                  Z := ((Long_Float (X) / 640.0) * 4.0 - 2.0,
+                        (Long_Float (Y) / 640.0) * 4.0 - 2.0);
+                  N := 0;
+                  --  Julia set iteration
+                  while Re (Z)**2 + Im (Z)**2 < 4.0 and N < N_Max loop
+                     N := N + 1;
+                     Z := Z**2 + C;
+                  end loop;
+
+                  Write_Pixel (X, Y, False_Colour (N));
+               end loop;
+            end loop;
+            S.Unlock;
+
+            declare
+               TR, SR : SDL.Video.Rectangles.Rectangle := (X => 0,
+                                                           Y => 0,
+                                                           Width  => Sprite.Image'Length (2),
+                                                           Height => Sprite.Image'Length (1));
+            begin
+               TR.X := 20;
+               TR.Y := 20;
+               S.Blit (TR,
+                       Sprite.S,
+                       SR);
+            end;
+         end Render;
+
          Window_Surface   : SDL.Video.Surfaces.Surface;
          Event            : SDL.Events.Events.Events;
          Finished         : Boolean := False;
@@ -90,38 +168,15 @@ begin
          use type SDL.Events.Keyboards.Key_Codes;
       begin
          SDL.Video.Surfaces.Makers.Create (Self => S,
-                                           Size => (800, 640),
+                                           Size => (640, 640),
                                            BPP => Pixel_Depth,
                                            Red_Mask => 0,
                                            Blue_Mask => 0,
                                            Green_Mask => 0,
                                            Alpha_Mask => 0);  --  a surface with known pixel depth
 
-         S.Lock;
-
-         for X in 0 .. 799 loop
-            for Y in 0 .. 639 loop
-               Write_Pixel (X, Y, Pixel (SDL.Video.Pixel_Formats.To_Pixel
-                              (Format => S.Pixel_Format,
-                               Red    => SDL.Video.Palettes.Colour_Component (Y * 255 / 639),
-                               Green  => SDL.Video.Palettes.Colour_Component (X * 255 / 799),
-                               Blue   => SDL.Video.Palettes.Colour_Component (255 - (X + Y) * 255 / (799 + 639)))));
-            end loop;
-         end loop;
-         S.Unlock;
-
-         declare
-            TR, SR : SDL.Video.Rectangles.Rectangle := (X => 0,
-                                                        Y => 0,
-                                                        Width  => Sprite.Image'Length (2),
-                                                        Height => Sprite.Image'Length (1));
-         begin
-            TR.X := 20;
-            TR.Y := 20;
-            S.Blit (TR,
-                    Sprite.S,
-                    SR);
-         end;
+         Make_False_Colour;
+         Render;
 
          Window_Surface := W.Get_Surface;
          Window_Surface.Blit (S);
@@ -137,6 +192,13 @@ begin
                      if Event.Keyboard.Key_Sym.Key_Code = SDL.Events.Keyboards.Code_Escape then
                         Finished := True;
                      end if;
+
+                  when SDL.Events.Mice.Motion =>
+                     Cursor := (X => Event.Mouse_Motion.X, Y => Event.Mouse_Motion.Y);
+                     Render;
+                     Window_Surface := W.Get_Surface;
+                     Window_Surface.Blit (S);
+                     W.Update_Surface;
 
                   when others =>
                      null;
