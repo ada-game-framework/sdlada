@@ -2,7 +2,6 @@ with "sdlada";
 with "aunit";
 
 project Unit_Tests is
-   for Languages   use ("Ada", "C");
    for Source_Dirs use ("../../unit_tests");
    for Object_Dir  use "gen/" & SDLAda.Mode & "/unit_tests/.obj";
    for Exec_Dir    use "gen/" & SDLAda.Mode & "/unit_tests";

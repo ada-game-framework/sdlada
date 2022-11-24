@@ -43,20 +43,23 @@ package SDL.Versions is
      Convention => C;
 
    --  These allow the user to determine which version of SDLAda they compiled with.
-   Compiled_Major : constant Version_Level with
-     Import        => True,
-     Convention    => C,
-     External_Name => "SDL_Ada_Major_Version";
+   Compiled_Major : constant Version_Level := 0;
+--   with
+--     Import        => True,
+--     Convention    => C,
+--     External_Name => "SDL_Ada_Major_Version";
 
-   Compiled_Minor : constant Version_Level with
-     Import        => True,
-     Convention    => C,
-     External_Name => "SDL_Ada_Minor_Version";
+   Compiled_Minor : constant Version_Level := 0;
+--   with
+--     Import        => True,
+--     Convention    => C,
+--     External_Name => "SDL_Ada_Minor_Version";
 
-   Compiled_Patch : constant Version_Level with
-     Import        => True,
-     Convention    => C,
-     External_Name => "SDL_Ada_Patch_Version";
+   Compiled_Patch : constant Version_Level := 0;
+--   with
+--     Import        => True,
+--     Convention    => C,
+--     External_Name => "SDL_Ada_Patch_Version";
 
    function Compiled return Version is
      (Major => Compiled_Major,

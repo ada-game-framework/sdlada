@@ -15,7 +15,6 @@ library project SDLAda is
          Source_Platform := "../../src/" & Platform;
    end case;
 
-   for Languages    use ("Ada", "C");
    for Source_Dirs  use ("../../src", Source_Platform, "gen/src/",
 
                          --  For SDL.Image.
