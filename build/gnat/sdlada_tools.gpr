@@ -1,0 +1,12 @@
+project Sdlada_Tools
+is
+   for Source_Dirs
+   use ("../../tools");
+
+   for Main
+   use ("gen_keyboard.adb");
+
+   for Object_Dir
+   use "gen/tools";
+
+end Sdlada_Tools;
