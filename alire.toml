@@ -29,21 +29,7 @@ project-files = ["build/gnat/sdlada.gpr"] #, "build/gnat/"]
   command = ["make", "-C", "./build/gnat", "tools"]
 
 [[depends-on]]
-  # [depends-on.'case(os)'.linux]
-    # TODO - Add distribution specific stuff, bug in Alire.
-    # [depends-on.'case(distribution)'.'debian|ubuntu']
   libsdl2 = "^2.0.0"
   libsdl2_ttf = "^2.0.0"
   libsdl2_image = "^2.0.0"
-    # [depends-on.'case(distribution)'.'fedora']
-    #   SDL2 = "^2.0.0"
-    #   SDL2_image = "^2.0.0"
-    #   SDL2_ttf = "^2.0.0"
-    # [depends-on.'case(distribution)'.'gentoo']
-    #   media-libs/sdl2 = "^2.0.0"
-    #   media-libs/sdl2_image = "^2.0.0"
-  # [depends-on.'case(os)'.windows]
-  #   mingw_w64_SDL2 = "^2.0.0"
-  #   mingw_w64_SDL2_image = "^2.0.0"
-  #   mingw_w64_SDL2_ttf = "^2.0.0"
-  # [depends-on.'case(os)'.macos]
+  make = "*" # Required for post-fetch actions
