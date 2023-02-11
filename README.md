@@ -135,7 +135,7 @@ SDL_AtomicSetPtr                      |   n   |
 SDL_AtomicTryLock                     |   n   |
 SDL_AtomicUnlock                      |   n   |
 SDL_AudioInit                         |   y   |
-SDL_AudioQuit                         |   n   |
+SDL_AudioQuit                         |   y   |
 SDL_BlitScaled                        |   y   |
 SDL_BlitSurface                       |   y   |
 SDL_BuildAudioCVT                     |   n   |
