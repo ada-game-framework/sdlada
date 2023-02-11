@@ -176,6 +176,7 @@ SDL_DXGIGetOutputInfo                 |   n   |
 SDL_DelEventWatch                     |   n   |
 SDL_DelHintCallback                   |   n   |
 SDL_Delay                             |   n   |
+SDL_DequeueAudio                      |   n   |
 SDL_DestroyCond                       |   n   |
 SDL_DestroyMutex                      |   n   |
 SDL_DestroyRenderer                   |   y   |
