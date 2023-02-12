@@ -37,13 +37,13 @@ begin
    Desired.Channels  := 2;
    Desired.Samples   := 4_096;
 
-   SDL.Log.Put_Debug ("Desired - Frequency :" & Desired.Frequency'Img);
-   SDL.Log.Put_Debug ("Desired - Format/Bit_Size :" & Desired.Format.Bit_Size'Img);
-   SDL.Log.Put_Debug ("Desired - Format/Float :" & Desired.Format.Float'Img);
+   SDL.Log.Put_Debug ("Desired - Frequency         :" & Desired.Frequency'Img);
+   SDL.Log.Put_Debug ("Desired - Format/Bit_Size   :" & Desired.Format.Bit_Size'Img);
+   SDL.Log.Put_Debug ("Desired - Format/Float      :" & Desired.Format.Float'Img);
    SDL.Log.Put_Debug ("Desired - Format/Endianness :" & Desired.Format.Endianness'Img);
-   SDL.Log.Put_Debug ("Desired - Format/Signed :" & Desired.Format.Signed'Img);
-   SDL.Log.Put_Debug ("Desired - Channels :" & Desired.Channels'Img);
-   SDL.Log.Put_Debug ("Desired - Samples :" & Desired.Samples'Img);
+   SDL.Log.Put_Debug ("Desired - Format/Signed     :" & Desired.Format.Signed'Img);
+   SDL.Log.Put_Debug ("Desired - Channels          :" & Desired.Channels'Img);
+   SDL.Log.Put_Debug ("Desired - Samples           :" & Desired.Samples'Img);
 
    SDL.Log.Put_Debug ("Opening Default Device");
 
@@ -56,22 +56,22 @@ begin
            Callback  => Audio_Support.Callback'Access,
            User_Data => State'Unchecked_Access);
    begin
-      SDL.Log.Put_Debug ("Opened Device:" & Audio_Devices.Get_ID (Device)'Img);
-      SDL.Log.Put_Debug ("Device Status: " & Audio_Devices.Get_Status (Device)'Img);
+      SDL.Log.Put_Debug ("Opened Device                :" & Audio_Devices.Get_ID (Device)'Img);
+      SDL.Log.Put_Debug ("Device Status                : " & Audio_Devices.Get_Status (Device)'Img);
 
-      SDL.Log.Put_Debug ("Obtained - Frequency :" & Obtained.Frequency'Img);
-      SDL.Log.Put_Debug ("Obtained - Format/Bit_Size :" & Obtained.Format.Bit_Size'Img);
-      SDL.Log.Put_Debug ("Obtained - Format/Float : " & Obtained.Format.Float'Img);
-      SDL.Log.Put_Debug ("Obtained - Format/Endianness : " & Obtained.Format.Endianness'Img);
-      SDL.Log.Put_Debug ("Obtained - Format/Signed : " & Obtained.Format.Signed'Img);
-      SDL.Log.Put_Debug ("Obtained - Channels :" & Obtained.Channels'Img);
-      SDL.Log.Put_Debug ("Obtained - Samples :" & Obtained.Samples'Img);
-      SDL.Log.Put_Debug ("Obtained - Silence :" & Obtained.Silence'Img);
-      SDL.Log.Put_Debug ("Obtained - Size :" & Obtained.Size'Img);
+      SDL.Log.Put_Debug ("Obtained - Frequency         :" & Obtained.Frequency'Img);
+      SDL.Log.Put_Debug ("Obtained - Format/Bit_Size   :" & Obtained.Format.Bit_Size'Img);
+      SDL.Log.Put_Debug ("Obtained - Format/Float      :" & Obtained.Format.Float'Img);
+      SDL.Log.Put_Debug ("Obtained - Format/Endianness :" & Obtained.Format.Endianness'Img);
+      SDL.Log.Put_Debug ("Obtained - Format/Signed     :" & Obtained.Format.Signed'Img);
+      SDL.Log.Put_Debug ("Obtained - Channels          :" & Obtained.Channels'Img);
+      SDL.Log.Put_Debug ("Obtained - Samples           :" & Obtained.Samples'Img);
+      SDL.Log.Put_Debug ("Obtained - Silence           :" & Obtained.Silence'Img);
+      SDL.Log.Put_Debug ("Obtained - Size              :" & Obtained.Size'Img);
 
-      SDL.Log.Put_Debug ("Unpausing Device: " & Audio_Devices.Get_Status (Device)'Img);
+      SDL.Log.Put_Debug ("Unpausing Device             : " & Audio_Devices.Get_Status (Device)'Img);
       Audio_Devices.Pause (Device, False);
-      SDL.Log.Put_Debug ("Device Status: " & Audio_Devices.Get_Status (Device)'Img);
+      SDL.Log.Put_Debug ("Device Status                : " & Audio_Devices.Get_Status (Device)'Img);
 
       delay Playback_Length;
 
@@ -91,22 +91,22 @@ begin
       Buffer : aliased Audio_Support.Buffer_Type := (1 .. 4_096 => (0, 0));
       Segment_Count : constant := 40;
    begin
-      SDL.Log.Put_Debug ("Opened Device: " & Audio_Devices.Get_ID (Device)'Img);
-      SDL.Log.Put_Debug ("Device Status: " & Audio_Devices.Get_Status (Device)'Img);
+      SDL.Log.Put_Debug ("Opened Device                : " & Audio_Devices.Get_ID (Device)'Img);
+      SDL.Log.Put_Debug ("Device Status                : " & Audio_Devices.Get_Status (Device)'Img);
 
-      SDL.Log.Put_Debug ("Obtained - Frequency :" & Obtained.Frequency'Img);
-      SDL.Log.Put_Debug ("Obtained - Format/Bit_Size :" & Obtained.Format.Bit_Size'Img);
-      SDL.Log.Put_Debug ("Obtained - Format/Float : " & Obtained.Format.Float'Img);
-      SDL.Log.Put_Debug ("Obtained - Format/Endianness : " & Obtained.Format.Endianness'Img);
-      SDL.Log.Put_Debug ("Obtained - Format/Signed :" & Obtained.Format.Signed'Img);
-      SDL.Log.Put_Debug ("Obtained - Channels :" & Obtained.Channels'Img);
-      SDL.Log.Put_Debug ("Obtained - Samples :" & Obtained.Samples'Img);
-      SDL.Log.Put_Debug ("Obtained - Silence :" & Obtained.Silence'Img);
-      SDL.Log.Put_Debug ("Obtained - Size :" & Obtained.Size'Img);
+      SDL.Log.Put_Debug ("Obtained - Frequency         :" & Obtained.Frequency'Img);
+      SDL.Log.Put_Debug ("Obtained - Format/Bit_Size   :" & Obtained.Format.Bit_Size'Img);
+      SDL.Log.Put_Debug ("Obtained - Format/Float      :" & Obtained.Format.Float'Img);
+      SDL.Log.Put_Debug ("Obtained - Format/Endianness :" & Obtained.Format.Endianness'Img);
+      SDL.Log.Put_Debug ("Obtained - Format/Signed     :" & Obtained.Format.Signed'Img);
+      SDL.Log.Put_Debug ("Obtained - Channels          :" & Obtained.Channels'Img);
+      SDL.Log.Put_Debug ("Obtained - Samples           :" & Obtained.Samples'Img);
+      SDL.Log.Put_Debug ("Obtained - Silence           :" & Obtained.Silence'Img);
+      SDL.Log.Put_Debug ("Obtained - Size              :" & Obtained.Size'Img);
 
-      SDL.Log.Put_Debug ("Unpausing Device: " & Audio_Devices.Get_Status (Device)'Img);
+      SDL.Log.Put_Debug ("Unpausing Device             : " & Audio_Devices.Get_Status (Device)'Img);
       Audio_Devices.Pause (Device, False);
-      SDL.Log.Put_Debug ("Device Status: " & Audio_Devices.Get_Status (Device)'Img);
+      SDL.Log.Put_Debug ("Device Status                : " & Audio_Devices.Get_Status (Device)'Img);
 
       for i in 1 .. Segment_Count loop
          Audio_Support.Callback (State'Unchecked_Access, Buffer);
