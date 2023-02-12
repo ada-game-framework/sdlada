@@ -134,7 +134,7 @@ SDL_AtomicSet                         |   n   |
 SDL_AtomicSetPtr                      |   n   |
 SDL_AtomicTryLock                     |   n   |
 SDL_AtomicUnlock                      |   n   |
-SDL_AudioInit                         |   n   |
+SDL_AudioInit                         |   y   |
 SDL_AudioQuit                         |   n   |
 SDL_BlitScaled                        |   y   |
 SDL_BlitSurface                       |   y   |
@@ -144,9 +144,9 @@ SDL_CalculateGammaRamp                |   y   |
 SDL_CaptureMouse                      |   y   |
 SDL_ClearError                        |   y   |
 SDL_ClearHints                        |   y   |
-SDL_ClearQueuedAudio                  |   n   |
+SDL_ClearQueuedAudio                  |   y   |
 SDL_CloseAudio                        |   n   |
-SDL_CloseAudioDevice                  |   n   |
+SDL_CloseAudioDevice                  |   y   |
 SDL_CompilerBarrier                   |   n   |
 SDL_CondBroadcast                     |   n   |
 SDL_CondSignal                        |   n   |
@@ -240,9 +240,9 @@ SDL_GameControllerOpen                |   y   |
 SDL_GameControllerUpdate              |   y   |
 SDL_GetAssertionHandler               |   n   |
 SDL_GetAssertionReport                |   n   |
-SDL_GetAudioDeviceName                |   n   |
-SDL_GetAudioDeviceStatus              |   n   |
-SDL_GetAudioDriver                    |   n   |
+SDL_GetAudioDeviceName                |   y   |
+SDL_GetAudioDeviceStatus              |   y   |
+SDL_GetAudioDriver                    |   y   |
 SDL_GetAudioStatus                    |   n   |
 SDL_GetBasePath                       |   y   |
 SDL_GetCPUCacheLineSize               |   y   |
@@ -251,7 +251,7 @@ SDL_GetClipRect                       |   y   |
 SDL_GetClipboardText                  |   y   |
 SDL_GetClosestDisplayMode             |   y   |
 SDL_GetColorKey                       |   y   |
-SDL_GetCurrentAudioDriver             |   n   |
+SDL_GetCurrentAudioDriver             |   y   |
 SDL_GetCurrentDisplayMode             |   y   |
 SDL_GetCurrentVideoDriver             |   y   |
 SDL_GetCursor                         |   y   |
@@ -273,8 +273,8 @@ SDL_GetKeyboardState                  |   n   |
 SDL_GetModState                       |   y   |
 SDL_GetMouseFocus                     |   n   |
 SDL_GetMouseState                     |   y   |
-SDL_GetNumAudioDevices                |   n   |
-SDL_GetNumAudioDrivers                |   n   |
+SDL_GetNumAudioDevices                |   y   |
+SDL_GetNumAudioDrivers                |   y   |
 SDL_GetNumDisplayModes                |   y   |
 SDL_GetNumRenderDrivers               |   y   |
 SDL_GetNumTouchDevices                |   n   |
@@ -287,7 +287,7 @@ SDL_GetPixelFormatName                |   y   |
 SDL_GetPlatform                       |   n   |      *
 SDL_GetPowerInfo                      |   y   |
 SDL_GetPrefPath                       |   y   |
-SDL_GetQueuedAudioSize                |   n   |
+SDL_GetQueuedAudioSize                |   y   |
 SDL_GetRGB                            |   y   |
 SDL_GetRGBA                           |   y   |
 SDL_GetRelativeMouseMode              |   y   |
@@ -451,9 +451,9 @@ SDL_MouseIsHaptic                     |   n   |
 SDL_NumHaptics                        |   n   |
 SDL_NumJoysticks                      |   y   |
 SDL_OpenAudio                         |   n   |
-SDL_OpenAudioDevice                   |   n   |
+SDL_OpenAudioDevice                   |   y   |
 SDL_PauseAudio                        |   n   |
-SDL_PauseAudioDevice                  |   n   |
+SDL_PauseAudioDevice                  |   y   |
 SDL_PeepEvents                        |   n   |
 SDL_PixelFormatEnumToMasks            |   y   |
 SDL_PointInRect                       |   n   |

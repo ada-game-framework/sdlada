@@ -6,7 +6,7 @@ project Tests is
    for Exec_Dir    use "gen/" & SDLAda.Mode & "/test";
    for Main        use ("test.adb", "version.adb", "platform.adb", "error.adb", "libraries.adb", "clipboard.adb",
                         "stream.adb", "stream2.adb", "surface.adb", "rwops.adb", "timers.adb", "create_window.adb",
-                        "mouse.adb", "hello_world.adb",
+                        "mouse.adb", "hello_world.adb", "audio.adb",
 
                         --  For SDL.Image.
                         "load_surface.adb",
@@ -24,7 +24,9 @@ project Tests is
          when "macos_homebrew" =>
             Linker_Switches := Linker_Switches & ("-lSDL2",
                                                   "-lSDL2_ttf",
-                                                  "-lSDL2_image");
+                                                  "-lSDL2_image",
+                                                  "-L/usr/local/lib");
+
          when others =>
             null;
       end case;
