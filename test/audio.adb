@@ -40,7 +40,7 @@ begin
    SDL.Log.Put_Debug ("Desired - Frequency :" & Desired.Frequency'Img);
    SDL.Log.Put_Debug ("Desired - Format/Bit_Size :" & Desired.Format.Bit_Size'Img);
    SDL.Log.Put_Debug ("Desired - Format/Float :" & Desired.Format.Float'Img);
-   SDL.Log.Put_Debug ("Desired - Format/Big_Endian :" & Desired.Format.Endianness'Img);
+   SDL.Log.Put_Debug ("Desired - Format/Endianness :" & Desired.Format.Endianness'Img);
    SDL.Log.Put_Debug ("Desired - Format/Signed :" & Desired.Format.Signed'Img);
    SDL.Log.Put_Debug ("Desired - Channels :" & Desired.Channels'Img);
    SDL.Log.Put_Debug ("Desired - Samples :" & Desired.Samples'Img);
