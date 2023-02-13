@@ -1,0 +1,49 @@
+with "sdlada_common.gpr";
+with "sdlada_mixer.gpr";
+
+project Tests_Mixer is
+
+   for Source_Dirs use ("../../test/mixer/");
+   for Object_Dir  use "gen/" & SDLAda_Common.Mode & "/test/mixer/.obj";
+   for Exec_Dir    use "gen/" & SDLAda_Common.Mode & "/test/mixer/";
+   for Main        use ("mix_inspection.adb",
+                        "play_channels.adb",
+                        "play_group.adb",
+                        "play_music.adb");
+
+   for Create_Missing_Dirs use "True";
+
+   Global_Switches := ();
+
+   case SDLAda_Common.Platform is
+
+      when "macosx" =>
+         Global_Switches := Global_Switches & ("-framework", "SDL2",
+                                               "-framework", "SDL2_mixer");
+      when others => null;
+
+   end case;
+
+   package Builder is
+
+      for Global_Compilation_Switches ("Ada") use Global_Switches;
+      for Global_Compilation_Switches ("C")   use Global_Switches;
+
+      for Default_Switches ("Ada") use
+        ("-g",
+         "-gnateE",
+         "-gnatf",
+         "-gnatwa",
+         "-gnatwj",
+         "-gnatw.x",
+         "-gnaty",
+         "-gnatyM99"
+        );
+   end Builder;
+
+   package Linker is
+      for Default_Switches ("Ada") use Global_Switches;
+      for Default_Switches ("C")   use Global_Switches;
+   end Linker;
+
+end Tests_Mixer;
