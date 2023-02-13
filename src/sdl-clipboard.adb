@@ -21,7 +21,7 @@
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C.Strings;
-with SDL;
+
 with SDL.Error;
 with SDL.Video.Windows;
 
