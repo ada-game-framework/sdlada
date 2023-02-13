@@ -136,6 +136,11 @@ SDL_AtomicTryLock                     |   n   |       |
 SDL_AtomicUnlock                      |   n   |       |
 SDL_AudioInit                         |   y   |       |
 SDL_AudioQuit                         |   y   |       |
+SDL_AudioStreamAvailable              |   n   | 2.0.7 |
+SDL_AudioStreamClear                  |   n   | 2.0.7 |
+SDL_AudioStreamFlush                  |   n   | 2.0.7 |
+SDL_AudioStreamGet                    |   n   | 2.0.7 |
+SDL_AudioStreamPut                    |   n   | 2.0.7 |
 SDL_BlitScaled                        |   y   |       |
 SDL_BlitSurface                       |   y   |       |
 SDL_BuildAudioCVT                     |   n   |       |
@@ -194,6 +199,7 @@ SDL_FillRects                         |   y   |       |
 SDL_FilterEvents                      |   n   |       |
 SDL_FlushEvent                        |   n   |       |
 SDL_FlushEvents                       |   n   |       |
+SDL_FreeAudioStream                   |   n   | 2.0.7 |
 SDL_FreeCursor                        |   y   |       |
 SDL_FreeFormat                        |   y   |       |
 SDL_FreePalette                       |   y   |       |
