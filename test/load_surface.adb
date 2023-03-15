@@ -17,7 +17,9 @@ procedure Load_Surface is
 begin
    SDL.Log.Set (Category => SDL.Log.Application, Priority => SDL.Log.Debug);
 
-   if SDL.Initialise (Flags => SDL.Enable_Screen) = True and SDL.Images.Initialise then
+   if SDL.Initialise (Flags => SDL.Enable_Screen) = True
+      and then SDL.Images.Initialise
+   then
       SDL.Video.Windows.Makers.Create (Win      => W,
                                        Title    => "Surface (Esc to exit)",
                                        Position => SDL.Natural_Coordinates'(X => 100, Y => 100),
