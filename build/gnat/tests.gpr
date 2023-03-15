@@ -6,7 +6,7 @@ project Tests is
    for Exec_Dir    use "gen/" & SDLAda.Mode & "/test";
    for Main        use ("test.adb", "version.adb", "platform.adb", "error.adb", "libraries.adb", "clipboard.adb",
                         "stream.adb", "stream2.adb", "surface.adb", "rwops.adb", "timers.adb", "create_window.adb",
-                        "mouse.adb",
+                        "mouse.adb", "hello_world.adb", "audio.adb", "surface_direct_access.adb",
 
                         --  For SDL.Image.
                         "load_surface.adb",
@@ -15,4 +15,24 @@ project Tests is
                         "ttf.adb");
 
    package Compiler renames SDLAda.Compiler;
+
+   package Linker is
+
+      Linker_Switches := ();
+
+      case Sdlada.Platform is
+         when "macos_homebrew" =>
+            Linker_Switches := Linker_Switches & ("-lSDL2",
+                                                  "-lSDL2_ttf",
+                                                  "-lSDL2_image",
+                                                  "-L/usr/local/lib");
+
+         when others =>
+            null;
+      end case;
+
+      for Switches ("Ada") use Linker_Switches;
+
+   end Linker;
+
 end Tests;

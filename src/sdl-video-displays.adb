@@ -20,8 +20,8 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
+
 with SDL.Error;
-with SDL.Video;
 
 package body SDL.Video.Displays is
 
