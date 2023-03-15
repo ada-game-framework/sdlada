@@ -28,7 +28,7 @@ with Ada.Finalization;
 with Interfaces.C;
 with System;
 --  private with SDL.C_Pointers;
-with SDL.Video;
+
 with SDL.Video.Palettes;
 with SDL.Video.Pixel_Formats;
 with SDL.Video.Rectangles;
@@ -65,9 +65,26 @@ package SDL.Video.Surfaces is
    function Size (Self : in Surface) return SDL.Sizes with
      Inline => True;
 
-   --  TODO: Make generic so that we can get access to specific arrays which are mapped onto the Pixels address.
+   --  Get the pitch parameter (number of bytes between lines)
+   function Pitch (Self : in Surface) return C.int with
+     Inline => True;
+
+   --  Get the address of actual pixels
    function Pixels (Self : in Surface) return System.Address with
      Inline => True;
+
+   generic
+      type Element is private;
+      type Element_Pointer is access all Element;
+   package Pixel_Data is
+      --  Get the starting address of whole data.
+      function Get (Self : in Surface) return Element_Pointer with
+        Inline => True;
+
+      --  Get the starting address of a specific pixel row.
+      function Get_Row (Self : in Surface; Y : in SDL.Coordinate) return Element_Pointer with
+        Inline => True, Pre => Y in 0 .. Self.Size.Height - 1;
+   end Pixel_Data;
 
    generic
       type Data is private;
