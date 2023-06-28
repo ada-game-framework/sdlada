@@ -38,6 +38,21 @@ You can build the library with Alire now, by calling the following in the root d
 alr build
 ```
 
+This seems to have come up as an issue, people not checking the original makefile on [lines 29 and 93](./build/gnat/makefile) on how to link SDLAda. SDL2 comes with the ```sdl2-config``` command which includes the following options:
+
+```bash
+$ sdl2-config --help
+Usage: /usr/bin/sdl2-config [--prefix[=DIR]] [--exec-prefix[=DIR]] [--version] [--cflags] [--libs]
+
+$ sdl2-config --cflags
+-I/usr/include/SDL2 -D_REENTRANT
+
+$ sdl2-config --libs
+-L/usr/lib64 -lSDL2
+```
+
+These options will differ depending on operating system. SDL3 seems like it might operate in a bit more of a portable way.
+
 #### MacOS
 
 SDLAda#s alire.toml is set up to use the Homebrew libs, so you need to install those first.
