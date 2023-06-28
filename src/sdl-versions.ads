@@ -23,6 +23,12 @@
 --  SDL.Versions
 --
 --  Library version information.
+--
+--  **IMPORTANT** DO NOT REMOVE THESE FUNCTIONS, they are very important. They allow the running application to see
+--                what version of the libraries are installed on the system. This allows the running application
+--                to modify it's behaviour if certain functionality from a certain version is missing.
+--                i.e. Steam controls it's libs and whilst they are usually up to date, there is no guarantee that
+--                the version you built against has the same functionality as that installed on the user's machine.
 --------------------------------------------------------------------------------------------------------------------
 package SDL.Versions is
    pragma Preelaborate;
