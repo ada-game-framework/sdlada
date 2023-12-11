@@ -1,4 +1,6 @@
 with Ada.Unchecked_Conversion;
+with Ada.Real_Time; use Ada.Real_Time;
+
 with SDL;
 with SDL.Events.Events;
 with SDL.Events.Keyboards;
@@ -42,6 +44,18 @@ begin
            (X => 10, Y => 130, Width => 100, Height => 100);
          Finished         : Boolean := False;
 
+         Loop_Start_Time_Goal : Ada.Real_Time.Time;
+         Loop_Start_Time_Real : Ada.Real_Time.Time;
+         Loop_Delay_Overhead_Time : Ada.Real_Time.Time_Span;
+         Loop_Delay_Overhead_Average : Ada.Real_Time.Time_Span :=
+           Ada.Real_Time.Time_Span_Zero;
+
+         Frame_Duration : constant Ada.Real_Time.Time_Span :=
+           Ada.Real_Time.Microseconds (16_667);
+         --  60 Hz refresh rate
+
+         Loop_Debug_Iterator : Natural := 0;
+
          use type SDL.Events.Keyboards.Key_Codes;
       begin
          Window_Surface := W.Get_Surface;
@@ -82,7 +96,32 @@ begin
 
          W.Update_Surface_Rectangle (Blit_Dest_Area);
 
+         --  Set next frame delay target using monotonic clock time
+         Loop_Start_Time_Goal := Ada.Real_Time.Clock;
+
+         SDL.Log.Put_Debug ("Frame duration: " &
+                              To_Duration (Frame_Duration)'Img);
+
          loop
+            Loop_Start_Time_Goal := Loop_Start_Time_Goal + Frame_Duration;
+            delay until Loop_Start_Time_Goal;
+
+            Loop_Start_Time_Real := Ada.Real_Time.Clock;
+
+            Loop_Delay_Overhead_Time := Loop_Start_Time_Real -
+              Loop_Start_Time_Goal;
+
+            Loop_Delay_Overhead_Average := (Loop_Delay_Overhead_Average +
+                                              Loop_Delay_Overhead_Time) / 2;
+
+            Loop_Debug_Iterator := Loop_Debug_Iterator + 1;
+            if Loop_Debug_Iterator mod 256 = 0 then
+               SDL.Log.Put_Debug ("Loop_Delay_Overhead_Time: " &
+                                    To_Duration (Loop_Delay_Overhead_Time)'Img);
+               SDL.Log.Put_Debug ("Loop_Delay_Overhead_Average: " &
+                                    To_Duration (Loop_Delay_Overhead_Average)'Img);
+            end if;
+
             while SDL.Events.Events.Poll (Event) loop
                case Event.Common.Event_Type is
                   when SDL.Events.Quit =>

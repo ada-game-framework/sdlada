@@ -1,3 +1,4 @@
+with Ada.Real_Time; use Ada.Real_Time;
 with Interfaces.C.Pointers;
 with SDL.Events.Events;
 with SDL.Events.Keyboards;
@@ -165,6 +166,12 @@ begin
          Event            : SDL.Events.Events.Events;
          Finished         : Boolean := False;
 
+         Loop_Start_Time_Goal : Ada.Real_Time.Time;
+
+         Frame_Duration : constant Ada.Real_Time.Time_Span :=
+           Ada.Real_Time.Microseconds (16_667);
+         --  60 Hz refresh rate (set to anything you like)
+
          use type SDL.Events.Keyboards.Key_Codes;
       begin
          SDL.Video.Surfaces.Makers.Create (Self => S,
@@ -182,7 +189,14 @@ begin
          Window_Surface.Blit (S);
          W.Update_Surface;
 
+         --  Set next frame delay target using monotonic clock time
+         Loop_Start_Time_Goal := Ada.Real_Time.Clock;
+
          loop
+            --  Limit event loop to 60 Hz using realtime "delay until"
+            Loop_Start_Time_Goal := Loop_Start_Time_Goal + Frame_Duration;
+            delay until Loop_Start_Time_Goal;
+
             while SDL.Events.Events.Poll (Event) loop
                case Event.Common.Event_Type is
                   when SDL.Events.Quit =>

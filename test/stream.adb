@@ -1,4 +1,4 @@
-with Ada.Calendar;
+with Ada.Real_Time; use Ada.Real_Time;
 with Ada.Text_IO.Text_Streams;
 with Ada.Unchecked_Conversion;
 with Interfaces.C;
@@ -79,16 +79,15 @@ procedure Stream is
    procedure Lock is new SDL.Video.Textures.Lock (Pixel_Pointer_Type => SDL.Video.Pixels.ARGB_8888_Access.Pointer);
 
    use type SDL.Video.Pixels.ARGB_8888_Access.Pointer;
-   use type Ada.Calendar.Time;
 
    --  This uses the same algorithm as the original teststream.c. It copies 1 pixel at a time, indexing into the moose
    --  palette using the data from moose.dat.
    procedure Update_Texture_1 (Pointer : in SDL.Video.Pixels.ARGB_8888_Access.Pointer) is
-      Start_Time       : Ada.Calendar.Time;
-      End_Time         : Ada.Calendar.Time;
+      Start_Time       : Ada.Real_Time.Time;
+      End_Time         : Ada.Real_Time.Time;
       Colour           : SDL.Video.Palettes.RGB_Colour;
    begin
-      Start_Time := Ada.Calendar.Clock;
+      Start_Time := Ada.Real_Time.Clock;
 
       for Y in 1 .. Moose_Size.Height loop
          declare
@@ -108,8 +107,8 @@ procedure Stream is
          end;
       end loop;
 
-      End_Time := Ada.Calendar.Clock;
-      SDL.Log.Put_Debug ("Update_Texture_1 took " & Duration'Image (End_Time - Start_Time) & " seconds.");
+      End_Time := Ada.Real_Time.Clock;
+      SDL.Log.Put_Debug ("Update_Texture_1 took " & To_Duration (End_Time - Start_Time)'Img & " seconds.");
    end Update_Texture_1;
 
    type Texture_2D_Array is array (SDL.Dimension range <>, SDL.Dimension range <>) of
@@ -128,13 +127,13 @@ procedure Stream is
       function To_Address is new Ada.Unchecked_Conversion (Source => SDL.Video.Pixels.ARGB_8888_Access.Pointer,
                                                            Target => System.Address);
 
-      Start_Time       : Ada.Calendar.Time;
-      End_Time         : Ada.Calendar.Time;
+      Start_Time       : Ada.Real_Time.Time;
+      End_Time         : Ada.Real_Time.Time;
       Colour           : SDL.Video.Palettes.RGB_Colour;
       Actual_Pixels    : Texture_2D_Array (1 .. Moose_Size.Height, 1 .. Moose_Size.Width) with
         Address => To_Address (Pixels);
    begin
-      Start_Time := Ada.Calendar.Clock;
+      Start_Time := Ada.Real_Time.Clock;
 
       for Y in 1 .. Moose_Size.Height loop
          for X in 1 .. Moose_Size.Width loop
@@ -147,8 +146,8 @@ procedure Stream is
          end loop;
       end loop;
 
-      End_Time := Ada.Calendar.Clock;
-      SDL.Log.Put_Debug ("Update_Texture_2 took " & Duration'Image (End_Time - Start_Time) & " seconds.");
+      End_Time := Ada.Real_Time.Clock;
+      SDL.Log.Put_Debug ("Update_Texture_2 took " & To_Duration (End_Time - Start_Time)'Img & " seconds.");
    end Update_Texture_2;
 
    type Cached_Moose_Frame_Array is array (Moose_Frames) of
@@ -270,17 +269,17 @@ begin
             function To_Address is new Ada.Unchecked_Conversion (Source => SDL.Video.Pixels.ARGB_8888_Access.Pointer,
                                                                  Target => System.Address);
 
-            Start_Time    : Ada.Calendar.Time;
-            End_Time      : Ada.Calendar.Time;
+            Start_Time    : Ada.Real_Time.Time;
+            End_Time      : Ada.Real_Time.Time;
             Actual_Pixels : Texture_2D_Array (1 .. Moose_Size.Height, 1 .. Moose_Size.Width) with
               Address => To_Address (Pixels);
          begin
-            Start_Time := Ada.Calendar.Clock;
+            Start_Time := Ada.Real_Time.Clock;
 
             Actual_Pixels := Cache (Moose_Frame);
 
-            End_Time := Ada.Calendar.Clock;
-            SDL.Log.Put_Debug ("Update_Texture_3 took " & Duration'Image (End_Time - Start_Time) & " seconds.");
+            End_Time := Ada.Real_Time.Clock;
+            SDL.Log.Put_Debug ("Update_Texture_3 took " & To_Duration (End_Time - Start_Time)'Img & " seconds.");
          end Update_Texture_3;
 
          Texture.Unlock;

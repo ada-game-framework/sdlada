@@ -1,4 +1,4 @@
-with Ada.Calendar;
+with Ada.Real_Time; use Ada.Real_Time;
 with Ada.Text_IO.Text_Streams;
 with Ada.Unchecked_Conversion;
 with SDL;
@@ -109,6 +109,23 @@ procedure Stream2 is
    end Cache_Moose;
 
    Cache : Cached_Moose_Frame_Array;
+
+   Left_Cursor_Down : Boolean := False;
+   Right_Cursor_Down : Boolean := False;
+
+   Loop_Start_Time_Goal : Ada.Real_Time.Time;
+   Loop_Start_Time_Real : Ada.Real_Time.Time;
+   Loop_Delay_Overhead_Time : Ada.Real_Time.Time_Span;
+   Loop_Delay_Overhead_Average : Ada.Real_Time.Time_Span :=
+     Ada.Real_Time.Time_Span_Zero;
+
+   Frame_Duration : constant Ada.Real_Time.Time_Span :=
+     Ada.Real_Time.Microseconds (6_944);
+   --  144 Hz refresh rate
+
+   Loop_Iterator : Natural := 0;
+   --  This is used for animation timing as well as debug timing
+
 begin
    SDL.Log.Set (Category => SDL.Log.Application, Priority => SDL.Log.Debug);
 
@@ -131,6 +148,11 @@ begin
                                         Kind     => SDL.Video.Textures.Streaming,
                                         Size     => Moose_Size);
 
+      --  Set next frame delay target using monotonic clock time
+      Loop_Start_Time_Goal := Ada.Real_Time.Clock;
+
+      SDL.Log.Put_Debug ("Frame duration: " & To_Duration (Frame_Duration)'Img);
+
       --  Main loop.
       declare
          Event    : SDL.Events.Events.Events;
@@ -140,6 +162,28 @@ begin
          use type SDL.Events.Keyboards.Scan_Codes;
       begin
          loop
+            Loop_Start_Time_Goal := Loop_Start_Time_Goal + Frame_Duration;
+            --  Calculate goal time for the next 50 Hz frame
+
+            delay until Loop_Start_Time_Goal;
+
+            Loop_Start_Time_Real := Ada.Real_Time.Clock;
+
+            Loop_Delay_Overhead_Time := Loop_Start_Time_Real -
+              Loop_Start_Time_Goal;
+
+            Loop_Delay_Overhead_Average := (Loop_Delay_Overhead_Average +
+                                              Loop_Delay_Overhead_Time) / 2;
+
+            Loop_Iterator := Loop_Iterator + 1;
+
+            if Loop_Iterator mod 256 = 0 then
+               SDL.Log.Put_Debug ("Loop_Delay_Overhead_Time: " &
+                                    To_Duration (Loop_Delay_Overhead_Time)'Img);
+               SDL.Log.Put_Debug ("Loop_Delay_Overhead_Average: " &
+                                    To_Duration (Loop_Delay_Overhead_Average)'Img);
+            end if;
+
             while SDL.Events.Events.Poll (Event) loop
                case Event.Common.Event_Type is
                   when SDL.Events.Quit =>
@@ -161,9 +205,16 @@ begin
                         --        Moose_Frame := Moose_Frame + 1;
                         --     end if;
                      elsif Event.Keyboard.Key_Sym.Scan_Code = SDL.Events.Keyboards.Scan_Code_Left then
-                        Moose_Frame := Moose_Frame - 1;
+                        Left_Cursor_Down := True;
                      elsif Event.Keyboard.Key_Sym.Scan_Code = SDL.Events.Keyboards.Scan_Code_Right then
-                        Moose_Frame := Moose_Frame + 1;
+                        Right_Cursor_Down := True;
+                     end if;
+
+                  when SDL.Events.Keyboards.Key_Up =>
+                     if Event.Keyboard.Key_Sym.Scan_Code = SDL.Events.Keyboards.Scan_Code_Left then
+                        Left_Cursor_Down := False;
+                     elsif Event.Keyboard.Key_Sym.Scan_Code = SDL.Events.Keyboards.Scan_Code_Right then
+                        Right_Cursor_Down := False;
                      end if;
 
                   when others =>
@@ -171,22 +222,26 @@ begin
                end case;
             end loop;
 
+            --  Update the animation every 4 frames (36 Hz)
+
+            if Loop_Iterator mod 4 = 0 then
+               if Left_Cursor_Down and not Right_Cursor_Down then
+                  Moose_Frame := Moose_Frame - 1;
+               elsif Right_Cursor_Down and not Left_Cursor_Down then
+                  Moose_Frame := Moose_Frame + 1;
+               end if;
+            end if;
+
             Lock (Texture, Pixels);
 
             declare
                function To_Address is new Ada.Unchecked_Conversion (Source => SDL.Video.Pixels.ARGB_8888_Access.Pointer,
                                                                     Target => System.Address);
 
-               Start_Time       : Ada.Calendar.Time;
-               End_Time         : Ada.Calendar.Time;
                Actual_Pixels    : Texture_2D_Array (1 .. Moose_Size.Height, 1 .. Moose_Size.Width) with
                  Address => To_Address (Pixels);
             begin
-               Start_Time := Ada.Calendar.Clock;
-
                Actual_Pixels := Cache (Moose_Frame);
-
-               End_Time := Ada.Calendar.Clock;
             end;
 
             Texture.Unlock;

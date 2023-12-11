@@ -1,3 +1,4 @@
+with Ada.Real_Time; use Ada.Real_Time;
 with Ada.Unchecked_Conversion;
 with Interfaces.C;
 with SDL;
@@ -50,6 +51,12 @@ begin
             Height => Image_Area.Height / 4);
          Finished           : Boolean := False;
 
+         Loop_Start_Time_Goal : Ada.Real_Time.Time;
+
+         Frame_Duration : constant Ada.Real_Time.Time_Span :=
+           Ada.Real_Time.Microseconds (16_667);
+         --  60 Hz refresh rate (set to anything you like)
+
          use type SDL.Events.Keyboards.Key_Codes;
       begin
          Window_Surface := W.Get_Surface;
@@ -71,7 +78,14 @@ begin
                                                                                     Width  => Image_Area.Width / 2,
                                                                                     Height => Image_Area.Height / 2));
 
+         --  Set next frame delay target using monotonic clock time
+         Loop_Start_Time_Goal := Ada.Real_Time.Clock;
+
          loop
+            --  Limit event loop to 60 Hz using realtime "delay until"
+            Loop_Start_Time_Goal := Loop_Start_Time_Goal + Frame_Duration;
+            delay until Loop_Start_Time_Goal;
+
             W.Update_Surface;
 
             while SDL.Events.Events.Poll (Event) loop
