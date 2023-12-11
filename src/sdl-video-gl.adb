@@ -55,6 +55,8 @@ package body SDL.Video.GL is
       Attribute_Share_With_Current_Context) with
      Convention => C;
 
+   pragma Unreferenced (Attribute_Retained_Backing);  --  deprecated / unused
+
    function To_int is new Ada.Unchecked_Conversion (Source => Profiles, Target => C.int);
 
    function SDL_GL_Set_Attribute (Attr : in Attributes; Value : in C.int) return C.int with
