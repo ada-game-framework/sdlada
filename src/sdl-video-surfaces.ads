@@ -211,18 +211,18 @@ private
    --  Internal_Surfaces are allowed to be manipulated by the user, but this is protected behind the following inlines.
    type Internal_Surface is
       record
-         Flags           : Surface_Flags;           --  Internal, don't touch.
-         Pixel_Format    : Pixel_Formats.Pixel_Format_Access;
-         Width           : SDL.Dimension;
-         Height          : SDL.Dimension;
-         Pitch           : C.int;
-         Pixels          : System.Address;          --  Pixel data.
-         User_Data       : User_Data_Pointer;
-         Locked          : C.int;                   --  Internal, don't touch.
-         Lock_Data       : System.Address;          --  Internal, don't touch.
-         Clip_Rectangle  : Rectangles.Rectangle;
-         Blit_Map        : System.Address;          --  Internal, don't touch.
-         Reference_Count : C.int;
+         Flags           : Surface_Flags := SW_Surface;            --  Internal, don't touch.
+         Pixel_Format    : Pixel_Formats.Pixel_Format_Access := null;
+         Width           : SDL.Dimension := 0;
+         Height          : SDL.Dimension := 0;
+         Pitch           : C.int := 0;
+         Pixels          : System.Address := System.Null_Address;  --  Pixel data.
+         User_Data       : User_Data_Pointer := null;
+         Locked          : C.int := 0;                             --  Internal, don't touch.
+         Lock_Data       : System.Address := System.Null_Address;  --  Internal, don't touch.
+         Clip_Rectangle  : Rectangles.Rectangle := (others => <>);
+         Blit_Map        : System.Address := System.Null_Address;  --  Internal, don't touch.
+         Reference_Count : C.int := 0;
       end record with
      Convention => C;
 

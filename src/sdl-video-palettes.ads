@@ -49,6 +49,8 @@ package SDL.Video.Palettes is
 
    Null_Colour : constant Colour := (others => <>);
 
+   pragma Warnings (Off, "8 bits of * unused", Reason => "padding");
+
    type RGB_Colour is
       record
          Red   : Colour_Component := Colour_Component'First;
@@ -59,6 +61,8 @@ package SDL.Video.Palettes is
      Size       => Colour_Component'Size * 4;
 
    Null_RGB_Colour : constant RGB_Colour := (others => <>);
+
+   pragma Warnings (On, "8 bits of * unused");
 
    --  Cursor type for our iterator.
    type Cursor is private;

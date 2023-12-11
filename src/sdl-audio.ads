@@ -34,7 +34,7 @@ package SDL.Audio is
    Audio_Error : exception;
 
    --  Audio drivers.
-   -- TODO: SDL3 - Removes Initialise/Finalise
+   --  TODO: SDL3 - Removes Initialise/Finalise
    function Initialise (Name : in String := "") return Boolean;
 
    procedure Finalise with

@@ -22,7 +22,6 @@
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C;
 with System;
-with Ada.Unchecked_Conversion;
 with SDL.Error;
 
 package body SDL.Video.Textures is

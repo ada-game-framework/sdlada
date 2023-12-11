@@ -20,7 +20,6 @@
 --     3. This notice may not be removed or altered from any source
 --     distribution.
 --------------------------------------------------------------------------------------------------------------------
-with Ada.Unchecked_Conversion;
 with SDL.Error;
 
 package body SDL.Video.Rectangles is
