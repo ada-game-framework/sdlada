@@ -11,7 +11,7 @@ project Tools is
    package Compiler is
       C_Switches   := ("-ffunction-sections", "-fdata-sections");
       Ada_Switches := ("-ffunction-sections", "-fdata-sections",
-                       "-gnat2012", "-gnata", "-gnato", "-gnatE", "-gnatwa",
+                       "-gnat2012", "-gnata", "-gnato", "-gnatwa",
                        "-gnaty", "-gnaty-s", "-gnatyO", "-gnatyM120", "-gnatyO");
 
       case Mode is

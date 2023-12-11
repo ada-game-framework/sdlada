@@ -23,5 +23,5 @@
 --  SDL.Inputs
 --------------------------------------------------------------------------------------------------------------------
 package SDL.Inputs is
-   pragma Preelaborate;
+   pragma Pure;
 end SDL.Inputs;
