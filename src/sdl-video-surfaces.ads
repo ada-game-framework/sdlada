@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------------------------------------------
---  Copyright (c) 2013-2020, Luke A. Guest
+--  Copyright (c) 2013-2023, Luke A. Guest
 --
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
@@ -226,7 +226,9 @@ private
       end record with
      Convention => C;
 
+   pragma Warnings (Off, "aggregate not fully initialized"); --  Stop warning about (others => <>)
    Null_Internal_Surface : constant Internal_Surface := (others => <>);
+   pragma Warnings (On, "aggregate not fully initialized");
 
    --  If the Dont_Free flag is set on the Internal_Surface, then calling SDL_FreeSurface won't decrease the reference
    --  count. This is set when getting a window's surface.

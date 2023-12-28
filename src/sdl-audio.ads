@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------------------------------------------
---  Copyright (c) 2021, Eduard Llamos�
+--  Copyright (c) 2021-2023, Eduard Llamos�
 --
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
@@ -34,7 +34,7 @@ package SDL.Audio is
    Audio_Error : exception;
 
    --  Audio drivers.
-   -- TODO: SDL3 - Removes Initialise/Finalise
+   --  TODO: SDL3 - Removes Initialise/Finalise
    function Initialise (Name : in String := "") return Boolean;
 
    procedure Finalise with

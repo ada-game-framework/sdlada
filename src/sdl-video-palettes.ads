@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------------------------------------------
---  Copyright (c) 2013-2020, Luke A. Guest
+--  Copyright (c) 2013-2023, Luke A. Guest
 --
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
@@ -49,6 +49,7 @@ package SDL.Video.Palettes is
 
    Null_Colour : constant Colour := (others => <>);
 
+   pragma Warnings (Off, "8 bits of ""RGB_Colour"" unused"); --  Unused on purpose
    type RGB_Colour is
       record
          Red   : Colour_Component := Colour_Component'First;
@@ -57,6 +58,7 @@ package SDL.Video.Palettes is
       end record with
      Convention => C_Pass_by_Copy,
      Size       => Colour_Component'Size * 4;
+   pragma Warnings (On, "8 bits of ""RGB_Colour"" unused");
 
    Null_RGB_Colour : constant RGB_Colour := (others => <>);
 

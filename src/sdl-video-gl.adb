@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------------------------------------------
---  Copyright (c) 2013-2020, Luke A. Guest
+--  Copyright (c) 2013-2023, Luke A. Guest
 --
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
@@ -29,6 +29,7 @@ package body SDL.Video.GL is
 
    use type SDL.C_Pointers.GL_Context_Pointer;
 
+   pragma Warnings (Off, """Attribute_Retained_Backing"" is not referenced"); --  This attribute is deprecated
    type Attributes is
      (Attribute_Red_Size,
       Attribute_Green_Size,
@@ -46,7 +47,7 @@ package body SDL.Video.GL is
       Attribute_Multisample_Buffers,
       Attribute_Multisample_Samples,
       Attribute_Accelerated,
-      Attribute_Retained_Backing,
+      Attribute_Retained_Backing, --  not used (deprecated)
       Attribute_Context_Major_Version,
       Attribute_Context_Minor_Version,
       Attribute_Context_EGL,
@@ -54,6 +55,7 @@ package body SDL.Video.GL is
       Attribute_Context_Profile,
       Attribute_Share_With_Current_Context) with
      Convention => C;
+   pragma Warnings (On, """Attribute_Retained_Backing"" is not referenced");
 
    function To_int is new Ada.Unchecked_Conversion (Source => Profiles, Target => C.int);
 
