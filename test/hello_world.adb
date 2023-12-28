@@ -48,7 +48,7 @@ begin
          end loop;
       end loop Main;
 
-      -- Clean up and exit.
+      --  Clean up and exit.
       W.Finalize;
       SDL.Finalise;
    end if;
