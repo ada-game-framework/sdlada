@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------------------------------------------
---  Copyright (c) 2021, Eduard Llamosí
+--  Copyright (c) 2021, Eduard Llamos
 --
 --  This software is provided 'as-is', without any express or implied
 --  warranty. In no event will the authors be held liable for any damages
@@ -24,15 +24,16 @@
 --
 --  Access to audio sample data.
 --------------------------------------------------------------------------------------------------------------------
-with System; use System;
+with System;
 
 package SDL.Audio.Sample_Formats is
-
    type Sample_Bit_Size is mod 2 ** 8 with
      Convention => C;
 
    type Sample_Endianness is (Little_Endian, Big_Endian) with
      Convention => C;
+
+   use type System.Bit_Order;
 
    System_Endianness : constant Sample_Endianness :=
      (if System.Default_Bit_Order = System.High_Order_First
@@ -47,6 +48,7 @@ package SDL.Audio.Sample_Formats is
    end record with
      Convention => C,
      Size       => 16;
+
    for Sample_Format use record
       Bit_Size   at 0 range 0 .. 7;
       Float      at 1 range 0 .. 0;
@@ -66,36 +68,42 @@ package SDL.Audio.Sample_Formats is
       Float      => False,
       Endianness => Little_Endian,
       Signed     => False);
+
    --  Signed 8-bit samples
    Sample_Format_S8 : constant Sample_Format :=
      (Bit_Size   => 8,
       Float      => False,
       Endianness => Little_Endian,
       Signed     => True);
+
    --  Unsigned 16-bit samples
    Sample_Format_U16LSB : constant Sample_Format :=
      (Bit_Size   => 16,
       Float      => False,
       Endianness => Little_Endian,
       Signed     => False);
+
    --  Signed 16-bit samples
    Sample_Format_S16LSB : constant Sample_Format :=
      (Bit_Size   => 16,
       Float      => False,
       Endianness => Little_Endian,
       Signed     => True);
+
    --  As above, but big-endian byte order
    Sample_Format_U16MSB : constant Sample_Format :=
      (Bit_Size   => 16,
       Float      => False,
       Endianness => Big_Endian,
       Signed     => False);
+
    --  As above, but big-endian byte order
    Sample_Format_S16MSB : constant Sample_Format :=
      (Bit_Size   => 16,
       Float      => False,
       Endianness => Big_Endian,
       Signed     => True);
+
    Sample_Format_U16 : constant Sample_Format := Sample_Format_U16LSB;
    Sample_Format_S16 : constant Sample_Format := Sample_Format_S16LSB;
 
@@ -109,6 +117,7 @@ package SDL.Audio.Sample_Formats is
       Float      => False,
       Endianness => Little_Endian,
       Signed     => False);
+
    --  As above, but big-endian byte order
    Sample_Format_S32MSB : constant Sample_Format :=
      (Bit_Size   => 32,
@@ -127,6 +136,7 @@ package SDL.Audio.Sample_Formats is
       Float      => True,
       Endianness => Little_Endian,
       Signed     => True);
+
    --  As above, but big-endian byte order
    Sample_Format_F32MSB : constant Sample_Format :=
      (Bit_Size   => 32,
@@ -158,5 +168,4 @@ package SDL.Audio.Sample_Formats is
       Float      => False,
       Endianness => System_Endianness,
       Signed     => True);
-
 end SDL.Audio.Sample_Formats;
