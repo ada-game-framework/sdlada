@@ -18,33 +18,6 @@ procedure Gen_Keyboard is
 
    function To_US (Str : in String) return Unbounded_String renames To_Unbounded_String;
 
-   License : constant array (Positive range <>) of Unbounded_String :=
-     (To_US ("Copyright (c) 2013-2020,  Luke A. Guest"),
-      To_US (""),
-      To_US ("This software is provided 'as-is', without any express or implied"),
-      To_US ("warranty. In no event will the authors be held liable for any damages"),
-      To_US ("arising from the use of this software."),
-      To_US (""),
-      To_US ("Permission is granted to anyone to use this software for any purpose,"),
-      To_US ("including commercial applications, and to alter it and redistribute it"),
-      To_US ("freely, subject to the following restrictions:"),
-      To_US (""),
-      To_US ("   1. The origin of this software must not be misrepresented; you must not"),
-      To_US ("   claim that you wrote the original software. If you use this software"),
-      To_US ("   in a product, an acknowledgment in the product documentation would be"),
-      To_US ("   appreciated but is not required."),
-      To_US (""),
-      To_US ("   2. Altered source versions must be plainly marked as such, and must not be"),
-      To_US ("   misrepresented as being the original software."),
-      To_US (""),
-      To_US ("   3. This notice may not be removed or altered from any source"),
-      To_US ("   distribution."));
-
-   Package_Description : constant array (Positive range <>) of Unbounded_String :=
-     (To_US ("SDL.Events.Keyboards"),
-      To_US (""),
-      To_US ("Keyboard specific events."));
-
    type Mapping_States is (Output, New_Line, Comment);
 
    package Scan_Codes_IO is new Integer_IO (Scan_Codes);
@@ -623,15 +596,18 @@ begin
 
    Comment_Dash (117);
 
-   for Line of License loop
-      Comment (Indent => 0, Text => To_String (Line));
-   end loop;
+   Comment (Indent   => 0,
+            Text     => "This source code is subject to the Zlib license, see the LICENCE file in the root " &
+              "of this directory.");
 
    Comment_Dash (117);
 
-   for Line of Package_Description loop
-      Comment (Indent => 0, Text => To_String (Line));
-   end loop;
+   Comment (Indent   => 0,
+            Text     => "SDL.Events.Keyboards");
+   Comment (Indent   => 0,
+            Text     => "");
+   Comment (Indent   => 0,
+            Text     => "Keyboard specific events.");
 
    Comment_Dash (117);
 
@@ -645,7 +621,7 @@ begin
    Put_Line ("   Key_Down                         : constant Event_Types := 16#0000_0300#;");
    Put_Line ("   Key_Up                           : constant Event_Types := Key_Down + 1;");
    Put_Line ("   Text_Editing                     : constant Event_Types := Key_Down + 2;");
-   Put_Line ("   Text_Input                       : constant Event_Types := Key_Down + 3;");
+   --  Put_Line ("   Text_Input                       : constant Event_Types := Key_Down + 3;");
    New_Line;
 
    --  Output the scan codes.
