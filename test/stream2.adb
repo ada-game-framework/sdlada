@@ -1,6 +1,7 @@
-with Ada.Calendar;
+with Ada.Real_Time;
 with Ada.Text_IO.Text_Streams;
 with Ada.Unchecked_Conversion;
+
 with SDL;
 with SDL.Events.Events;
 with SDL.Events.Keyboards;
@@ -174,19 +175,23 @@ begin
             Lock (Texture, Pixels);
 
             declare
+               use Ada.Real_Time;
+
                function To_Address is new Ada.Unchecked_Conversion (Source => SDL.Video.Pixels.ARGB_8888_Access.Pointer,
                                                                     Target => System.Address);
 
-               Start_Time       : Ada.Calendar.Time;
-               End_Time         : Ada.Calendar.Time;
+               Start_Time       : Time;
+               End_Time         : Time;
+               Unused_Span      : Time_Span;
                Actual_Pixels    : Texture_2D_Array (1 .. Moose_Size.Height, 1 .. Moose_Size.Width) with
                  Address => To_Address (Pixels);
             begin
-               Start_Time := Ada.Calendar.Clock;
+               Start_Time := Clock;
 
                Actual_Pixels := Cache (Moose_Frame);
 
-               End_Time := Ada.Calendar.Clock;
+               End_Time    := Clock;
+               Unused_Span := End_Time - Start_Time;
             end;
 
             Texture.Unlock;
