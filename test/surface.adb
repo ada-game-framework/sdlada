@@ -1,4 +1,3 @@
-with Ada.Unchecked_Conversion;
 with SDL;
 with SDL.Events.Events;
 with SDL.Events.Keyboards;
