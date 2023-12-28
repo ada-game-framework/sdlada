@@ -1,3 +1,5 @@
+with Ada.Real_Time; use Ada.Real_Time;
+
 with SDL;
 with SDL.Events.Events;
 with SDL.Events.Keyboards;
@@ -14,6 +16,13 @@ procedure Mouse is
    W           : SDL.Video.Windows.Window;
    Renderer    : SDL.Video.Renderers.Renderer;
    Texture     : SDL.Video.Textures.Texture;
+
+   Loop_Start_Time_Goal : Ada.Real_Time.Time;
+
+   Frame_Duration : constant Ada.Real_Time.Time_Span :=
+     Ada.Real_Time.Microseconds (16_667);
+   --  60 Hz refresh rate (set to anything you like)
+
 begin
    SDL.Log.Set (Category => SDL.Log.Application, Priority => SDL.Log.Debug);
 
@@ -40,7 +49,14 @@ begin
          Warp_Rel    : Boolean := True;
          Warp_Screen : Boolean := False;
       begin
+         --  Set next frame delay target using monotonic clock time
+         Loop_Start_Time_Goal := Ada.Real_Time.Clock;
+
          loop
+            --  Limit event loop to 60 Hz using realtime "delay until"
+            Loop_Start_Time_Goal := Loop_Start_Time_Goal + Frame_Duration;
+            delay until Loop_Start_Time_Goal;
+
             while SDL.Events.Events.Poll (Event) loop
                case Event.Common.Event_Type is
                   when SDL.Events.Quit =>

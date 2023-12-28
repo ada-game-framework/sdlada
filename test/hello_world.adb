@@ -1,3 +1,5 @@
+with Ada.Real_Time; use Ada.Real_Time;
+
 with SDL;
 with SDL.Events.Events;
 with SDL.Log;
@@ -12,6 +14,12 @@ procedure Hello_World is
    Renderer         : SDL.Video.Renderers.Renderer;
    Texture          : SDL.Video.Textures.Texture;
    Event            : SDL.Events.Events.Events;
+
+   Loop_Start_Time_Goal : Ada.Real_Time.Time;
+
+   Frame_Duration : constant Ada.Real_Time.Time_Span :=
+     Ada.Real_Time.Microseconds (16_667);
+   --  60 Hz refresh rate (set to anything you like)
 
    use type SDL.Events.Event_Types;
 begin
@@ -36,7 +44,14 @@ begin
          Kind     => SDL.Video.Textures.Streaming,
          Size     => W_Size);
 
+      --  Set next frame delay target using monotonic clock time
+      Loop_Start_Time_Goal := Ada.Real_Time.Clock;
+
       Main : loop
+         --  Limit event loop to 60 Hz using realtime "delay until"
+         Loop_Start_Time_Goal := Loop_Start_Time_Goal + Frame_Duration;
+         delay until Loop_Start_Time_Goal;
+
          while SDL.Events.Events.Poll (Event) loop
             if Event.Common.Event_Type = SDL.Events.Quit then
                exit Main;
