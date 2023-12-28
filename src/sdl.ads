@@ -27,7 +27,7 @@
 with Interfaces.C;
 
 package SDL is
-   pragma Preelaborate;
+   pragma Pure;
 
    package C renames Interfaces.C;
 

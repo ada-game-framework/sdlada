@@ -33,6 +33,7 @@ generic
    type Buffer_Index is (<>);
    type Buffer_Type is array (Buffer_Index range <>) of Frame_Type;
 package SDL.Audio.Devices is
+   pragma Elaborate_Body;
 
    Audio_Device_Error : exception;
 

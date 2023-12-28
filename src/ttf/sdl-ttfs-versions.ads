@@ -27,6 +27,8 @@
 with SDL.Versions;
 
 package SDL.TTFs.Versions is
+   pragma Elaborate_Body;
+
    --  These allow the user to determine which version of SDLAda_TTF they compiled with.
    Compiled_Major : constant SDL.Versions.Version_Level with
      Import        => True,

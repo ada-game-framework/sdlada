@@ -29,7 +29,7 @@
 --    task so as to separate out the events from the main window. This could change. I really don't know yet.
 --------------------------------------------------------------------------------------------------------------------
 package SDL.Events is
-   pragma Preelaborate;
+   pragma Pure;
 
    type Event_Types is mod 2 ** 32 with
      Convention => C;
