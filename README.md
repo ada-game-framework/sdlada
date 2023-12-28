@@ -110,7 +110,7 @@ Anything listed here is a question of whether it's required.
 
 ## [Current version](http://www.semver.org)
 
-v2.5.14
+v2.5.15
 
 ## Versions tested against
 

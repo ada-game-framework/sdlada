@@ -1,3 +1,4 @@
+with Ada.Real_Time; use Ada.Real_Time;
 with SDL;
 with SDL.Error;
 with SDL.Events.Events;
@@ -145,10 +146,23 @@ begin
          Event    : SDL.Events.Events.Events;
          Finished : Boolean := False;
 
+         Loop_Start_Time_Goal : Ada.Real_Time.Time;
+
+         Frame_Duration : constant Ada.Real_Time.Time_Span :=
+           Ada.Real_Time.Microseconds (6_944);
+         --  144 Hz refresh rate
+
          use type SDL.Events.Keyboards.Key_Codes;
          use type SDL.Events.Windows.Window_Event_ID;
       begin
+         --  Set next frame delay target using monotonic clock time
+         Loop_Start_Time_Goal := Ada.Real_Time.Clock;
+
          loop
+            --  Limit event loop to 144 Hz using realtime "delay until"
+            Loop_Start_Time_Goal := Loop_Start_Time_Goal + Frame_Duration;
+            delay until Loop_Start_Time_Goal;
+
             while SDL.Events.Events.Poll (Event) loop
                case Event.Common.Event_Type is
                   when SDL.Events.Quit =>
