@@ -27,6 +27,8 @@
 with Interfaces.C;
 
 package SDL.Images is
+   pragma Pure;
+
    package C renames Interfaces.C;
 
    Image_Error : exception;

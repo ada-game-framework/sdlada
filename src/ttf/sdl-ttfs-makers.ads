@@ -28,6 +28,8 @@
 with SDL.RWops;
 
 package SDL.TTFs.Makers is
+   pragma Preelaborate;
+
    procedure Create (Font       : in out Fonts;
                      File_Name  : in String;
                      Point_Size : in Point_Sizes;

@@ -25,7 +25,7 @@
 --  Battery access on the target platform.
 --------------------------------------------------------------------------------------------------------------------
 package SDL.Power is
-   pragma Preelaborate;
+   pragma Pure;
 
    type State is
      (Unknown,    --  Cannot determine power status.
