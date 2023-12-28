@@ -236,8 +236,6 @@ begin
             Lock (Texture, Pixels);
 
             declare
-               use Ada.Real_Time;
-
                function To_Address is new Ada.Unchecked_Conversion (Source => SDL.Video.Pixels.ARGB_8888_Access.Pointer,
                                                                     Target => System.Address);
 
