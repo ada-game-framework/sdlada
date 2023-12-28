@@ -116,9 +116,10 @@ v2.5.17
 
 Library   | Version
 ----------|--------
-SDL       | 2.0.7
-SDL_image | 2.0.2
-SDL_ttf   | 2.0.14
+SDL       | 2.28.5
+SDL_image | 2.6.3
+SDL_mixer | 2.6.3
+SDL_ttf   | 2.20.2
 
 ## Bound functions
 
