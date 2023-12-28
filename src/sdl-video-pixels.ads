@@ -75,7 +75,9 @@ package SDL.Video.Pixels is
       type Index is (<>);
       type Element is private;
       type Element_Array_1D is array (Index range <>) of aliased Element;
+      pragma Warnings (Off, """Element_Array_2D"" is not referenced"); --  This attribute is deprecated
       type Element_Array_2D is array (Index range <>, Index range <>) of aliased Element;
+      pragma Warnings (On, """Element_Array_2D"" is not referenced"); --  This attribute is deprecated
 
       Default_Terminator : Element;
    package Texture_Data is
