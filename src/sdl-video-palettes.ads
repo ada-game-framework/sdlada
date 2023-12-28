@@ -62,6 +62,8 @@ package SDL.Video.Palettes is
 
    Null_RGB_Colour : constant RGB_Colour := (others => <>);
 
+   pragma Warnings (On, "8 bits of * unused");
+
    --  Cursor type for our iterator.
    type Cursor is private;
 
