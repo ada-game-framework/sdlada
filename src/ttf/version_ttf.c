@@ -21,7 +21,7 @@
  *    distribution.
  **********************************************************************************************************************/
 #ifdef __APPLE__
-    #ifdef SDL_HOMEBREW
+    #if defined(SDL_HOMEBREW) || defined(SDL_MACPORTS)
         #include <SDL2/SDL_ttf.h>
     #else
         #include <SDL2_ttf/SDL_ttf.h>

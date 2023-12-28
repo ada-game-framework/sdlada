@@ -1,5 +1,5 @@
 library project SDLAda is
-   type Platform_Type is ("linux", "bsd", "windows", "macosx", "macos_homebrew", "ios", "android");
+   type Platform_Type is ("linux", "bsd", "windows", "macosx", "macos_homebrew", "macos_ports", "ios", "android");
    type Mode_Type is ("debug", "release");
 
    Platform : Platform_Type := external ("SDL_PLATFORM", "linux");
@@ -8,7 +8,7 @@ library project SDLAda is
    Source_Platform := "";
 
    case Platform is
-      when "macos_homebrew" =>
+      when "macos_homebrew" | "macos_ports" =>
          Source_Platform := "../../src/macosx";
 
       when others =>
@@ -49,7 +49,14 @@ library project SDLAda is
 
          when "macos_homebrew" =>
             C_Switches   := C_Switches & ("-DSDL_HOMEBREW",
-                                          "-I/usr/local/include",
+                                          "-I"
+                                          & external ("HOMEBREW_PREFIX")
+                                          & "/include",
+                                          "-D_REENTRANT");
+
+         when "macos_ports" =>
+            C_Switches   := C_Switches & ("-DSDL_MACPORTS",
+                                          "-I/opt/local/include",
                                           "-D_REENTRANT");
 
          when others =>

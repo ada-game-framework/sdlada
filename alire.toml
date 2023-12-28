@@ -13,7 +13,7 @@ tags = ["gamedev", "games", "portable", "cross-platform"]
 project-files = ["build/gnat/sdlada.gpr"] #, "build/gnat/"]
 
 [gpr-externals]
-  SDL_PLATFORM = ["linux", "bsd", "windows", "macosx", "macos_homebrew", "ios", "android"]
+  SDL_PLATFORM = ["linux", "bsd", "windows", "macosx", "macos_homebrew", "macos_ports", "ios", "android"]
   SDL_MODE = ["debug", "release"]
 
 # [gpr-set-externals]
@@ -22,7 +22,7 @@ project-files = ["build/gnat/sdlada.gpr"] #, "build/gnat/"]
 [gpr-set-externals.'case(os)']
   linux   = { SDL_PLATFORM = "linux" }
   windows = { SDL_PLATFORM = "windows" }
-  macos   = { SDL_PLATFORM = "macos_homebrew" }
+  # macos   = { SDL_PLATFORM = "macos_homebrew" }
 
 [[actions]]
   type = "pre-build"
