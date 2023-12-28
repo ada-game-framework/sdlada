@@ -15,8 +15,10 @@ begin
 
    --  Endian-ness.
    SDL.Log.Put_Debug ("Bit Order              : " & System.Bit_Order'Image (Endian));
+   pragma Warnings (Off, "condition is always False");
    SDL.Log.Put_Debug ("...in other words      : " &
                       (if Endian = System.High_Order_First then "Big-endian" else "Little-endian"));
+   pragma Warnings (On, "condition is always False");
 
    --  CPU Info.
    SDL.Log.Put_Debug ("CPU count              : "  & Positive'Image (SDL.CPUS.Count));
