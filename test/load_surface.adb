@@ -1,4 +1,4 @@
-with Ada.Real_Time; use Ada.Real_Time;
+with Ada.Real_Time;
 with Interfaces.C;
 with SDL;
 with SDL.Events.Events;
@@ -57,6 +57,7 @@ begin
          --  60 Hz refresh rate (set to anything you like)
 
          use type SDL.Events.Keyboards.Key_Codes;
+         use type Ada.Real_Time.Time;
       begin
          Window_Surface := W.Get_Surface;
 
