@@ -19,6 +19,7 @@ library project SDLAda is
    for Source_Dirs  use ("../../src",
                          "../../src/audio",
                          "../../src/events",
+                         "../../src/inputs",
                          "gen/src/",
                          Source_Platform,
 
