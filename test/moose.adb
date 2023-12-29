@@ -1,3 +1,6 @@
+--------------------------------------------------------------------------------------------------------------------
+--  This source code is subject to the Zlib license, see the LICENCE file in the root of this directory.
+--------------------------------------------------------------------------------------------------------------------
 with Ada.Text_IO.Text_Streams;
 with SDL.Log;
 
