@@ -18,6 +18,7 @@ library project SDLAda is
    for Languages    use ("Ada", "C");
    for Source_Dirs  use ("../../src",
                          "../../src/audio",
+                         "../../src/events",
                          "gen/src/",
                          Source_Platform,
 
