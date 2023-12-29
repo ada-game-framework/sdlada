@@ -20,6 +20,7 @@ library project SDLAda is
                          "../../src/audio",
                          "../../src/events",
                          "../../src/inputs",
+                         "../../src/rwops",
                          "gen/src/",
                          Source_Platform,
 
