@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------------------------------------------
 --  This source code is subject to the Zlib license, see the LICENCE file in the root of this directory.
 --------------------------------------------------------------------------------------------------------------------
-with Ada.Real_Time; use Ada.Real_Time;
+with Ada.Real_Time;
 with Ada.Unchecked_Conversion;
 with Interfaces.C;
 with Moose;
@@ -34,6 +34,8 @@ procedure Stream is
       Start_Time       : Ada.Real_Time.Time;
       End_Time         : Ada.Real_Time.Time;
       Colour           : SDL.Video.Palettes.RGB_Colour;
+
+      use type Ada.Real_Time.Time;
    begin
       Start_Time := Ada.Real_Time.Clock;
 
@@ -57,7 +59,8 @@ procedure Stream is
       end loop;
 
       End_Time := Ada.Real_Time.Clock;
-      SDL.Log.Put_Debug ("Update_Texture_1 took " & To_Duration (End_Time - Start_Time)'Img & " seconds.");
+      SDL.Log.Put_Debug ("Update_Texture_1 took " &
+        Ada.Real_Time.To_Duration (End_Time - Start_Time)'Img & " seconds.");
    end Update_Texture_1;
 
    package Texture_2D is new SDL.Video.Pixels.Texture_Data
@@ -78,6 +81,8 @@ procedure Stream is
       Colour           : SDL.Video.Palettes.RGB_Colour;
       Actual_Pixels    : Moose.Texture_2D_Array (1 .. Moose.Moose_Size.Height, 1 .. Moose.Moose_Size.Width) with
         Address => To_Address (Pixels);
+
+      use type Ada.Real_Time.Time;
    begin
       Start_Time := Ada.Real_Time.Clock;
 
@@ -94,7 +99,8 @@ procedure Stream is
       end loop;
 
       End_Time := Ada.Real_Time.Clock;
-      SDL.Log.Put_Debug ("Update_Texture_2 took " & To_Duration (End_Time - Start_Time)'Img & " seconds.");
+      SDL.Log.Put_Debug ("Update_Texture_2 took " &
+        Ada.Real_Time.To_Duration (End_Time - Start_Time)'Img & " seconds.");
    end Update_Texture_2;
 
    use type Moose.Moose_Frames;
@@ -197,13 +203,16 @@ begin
             End_Time      : Ada.Real_Time.Time;
             Actual_Pixels : Moose.Texture_2D_Array (1 .. Moose.Moose_Size.Height, 1 .. Moose.Moose_Size.Width) with
               Address => To_Address (Pixels);
+
+            use type Ada.Real_Time.Time;
          begin
             Start_Time := Ada.Real_Time.Clock;
 
             Actual_Pixels := Moose.Cache (Moose.Moose_Frame);
 
             End_Time := Ada.Real_Time.Clock;
-            SDL.Log.Put_Debug ("Update_Texture_3 took " & To_Duration (End_Time - Start_Time)'Img & " seconds.");
+            SDL.Log.Put_Debug ("Update_Texture_3 took " &
+              Ada.Real_Time.To_Duration (End_Time - Start_Time)'Img & " seconds.");
          end Update_Texture_3;
 
          Texture.Unlock;
