@@ -16,7 +16,10 @@ library project SDLAda is
    end case;
 
    for Languages    use ("Ada", "C");
-   for Source_Dirs  use ("../../src", Source_Platform, "gen/src/",
+   for Source_Dirs  use ("../../src",
+                         "../../src/audio",
+                         "gen/src/",
+                         Source_Platform,
 
                          --  For SDL.Image.
                          "../../src/image",
