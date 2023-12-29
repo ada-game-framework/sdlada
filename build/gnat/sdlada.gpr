@@ -21,6 +21,7 @@ library project SDLAda is
                          "../../src/events",
                          "../../src/inputs",
                          "../../src/rwops",
+                         "../../src/video",
                          "gen/src/",
                          Source_Platform,
 
