@@ -55,13 +55,24 @@ These options will differ depending on operating system. SDL3 seems like it migh
 
 #### MacOS
 
-SDLAda's alire.toml is set up to use the Homebrew libs, so you need to install those first.
+SDLAda's alire.toml is set up to use the Homebrew and MacPorts distributions, so you need to install the dependencies first.
+
+##### Home Brew
 
 ```
 brew install sdl2
 brew install sdl2_ttf
 brew install sdl2_image
 brew install sdl2_mixer
+```
+
+##### Mac Ports
+
+```
+sudo port install libsdl2
+sudo port install libsdl2_ttf
+sudo port install libsdl2_image
+sudo port install libsdl2_mixer
 ```
 
 ## Installation
