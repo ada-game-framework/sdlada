@@ -47,6 +47,17 @@ package SDL.Video.Windows is
    Mouse_Focus         : constant Window_Flags := 16#0000_0400#;
    Full_Screen_Desktop : constant Window_Flags := Full_Screen or 16#0000_1000#;
    Foreign             : constant Window_Flags := 16#0000_0800#; --  TODO: Not implemented yet.
+   Allow_High_DPI      : constant Window_Flags := 16#0000_2000#;
+   Mouse_Capture       : constant Window_Flags := 16#0000_4000#;
+   Always_On_Top       : constant Window_Flags := 16#0000_8000#;
+   Skip_Taskbar        : constant Window_Flags := 16#0001_0000#;
+   Utility             : constant Window_Flags := 16#0002_0000#;
+   Tool_Tip            : constant Window_Flags := 16#0004_0000#;
+   Pop_Up_Menu         : constant Window_Flags := 16#0008_0000#;
+   Keyboard_Grabbed    : constant Window_Flags := 16#0010_0000#;
+   Vulkan              : constant Window_Flags := 16#1000_0000#;
+   Metal               : constant Window_Flags := 16#2000_0000#;
+
 
    --  TODO: This isn't raising any exception when I pass a different value for some reason.
    subtype Full_Screen_Flags is Window_Flags with
