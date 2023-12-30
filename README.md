@@ -122,7 +122,7 @@ Anything listed here is a question of whether it's required.
 
 ## [Current version](http://www.semver.org)
 
-v2.5.17
+v2.5.18
 
 ## Versions tested against
 
