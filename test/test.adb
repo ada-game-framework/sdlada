@@ -87,7 +87,7 @@ begin
          use type SDL.Inputs.Joysticks.GUIDs;
       begin
          if Total_Sticks = 0 then
-            SDL.Log.Put_Debug ("No Joysticks    : ");
+            SDL.Log.Put_Debug ("Joysticks       : None");
          else
             SDL.Log.Put_Debug ("Joystick polling: " & Boolean'Image (SDL.Events.Joysticks.Is_Polling_Enabled));
             SDL.Log.Put_Debug ("Total Joysticks : " & SDL.Inputs.Joysticks.Devices'Image (Total_Sticks));
