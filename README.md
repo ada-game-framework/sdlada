@@ -20,6 +20,8 @@ able to use the library however they wish without restrictions.
 
 ## Building
 
+### Makefile
+
 There are a number of variables which can be set to control the compilation:
 
 * SDL_PLATFORM = Can be set to one of the following values: linux, windows, macosx, macos_homebrew, ios or android
@@ -52,6 +54,19 @@ $ sdl2-config --libs
 ```
 
 These options will differ depending on operating system. SDL3 seems like it might operate in a bit more of a portable way.
+
+#### Linking
+
+To link an application with sdlada, you will need to add ```-largs $(sdl2-config) --libs``` to command line:
+
+```bash
+$ cd <game|app dir>
+$ alr build -- -largs $(sdl2-config) --libs
+```
+
+You'll also need to add ```-lSDL2_image```, ```-lSDL2_ttf``` and ```-lSDL2_mixer``` for your platform. TODO: Fix this.
+
+This will only be required for the time being.
 
 #### MacOS
 
