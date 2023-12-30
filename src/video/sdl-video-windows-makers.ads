@@ -31,6 +31,7 @@ package SDL.Video.Windows.Makers is
      Inline => True;
 
    --  Create a window from an existing window created in some other way.
+   --  See: https://github.com/Lucretia/sdlada/issues/16#issuecomment-364142941
    procedure Create (Win : in out Window; Native : in Native_Window) with
      Inline => True;
 
