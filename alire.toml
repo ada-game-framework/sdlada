@@ -34,4 +34,5 @@ project-files = ["build/gnat/sdlada.gpr"] #, "build/gnat/"]
   libsdl2 = "^2.0.0"
   libsdl2_ttf = "^2.0.0"
   libsdl2_image = "^2.0.0"
+  libsdl2_mixer = "^2.0.0"
   make = "*" # Required for post-fetch actions
