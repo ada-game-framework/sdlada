@@ -61,7 +61,7 @@ To link an application with sdlada, you will need to add ```-largs $(sdl2-config
 
 ```bash
 $ cd <game|app dir>
-$ alr build -- -largs $(sdl2-config) --libs
+$ alr build -- -largs $(sdl2-config --libs)
 ```
 
 You'll also need to add ```-lSDL2_image```, ```-lSDL2_ttf``` and ```-lSDL2_mixer``` for your platform. TODO: Fix this.
