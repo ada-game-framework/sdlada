@@ -57,7 +57,7 @@ These options will differ depending on operating system. SDL3 seems like it migh
 
 #### Linking
 
-To link an application with sdlada, you will need to add ```-largs $(sdl2-config) --libs``` to command line:
+To link an application with sdlada, you will need to add ```-largs $(sdl2-config --libs)``` to command line:
 
 ```bash
 $ cd <game|app dir>
