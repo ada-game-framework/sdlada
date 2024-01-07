@@ -22,9 +22,10 @@ project-files = ["build/gnat/sdlada.gpr"] #, "build/gnat/"]
 [gpr-set-externals.'case(os)']
   linux   = { SDL_PLATFORM = "linux" }
   windows = { SDL_PLATFORM = "windows" }
-[gpr-set-externals.'case(distribution)']
-  homebrew = { SDL_PLATFORM = "macos_homebrew" }
-  macports = { SDL_PLATFORM = "macos_ports" }
+  macos   = { SDL_PLATFORM = "macosx" }
+# [gpr-set-externals.'case(distribution)']
+#   homebrew = { SDL_PLATFORM = "macos_homebrew" }
+#   macports = { SDL_PLATFORM = "macos_ports" }
 
 [[actions]]
   type = "pre-build"
