@@ -27,6 +27,13 @@ jobs:
         alr --non-interactive toolchain --select gnat_native
         alr --non-interactive toolchain --select gprbuild
     -
+      name: Install SDL2 components
+      run: |
+        brew install sdl2
+        brew install sdl2_image
+        brew install sdl2_mixer
+        brew install sdl2_ttf
+    -
       name: Build and run
       run: |
         eval $(brew shellenv)
