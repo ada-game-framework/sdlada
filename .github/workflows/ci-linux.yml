@@ -1,0 +1,32 @@
+---
+
+name: CI Linux
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    name: CI on linux
+
+    runs-on: ubuntu-latest
+
+    steps:
+    -
+      name: Checkout
+      uses: actions/checkout@v2
+    -
+      name: alire-project/setup-alire
+      uses: alire-project/setup-alire@v1
+    -
+      name: Install toolchain
+      run: |
+        alr --non-interactive config --global --set toolchain.assistant false
+        alr --non-interactive toolchain --install gnat_native
+        alr --non-interactive toolchain --install gprbuild
+        alr --non-interactive toolchain --select gnat_native
+        alr --non-interactive toolchain --select gprbuild
+    -
+      name: Build and run
+      run: |
+        alr --non-interactive build
