@@ -37,3 +37,8 @@ project-files = ["build/gnat/sdlada.gpr"] #, "build/gnat/"]
   libsdl2_image = "^2.0.0"
   libsdl2_mixer = "^2.0.0"
   make = "*" # Required for post-fetch actions
+
+[environment.'case(distribution)'.msys2.C_INCLUDE_PATH]
+# sdlada expects SDL2 headers to be in the C_INCLUDE_PATH but the option
+# used in the project file ("-I/usr/include/SDL2") doesn't work with msys2
+append = "${DISTRIB_ROOT}/mingw64/include/SDL2"
