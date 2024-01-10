@@ -488,6 +488,9 @@ package body SDL.Video.Surfaces is
    begin
       if Self.Internal /= null and then Self.Owns then
          SDL_Free_Surface (Self.Internal);
+
+         --  Make sure the surface cannot be free'd again, which would cause a "use after free" crash.
+         Self.Internal := null;
       end if;
    end Finalize;
 end SDL.Video.Surfaces;
