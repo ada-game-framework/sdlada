@@ -1,11 +1,7 @@
 /***********************************************************************************************************************
  *  This source code is subject to the Zlib license, see the LICENCE file in the root of this directory.
  **********************************************************************************************************************/
-#ifdef __APPLE__
 #include <SDL2/SDL.h>
-#else
-#include <SDL.h>
-#endif
 
 /* We need to define some constants here so we can get access to the values that in #define form from Ada.
  */

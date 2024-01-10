@@ -1,0 +1,43 @@
+---
+
+name: CI macOS
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    name: CI on macOS
+
+    runs-on: macos-latest
+
+    steps:
+    -
+      name: Checkout
+      uses: actions/checkout@v2
+    -
+      name: alire-project/setup-alire
+      uses: alire-project/setup-alire@v1
+    -
+      name: Install toolchain
+      run: |
+        alr --non-interactive config --global --set toolchain.assistant false
+        alr --non-interactive toolchain --install gnat_native
+        alr --non-interactive toolchain --install gprbuild
+        alr --non-interactive toolchain --select gnat_native
+        alr --non-interactive toolchain --select gprbuild
+    -
+      name: Install SDL2 components
+      run: |
+        brew install sdl2
+        brew install sdl2_image
+        brew install sdl2_mixer
+        brew install sdl2_ttf
+    -
+      name: Build and run
+      run: |
+        eval $(brew shellenv)
+        export C_INCLUDE_PATH=$HOMEBREW_PREFIX/include
+        export CPP_INCLUDE_PATH=$HOMEBREW_PREFIX/include
+        export LIBRARY_PATH=$HOMEBREW_PREFIX/lib
+        alr --non-interactive build
