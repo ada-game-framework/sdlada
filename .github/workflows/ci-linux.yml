@@ -3,7 +3,7 @@
 name: CI Linux
 
 on:
-  workflow_call:
+  workflow_dispatch:
   pull_request:
 
 jobs:
