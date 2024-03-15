@@ -29,7 +29,10 @@ library project SDLAda is
                          "../../src/image",
 
                          --  For SDL.TTF.
-                         "../../src/ttf");
+                         "../../src/ttf",
+
+                         --  For SDL.Mixer.
+                         "../../src/mixer");
    for Library_Name use "sdlada";
    for Object_Dir   use "gen/" & Mode & "/lib/.obj";
    for Library_Dir  use "gen/" & Mode &  "/lib";
