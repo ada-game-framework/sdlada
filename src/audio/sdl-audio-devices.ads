@@ -1,10 +1,6 @@
 --------------------------------------------------------------------------------------------------------------------
 --  This source code is subject to the Zlib license, see the LICENCE file in the root of this directory.
 --------------------------------------------------------------------------------------------------------------------
---  SDL.Audio.Devices
---
---  Operating system audio device access and control.
---------------------------------------------------------------------------------------------------------------------
 with Ada.Finalization;
 with SDL.Audio.Sample_Formats;
 with System;
@@ -65,6 +61,7 @@ package SDL.Audio.Devices is
       Format    : SDL.Audio.Sample_Formats.Sample_Format;
       Channels  : Channel_Counts;
       Samples   : Interfaces.Unsigned_16;
+
       case Mode is
          when Desired =>
             null;
@@ -113,18 +110,21 @@ package SDL.Audio.Devices is
 
    function Get_Status (Self : in Device) return Audio_Status;
 
-   function Get_ID (Self : in Device) return ID;
+   function Get_ID (Self : in Device) return ID with
+     Inline;
 
-   procedure Pause (Self : in Device; Pause : in Boolean);
+   procedure Pause (Self : in Device; Pause : in Boolean) with
+     Inline;
 
-   function Get_Queued_Size (Self : in Device) return Interfaces.Unsigned_32;
+   function Get_Queued_Size (Self : in Device) return Interfaces.Unsigned_32 with
+     Inline;
 
-   procedure Clear_Queued (Self : in Device);
+   procedure Clear_Queued (Self : in Device) with
+     Inline;
 
-   procedure Close (Self : in out Device);
-
+   procedure Close (Self : in out Device) with
+     Inline;
 private
-
    Default_Device : constant C.int := 1;
 
    type User_Data is new Ada.Finalization.Controlled with null record;
@@ -187,5 +187,4 @@ private
 
    overriding
    procedure Finalize (Self : in out Device);
-
 end SDL.Audio.Devices;

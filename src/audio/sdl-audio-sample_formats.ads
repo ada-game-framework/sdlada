@@ -1,10 +1,6 @@
 --------------------------------------------------------------------------------------------------------------------
 --  This source code is subject to the Zlib license, see the LICENCE file in the root of this directory.
 --------------------------------------------------------------------------------------------------------------------
---  SDL.Audio.Frame_Formats
---
---  Access to audio sample data.
---------------------------------------------------------------------------------------------------------------------
 with System;
 
 package SDL.Audio.Sample_Formats is
@@ -105,6 +101,7 @@ package SDL.Audio.Sample_Formats is
       Float      => False,
       Endianness => Big_Endian,
       Signed     => True);
+
    Sample_Format_S32 : constant Sample_Format := Sample_Format_S32LSB;
 
    --
@@ -128,22 +125,24 @@ package SDL.Audio.Sample_Formats is
    --
    --  Native audio byte ordering
    --
-
    Sample_Format_U16SYS : constant Sample_Format :=
      (Bit_Size   => 16,
       Float      => False,
       Endianness => System_Endianness,
       Signed     => False);
+
    Sample_Format_S16SYS : constant Sample_Format :=
      (Bit_Size   => 16,
       Float      => False,
       Endianness => System_Endianness,
       Signed     => True);
+
    Sample_Format_U32SYS : constant Sample_Format :=
      (Bit_Size   => 32,
       Float      => False,
       Endianness => System_Endianness,
       Signed     => False);
+
    Sample_Format_S32SYS : constant Sample_Format :=
      (Bit_Size   => 32,
       Float      => False,

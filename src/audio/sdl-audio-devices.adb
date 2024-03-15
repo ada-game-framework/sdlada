@@ -8,17 +8,11 @@ with Ada.Unchecked_Conversion;
 package body SDL.Audio.Devices is
    package C renames Interfaces.C;
 
-   function Total_Devices
-     (Is_Capture : in Boolean := False)
-      return Positive
-   is
-      function SDL_Get_Num_Audio_Devices
-        (Is_Capture : in SDL_Bool)
-         return C.int
-        with
-          Import        => True,
-          Convention    => C,
-          External_Name => "SDL_GetNumAudioDevices";
+   function Total_Devices (Is_Capture : in Boolean := False) return Positive is
+      function SDL_Get_Num_Audio_Devices (Is_Capture : in SDL_Bool) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GetNumAudioDevices";
 
       Num : constant C.int := SDL_Get_Num_Audio_Devices (To_Bool (Is_Capture));
    begin
@@ -29,25 +23,17 @@ package body SDL.Audio.Devices is
       return Positive (Num);
    end Total_Devices;
 
-   function Get_Name
-     (Index      : in Positive;
-      Is_Capture : in Boolean := False)
-      return String
-   is
-      function SDL_Get_Audio_Device_Name
-        (Index : in C.int; Is_Capture : in SDL_Bool)
-         return C.Strings.chars_ptr
-        with
+
+   function Get_Name (Index : in Positive; Is_Capture : in Boolean := False) return String is
+      function SDL_Get_Audio_Device_Name (Index : in C.int; Is_Capture : in SDL_Bool) return C.Strings.chars_ptr with
           Import        => True,
           Convention    => C,
           External_Name => "SDL_GetAudioDeviceName";
-
-      --  Index is zero based, so need to subtract 1 to correct it.
-      C_Str : constant C.Strings.chars_ptr := SDL_Get_Audio_Device_Name
-        (C.int (Index) - 1, To_Bool (Is_Capture));
    begin
-      return C.Strings.Value (C_Str);
+      --  Index is zero based, so need to subtract 1 to correct it.
+      return C.Strings.Value (SDL_Get_Audio_Device_Name (C.int (Index) - 1, To_Bool (Is_Capture)));
    end Get_Name;
+
 
    function Open
      (Name            : in String := "";
@@ -61,11 +47,10 @@ package body SDL.Audio.Devices is
    is
    begin
       return Result : Device do
-         Open
-           (Result, Name, Is_Capture, Desired,
-            Obtained, Callback, User_Data, Allowed_Changes);
+         Open (Result, Name, Is_Capture, Desired, Obtained, Callback, User_Data, Allowed_Changes);
       end return;
    end Open;
+
 
    procedure Open
      (Self            : out Device;
@@ -105,11 +90,10 @@ package body SDL.Audio.Devices is
 
       Num : C.int;
    begin
-      Desired_Internal :=
-        To_Internal_Spec
-          (From     => Desired,
-           Callback => Callback,
-           External => Self.External'Unchecked_Access);
+      Desired_Internal := To_Internal_Spec
+        (From     => Desired,
+         Callback => Callback,
+         External => Self.External'Unchecked_Access);
 
       if Name /= "" then
          Num := SDL_Open_Audio_Device
@@ -136,11 +120,9 @@ package body SDL.Audio.Devices is
       Internal_Open (Self, Num, Callback, User_Data);
    end Open;
 
-   procedure Queue
-     (Self : in Device;
-      Data : aliased in Buffer_Type)
-   is
-      use Interfaces;
+
+   procedure Queue (Self : in Device; Data : aliased in Buffer_Type) is
+      use type Interfaces.Unsigned_32;
 
       function SDL_Queue_Audio
         (Dev  : in ID;
@@ -163,6 +145,7 @@ package body SDL.Audio.Devices is
          raise Audio_Device_Error with SDL.Error.Get;
       end if;
    end Queue;
+
 
    procedure Internal_Callback
      (External    : in External_Data_Ptr;
@@ -187,24 +170,25 @@ package body SDL.Audio.Devices is
       External.Callback (External.User_Data, Ada_Array.all);
    end Internal_Callback;
 
+
    function Get_Status (Self : in Device) return Audio_Status is
-      function SDL_Get_Audio_Device_Status (Dev : in ID) return Audio_Status
-        with
-          Import        => True,
-          Convention    => C,
-          External_Name => "SDL_GetAudioDeviceStatus";
+      function SDL_Get_Audio_Device_Status (Dev : in ID) return Audio_Status with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GetAudioDeviceStatus";
    begin
       return SDL_Get_Audio_Device_Status (Self.Internal);
    end Get_Status;
+
 
    function Get_ID (Self : in Device) return ID is
    begin
       return Self.Internal;
    end Get_ID;
 
+
    procedure Pause (Self : in Device; Pause : in Boolean) is
-      procedure SDL_Pause_Audio_Device (Dev : in ID; P : in SDL_Bool)
-      with
+      procedure SDL_Pause_Audio_Device (Dev : in ID; P : in SDL_Bool) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_PauseAudioDevice";
@@ -212,10 +196,9 @@ package body SDL.Audio.Devices is
       SDL_Pause_Audio_Device (Self.Internal, To_Bool (Pause));
    end Pause;
 
+
    function Get_Queued_Size (Self : in Device) return Interfaces.Unsigned_32 is
-      function SDL_Get_Queued_Audio_Size (Dev : in ID)
-         return Interfaces.Unsigned_32
-      with
+      function SDL_Get_Queued_Audio_Size (Dev : in ID) return Interfaces.Unsigned_32 with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetQueuedAudioSize";
@@ -223,9 +206,9 @@ package body SDL.Audio.Devices is
       return SDL_Get_Queued_Audio_Size (Self.Internal);
    end Get_Queued_Size;
 
+
    procedure Clear_Queued (Self : in Device) is
-      procedure SDL_Clear_Queued_Audio (Dev : in ID)
-      with
+      procedure SDL_Clear_Queued_Audio (Dev : in ID) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_ClearQueuedAudio";
@@ -233,29 +216,31 @@ package body SDL.Audio.Devices is
       SDL_Clear_Queued_Audio (Self.Internal);
    end Clear_Queued;
 
+
    procedure Close (Self : in out Device) is
-      procedure SDL_Close_Audio_Device (Dev : in ID)
-      with
+      procedure SDL_Close_Audio_Device (Dev : in ID) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_CloseAudioDevice";
    begin
       SDL_Close_Audio_Device (Self.Internal);
+
       Self.Is_Open := False;
    end Close;
+
 
    procedure Internal_Open
      (Self      : out Device;
       Num       : in C.int;
       Callback  : in Audio_Callback;
-      User_Data : in User_Data_Access)
-   is
+      User_Data : in User_Data_Access) is
    begin
       Self.Internal := ID (Num);
       Self.Is_Open := True;
       Self.External.Callback := Callback;
       Self.External.User_Data := User_Data;
    end Internal_Open;
+
 
    function To_Internal_Spec
      (From     : in Desired_Spec;
@@ -268,11 +253,11 @@ package body SDL.Audio.Devices is
          Result.Format    := From.Format;
          Result.Channels  := From.Channels;
          Result.Samples   := From.Samples;
-         Result.Callback  :=
-           (if Callback /= null then Internal_Callback'Access else null);
+         Result.Callback  := (if Callback /= null then Internal_Callback'Access else null);
          Result.User_Data := External;
       end return;
    end To_Internal_Spec;
+
 
    function To_External_Spec (From : Internal_Spec) return Obtained_Spec is
    begin
@@ -288,6 +273,7 @@ package body SDL.Audio.Devices is
       end return;
    end To_External_Spec;
 
+
    overriding
    procedure Finalize (Self : in out Device) is
    begin
@@ -295,5 +281,4 @@ package body SDL.Audio.Devices is
          Self.Close;
       end if;
    end Finalize;
-
 end SDL.Audio.Devices;
