@@ -605,17 +605,12 @@ package body SDL.Video.GL is
    end Unbind_Texture;
 
    function Get_Sub_Program (Name : in String) return Access_To_Sub_Program is
-      function SDL_GL_Get_Proc_Address (P : in C.Strings.chars_ptr) return Access_To_Sub_Program with
+      function SDL_GL_Get_Proc_Address (P : in C.char_array) return Access_To_Sub_Program with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GL_GetProcAddress";
-
-      C_Name_Str  : C.Strings.chars_ptr            := C.Strings.New_String (Name);
-      Sub_Program : constant Access_To_Sub_Program := SDL_GL_Get_Proc_Address (C_Name_Str);
    begin
-      C.Strings.Free (C_Name_Str);
-
-      return Sub_Program;
+      return SDL_GL_Get_Proc_Address (C.To_C (Name));
    end Get_Sub_Program;
 
    function Supports (Extension : in String) return Boolean is
@@ -681,6 +676,11 @@ package body SDL.Video.GL is
       SDL_GL_Swap_Window (Get_Internal_Window (Window));
    end Swap;
 
+   function SDL_GL_Load_Library (P : in C.char_array) return C.int with
+     Import        => True,
+     Convention    => C,
+     External_Name => "SDL_GL_LoadLibrary";
+
    function SDL_GL_Load_Library (P : in C.Strings.chars_ptr) return C.int with
      Import        => True,
      Convention    => C,
@@ -696,12 +696,8 @@ package body SDL.Video.GL is
    end Load_Library;
 
    procedure Load_Library (Path : in String) is
-      C_Name_Str : C.Strings.chars_ptr := C.Strings.New_String (Path);
-      Result     : constant C.int      := SDL_GL_Load_Library (C_Name_Str);
    begin
-      C.Strings.Free (C_Name_Str);
-
-      if Result /= SDL.Success then
+      if SDL_GL_Load_Library (C.To_C (Path)) /= SDL.Success then
          raise SDL_GL_Error with "Unable to load OpenGL library """ & Path & '"';
       end if;
    end Load_Library;

@@ -37,24 +37,16 @@ package body SDL.RWops is
    function Preferences_Path (Organisation : in UTF_Strings.UTF_String;
                               Application  : in UTF_Strings.UTF_String) return UTF_Strings.UTF_String
    is
-      function SDL_Get_Pref_Path (Organisation : in C.Strings.chars_ptr;
-                                  Application  : in C.Strings.chars_ptr) return C.Strings.chars_ptr with
+      function SDL_Get_Pref_Path (Organisation : in C.char_array;
+                                  Application  : in C.char_array) return C.Strings.chars_ptr with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetPrefPath";
 
-      C_Organisation : C.Strings.chars_ptr;
-      C_Application  : C.Strings.chars_ptr;
       C_Path         : C.Strings.chars_ptr;
    begin
-      C_Organisation := C.Strings.New_String (Organisation);
-      C_Application  := C.Strings.New_String (Application);
-
-      C_Path := SDL_Get_Pref_Path (Organisation => C_Organisation,
-                                   Application  => C_Application);
-
-      C.Strings.Free (C_Organisation);
-      C.Strings.Free (C_Application);
+      C_Path := SDL_Get_Pref_Path (Organisation => C.To_C (Organisation),
+                                   Application  => C.To_C (Application));
 
       if C_Path = C.Strings.Null_Ptr then
          raise RWops_Error with SDL.Error.Get;

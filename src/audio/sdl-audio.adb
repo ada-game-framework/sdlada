@@ -13,15 +13,15 @@ package body SDL.Audio is
         Convention    => C,
         External_Name => "SDL_AudioInit";
 
-      C_Str  : C.Strings.chars_ptr := C.Strings.Null_Ptr;
+      function SDL_Audio_Init (C_Name : in C.char_array) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_AudioInit";
+
       Result : C.int;
    begin
       if Name /= "" then
-         C_Str := C.Strings.New_String (Name);
-
-         Result := SDL_Audio_Init (C_Name => C_Str);
-
-         C.Strings.Free (C_Str);
+         Result := SDL_Audio_Init (C.To_C (Name));
       else
          Result := SDL_Audio_Init (C_Name => C.Strings.Null_Ptr);
       end if;

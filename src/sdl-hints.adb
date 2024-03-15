@@ -58,59 +58,41 @@ package body SDL.Hints is
    end Value;
 
    function Get (Name : in Hint) return String is
-      function SDL_Get_Hint (C_Str : in C.Strings.chars_ptr) return C.Strings.chars_ptr with
+      function SDL_Get_Hint (C_Str : in C.char_array) return C.Strings.chars_ptr with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetHint";
 
-      C_Hint_Str : C.Strings.chars_ptr          := C.Strings.New_String (Value (H => Name));
-      C_Str      : constant C.Strings.chars_ptr := SDL_Get_Hint (C_Hint_Str);
+      C_Str : constant C.Strings.chars_ptr := SDL_Get_Hint (C.To_C (Value (Name)));
    begin
       if C_Str = C.Strings.Null_Ptr then
          return "";
       end if;
 
-      C.Strings.Free (C_Hint_Str);
-
       return C.Strings.Value (C_Str);
    end Get;
 
    procedure Set (Name : in Hint; Value : in String) is
-      function SDL_Set_Hint (Name, Value : in C.Strings.chars_ptr) return SDL_Bool with
+      function SDL_Set_Hint (Name, Value : in C.char_array) return SDL_Bool with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_SetHint";
 
-      C_Hint_Str  : C.Strings.chars_ptr := C.Strings.New_String (Hints.Value (Name));
-      C_Value_Str : C.Strings.chars_ptr := C.Strings.New_String (Value);
-      Result      : constant SDL_Bool   := SDL_Set_Hint
-        (Name  => C_Hint_Str,
-         Value => C_Value_Str);
+      Result : constant SDL_Bool := SDL_Set_Hint (C.To_C (Hints.Value (Name)), C.To_C (Value));
    begin
-      C.Strings.Free (C_Hint_Str);
-      C.Strings.Free (C_Value_Str);
-
       if Result = SDL_False then
          raise Hint_Error with SDL.Error.Get;
       end if;
    end Set;
 
    procedure Set (Name : in Hint; Value : in String; Priority : in Priorities) is
-      function SDL_Set_Hint (Name, Value : in C.Strings.chars_ptr; P : in Priorities) return SDL_Bool with
+      function SDL_Set_Hint (Name, Value : in C.char_array; P : in Priorities) return SDL_Bool with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_SetHintWithPriority";
 
-      C_Hint_Str  : C.Strings.chars_ptr := C.Strings.New_String (Hints.Value (Name));
-      C_Value_Str : C.Strings.chars_ptr := C.Strings.New_String (Value);
-      Result      : constant SDL_Bool   := SDL_Set_Hint
-        (Name  => C_Hint_Str,
-         Value => C_Value_Str,
-         P     => Priority);
+      Result : constant SDL_Bool := SDL_Set_Hint (C.To_C (Hints.Value (Name)), C.To_C (Value), Priority);
    begin
-      C.Strings.Free (C_Hint_Str);
-      C.Strings.Free (C_Value_Str);
-
       if Result = SDL_False then
          raise Hint_Error with SDL.Error.Get;
       end if;

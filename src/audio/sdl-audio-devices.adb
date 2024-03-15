@@ -78,6 +78,18 @@ package body SDL.Audio.Devices is
       Allowed_Changes : in Changes := None)
    is
       function SDL_Open_Audio_Device
+        (C_Name     : in C.char_array;
+         Is_Capture : in SDL_Bool;
+         D          : in Internal_Spec_Ptr;
+         O          : in Internal_Spec_Ptr;
+         AC         : in Changes)
+         return C.int
+        with
+          Import        => True,
+          Convention    => C,
+          External_Name => "SDL_OpenAudioDevice";
+
+      function SDL_Open_Audio_Device
         (C_Name     : in C.Strings.chars_ptr;
          Is_Capture : in SDL_Bool;
          D          : in Internal_Spec_Ptr;
@@ -91,7 +103,6 @@ package body SDL.Audio.Devices is
 
       Desired_Internal, Obtained_Internal : aliased Internal_Spec;
 
-      C_Str  : C.Strings.chars_ptr := C.Strings.Null_Ptr;
       Num : C.int;
    begin
       Desired_Internal :=
@@ -101,16 +112,12 @@ package body SDL.Audio.Devices is
            External => Self.External'Unchecked_Access);
 
       if Name /= "" then
-         C_Str := C.Strings.New_String (Name);
-
          Num := SDL_Open_Audio_Device
-           (C_Name     => C_Str,
+           (C_Name     => C.To_C (Name),
             Is_Capture => To_Bool (Is_Capture),
             D          => Desired_Internal'Unrestricted_Access,
             O          => Obtained_Internal'Unchecked_Access,
             AC         => Allowed_Changes);
-
-         C.Strings.Free (C_Str);
       else
          Num := SDL_Open_Audio_Device
            (C_Name     => C.Strings.Null_Ptr,

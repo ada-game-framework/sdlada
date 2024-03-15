@@ -22,15 +22,15 @@ package body SDL.Video is
         Convention    => C,
         External_Name => "SDL_VideoInit";
 
-      C_Str  : C.Strings.chars_ptr := C.Strings.Null_Ptr;
+      function SDL_Video_Init (C_Name : in C.char_array) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_VideoInit";
+
       Result : C.int;
    begin
       if Name /= "" then
-         C_Str := C.Strings.New_String (Name);
-
-         Result := SDL_Video_Init (C_Name => C_Str);
-
-         C.Strings.Free (C_Str);
+         Result := SDL_Video_Init (C.To_C (Name));
       else
          Result := SDL_Video_Init (C_Name => C.Strings.Null_Ptr);
       end if;

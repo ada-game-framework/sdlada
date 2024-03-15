@@ -2,7 +2,7 @@
 --  This source code is subject to the Zlib license, see the LICENCE file in the root of this directory.
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Unchecked_Conversion;
-with Interfaces.C.Strings;
+--  with Interfaces.C.Strings;
 with SDL.Error;
 with System;
 
@@ -10,16 +10,12 @@ package body SDL.Libraries is
    package C renames Interfaces.C;
 
    procedure Load (Self : out Handles; Name : in String) is
-      function SDL_Load_Object (C_Str : in C.Strings.chars_ptr) return Internal_Handle_Access with
+      function SDL_Load_Object (C_Str : in C.char_array) return Internal_Handle_Access with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_LoadObject";
-
-      C_Str : C.Strings.chars_ptr := C.Strings.New_String (Name);
    begin
-      Self.Internal := SDL_Load_Object (C_Str);
-
-      C.Strings.Free (C_Str);
+      Self.Internal := SDL_Load_Object (C.To_C (Name));
 
       if Self.Internal = null then
          raise Library_Error with SDL.Error.Get;
@@ -42,24 +38,20 @@ package body SDL.Libraries is
       function To_Sub_Program is new Ada.Unchecked_Conversion
         (Source => System.Address, Target => Access_To_Sub_Program);
 
-      function SDL_Load_Function (H : in Internal_Handle_Access; N : in C.Strings.chars_ptr)
+      function SDL_Load_Function (H : in Internal_Handle_Access; N : in C.char_array)
                                   return System.Address with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_LoadFunction";
 
-      C_Str    : C.Strings.chars_ptr     := C.Strings.New_String (Name);
-      Func_Ptr : constant System.Address := SDL_Load_Function (From_Library.Internal, C_Str);
+      Func_Ptr : constant System.Address := SDL_Load_Function (From_Library.Internal, C.To_C (Name));
 
       use type System.Address;
    begin
-      C.Strings.Free (C_Str);
-
       if Func_Ptr = System.Null_Address then
          raise Library_Error with SDL.Error.Get;
       end if;
 
-      --        return To_Sub_Program (Func_Ptr);
       return To_Sub_Program (Func_Ptr);
    end Load_Sub_Program;
 
