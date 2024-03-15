@@ -1,6 +1,10 @@
 --------------------------------------------------------------------------------------------------------------------
 --  This source code is subject to the Zlib license, see the LICENCE file in the root of this directory.
 --------------------------------------------------------------------------------------------------------------------
+--  SDL.Audio.Devices
+--
+--  Operating system audio device access and control.
+--------------------------------------------------------------------------------------------------------------------
 with Ada.Finalization;
 with SDL.Audio.Sample_Formats;
 with System;
