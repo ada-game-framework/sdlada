@@ -137,7 +137,7 @@ Anything listed here is a question of whether it's required.
 
 ## [Current version](http://www.semver.org)
 
-v2.5.20
+v2.5.22
 
 ## Versions tested against
 

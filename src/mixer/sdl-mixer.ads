@@ -3,12 +3,10 @@
 --------------------------------------------------------------------------------------------------------------------
 --  SDL.Mixer
 --------------------------------------------------------------------------------------------------------------------
-
 with Interfaces;
 with System;
 
 package SDL.Mixer is
-
    Mixer_Error : exception;
 
    type Init_Flag is new Interfaces.Unsigned_32;
@@ -19,12 +17,15 @@ package SDL.Mixer is
    Init_MID  : constant Init_Flag := 16#0000_0020#;
    Init_Opus : constant Init_Flag := 16#0000_0040#;
 
-   procedure Initialise (Flags : in Init_Flag);
    --  Loads dynamic libraries and prepares them for use. Flags should be no or
    --  more flags from Init_Flags OR'd together. Raises Mixer_Error on failure.
+   procedure Initialise (Flags : in Init_Flag);
 
-   procedure Quit;
    --  Unloads libraries loaded with Initialize.
+   procedure Quit with
+     Import        => True,
+     Convention    => C,
+     External_Name => "Mix_Quit";
 
    type Sample_Rate     is new Interfaces.Integer_32;
    type Bits_Per_Sample is new Interfaces.Unsigned_8;
@@ -57,6 +58,7 @@ package SDL.Mixer is
       end record;
 
    type Channel_Count   is range 1 .. 8;
+
    type Volume_Type     is range 0 .. 128
      with Size => 8;
 
@@ -69,33 +71,34 @@ package SDL.Mixer is
 
    type Chunk_Type is private;
 
-   type Fading_Type is (No_Fading, Fading_Out, Fading_In);
    --  The different fading types supported
+   type Fading_Type is (No_Fading, Fading_Out, Fading_In);
 
+   --  Open the mixer with a certain audio format
    procedure Open (Frequency  : in Sample_Rate;
                    Format     : in Audio_Format;
                    Channels   : in Channel_Count;
                    Chunk_Size : in Integer);
-   --  Open the mixer with a certain audio format
 
+   --  Open the mixer with specific device and certain audio format
    procedure Open (Frequency       : in Sample_Rate;
                    Format          : in Audio_Format;
                    Channels        : in Channel_Count;
                    Chunk_Size      : in Integer;
                    Device_Name     : in String;
                    Allowed_Changes : in Integer);
-   --  Open the mixer with specific device and certain audio format
 
-   procedure Close;
    --  Close the mixer, halting all playing audio
+   procedure Close with
+     Import        => True,
+     Convention    => C,
+     External_Name => "Mix_CloseAudio";
 
+   --  Find out what the actual audio device parameters are
    procedure Query_Spec (Frequency : out Sample_Rate;
                          Format    : out Audio_Format;
                          Channels  : out Channel_Count);
-   --  Find out what the actual audio device parameters are
-
 private
-
    type Chunk_Record is
       record
          Allocated : Boolean;
@@ -106,5 +109,4 @@ private
    --  The internal format for an audio chunk
 
    type Chunk_Type is access all Chunk_Record;
-
 end SDL.Mixer;

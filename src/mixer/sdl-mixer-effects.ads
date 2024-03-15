@@ -3,21 +3,13 @@
 --------------------------------------------------------------------------------------------------------------------
 --  SDL.Mixer.Effects
 --------------------------------------------------------------------------------------------------------------------
-
 with SDL.Mixer.Channels;
 
 package SDL.Mixer.Effects is
+   package Ch renames SDL.Mixer.Channels;
 
-   use SDL.Mixer.Channels;
+   Mix_Channel_Post : constant Ch.Channel_Index;
 
-   Mix_Channel_Post : constant Channel_Index;
-
-   type Effect_Function_Access is
-     access procedure (Channel : in C.int;
-                       Stream  : in C.int;
-                       Len     : in C.int;
-                       Udata   : in C.int)
-     with Convention => C;
    --  This is the format of a special effect callback:
    --
    --  Channel is the channel number that your effect is affecting. Stream is
@@ -32,6 +24,12 @@ package SDL.Mixer.Effects is
    --  music for the final output stream.
    --
    --  Do never call SDL.Audio.Lock from your callback function!
+   type Effect_Function_Access is
+     access procedure (Channel : in C.int;
+                       Stream  : in C.int;
+                       Len     : in C.int;
+                       Udata   : in C.int)
+     with Convention => C;
 
    type Effect_Done_Access is
      access procedure (Channel : in C.int;
@@ -48,10 +46,6 @@ package SDL.Mixer.Effects is
    type Distance_Type is new Interfaces.Unsigned_8;
    type Angle_Type    is new Interfaces.Integer_16;
 
-   procedure Register (Channel  : in Channel_Index;
-                       Effect   : in Effect_Function_Access;
-                       Done     : in Effect_Done_Access;
-                       Argument : in Integer);
    --  Register a special effect function. At mixing time, the channel data is
    --  copied into a buffer and passed through each registered effect function.
    --  After it passes through all the functions, it is mixed into the final
@@ -96,17 +90,22 @@ package SDL.Mixer.Effects is
    --
    --  Do never call SDL.Audio.Lock from your callback function!
    --  Raises Mixer_Error if error (no such channel).
+   procedure Register (Channel  : in Ch.Channel_Index;
+                       Effect   : in Effect_Function_Access;
+                       Done     : in Effect_Done_Access;
+                       Argument : in Integer) with
+     Inline;
 
-   procedure Unregister (Channel : in Channel_Index;
-                         Effect  : in Effect_Function_Access);
    --  You may not need to call this explicitly, unless you need to stop an
    --  effect from processing in the middle of a chunk's playback.
    --  Posteffects are never implicitly unregistered as they are for channels,
    --  but they may be explicitly unregistered through this function by
    --  specifying Mix_Channel_Post for a channel.
    --  Raises Mixer_Error if error (no such channel or effect).
+   procedure Unregister (Channel : in Ch.Channel_Index;
+                         Effect  : in Effect_Function_Access) with
+     Inline;
 
-   procedure Unregister_All (Channel : in Channel_Index);
    --  You may not need to call this explicitly, unless you need to stop all
    --  effects from processing in the middle of a chunk's playback. Note that
    --  this will also shut off some internal effect processing, since
@@ -116,16 +115,17 @@ package SDL.Mixer.Effects is
    --  but they may be explicitly unregistered through this function by
    --  specifying Mix_Channel_Post for a channel.
    --  Raises Mixer_Error if error (no such channel).
+   procedure Unregister_All (Channel : in Ch.Channel_Index) with
+     Inline;
 
-   procedure Set_Post_Mix (Mix_Function : in Mix_Function_Access;
-                           Argument     : in Integer);
    --  Set a function that is called after all mixing is performed.
    --  This can be used to provide real-time visual display of the audio stream
    --  or add a custom mixer filter for the stream data.
    --  Raises Mixer_Error if error.
+   procedure Set_Post_Mix (Mix_Function : in Mix_Function_Access;
+                           Argument     : in Integer) with
+     Inline;
 
-   procedure Set_Panning (Channel     : in Channel_Index;
-                          Left, Right : in Volumen_Type);
    --  Set the panning of a channel. The left and right channels are specified
    --  as integers between 0 and 255, quietest to loudest, respectively.
    --
@@ -150,9 +150,10 @@ package SDL.Mixer.Effects is
    --  Raises Mixer_Error if error (no such channel or
    --  SDL.Mixer.Effects.Register fails). Note that an audio device in mono
    --  mode is a no-op, but this call will return successful in that case.
+   procedure Set_Panning (Channel     : in Ch.Channel_Index;
+                          Left, Right : in Volumen_Type) with
+     Inline;
 
-   procedure Set_Distance (Channel  : in Channel_Index;
-                           Distance : in Distance_Type);
    --  Set the "distance" of a channel. Distance is an integer from 0 to 255
    --  that specifies the location of the sound in relation to the listener.
    --  Distance 0 is overlapping the listener, and 255 is as far away as possible
@@ -178,10 +179,10 @@ package SDL.Mixer.Effects is
    --
    --  Raises Mixer_Error if error (no such channel or
    --  SDL.Mixer.Effects.Register fails).
+   procedure Set_Distance (Channel  : in Ch.Channel_Index;
+                           Distance : in Distance_Type) with
+     Inline;
 
-   procedure Set_Position (Channel  : in Channel_Index;
-                           Angle    : in Angle_Type;
-                           Distance : in Distance_Type);
    --  Set the position of a channel. Angle is an integer from 0 to 360, that
    --  specifies the location of the sound in relation to the listener. Angle
    --  will be reduced as neccesary (540 becomes 180 degrees, -100 becomes
@@ -218,9 +219,11 @@ package SDL.Mixer.Effects is
    --
    --  Raises Mixer_Error if error (no such channel or
    --  SDL.Mixer.Effects.Register fails).
+   procedure Set_Position (Channel  : in Ch.Channel_Index;
+                           Angle    : in Angle_Type;
+                           Distance : in Distance_Type) with
+     Inline;
 
-   procedure Set_Reverse_Stereo (Channel : in Channel_Index;
-                                 Flip    : in Boolean);
    --  Causes a channel to reverse its stereo. This is handy if the user has his
    --  speakers hooked up backwards, or you would like to have a minor bit of
    --  psychedelia in your sound code.  :)  Calling this function with (flip)
@@ -240,9 +243,13 @@ package SDL.Mixer.Effects is
    --  SDL.Mixer.Effects.Register fails).
    --  Note that an audio device in mono mode is a no-op, but this call will
    --  return successful in that case.
+   procedure Reverse_Stereo (Channel : in Ch.Channel_Index; Flip : in Boolean) with
+     Inline;
 
+   procedure Set_Reverse_Stereo (Channel : in Ch.Channel_Index;
+                                 Flip    : in Boolean) renames Reverse_Stereo;  --  Deprecated
 private
+   use type Ch.Channel_Index;
 
-   Mix_Channel_Post : constant Channel_Index := -2;
-
+   Mix_Channel_Post : constant Ch.Channel_Index := -2;
 end SDL.Mixer.Effects;

@@ -8,7 +8,6 @@
 with SDL.Versions;
 
 package SDL.Mixer.Versions is
-
    --  These allow the user to determine which version of SDLAda_Mixer they compiled with.
    Compiled_Major : constant SDL.Versions.Version_Level with
      Import        => True,
@@ -29,6 +28,6 @@ package SDL.Mixer.Versions is
                                                 Minor => Compiled_Minor,
                                                 Patch => Compiled_Patch);
 
-   procedure Linked_With (Info : in out SDL.Versions.Version);
-
+   procedure Linked_With (Info : in out SDL.Versions.Version) with
+     Inline;
 end SDL.Mixer.Versions;
