@@ -7,7 +7,7 @@ with SDL.RWops;
 
 package SDL.Mixer.Music is
    --  These are types of music files (not libraries used to load them)
-   type Music_Type_Type is
+   type Music_Type_Type is  --  TODO: Fix this name.
      (None,
       CMD,
       WAV,
@@ -20,7 +20,7 @@ package SDL.Mixer.Music is
       MUS_MODPLUG_Unused,
       Opus);
 
-   --  Mod_C renames Tracker;
+   function Mod_C return Music_Type_Type renames Tracker;  --  Deprecated, terrible name.
 
    type Music_Type is private;
 
