@@ -25,14 +25,8 @@ library project SDLAda is
                          "gen/src/",
                          Source_Platform,
 
-                         --  For SDL.Image.
-                         "../../src/image",
-
                          --  For SDL.TTF.
-                         "../../src/ttf",
-
-                         --  For SDL.Mixer.
-                         "../../src/mixer");
+                         "../../src/ttf");
    for Library_Name use "sdlada";
    for Object_Dir   use "gen/" & Mode & "/lib/.obj";
    for Library_Dir  use "gen/" & Mode &  "/lib";
