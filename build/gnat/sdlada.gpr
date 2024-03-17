@@ -23,10 +23,8 @@ library project SDLAda is
                          "../../src/rwops",
                          "../../src/video",
                          "gen/src/",
-                         Source_Platform,
+                         Source_Platform);
 
-                         --  For SDL.TTF.
-                         "../../src/ttf");
    for Library_Name use "sdlada";
    for Object_Dir   use "gen/" & Mode & "/lib/.obj";
    for Library_Dir  use "gen/" & Mode &  "/lib";
@@ -35,8 +33,8 @@ library project SDLAda is
    package Compiler is
       Common_Switches := ("-ffunction-sections", "-fdata-sections");
       C_Switches      := ();
-      Ada_Switches    := ("-gnat2012", "-gnata", "-gnato", "-gnatwa",
-                          "-gnaty", "-gnaty-s", "-gnatyO", "-gnatyM120", "-gnatyx");
+      Ada_Switches    := ("-gnat2012", "-gnata", "-gnato", "-gnatwa", "-gnatwaJ", "-gnaty", "-gnaty-s", "-gnatyO",
+                          "-gnatyM120", "-gnatyx");
 
       case Mode is
          when "debug" =>
