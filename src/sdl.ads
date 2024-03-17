@@ -124,8 +124,7 @@ private
    type SDL_Bool is (SDL_False, SDL_True) with
      Convention => C;
 
-   function To_Bool (Value : in Boolean) return SDL_Bool with
-     Inline;
+   function To_Bool (Value : in Boolean) return SDL_Bool is (if Value then SDL_True else SDL_False);
 
    --  The next value is used in mapping the Ada types onto the C types, it is the word size used for all data
    --  in SDL, i.e. all data is 4 byte aligned so it works with 32-bit architectures.
