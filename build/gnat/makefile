@@ -45,7 +45,7 @@ all: tools $(LIB_NAME) tests
 # SDL library
 
 $(LIB_NAME): sdlada.gpr $(GEN_KB)
-	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
+	$(GPRMAKE) -p -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
 		-Psdlada.gpr
 
 .PHONY: clean-lib
@@ -69,7 +69,7 @@ $(GEN_KB): gen/$(SDL_MODE)/tools/gen_keyboard
 	./gen/$(SDL_MODE)/tools/gen_keyboard > $@
 
 gen/$(SDL_MODE)/tools/gen_keyboard:
-	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
+	$(GPRMAKE) -p -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
 		-Ptools.gpr
 
 .PHONY: clean-kb clean-tools
@@ -89,13 +89,13 @@ tests: $(LIB_NAME) tests.gpr $(TESTS_SRCS)
 .PHONY: $(TESTS_SRCS)
 
 tests.gpr: $(TESTS_SRCS) gen/$(SDL_MODE)/test/libtestmaths.so
-	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
+	$(GPRMAKE) -p -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
 		-Ptests.gpr ${SDL2_CONFIG}
 
 # Maths library
 
 gen/$(SDL_MODE)/test/libtestmaths.so: $(SRC_DIR)/test/maths/maths.ad[sb] $(SRC_DIR)/test/maths/maths.c
-	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
+	$(GPRMAKE) -p -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
 		-Ptest_maths_build.gpr
 
 .PHONY: clean-tests
@@ -110,7 +110,7 @@ clean-tests:
 unit_tests: $(LIB_NAME) build_unit_tests/unit_tests
 
 build_unit_tests/unit_tests:
-	$(GPRMAKE) -p -gnat2012 -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
+	$(GPRMAKE) -p -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
 		-Punit_tests.gpr ${SDL2_CONFIG}
 
 .PHONY: clean-unit_tests
