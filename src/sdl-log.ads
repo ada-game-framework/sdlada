@@ -83,12 +83,20 @@ package SDL.Log is
      External_Name => "SDL_LogResetPriorities";
 
    --  Set the priority of all the log categories to the given Priority.
-   procedure Set (Priority : in Priorities) with
-     Inline => True;
+   procedure Set_All_Priorities (Priority : in Priorities) with
+     Import        => True,
+     Convention    => C,
+     External_Name => "SDL_LogSetAllPriority";
+
+   procedure Set (Priority : in Priorities) renames Set_All_Priorities;  --  Deprecated
 
    --  Set the the given log Category to the given Priority.
-   procedure Set (Category : in Categories; Priority : in Priorities) with
-     Inline => True;
+   procedure Set_Priority (Category : in Categories; Priority : in Priorities) with
+     Import        => True,
+     Convention    => C,
+     External_Name => "SDL_LogSetPriority";
+
+   procedure Set (Category : in Categories; Priority : in Priorities) renames Set_Priority;  --  Deprecated
 
    --  Logging callbacks.
    --  TODO: complete this.

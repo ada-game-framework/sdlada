@@ -91,25 +91,6 @@ package body SDL.Log is
    end Put_Warn;
 
 
-   procedure Set (Priority : in Priorities) is
-      procedure SDL_Set_All_Priorities (Priority : in Priorities) with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_LogSetAllPriority";
-   begin
-      SDL_Set_All_Priorities (Priority);
-   end Set;
-
-
-   procedure Set (Category : in Categories; Priority : in Priorities) is
-      procedure SDL_Set_Priority (Category : in Categories; Priority : in Priorities) with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_LogSetPriority";
-   begin
-      SDL_Set_Priority (Category, Priority);
-   end Set;
-
    --  Logging.
    --  A local record type which gets initialised with an access to callback
    --  and a copy to the actual user data.
