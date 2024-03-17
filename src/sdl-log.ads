@@ -14,7 +14,8 @@ package SDL.Log is
 
    --  Had to make this into a type with constants due to the abuse of
    --  the C enumeration.
-   type Categories is range 0 .. 2 ** 32;
+   type Categories is range 0 .. 2 ** 32 with
+     Convention => C;
 
    Application    : constant Categories := 0;
    Errors         : constant Categories := 1;
