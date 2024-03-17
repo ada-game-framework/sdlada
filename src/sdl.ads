@@ -93,11 +93,12 @@ package SDL is
 
    function Initialise_Sub_System (Flags : in Init_Flags) return Boolean;
 
-   procedure Finalise_Sub_System
-     (Flags : in Init_Flags) with
+   procedure Quit_Sub_System (Flags : in Init_Flags) with
      Import        => True,
      Convention    => C,
      External_Name => "SDL_QuitSubSystem";
+
+   procedure Finalise_Sub_System (Flags : in Init_Flags) renames Quit_Sub_System;  --  Deprecated.
 
    --  Get which sub-systems were initialised.
    function What_Was_Initialised return Init_Flags with
