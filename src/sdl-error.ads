@@ -18,4 +18,8 @@ package SDL.Error is
 
    function Get return String with
      Inline;
+
+   --  Warning! This function does 3 copies of the string.
+   procedure Get (Buffer : in out String) with
+     Inline;
 end SDL.Error;
