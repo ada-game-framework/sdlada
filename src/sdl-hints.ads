@@ -8,6 +8,9 @@
 package SDL.Hints is
    pragma Preelaborate;
 
+   --  TODO: Redo this package.
+   --        This will be a complete API change.
+
    --  TODO: Make this more robust using more functions and platform specific
    --  packages with error checking on returned values?
    --  Would be nice to have the compiler only allow that which is allowed on
@@ -48,7 +51,12 @@ package SDL.Hints is
      Convention    => C,
      External_Name => "SDL_ClearHints";
 
-   function Get (Name : in Hint) return String;
-   procedure Set (Name : in Hint; Value : in String);
-   procedure Set (Name : in Hint; Value : in String; Priority : in Priorities);
+   function Get (Name : in Hint) return String with
+     Inline => True;
+
+   procedure Set (Name : in Hint; Value : in String) with
+     Inline => True;
+
+   procedure Set (Name : in Hint; Value : in String; Priority : in Priorities) with
+     Inline => True;
 end SDL.Hints;

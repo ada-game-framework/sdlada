@@ -77,23 +77,19 @@ package body SDL.Hints is
         Import        => True,
         Convention    => C,
         External_Name => "SDL_SetHint";
-
-      Result : constant SDL_Bool := SDL_Set_Hint (C.To_C (Hints.Value (Name)), C.To_C (Value));
    begin
-      if Result = SDL_False then
+      if SDL_Set_Hint (C.To_C (Hints.Value (Name)), C.To_C (Value)) = SDL_False then
          raise Hint_Error with SDL.Error.Get;
       end if;
    end Set;
 
    procedure Set (Name : in Hint; Value : in String; Priority : in Priorities) is
-      function SDL_Set_Hint (Name, Value : in C.char_array; P : in Priorities) return SDL_Bool with
+      function SDL_Set_Hint_With_Priority (Name, Value : in C.char_array; P : in Priorities) return SDL_Bool with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_SetHintWithPriority";
-
-      Result : constant SDL_Bool := SDL_Set_Hint (C.To_C (Hints.Value (Name)), C.To_C (Value), Priority);
    begin
-      if Result = SDL_False then
+      if SDL_Set_Hint_With_Priority (C.To_C (Hints.Value (Name)), C.To_C (Value), Priority) = SDL_False then
          raise Hint_Error with SDL.Error.Get;
       end if;
    end Set;
