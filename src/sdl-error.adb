@@ -8,12 +8,12 @@ package body SDL.Error is
    package C renames Interfaces.C;
 
    procedure Set (S : in String) is
-      procedure SDL_Set_Error (C_Str : in C.char_array) with
+      procedure SDL_Set_Error (Fmt_Str, C_Str : in C.char_array) with
         Import        => True,
-        Convention    => C,
+        Convention    => C_Variadic_1,
         External_Name => "SDL_SetError";
    begin
-      SDL_Set_Error (C.To_C (S));
+      SDL_Set_Error (C.To_C ("%s"), C.To_C (S));
    end Set;
 
 
