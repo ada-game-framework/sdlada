@@ -13,7 +13,9 @@ package SDL.Error is
      Convention    => C,
      External_Name => "SDL_ClearError";
 
-   procedure Set (S : in String);
+   procedure Set (S : in String) with
+     Inline;
 
-   function Get return String;
+   function Get return String with
+     Inline;
 end SDL.Error;
