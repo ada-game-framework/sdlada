@@ -57,5 +57,4 @@ package SDL.Versions is
    function Revision return Revision_Level;
 
    procedure Linked_With (Info : in out Version);
-
 end SDL.Versions;
