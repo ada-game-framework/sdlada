@@ -91,6 +91,16 @@ package body SDL.Log is
    end Put_Warn;
 
 
+   procedure Reset_Priorities is
+      procedure SDL_Reset_Priorities with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_LogResetPriorities";
+   begin
+      SDL_Reset_Priorities;
+   end Reset_Priorities;
+
+
    procedure Set (Priority : in Priorities) is
       procedure SDL_Set_All_Priorities (Priority : in Priorities) with
         Import        => True,

@@ -78,9 +78,7 @@ package SDL.Log is
 
    --
    procedure Reset_Priorities with
-     Import        => True,
-     Convention    => C,
-     External_Name => "SDL_LogResetPriorities";
+     Inline => True;
 
    --  Set the priority of all the log categories to the given Priority.
    procedure Set (Priority : in Priorities) with
