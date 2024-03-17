@@ -17,22 +17,24 @@ package SDL.Log is
    type Categories is range 0 .. 2 ** 32 with
      Convention => C;
 
-   Application    : constant Categories := 0;
-   Errors         : constant Categories := 1;
-   Assert         : constant Categories := 2;
-   System         : constant Categories := 3;
-   Audio          : constant Categories := 4;
-   Video          : constant Categories := 5;
-   Render         : constant Categories := 6;
-   Input          : constant Categories := 7;
-   Test           : constant Categories := 8;
+   Application     : constant Categories := 0;
+   Errors          : constant Categories := 1;
+   Assert          : constant Categories := 2;
+   System          : constant Categories := 3;
+   Audio           : constant Categories := 4;
+   Video           : constant Categories := 5;
+   Render          : constant Categories := 6;
+   Input           : constant Categories := 7;
+   Test            : constant Categories := 8;
 
    --  Reserved categories.
-   Reserved_First : constant Categories := 9;
-   Reserved_Last  : constant Categories := 18;
+   Reserved_First  : constant Categories := 9;
+   Reserved_Last   : constant Categories := 18;
 
    --  Custom categories.
-   subtype Custom_Categories is Categories range Reserved_Last .. Categories'Last;
+   Custom_Category : constant Categories := 19;
+
+   subtype Custom_Categories is Categories range Custom_Category .. Categories'Last;
 
    type Priorities is (Verbose, Debug, Info, Warn, Error, Critical) with
      Convention => C;
