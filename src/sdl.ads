@@ -84,10 +84,12 @@ package SDL is
 
    function Initialise (Flags : in Init_Flags := Enable_Everything) return Boolean;
 
-   procedure Finalise with
+   procedure Quit with
      Import        => True,
      Convention    => C,
      External_Name => "SDL_Quit";
+
+   procedure Finalise renames Quit;  --  Deprecated.
 
    function Initialise_Sub_System (Flags : in Init_Flags) return Boolean;
 
@@ -98,21 +100,27 @@ package SDL is
      External_Name => "SDL_QuitSubSystem";
 
    --  Get which sub-systems were initialised.
-   function Was_Initialised return Init_Flags;
+   function What_Was_Initialised return Init_Flags with
+     Inline;
+
+   function Was_Initialised return Init_Flags renames What_Was_Initialised;  --  Deprecated.
 
    --  Check whether a set of sub-systems were initialised.
-   function Was_Initialised (Flags : in Init_Flags) return Boolean;
+   function Was_Initialised (Flags : in Init_Flags) return Boolean with
+     Inline;
 private
-   Success   : constant Interfaces.C.int := 0;
+   --  If any SDL2 function returns 0 for success, use this constant for readability.
+   Success : constant Interfaces.C.int := 0;
 
    type SDL_Bool is (SDL_False, SDL_True) with
      Convention => C;
 
-   function To_Bool (Value : in Boolean) return SDL_Bool;
+   function To_Bool (Value : in Boolean) return SDL_Bool with
+     Inline;
 
    --  The next value is used in mapping the Ada types onto the C types, it is the word size used for all data
    --  in SDL, i.e. all data is 4 byte aligned so it works with 32-bit architectures.
-   Word      : constant := 4;
+   Word        : constant := 4;
 
    --  These constants are internal to the events system.
    SDL_Query   : constant C.int := -1;
