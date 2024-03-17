@@ -82,7 +82,8 @@ package SDL is
    function "/" (Left : in Sizes; Scale : in Positive_Dimension) return Sizes is
      (Sizes'(Width => Left.Width / Scale, Height => Left.Height / Scale));
 
-   function Initialise (Flags : in Init_Flags := Enable_Everything) return Boolean;
+   function Initialise (Flags : in Init_Flags := Enable_Everything) return Boolean with
+     Inline;
 
    procedure Quit with
      Import        => True,
@@ -91,7 +92,8 @@ package SDL is
 
    procedure Finalise renames Quit;  --  Deprecated.
 
-   function Initialise_Sub_System (Flags : in Init_Flags) return Boolean;
+   function Initialise_Sub_System (Flags : in Init_Flags) return Boolean with
+     Inline;
 
    procedure Quit_Sub_System (Flags : in Init_Flags) with
      Import        => True,

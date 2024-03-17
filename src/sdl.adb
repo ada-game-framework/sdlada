@@ -7,10 +7,8 @@ package body SDL is
         Import        => True,
         Convention    => C,
         External_Name => "SDL_Init";
-
-      Result : constant C.int := SDL_Init (Flags);
    begin
-      return (Result = Success);
+      return (SDL_Init (Flags) = Success);
    end Initialise;
 
 
@@ -19,10 +17,8 @@ package body SDL is
         Import        => True,
         Convention    => C,
         External_Name => "SDL_InitSubSystem";
-
-      Result : constant C.int := SDL_Init_Sub_System (Flags);
    begin
-      return (Result = Success);
+      return (SDL_Init_Sub_System (Flags) = Success);
    end Initialise_Sub_System;
 
 
