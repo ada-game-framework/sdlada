@@ -100,6 +100,9 @@ package SDL is
 
    procedure Finalise_Sub_System (Flags : in Init_Flags) renames Quit_Sub_System;  --  Deprecated.
 
+   --  TODO: Is this required?
+   --  TODO: SDL_SetMainReady
+
    --  Get which sub-systems were initialised.
    function What_Was_Initialised return Init_Flags with
      Inline;
@@ -109,6 +112,9 @@ package SDL is
    --  Check whether a set of sub-systems were initialised.
    function Was_Initialised (Flags : in Init_Flags) return Boolean with
      Inline;
+
+   --  TODO: Is this required? UWP has been dropped by MS and SDL3.
+   --  TODO: SDL_WinRTRunApp
 private
    --  If any SDL2 function returns 0 for success, use this constant for readability.
    Success : constant Interfaces.C.int := 0;
