@@ -92,6 +92,7 @@ package body SDL.Log is
 
 
    --  Logging.
+   --  TODO: Fix this.
    --  A local record type which gets initialised with an access to callback
    --  and a copy to the actual user data.
    type Local_User_Data is
@@ -101,25 +102,30 @@ package body SDL.Log is
       end record with
      Convention => C;
 
-   procedure Local_Callback
+   procedure Log_Output_Function
      (User_Data : in Local_User_Data;
       Category  : in Categories;
       Priority  : in Priorities;
       Message   : in C.Strings.chars_ptr) with
      Convention => C;
 
-   procedure Local_Callback
+   procedure Log_Output_Function
      (User_Data : in Local_User_Data;
       Category  : in Categories;
       Priority  : in Priorities;
       Message   : in C.Strings.chars_ptr) is
    begin
       --  Call the Ada callback now.
-      User_Data.Callback
-        (User_Data.Data,
-         Category,
-         Priority,
-         C.Strings.Value (Message));
-   end Local_Callback;
-   pragma Unreferenced (Local_Callback);  --  TODO: Fix me!
+      User_Data.Callback (User_Data.Data,
+                          Category,
+                          Priority,
+                          C.Strings.Value (Message));
+   end Log_Output_Function;
+
+   procedure Local_Callback
+     (User_Data : in Local_User_Data;
+      Category  : in Categories;
+      Priority  : in Priorities;
+      Message   : in C.Strings.chars_ptr) renames Log_Output_Function with  --  Deprecated.
+        Unreferenced;
 end SDL.Log;
