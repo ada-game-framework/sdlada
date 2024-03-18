@@ -16,11 +16,13 @@ begin
    SDL.Versions.Linked_With (Info => Linked_Version);
 
    SDL.Log.Put_Debug ("Revision       : " & SDL.Versions.Revision);
-   SDL.Log.Put_Debug ("Linked with    : " & ASF.Trim (Linked_Version.Major'Image, Ada.Strings.Left) &
-                        "." & ASF.Trim (Linked_Version.Minor'Image, Ada.Strings.Left) &
-                        "." & ASF.Trim (Linked_Version.Patch'Image, Ada.Strings.Left));
-   SDL.Log.Put_Debug ("Compiled with  : " & ASF.Trim (SDL.Versions.Compiled_Major'Image, Ada.Strings.Left) &
-                        "." & ASF.Trim (SDL.Versions.Compiled_Minor'Image, Ada.Strings.Left) &
-                        "." & ASF.Trim (SDL.Versions.Compiled_Patch'Image, Ada.Strings.Left));
+   SDL.Log.Put_Debug ("Linked with    : " &
+     ASF.Trim (Linked_Version.Major'Image, Ada.Strings.Left) & "." &
+     ASF.Trim (Linked_Version.Minor'Image, Ada.Strings.Left) & "." &
+     ASF.Trim (Linked_Version.Patch'Image, Ada.Strings.Left));
+   SDL.Log.Put_Debug ("Compiled with  : " &
+     ASF.Trim (SDL.Versions.Compiled_Major'Image, Ada.Strings.Left) & "." &
+     ASF.Trim (SDL.Versions.Compiled_Minor'Image, Ada.Strings.Left) & "." &
+     ASF.Trim (SDL.Versions.Compiled_Patch'Image, Ada.Strings.Left));
    SDL.Finalise;
 end Version;
