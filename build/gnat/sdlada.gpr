@@ -49,6 +49,17 @@ library project SDLAda is
             Common_Switches := Common_Switches & ("-O2");
       end case;
 
+      --  All GCC releases up to & including 13.2 give errors when
+      --  using SDK 15, because Apple have used a new macro
+      --  unsupported by GCC.
+      case Platform is
+         when "macos_homebrew" | "macos_ports" =>
+            for Driver ("C") use "clang";
+
+         when others =>
+            null;
+      end case;
+
       --  These flags require checking on all platforms as they're taken directly from sdl2-config.
       case Platform is
          when "linux" | "bsd" | "android" | "windows" =>
