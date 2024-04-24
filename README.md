@@ -312,9 +312,11 @@ SDL_GetDisplayBounds                  |   y   |       |
 SDL_GetDisplayMode                    |   y   |       |
 SDL_GetDisplayName                    |   n   |       |
 SDL_GetError                          |   y   |       |
+SDL_GetErrorMsg                       |   y   |       |
 SDL_GetEventFilter                    |   n   |       |
 SDL_GetGlobalMouseState               |   y   |       |
 SDL_GetHint                           |   y   |       |
+SDL_GetHintBoolean                    |   n   |       |
 SDL_GetKeyFromName                    |   y   |       |
 SDL_GetKeyFromScancode                |   y   |       |
 SDL_GetKeyName                        |   y   |       |
