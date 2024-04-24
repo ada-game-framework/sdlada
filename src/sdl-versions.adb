@@ -13,10 +13,8 @@ package body SDL.Versions is
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetRevision";
-
-      C_Str : constant C.Strings.chars_ptr := SDL_Get_Revision;
    begin
-      return C.Strings.Value (C_Str);
+      return C.Strings.Value (SDL_Get_Revision);
    end Revision;
 
 
@@ -31,15 +29,11 @@ package body SDL.Versions is
 
 
    procedure Linked_With (Info : in out Version) is
-      procedure SDL_Get_Version (V : access Version) with
+      procedure SDL_Get_Version (V : in out Version) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetVersion";
-
-      Data : aliased Version;
    begin
-      SDL_Get_Version (Data'Access);
-
-      Info := Data;
+      SDL_Get_Version (Info);
    end Linked_With;
 end SDL.Versions;

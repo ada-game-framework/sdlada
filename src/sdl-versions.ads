@@ -19,6 +19,7 @@ package SDL.Versions is
      Convention => C;
 
    --  TODO: Check this against the library, as they use an int.
+   --  Deprecated: DO NOT USE.
    type Revision_Level is mod 2 ** 32;
 
    type Version is
@@ -54,7 +55,8 @@ package SDL.Versions is
    function Revision return String with
      Inline => True;
 
-   function Revision return Revision_Level;
+   function Revision return Revision_Level;  --  Deprecated.
 
-   procedure Linked_With (Info : in out Version);
+   procedure Linked_With (Info : in out Version) with
+     Inline => True;
 end SDL.Versions;
