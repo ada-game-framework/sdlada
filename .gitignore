@@ -1,8 +1,9 @@
-build/gnat/gen
-thirdparty
 *~
 design_briefs
 wiki
 *.bak
 *.sh
 *.patch
+.gitignore
+thirdparty
+build/
