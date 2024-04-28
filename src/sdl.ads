@@ -6,9 +6,11 @@
 --  Ada 2012 bindings to the SDL 2.x.y library.
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C;
+with SDL_Linker;
 
 package SDL is
    pragma Pure;
+   pragma Linker_Options (SDL_Linker.Options);
 
    package C renames Interfaces.C;
 
