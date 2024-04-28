@@ -12,17 +12,6 @@ SRC_DIR		=	../..
 
 SRCS		=	src/sdl.ads
 
-TESTS_SRCS	=	$(SRC_DIR)/test/clipboard.adb \
-			$(SRC_DIR)/test/error.adb \
-			$(SRC_DIR)/test/libraries.adb \
-			$(SRC_DIR)/test/platform.adb \
-			$(SRC_DIR)/test/stream.adb \
-			$(SRC_DIR)/test/stream2.adb \
-			$(SRC_DIR)/test/test.adb \
-			$(SRC_DIR)/test/version.adb \
-			$(SRC_DIR)/test/maths/maths.ad[sb] \
-			$(SRC_DIR)/test/maths/maths.c
-
 GEN_KB		=	gen/src/sdl-events-keyboards.ads
 
 ifeq (,$(filter $(SDL_PLATFORM), "linux" "windows" "bsd" "android"))
@@ -36,7 +25,7 @@ LIB_NAME	=	lib/libadasdl.a
 
 .PHONY: sdlada.gpr test_maths_build.gpr test.gpr tools.gpr
 
-all: tools $(LIB_NAME) tests
+all: tools $(LIB_NAME)
 
 # TODO: Fix the compiler so we actually get shared libs!
 #
@@ -82,29 +71,6 @@ clean-tools:
 	$(GPRCLEAN) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptools.gpr
 
 #####################################################################################
-# Tests
-
-tests: $(LIB_NAME) tests.gpr $(TESTS_SRCS)
-
-.PHONY: $(TESTS_SRCS)
-
-tests.gpr: $(TESTS_SRCS) gen/$(SDL_MODE)/test/libtestmaths.so
-	$(GPRMAKE) -p -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
-		-Ptests.gpr ${SDL2_CONFIG}
-
-# Maths library
-
-gen/$(SDL_MODE)/test/libtestmaths.so: $(SRC_DIR)/test/maths/maths.ad[sb] $(SRC_DIR)/test/maths/maths.c
-	$(GPRMAKE) -p -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) \
-		-Ptest_maths_build.gpr
-
-.PHONY: clean-tests
-
-clean-tests:
-	$(GPRCLEAN) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptests.gpr
-	$(GPRCLEAN) -XSDL_MODE=$(SDL_MODE) -XSDL_PLATFORM=$(SDL_PLATFORM) -Ptest_maths_build.gpr
-
-#####################################################################################
 # Unit tests
 
 unit_tests: $(LIB_NAME) build_unit_tests/unit_tests
@@ -130,4 +96,4 @@ install: all
 
 .PHONY: clean
 
-clean: clean-kb clean-tools clean-tests clean-unit_tests clean-lib
+clean: clean-kb clean-tools clean-unit_tests clean-lib
