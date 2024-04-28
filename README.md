@@ -22,6 +22,8 @@ able to use the library however they wish without restrictions.
 
 ### Makefile
 
+This was originally built with the idea that there could be different compilers and their build scripts would go into a ```build/<compiler>``` directory. This can still be built with the makefile, the subsequent extracted components cannot.
+
 There are a number of variables which can be set to control the compilation:
 
 * SDL_PLATFORM = Can be set to one of the following values: linux, windows, macosx, macos_homebrew, ios or android
