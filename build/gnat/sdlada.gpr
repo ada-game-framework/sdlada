@@ -59,7 +59,7 @@ library project SDLAda is
       --  using SDK 15, because Apple have used a new macro
       --  unsupported by GCC.
       case Platform is
-         when "macos_homebrew" | "macos_ports" =>
+         when "macosx" | "macos_homebrew" | "macos_ports" =>
             for Driver ("C") use "clang";
 
          when others =>
