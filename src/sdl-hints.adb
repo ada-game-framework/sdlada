@@ -27,6 +27,7 @@ package body SDL.Hints is
    Joystick_Allow_Background_Events_Name : aliased constant String := "SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS";
    Allow_Topmost_Name                    : aliased constant String := "SDL_ALLOW_TOPMOST";
    Timer_Resolution_Name                 : aliased constant String := "SDL_TIMER_RESOLUTION";
+   Video_High_DPI_Disabled_Name          : aliased constant String := "SDL_VIDEO_HIGHDPI_DISABLED";
 
    type Hint_Names is access constant String;
 

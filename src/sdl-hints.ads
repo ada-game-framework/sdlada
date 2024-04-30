@@ -40,7 +40,9 @@ package SDL.Hints is
       Game_Controller_Config, -- win, mac, linux
       Joystick_Allow_Background_Events,
       Allow_Topmost,
-      Timer_Resolution) with  -- win7 and earlier
+      Timer_Resolution,
+      Video_High_DPI_Disabled
+    ) with  -- win7 and earlier
      Discard_Names => True;
 
    type Priorities is (Default, Normal, Override) with
