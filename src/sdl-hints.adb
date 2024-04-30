@@ -48,7 +48,8 @@ package body SDL.Hints is
       Game_Controller_Config_Name'Access,
       Joystick_Allow_Background_Events_Name'Access,
       Allow_Topmost_Name'Access,
-      Timer_Resolution_Name'Access);
+      Timer_Resolution_Name'Access,
+      Video_High_DPI_Disabled_Name'Access);
 
    function Value (H : in Hint) return String with
      Inline => True;
