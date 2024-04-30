@@ -51,6 +51,10 @@ package SDL.Video.Renderers is
    procedure Set_Draw_Colour (Self : in out Renderer; Colour : in SDL.Video.Palettes.Colour);
 
    --  SDL_GetRendererInfo
+   procedure Get_Output_Size
+     (Self   : in Renderer;
+      Width  : out SDL.Natural_Dimension;
+      Height : out SDL.Natural_Dimension);
 
    procedure Clear (Self : in out Renderer);
 

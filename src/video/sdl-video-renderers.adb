@@ -133,6 +133,27 @@ package body SDL.Video.Renderers is
       end if;
    end Set_Draw_Colour;
 
+
+   procedure Get_Output_Size
+     (Self   : in Renderer;
+      Width  : out SDL.Natural_Dimension;
+      Height : out SDL.Natural_Dimension) is
+
+      function SDL_Get_Renderer_Output_Size (R : in SDL.C_Pointers.Renderer_Pointer;
+                                             W,
+                                             H : out C.int) return C.int with
+         Import        => True,
+         Convention    => C,
+         External_Name => "SDL_GetRendererOutputSize";
+
+      Result : constant C.int := SDL_Get_Renderer_Output_Size (Self.Internal, Width, Height);
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Get_Output_Size;
+
+
    procedure Clear (Self : in out Renderer) is
       function SDL_Render_Clear (R : in SDL.C_Pointers.Renderer_Pointer) return C.int with
         Import        => True,
