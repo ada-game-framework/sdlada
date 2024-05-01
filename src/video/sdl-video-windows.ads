@@ -7,6 +7,7 @@
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Finalization;
 with Ada.Strings.UTF_Encoding;
+with Interfaces;
 private with SDL.C_Pointers;
 with SDL.Video.Displays;
 with SDL.Video.Pixel_Formats;
@@ -19,16 +20,18 @@ package SDL.Video.Windows is
 
    Window_Error : exception;
 
+   use type Interfaces.Unsigned_32;
+
    --  Return a special coordinate value to indicate that you don't care what
    --  the window position is. Note that you can still specify a target
    --  display.
-   function Undefined_Window_Position
-     (Display : Natural := 0) return SDL.Natural_Coordinate;
+   function Undefined_Window_Position (Display : Natural := 0) return SDL.Natural_Coordinate is
+     (C.int (Interfaces.Unsigned_32 (Display) or 16#1FFF_0000#));
 
    --  Return a special coordinate value to indicate that the window position
    --  should be centered.
-   function Centered_Window_Position
-     (Display : Natural := 0) return SDL.Natural_Coordinate;
+   function Centered_Window_Position (Display : Natural := 0) return SDL.Natural_Coordinate is
+     (C.int (Interfaces.Unsigned_32 (Display) or 16#2FFF_0000#));
 
    type Window_Flags is mod 2 ** 32 with
      Convention => C;
