@@ -10,7 +10,7 @@ jobs:
   build:
     name: CI on macOS
 
-    runs-on: macos-latest
+    runs-on: macos-12
 
     steps:
     -
@@ -18,13 +18,11 @@ jobs:
       uses: actions/checkout@v4
     -
       name: alire-project/setup-alire
-      uses: alire-project/setup-alire@v2
+      uses: alire-project/setup-alire@v3
     -
       name: Install toolchain
       run: |
-        alr --non-interactive config --global --set toolchain.assistant false
-        alr --non-interactive toolchain --install gnat_native
-        alr --non-interactive toolchain --install gprbuild
+        alr --non-interactive settings --global --set toolchain.assistant false
         alr --non-interactive toolchain --select gnat_native
         alr --non-interactive toolchain --select gprbuild
     -

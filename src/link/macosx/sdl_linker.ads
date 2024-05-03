@@ -6,5 +6,5 @@
 package SDL_Linker is
    pragma Pure;
 
-   Options : constant String := "-F/Library/Frameworks -framework SDL2";
+   Options : constant String := "-Wl,-F/Library/Frameworks,-framework,SDL2";
 end SDL_Linker;
