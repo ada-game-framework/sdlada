@@ -1,6 +1,6 @@
 ---
 
-name: CI macOS
+name: CI macOS (Homebrew)
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: CI on macOS
+    name: CI on macOS (Homebrew)
 
     runs-on: macos-12
 

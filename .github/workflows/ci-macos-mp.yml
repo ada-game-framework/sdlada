@@ -1,0 +1,38 @@
+---
+
+name: CI macOS (Macports)
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  build:
+    name: CI on macOS (Macports)
+
+    runs-on: macos-12
+
+    steps:
+    -
+      name: Checkout
+      uses: actions/checkout@v4
+    -
+      name: alire-project/setup-alire
+      uses: alire-project/setup-alire@v3
+    -
+      name: Install toolchain
+      run: |
+        alr --non-interactive settings --global --set toolchain.assistant false
+        alr --non-interactive toolchain --select gnat_native
+        alr --non-interactive toolchain --select gprbuild
+    -
+      name: Disable Homebrew
+      run: rm -f $(which brew)
+      shell: bash
+    -
+      name: Install MacPorts
+      uses: melusina-org/setup-macports@v1
+    -
+      name: Build and run
+      run: |
+        alr --non-interactive build

@@ -83,6 +83,10 @@ library project SDLAda is
                                           "-I/opt/local/include",
                                           "-D_REENTRANT");
 
+         when "macosx" =>
+            C_Switches   := C_Switches & ("-F/Library/Frameworks",
+                                          "-D_THREAD_SAFE");
+
          when others =>
             null;
       end case;
