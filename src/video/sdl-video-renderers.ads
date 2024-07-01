@@ -6,6 +6,8 @@
 --  Renderer.
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Finalization;
+with Interfaces.C;
+with Interfaces.C.Strings;
 private with SDL.C_Pointers;
 with SDL.Video.Palettes;
 with SDL.Video.Rectangles;
@@ -14,6 +16,8 @@ with SDL.Video.Windows;
 
 package SDL.Video.Renderers is
    pragma Preelaborate;
+
+   package C renames Interfaces.C;
 
    --  TODO: Finish this.
 
@@ -30,12 +34,26 @@ package SDL.Video.Renderers is
 
    type Renderer_Flip is (None, Horizontal, Vertical, Both);
 
-   --  SDL_RendererInfo
-
    function Total_Drivers return Positive with
      Inline => True;
 
-   --  SDL_GetRenderDriverInfo
+   type Texture_Formats is mod 2 ** 32 with
+     Convention => C;
+
+   type Texture_Format_Arrays is array (0 .. 15) of Texture_Formats with
+     Convention => C;
+
+   type Renderer_Infos is record  --  SDL_RendererInfo
+      Name                : C.Strings.chars_ptr;
+      Flags               : Renderer_Flags;
+      Num_Texture_Formats : Natural;
+      Texture_Formats     : Texture_Format_Arrays;
+      Max_Texture_Width   : Natural_Dimension;
+      Max_Texture_Height  : Natural_Dimension;
+   end record
+     with Convention => C_Pass_By_Copy;
+
+   procedure Get_Driver_Info (Index : Positive; Info : out Renderer_Infos);
 
    type Renderer is new Ada.Finalization.Limited_Controlled with private;
 

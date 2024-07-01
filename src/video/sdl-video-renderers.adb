@@ -1,12 +1,9 @@
 --------------------------------------------------------------------------------------------------------------------
 --  This source code is subject to the Zlib license, see the LICENCE file in the root of this directory.
 --------------------------------------------------------------------------------------------------------------------
-with Interfaces.C;
 with SDL.Error;
 
 package body SDL.Video.Renderers is
-   package C renames Interfaces.C;
-
    use type SDL.C_Pointers.Renderer_Pointer;
 
    type Internal_Flip is mod 2 ** 32 with
@@ -46,6 +43,21 @@ package body SDL.Video.Renderers is
 
       return Positive (Result);
    end Total_Drivers;
+
+
+   procedure Get_Driver_Info (Index : Positive; Info : out Renderer_Infos) is
+      function SDL_Get_Render_Driver_Info (Index : Positive; Info : out Renderer_Infos) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GetRenderDriverInfo";
+
+      Result : constant C.int := SDL_Get_Render_Driver_Info (Index, Info);
+   begin
+      if Result /= SDL.Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Get_Driver_Info;
+
 
    overriding
    procedure Finalize (Self : in out Renderer) is
