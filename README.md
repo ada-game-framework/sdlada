@@ -320,11 +320,11 @@ SDL_GetEventFilter                    |   n   |        |
 SDL_GetGlobalMouseState               |   y   |        |
 SDL_GetHint                           |   y   |        |
 SDL_GetHintBoolean                    |   n   |        |
+SDL_GetKeyboardFocus                  |   y   |        |
+SDL_GetKeyboardState                  |   y   |        |
 SDL_GetKeyFromName                    |   y   |        |
 SDL_GetKeyFromScancode                |   y   |        |
 SDL_GetKeyName                        |   y   |        |
-SDL_GetKeyboardFocus                  |   y   |        |
-SDL_GetKeyboardState                  |   y   |        |
 SDL_GetModState                       |   y   |        |
 SDL_GetMouseFocus                     |   n   |        |
 SDL_GetMouseState                     |   y   |        |
@@ -442,6 +442,7 @@ SDL_IsGameController                  |   y   |        |
 SDL_IsScreenKeyboardShown             |   y   |        |
 SDL_IsScreenSaverEnabled              |   y   |        |
 SDL_IsTextInputActive                 |   y   |        |
+SDL_IsTextInputShown                  |   y   | 2.0.22 |
 SDL_JoystickClose                     |   y   |        |
 SDL_JoystickEventState                |   y   |        |
 SDL_JoystickFromInstanceID            |   n   |        |
@@ -570,6 +571,7 @@ SDL_RenderSetScale                    |   y   |        |
 SDL_RenderSetViewport                 |   y   |        |
 SDL_RenderTargetSupported             |   y   |        |
 SDL_ResetAssertionReport              |   n   |        |
+SDL_ResetKeyboard                     |   y   | 2.24.0 |
 SDL_RestoreWindow                     |   y   |        |
 SDL_SaveAllDollarTemplates            |   n   |        |
 SDL_SaveBMP                           |   n   |        |

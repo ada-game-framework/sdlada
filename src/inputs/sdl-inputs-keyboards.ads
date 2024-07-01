@@ -47,6 +47,16 @@ package SDL.Inputs.Keyboards is
    function Is_Text_Input_Enabled return Boolean with
      Inline => True;
 
+   function Is_Text_Input_Shown return SDL_Bool with
+      Import        => True,
+      Convention    => C,
+      External_Name => "SDL_IsTextInputShown";
+
+   procedure Reset_Keyboard with
+      Import        => True,
+      Convention    => C,
+      External_Name => "SDL_ResetKeyboard";
+
    procedure Set_Text_Input_Rectangle (Rectangle : in SDL.Video.Rectangles.Rectangle) with
      Inline => True;
 
