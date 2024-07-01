@@ -58,7 +58,9 @@ package SDL.Inputs.Keyboards is
       External_Name => "SDL_ResetKeyboard";
 
    procedure Set_Text_Input_Rectangle (Rectangle : in SDL.Video.Rectangles.Rectangle) with
-     Inline => True;
+     Import        => True,
+     Convention    => C,
+     External_Name => "SDL_SetTextInputRect";
 
    procedure Start_Text_Input with
       Import        => True,

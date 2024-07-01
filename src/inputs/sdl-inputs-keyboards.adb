@@ -63,12 +63,8 @@ package body SDL.Inputs.Keyboards is
    end Is_Text_Input_Enabled;
 
 
-   procedure Set_Text_Input_Rectangle (Rectangle : in SDL.Video.Rectangles.Rectangle) is
-      procedure SDL_Set_Text_Input_Rect (Rectangle : in SDL.Video.Rectangles.Rectangle) with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_SetTextInputRect";
-   begin
-      SDL_Set_Text_Input_Rect (Rectangle);
-   end Set_Text_Input_Rectangle;
+   function Is_Text_Input_Shown return SDL_Bool with
+     Import        => True,
+     Convention    => C,
+     External_Name => "SDL_IsTextInputShown";
 end SDL.Inputs.Keyboards;
