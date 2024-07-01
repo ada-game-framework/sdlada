@@ -213,15 +213,10 @@ SDL_CreateCursor                      |   n   |        |
 SDL_CreateMutex                       |   n   |        |
 SDL_CreateRGBSurface                  |   y   |        |
 SDL_CreateRGBSurfaceFrom              |   n   |        |
-SDL_CreateRenderer                    |   y   |        |
 SDL_CreateSemaphore                   |   n   |        |
-SDL_CreateSoftwareRenderer            |   y   |        |
 SDL_CreateSystemCursor                |   y   |        |
-SDL_CreateTexture                     |   y   |        |
-SDL_CreateTextureFromSurface          |   y   |        |
 SDL_CreateThread                      |   n   |        |
 SDL_CreateWindow                      |   y   |        |
-SDL_CreateWindowAndRenderer           |   n   |        |
 SDL_CreateWindowFrom                  |   y   |        |
 SDL_DXGIGetOutputInfo                 |   n   |        |
 SDL_DelEventWatch                     |   n   |        |
@@ -230,9 +225,7 @@ SDL_Delay                             |   n   |        |
 SDL_DequeueAudio                      |   n   |        |
 SDL_DestroyCond                       |   n   |        |
 SDL_DestroyMutex                      |   n   |        |
-SDL_DestroyRenderer                   |   y   |        |
 SDL_DestroySemaphore                  |   n   |        |
-SDL_DestroyTexture                    |   y   |        |
 SDL_DestroyWindow                     |   y   |        |
 SDL_DetachThread                      |   n   |        |
 SDL_Direct3D9GetAdapterIndex          |   n   |        |
@@ -252,7 +245,6 @@ SDL_FreePalette                       |   y   |        |
 SDL_FreeRW                            |   n   |        |      * (implicitly called by RWclose)
 SDL_FreeSurface                       |   y   |        |
 SDL_FreeWAV                           |   n   |        |
-SDL_GL_BindTexture                    |   y   |        |
 SDL_GL_CreateContext                  |   y   |        |
 SDL_GL_DeleteContext                  |   y   |        |
 SDL_GL_ExtensionSupported             |   y   |        |
@@ -268,7 +260,6 @@ SDL_GL_ResetAttributes                |   y   |        |
 SDL_GL_SetAttribute                   |   y   |        |
 SDL_GL_SetSwapInterval                |   y   |        |
 SDL_GL_SwapWindow                     |   y   |        |
-SDL_GL_UnbindTexture                  |   y   |        |
 SDL_GL_UnloadLibrary                  |   y   |        |
 SDL_GameControllerAddMapping          |   y   |        |
 SDL_GameControllerAddMappingsFromFile |   y   |        |
@@ -331,7 +322,6 @@ SDL_GetMouseState                     |   y   |        |
 SDL_GetNumAudioDevices                |   y   |        |
 SDL_GetNumAudioDrivers                |   y   |        |
 SDL_GetNumDisplayModes                |   y   |        |
-SDL_GetNumRenderDrivers               |   y   |        |
 SDL_GetNumTouchDevices                |   n   |        |
 SDL_GetNumTouchFingers                |   n   |        |
 SDL_GetNumVideoDisplays               |   y   |        |
@@ -347,13 +337,6 @@ SDL_GetRGB                            |   y   |        |
 SDL_GetRGBA                           |   y   |        |
 SDL_GetRelativeMouseMode              |   y   |        |
 SDL_GetRelativeMouseState             |   y   |        |
-SDL_GetRenderDrawBlendMode            |   y   |        |
-SDL_GetRenderDrawColor                |   y   |        |
-SDL_GetRenderDriverInfo               |   n   |        |
-SDL_GetRenderTarget                   |   n   |        |
-SDL_GetRenderer                       |   y   |        |
-SDL_GetRendererInfo                   |   n   |        |
-SDL_GetRendererOutputSize             |   n   |        |
 SDL_GetRevision                       |   y   |        |
 SDL_GetRevisionNumber                 |   y   |        |
 SDL_GetScancodeFromKey                |   y   |        |
@@ -363,9 +346,6 @@ SDL_GetSurfaceAlphaMod                |   y   |        |
 SDL_GetSurfaceBlendMode               |   y   |        |
 SDL_GetSurfaceColorMod                |   y   |        |
 SDL_GetSystemRAM                      |   n   |        |
-SDL_GetTextureAlphaMod                |   y   |        |
-SDL_GetTextureBlendMode               |   y   |        |
-SDL_GetTextureColorMod                |   y   |        |
 SDL_GetThreadID                       |   n   |        |
 SDL_GetThreadName                     |   n   |        |
 SDL_GetTicks                          |   n   |        |
@@ -476,7 +456,6 @@ SDL_LockAudio                         |   n   |        |
 SDL_LockAudioDevice                   |   n   |        |
 SDL_LockMutex                         |   n   |        |
 SDL_LockSurface                       |   y   |        |
-SDL_LockTexture                       |   y   |        |
 SDL_Log                               |   y   |        |
 SDL_LogCritical                       |   y   |        |
 SDL_LogDebug                          |   y   |        |
@@ -517,11 +496,11 @@ SDL_PointInRect                       |   n   |        |
 SDL_PollEvent                         |   y   |        |
 SDL_PumpEvents                        |   n   |        |
 SDL_PushEvent                         |   n   |        |
-SDL_QueryTexture                      |   y   |        |
 SDL_QueueAudio                        |   n   |        |
 SDL_Quit                              |   y   |        |
 SDL_QuitRequested                     |   n   |        |
 SDL_QuitSubSystem                     |   y   |        |
+SDL_RenderGetD3D9Device               |   n   |        |
 SDL_REVISION                          |   n   |        |      *
 SDL_RWFromConstMem                    |   n   |        |
 SDL_RWFromFP                          |   n   |        |      * (unix only)
@@ -546,30 +525,6 @@ SDL_RectEmpty                         |   n   |        |
 SDL_RectEquals                        |   n   |        |
 SDL_RegisterEvents                    |   n   |        |
 SDL_RemoveTimer                       |   n   |        |
-SDL_RenderClear                       |   y   |        |
-SDL_RenderCopy                        |   y   |        |
-SDL_RenderCopyEx                      |   y   |        |
-SDL_RenderDrawLine                    |   y   |        |
-SDL_RenderDrawLines                   |   y   |        |
-SDL_RenderDrawPoint                   |   y   |        |
-SDL_RenderDrawPoints                  |   y   |        |
-SDL_RenderDrawRect                    |   y   |        |
-SDL_RenderDrawRects                   |   y   |        |
-SDL_RenderFillRect                    |   y   |        |
-SDL_RenderFillRects                   |   y   |        |
-SDL_RenderGetClipRect                 |   y   |        |
-SDL_RenderGetD3D9Device               |   n   |        |
-SDL_RenderGetLogicalSize              |   y   |        |
-SDL_RenderGetScale                    |   y   |        |
-SDL_RenderGetViewport                 |   y   |        |
-SDL_RenderIsClipEnabled               |   n   |        |
-SDL_RenderPresent                     |   y   |        |
-SDL_RenderReadPixels                  |   n   |        |
-SDL_RenderSetClipRect                 |   y   |        |
-SDL_RenderSetLogicalSize              |   y   |        |
-SDL_RenderSetScale                    |   y   |        |
-SDL_RenderSetViewport                 |   y   |        |
-SDL_RenderTargetSupported             |   y   |        |
 SDL_ResetAssertionReport              |   n   |        |
 SDL_ResetKeyboard                     |   y   | 2.24.0 |
 SDL_RestoreWindow                     |   y   |        |
@@ -596,18 +551,12 @@ SDL_SetModState                       |   y   |        |
 SDL_SetPaletteColors                  |   n   |        |
 SDL_SetPixelFormatPalette             |   n   |        |
 SDL_SetRelativeMouseMode              |   y   |        |
-SDL_SetRenderDrawBlendMode            |   y   |        |
-SDL_SetRenderDrawColor                |   y   |        |
-SDL_SetRenderTarget                   |   y   |        |
 SDL_SetSurfaceAlphaMod                |   y   |        |
 SDL_SetSurfaceBlendMode               |   y   |        |
 SDL_SetSurfaceColorMod                |   y   |        |
 SDL_SetSurfacePalette                 |   n   |        |
 SDL_SetSurfaceRLE                     |   y   |        |
 SDL_SetTextInputRect                  |   y   |        |
-SDL_SetTextureAlphaMod                |   y   |        |
-SDL_SetTextureBlendMode               |   y   |        |
-SDL_SetTextureColorMod                |   y   |        |
 SDL_SetThreadPriority                 |   n   |        |
 SDL_SetWindowBordered                 |   n   |        |
 SDL_SetWindowBrightness               |   y   |        |
@@ -654,11 +603,8 @@ SDL_UnlockAudio                       |   n   |        |
 SDL_UnlockAudioDevice                 |   n   |        |
 SDL_UnlockMutex                       |   n   |        |
 SDL_UnlockSurface                     |   y   |        |
-SDL_UnlockTexture                     |   y   |        |
-SDL_UpdateTexture                     |   n   |        |
 SDL_UpdateWindowSurface               |   n   |        |
 SDL_UpdateWindowSurfaceRects          |   y   |        |
-SDL_UpdateYUVTexture                  |   n   |        |
 SDL_VERSION                           |   n   |        |      *
 SDL_VERSIONNUM                        |   n   |        |      *
 SDL_VERSION_ATLEAST                   |   n   |        |      *
@@ -683,6 +629,92 @@ SDL_acos                              |   n   |        |
 SDL_assert                            |   n   |        |
 SDL_assert_paranoid                   |   n   |        |
 SDL_assert_release                    |   n   |        |
+
+#### Renderer
+
+Name                                  | Bound | Since  | Won't bind
+--------------------------------------|-------|--------|-----------
+SDL_CreateRenderer                    |   y   |        |
+SDL_CreateSoftwareRenderer            |   y   |        |
+SDL_CreateTexture                     |   y   |        |
+SDL_CreateTextureFromSurface          |   y   |        |
+SDL_CreateWindowAndRenderer           |   n   |        |
+SDL_DestroyRenderer                   |   y   |        |
+SDL_DestroyTexture                    |   y   |        |
+SDL_GetNumRenderDrivers               |   y   |        |
+SDL_GetRenderDrawBlendMode            |   y   |        |
+SDL_GetRenderDrawColor                |   y   |        |
+SDL_GetRenderDriverInfo               |   n   |        |
+SDL_GetRenderer                       |   y   |        |
+SDL_GetRendererInfo                   |   n   |        |
+SDL_GetRendererOutputSize             |   n   |        |
+SDL_GetRenderTarget                   |   n   |        |
+SDL_GetTextureAlphaMod                |   y   |        |
+SDL_GetTextureBlendMode               |   y   |        |
+SDL_GetTextureColorMod                |   y   |        |
+SDL_GetTextureScaleMode               |   n   | 2.0.12 |
+SDL_GetTextureUserData                |   n   | 2.0.18 |
+SDL_GL_BindTexture                    |   y   |        |
+SDL_GL_UnbindTexture                  |   y   |        |
+SDL_LockTexture                       |   y   |        |
+SDL_LockTextureToSurface              |   n   | 2.0.12 |
+SDL_QueryTexture                      |   y   |        |
+SDL_RenderClear                       |   y   |        |
+SDL_RenderCopy                        |   y   |        |
+SDL_RenderCopyEx                      |   y   |        |
+SDL_RenderCopyExF                     |   n   | 2.0.10 |
+SDL_RenderCopyF                       |   n   | 2.0.10 |
+SDL_RenderDrawLine                    |   y   |        |
+SDL_RenderDrawLineF                   |   n   | 2.0.10 |
+SDL_RenderDrawLines                   |   y   |        |
+SDL_RenderDrawLinesF                  |   n   | 2.0.10 |
+SDL_RenderDrawPoint                   |   y   |        |
+SDL_RenderDrawPointF                  |   n   | 2.0.10 |
+SDL_RenderDrawPoints                  |   y   |        |
+SDL_RenderDrawPointsF                 |   n   | 2.0.10 |
+SDL_RenderDrawRect                    |   y   |        |
+SDL_RenderDrawRectF                   |   n   | 2.0.10 |
+SDL_RenderDrawRects                   |   y   |        |
+SDL_RenderDrawRectsF                  |   n   | 2.0.10 |
+SDL_RenderFillRect                    |   y   |        |
+SDL_RenderFillRectF                   |   n   | 2.0.10 |
+SDL_RenderFillRects                   |   y   |        |
+SDL_RenderFillRectsF                  |   n   | 2.0.10 |
+SDL_RenderFlush                       |   n   | 2.0.10 |
+SDL_RenderGeometry                    |   n   | 2.0.18 |
+SDL_RenderGeometryRAW                 |   n   | 2.0.18 |
+SDL_RenderGetClipRect                 |   y   |        |
+SDL_RenderGetIntegerScale             |   n   | 2.0.5  |
+SDL_RenderGetLogicalSize              |   y   |        |
+SDL_RenderGetMetalCommandEncoder      |   n   | 2.0.8  |
+SDL_RenderGetMetalLayer               |   n   | 2.0.8  |
+SDL_RenderGetScale                    |   y   |        |
+SDL_RenderGetViewport                 |   y   |        |
+SDL_RenderGetWindow                   |   y   | 2.0.22 |
+SDL_RenderIsClipEnabled               |   n   |        |
+SDL_RenderLogicalToWindow             |   n   | 2.0.18 |
+SDL_RenderPresent                     |   y   |        |
+SDL_RenderReadPixels                  |   n   |        |
+SDL_RenderSetClipRect                 |   y   |        |
+SDL_RenderSetIntegerScale             |   n   | 2.0.5  |
+SDL_RenderSetLogicalSize              |   y   |        |
+SDL_RenderSetScale                    |   y   |        |
+SDL_RenderSetViewport                 |   y   |        |
+SDL_RenderSetVSync                    |   n   | 2.0.18 |
+SDL_RenderTargetSupported             |   y   |        |
+SDL_RenderWindowToLogical             |   n   | 2.0.18 |
+SDL_SetRenderDrawBlendMode            |   y   |        |
+SDL_SetRenderDrawColor                |   y   |        |
+SDL_SetRenderTarget                   |   y   |        |
+SDL_SetTextureAlphaMod                |   y   |        |
+SDL_SetTextureBlendMode               |   y   |        |
+SDL_SetTextureColorMod                |   y   |        |
+SDL_SetTextureScaleMode               |   n   | 2.0.12 |
+SDL_SetTextureUserData                |   n   | 2.0.18 |
+SDL_UnlockTexture                     |   y   |        |
+SDL_UpdateNVTexture                   |   n   | 2.0.16 |
+SDL_UpdateTexture                     |   n   | 2.0.0  |
+SDL_UpdateYUVTexture                  |   n   | 2.0.1  |
 
 ### SDL_image
 
