@@ -47,10 +47,8 @@ package SDL.Inputs.Keyboards is
    function Is_Text_Input_Enabled return Boolean with
      Inline => True;
 
-   function Is_Text_Input_Shown return SDL_Bool with
-      Import        => True,
-      Convention    => C,
-      External_Name => "SDL_IsTextInputShown";
+   function Is_Text_Input_Shown return Boolean with
+     Inline => True;
 
    procedure Reset_Keyboard with
       Import        => True,

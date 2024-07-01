@@ -63,8 +63,12 @@ package body SDL.Inputs.Keyboards is
    end Is_Text_Input_Enabled;
 
 
-   function Is_Text_Input_Shown return SDL_Bool with
-     Import        => True,
-     Convention    => C,
-     External_Name => "SDL_IsTextInputShown";
+   function Is_Text_Input_Shown return Boolean is
+      function Is_Text_Input_Shown return SDL_Bool with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_IsTextInputShown";
+   begin
+      return Is_Text_Input_Shown = SDL_True;
+   end Is_Text_Input_Shown;
 end SDL.Inputs.Keyboards;
