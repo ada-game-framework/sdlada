@@ -18,10 +18,14 @@ package SDL.Inputs.Keyboards is
    --     function Keys return
 
    function Get_Modifiers return SDL.Events.Keyboards.Key_Modifiers with
-     Inline => True;
+     Import        => True,
+     Convention    => C,
+     External_Name => "SDL_GetModState";
 
    procedure Set_Modifiers (Modifiers : in SDL.Events.Keyboards.Key_Modifiers) with
-     Inline => True;
+      Import        => True,
+      Convention    => C,
+      External_Name => "SDL_SetModState";
 
    --  Screen keyboard.
    function Supports_Screen_Keyboard return Boolean with
@@ -38,8 +42,12 @@ package SDL.Inputs.Keyboards is
      Inline => True;
 
    procedure Start_Text_Input with
-     Inline => True;
+      Import        => True,
+      Convention    => C,
+      External_Name => "SDL_StartTextInput";
 
    procedure Stop_Text_Input with
-     Inline => True;
+      Import        => True,
+      Convention    => C,
+      External_Name => "SDL_StopTextInput";
 end SDL.Inputs.Keyboards;
