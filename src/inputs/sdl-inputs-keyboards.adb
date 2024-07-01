@@ -4,7 +4,6 @@
 private with SDL.C_Pointers;
 
 package body SDL.Inputs.Keyboards is
-
    function Get_Focus return SDL.Video.Windows.ID is
       function SDL_Get_Window_ID (W : in SDL.C_Pointers.Windows_Pointer) return SDL.Video.Windows.ID with
         Import        => True,
@@ -18,6 +17,16 @@ package body SDL.Inputs.Keyboards is
    begin
       return SDL_Get_Window_ID (SDL_Get_Keyboard_Focus);
    end Get_Focus;
+
+
+   function Get_State return Key_State_Access is
+      function SDL_Get_Keyboard_State (Num_Keys : SDL.Events.Keyboards.Scan_Codes) return Key_State_Access with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GetKeyboardState";
+   begin
+      return SDL_Get_Keyboard_State (0);
+   end Get_State;
 
 
    function Supports_Screen_Keyboard return Boolean is

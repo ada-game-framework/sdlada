@@ -13,9 +13,13 @@ package SDL.Inputs.Keyboards is
    function Get_Focus return SDL.Video.Windows.ID with
      Inline => True;
 
-   --  TODO:
-   --     type Key_State_Array is array () of SDL.Video.Windows.Scan_Codes;
-   --     function Keys return
+   type Key_State_Array is array (SDL.Events.Keyboards.Scan_Codes) of Boolean with
+     Convention => C;
+
+   type Key_State_Access is access constant Key_State_Array with
+     Convention => C;
+
+   function Get_State return Key_State_Access;
 
    function Get_Modifiers return SDL.Events.Keyboards.Key_Modifiers with
      Import        => True,
