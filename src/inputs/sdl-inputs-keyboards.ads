@@ -10,6 +10,11 @@ with SDL.Video.Windows;
 package SDL.Inputs.Keyboards is
    pragma Preelaborate;
 
+   procedure Clear_Composition with
+     Import        => True,
+     Convention    => C,
+     External_Name => "SDL_ClearComposition";
+
    function Get_Focus return SDL.Video.Windows.ID with
      Inline => True;
 
