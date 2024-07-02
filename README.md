@@ -835,7 +835,7 @@ SDL_DequeueAudio                      |   n   |        |
 SDL_FreeAudioStream                   |   n   | 2.0.7  |
 SDL_FreeWAV                           |   n   |        |
 SDL_GetAudioDeviceName                |   y   |        |
-SDL_GetAudioDeviceSpec                |   y   | 2.0.16 |
+SDL_GetAudioDeviceSpec                |   n   | 2.0.16 |
 SDL_GetAudioDeviceStatus              |   y   |        |
 SDL_GetAudioDriver                    |   y   |        |
 SDL_GetAudioStatus                    |   n   |        |
