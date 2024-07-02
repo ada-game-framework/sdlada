@@ -353,7 +353,7 @@ SDL_DestroyTexture                    |   y   |        |
 SDL_GetNumRenderDrivers               |   y   |        |
 SDL_GetRenderDrawBlendMode            |   y   |        |
 SDL_GetRenderDrawColor                |   y   |        |
-SDL_GetRenderDriverInfo               |   n   |        |
+SDL_GetRenderDriverInfo               |   y   |        |
 SDL_GetRenderer                       |   y   |        |
 SDL_GetRendererInfo                   |   n   |        |
 SDL_GetRendererOutputSize             |   n   |        |
