@@ -48,7 +48,7 @@ package SDL.Video.Windows is
    Resizable           : constant Window_Flags := 16#0000_0020#;
    Minimised           : constant Window_Flags := 16#0000_0040#;
    Maximised           : constant Window_Flags := 16#0000_0080#;
-   Input_Grabbed       : constant Window_Flags := 16#0000_0100#;
+   Mouse_Grabbed       : constant Window_Flags := 16#0000_0100#;
    Input_Focus         : constant Window_Flags := 16#0000_0200#;
    Mouse_Focus         : constant Window_Flags := 16#0000_0400#;
    Full_Screen_Desktop : constant Window_Flags := Full_Screen or 16#0000_1000#;
@@ -64,6 +64,7 @@ package SDL.Video.Windows is
    Vulkan              : constant Window_Flags := 16#1000_0000#;
    Metal               : constant Window_Flags := 16#2000_0000#;
 
+   Input_Grabbed       : constant Window_Flags := Mouse_Grabbed;
 
    --  TODO: This isn't raising any exception when I pass a different value for some reason.
    subtype Full_Screen_Flags is Window_Flags with
