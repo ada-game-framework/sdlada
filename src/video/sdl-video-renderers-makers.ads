@@ -13,7 +13,7 @@ package SDL.Video.Renderers.Makers is
    procedure Create
      (Rend   : in out Renderer;
       Window : in out SDL.Video.Windows.Window;
-      Driver : in Positive;
+      Driver : in Driver_Indices;
       Flags  : in Renderer_Flags := Default_Renderer_Flags);
 
    --  Specifically create a renderer using the first available driver.

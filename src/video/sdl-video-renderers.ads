@@ -20,6 +20,8 @@ package SDL.Video.Renderers is
    package C renames Interfaces.C;
 
    --  TODO: Finish this.
+   type Driver_Indices is range -1 .. Positive'Last with
+     Convention => C;
 
    Renderer_Error : exception;
 
@@ -34,7 +36,7 @@ package SDL.Video.Renderers is
 
    type Renderer_Flip is (None, Horizontal, Vertical, Both);
 
-   function Total_Drivers return Positive with
+   function Total_Drivers return Natural with
      Inline => True;
 
    type Texture_Formats is mod 2 ** 32 with

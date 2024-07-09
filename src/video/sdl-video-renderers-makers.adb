@@ -19,7 +19,7 @@ package body SDL.Video.Renderers.Makers is
    procedure Create
      (Rend   : in out Renderer;
       Window : in out SDL.Video.Windows.Window;
-      Driver : in Positive;
+      Driver : in Driver_Indices;
       Flags  : in Renderer_Flags := Default_Renderer_Flags) is
 
       function SDL_Create_Renderer (W : in SDL.C_Pointers.Windows_Pointer; Index : in C.int; Flags : in Renderer_Flags)

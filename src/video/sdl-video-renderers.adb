@@ -29,7 +29,7 @@ package body SDL.Video.Renderers is
      Import     => True,
      Convention => Ada;
 
-   function Total_Drivers return Positive is
+   function Total_Drivers return Natural is
       function SDL_Get_Num_Render_Drivers return C.int with
         Import        => True,
         Convention    => C,
@@ -37,11 +37,11 @@ package body SDL.Video.Renderers is
 
       Result : constant C.int := SDL_Get_Num_Render_Drivers;
    begin
-      if Result < C.int (Positive'First) then
+      if Result < C.int (Natural'First) then
          raise Renderer_Error with SDL.Error.Get;
       end if;
 
-      return Positive (Result);
+      return Natural (Result);
    end Total_Drivers;
 
 
