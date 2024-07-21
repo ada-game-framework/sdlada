@@ -145,17 +145,16 @@ package SDL.Video.GL is
       type Access_To_Sub_Program is private;
    function Get_Sub_Program (Name : in String) return Access_To_Sub_Program;
 
-   type Swap_Intervals is (Not_Supported, Not_Synchronised, Synchronised) with
+   type Swap_Intervals is (Adaptive_VSync, Not_Synchronised, Synchronised) with
      Convention => C;
 
-   for Swap_Intervals use (Not_Supported => -1, Not_Synchronised => 0, Synchronised => 1);
+   for Swap_Intervals use (Adaptive_VSync => -1, Not_Synchronised => 0, Synchronised => 1);
 
-   subtype Allowed_Swap_Intervals is Swap_Intervals range Not_Synchronised .. Synchronised;
+   subtype Allowed_Swap_Intervals is Swap_Intervals range Adaptive_VSync .. Synchronised;
 
    function Get_Swap_Interval return Swap_Intervals;
 
-   --  Returns False if setting this is not supported.
-   function Set_Swap_Interval (Interval : in Allowed_Swap_Intervals; Late_Swap_Tear : in Boolean) return Boolean;
+   procedure Set_Swap_Interval (Interval : in Allowed_Swap_Intervals);
 
    procedure Swap (Window : in out SDL.Video.Windows.Window) with
      Inline => True;

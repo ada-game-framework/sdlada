@@ -636,35 +636,17 @@ package body SDL.Video.GL is
       return SDL_GL_Get_Swap_Interval;
    end Get_Swap_Interval;
 
-   function Set_Swap_Interval (Interval : in Allowed_Swap_Intervals; Late_Swap_Tear : in Boolean) return Boolean is
-      pragma Unreferenced (Interval);  --  TODO: Fix me!
+   procedure Set_Swap_Interval (Interval : in Allowed_Swap_Intervals) is
       function SDL_GL_Set_Swap_Interval (Interval : in Swap_Intervals) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GL_SetSwapInterval";
 
-      Late_Tearing : Swap_Intervals renames Not_Supported;
-      Result       : C.int;
+      Result : C.int := SDL_GL_Set_Swap_Interval (Interval);
    begin
-      if Late_Swap_Tear then
-         --  Override the interval passed.
-         Result := SDL_GL_Set_Swap_Interval (Late_Tearing);
-
-         if Result = -1 then
-            --  Try again with synchronised.
-            Result := SDL_GL_Set_Swap_Interval (Synchronised);
-
-            return (if Result = -1 then False else True);
-         elsif Result = Success then
-            return True;
-         else
-            raise SDL_GL_Error with "Something unexpected happend whilst setting swap interval.";
-         end if;
+      if Result /= SDL.Success then
+         raise SDL_GL_Error with SDL.Error.Get;
       end if;
-
-      Result := SDL_GL_Set_Swap_Interval (Synchronised);
-
-      return (if Result = -1 then False else True);
    end Set_Swap_Interval;
 
    procedure Swap (Window : in out SDL.Video.Windows.Window) is
