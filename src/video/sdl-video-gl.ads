@@ -36,7 +36,7 @@ package SDL.Video.GL is
    --  with SDL is anothing matter.
    type Major_Versions is range 1 .. 4;
 
-   type Minor_Versions is range 0 .. 4;
+   type Minor_Versions is range 0 .. 6;
 
    type Profiles is (Core, Compatibility, ES) with
      Convention => C,
