@@ -604,6 +604,7 @@ package body SDL.Video.GL is
       end if;
    end Unbind_Texture;
 
+
    function Get_Sub_Program (Name : in String) return Access_To_Sub_Program is
       function SDL_GL_Get_Proc_Address (P : in C.char_array) return Access_To_Sub_Program with
         Import        => True,
@@ -612,6 +613,17 @@ package body SDL.Video.GL is
    begin
       return SDL_GL_Get_Proc_Address (C.To_C (Name));
    end Get_Sub_Program;
+
+
+   function Get_Subprogram return Access_To_Sub_Program is
+      function SDL_GL_Get_Proc_Address (P : in C.char_array) return Access_To_Sub_Program with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GL_GetProcAddress";
+   begin
+      return SDL_GL_Get_Proc_Address (C.To_C (Subprogram_Name));
+   end Get_Subprogram;
+
 
    function Supports (Extension : in String) return Boolean is
       function SDL_GL_Extension_Supported (E : in C.Strings.chars_ptr) return SDL_Bool with

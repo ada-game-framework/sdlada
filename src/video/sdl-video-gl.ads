@@ -143,7 +143,13 @@ package SDL.Video.GL is
 
    generic
       type Access_To_Sub_Program is private;
-   function Get_Sub_Program (Name : in String) return Access_To_Sub_Program;
+   function Get_Sub_Program (Name : in String) return Access_To_Sub_Program with
+     Obsolescent;
+
+   generic
+      Subprogram_Name : String;
+      type Access_To_Sub_Program is private;
+   function Get_Subprogram return Access_To_Sub_Program;
 
    type Swap_Intervals is (Adaptive_VSync, Not_Synchronised, Synchronised) with
      Convention => C;
