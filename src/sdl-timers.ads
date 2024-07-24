@@ -30,4 +30,22 @@ package SDL.Timers is
      Import        => True,
      Convention    => C,
      External_Name => "SDL_Delay";
+
+   procedure Wait_Delay (MS : Milliseconds_Long) with
+     Inline;
+
+   package Performance is
+      type Counts is new Interfaces.Unsigned_64;
+      type Frequencies is new Interfaces.Unsigned_64;
+
+      function Get_Counter return Counts with
+      Import        => True,
+      Convention    => C,
+      External_Name => "SDL_GetPerformanceCounter";
+
+      function Get_Frequency return Frequencies with
+      Import        => True,
+      Convention    => C,
+      External_Name => "SDL_GetPerformanceFrequency";
+   end Performance;
 end SDL.Timers;
