@@ -923,11 +923,11 @@ SDL_MemoryBarrierReleaseFunction      |   n   | 2.0.6  |
 Name                                  | Bound | Since  | Won't bind
 --------------------------------------|-------|--------|-----------
 SDL_AddTimer                          |   n   |        |
-SDL_Delay                             |   n   |        |
-SDL_GetPerformanceCounter             |   n   |        |
-SDL_GetPerformanceFrequency           |   n   |        |
-SDL_GetTicks                          |   n   |        |
-SDL_GetTicks64                        |   n   | 2.0.18 |
+SDL_Delay                             |   y   |        |
+SDL_GetPerformanceCounter             |   y   |        |
+SDL_GetPerformanceFrequency           |   y   |        |
+SDL_GetTicks                          |   y   |        |
+SDL_GetTicks64                        |   y   | 2.0.18 |
 SDL_RemoveTimer                       |   n   |        |
 SDL_TICKS_PASSED                      |   n   |        |
 
