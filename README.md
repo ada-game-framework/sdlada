@@ -255,7 +255,7 @@ SDL_GetDesktopDisplayMode             |   y   |        |
 SDL_GetDisplayBounds                  |   y   |        |
 SDL_GetDisplayDPI                     |   y   | 2.0.4  |
 SDL_GetDisplayMode                    |   y   |        |
-SDL_GetDisplayName                    |   n   |        |
+SDL_GetDisplayName                    |   y   |        |
 SDL_GetDisplayOrientation             |   n   | 2.0.9  |
 SDL_GetDisplayUsableBounds            |   n   | 2.0.5  |
 SDL_GetGrabbedWindow                  |   n   | 2.0.4  |

@@ -36,6 +36,8 @@ package SDL.Video.Displays is
 
    function Total return Display_Indices;
 
+   function Get_Display_Name (Display : Display_Indices) return String;
+
    function Closest_Mode (Display : in Display_Indices; Wanted : in Mode; Target : out Mode) return Boolean;
 
    function Current_Mode (Display : in Display_Indices; Target : out Mode) return Boolean;

@@ -1,6 +1,7 @@
 --------------------------------------------------------------------------------------------------------------------
 --  This source code is subject to the Zlib license, see the LICENCE file in the root of this directory.
 --------------------------------------------------------------------------------------------------------------------
+with Interfaces.C.Strings;
 with SDL.Error;
 
 package body SDL.Video.Displays is
@@ -19,6 +20,26 @@ package body SDL.Video.Displays is
 
       return Display_Indices (Num);
    end Total;
+
+
+   function Get_Display_Name (Display : Display_Indices) return String is
+      function SDL_Get_Display_Name (displayIndex : C.int) return C.Strings.chars_ptr with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GetDisplayName";
+
+      --  Note: Does NOT need to be freed.
+      C_Str : constant C.Strings.chars_ptr := SDL_Get_Display_Name (C.int (Display - 1));
+
+      use type C.Strings.chars_ptr;
+   begin
+      if C_Str = C.Strings.Null_Ptr then
+         return "";
+      end if;
+
+      return C.Strings.Value (C_Str);
+   end Get_Display_Name;
+
 
    function Closest_Mode (Display : in Display_Indices; Wanted : in Mode; Target : out Mode) return Boolean is
       function SDL_Get_Closest_Display_Mode (D : C.int; W : in Mode; T : out Mode) return Access_Mode with
