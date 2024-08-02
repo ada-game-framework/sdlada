@@ -57,7 +57,12 @@ package SDL.Video.Displays is
 
    function Total_Display_Modes (Display : in Display_Indices; Total : out Positive) return Boolean;
 
-   function Display_Bounds (Display : in Display_Indices; Bounds : out Rectangles.Rectangle) return Boolean;
+   function Display_Bounds (Display : in Display_Indices; Bounds : out Rectangles.Rectangle) return Boolean with
+     Obsolescent;
+
+   function Get_Bounds (Display : in Display_Indices; Bounds : out Rectangles.Rectangle) return Boolean
+     renames Display_Bounds;
+   function Get_Usable_Bounds (Display : Display_Indices; Bounds : out Rectangles.Rectangle) return Boolean;
 
    procedure Get_Display_DPI (Display : Display_Indices; Diagonal, Horizontal, Vertical : out Float);
    procedure Get_Display_DPI (Display : Display_Indices; Horizontal, Vertical : out Float);

@@ -102,6 +102,7 @@ package body SDL.Video.Displays is
       return False;
    end Total_Display_Modes;
 
+
    function Display_Bounds (Display : in Display_Indices; Bounds : out Rectangles.Rectangle) return Boolean is
       function SDL_Get_Display_Bounds (D : in C.int; B : out Rectangles.Rectangle) return C.int with
         Import        => True,
@@ -112,6 +113,18 @@ package body SDL.Video.Displays is
    begin
       return (Result = Success);
    end Display_Bounds;
+
+
+   function Get_Usable_Bounds (Display : Display_Indices; Bounds : out Rectangles.Rectangle) return Boolean is
+      function Get_Display_Usable_Bounds (displayIndex : C.int; rect : out Rectangles.Rectangle) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GetDisplayUsableBounds";
+
+      Result : constant C.int := Get_Display_Usable_Bounds (C.int (Display - 1), Bounds);
+   begin
+      return (Result = Success);
+   end Get_Usable_Bounds;
 
 
    function SDL_Get_Display_DPI

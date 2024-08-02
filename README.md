@@ -257,7 +257,7 @@ SDL_GetDisplayDPI                     |   y   | 2.0.4  |
 SDL_GetDisplayMode                    |   y   |        |
 SDL_GetDisplayName                    |   y   |        |
 SDL_GetDisplayOrientation             |   y   | 2.0.9  |
-SDL_GetDisplayUsableBounds            |   n   | 2.0.5  |
+SDL_GetDisplayUsableBounds            |   y   | 2.0.5  |
 SDL_GetGrabbedWindow                  |   n   | 2.0.4  |
 SDL_GetNumDisplayModes                |   y   |        |
 SDL_GetNumVideoDisplays               |   y   |        |
