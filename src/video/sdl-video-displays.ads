@@ -63,4 +63,6 @@ package SDL.Video.Displays is
    procedure Get_Display_DPI (Display : Display_Indices; Horizontal, Vertical : out Float);
    function Get_Display_Horizontal_DPI (Display : Display_Indices) return Float;
    function Get_Display_Vertical_DPI (Display : Display_Indices) return Float;
+
+   function Get_Display_Orientation (Display : Display_Indices) return Display_Orientations;
 end SDL.Video.Displays;
