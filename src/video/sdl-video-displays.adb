@@ -98,8 +98,8 @@ package body SDL.Video.Displays is
       ddpi : access Float;
       hdpi : access Float;
       vdpi : access Float) return C.int
-   with Import => True,
-        Convention => C,
+   with Import        => True,
+        Convention    => C,
         External_Name => "SDL_GetDisplayDPI";
 
    procedure Get_Display_DPI (Display : Display_Indices; Diagonal, Horizontal, Vertical : out Float) is
