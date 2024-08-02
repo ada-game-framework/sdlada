@@ -4,7 +4,6 @@
 with SDL.Error;
 
 package body SDL.Video.Displays is
-
    function Total return Display_Indices is
       --  This function returns a value >= 1, use this as a new lower type bound.
       function SDL_Get_Num_Video_Displays return C.int with
