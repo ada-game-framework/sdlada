@@ -176,4 +176,14 @@ package body SDL.Video.Displays is
 
       return V;
    end Get_Display_Vertical_DPI;
+
+
+   function Get_Display_Orientation (Display : Display_Indices) return Display_Orientations is
+      function SDL_Get_Display_Orientation (displayIndex : C.int) return Display_Orientations with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GetDisplayOrientation";
+   begin
+      return SDL_Get_Display_Orientation (C.int (Display - 1));
+   end Get_Display_Orientation;
 end SDL.Video.Displays;

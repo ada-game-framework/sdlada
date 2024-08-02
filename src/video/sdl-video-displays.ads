@@ -34,6 +34,15 @@ package SDL.Video.Displays is
    --  Video displays.
    type Display_Indices is new Positive;
 
+   type Display_Orientations is
+     (Orientation_Unknown,
+      Orientation_Landscape,
+      Orientation_Landscape_Flipped,
+      Orientation_Portrait,
+      Orientation_Portrait_Flipped)
+   with Convention => C;
+
+
    function Total return Display_Indices;
 
    function Get_Display_Name (Display : Display_Indices) return String;
