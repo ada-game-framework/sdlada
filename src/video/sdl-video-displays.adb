@@ -92,4 +92,68 @@ package body SDL.Video.Displays is
    begin
       return (Result = Success);
    end Display_Bounds;
+
+
+   function SDL_Get_Display_DPI
+     (displayIndex : C.int;
+      ddpi : access Float;
+      hdpi : access Float;
+      vdpi : access Float) return C.int
+   with Import => True,
+        Convention => C,
+        External_Name => "SDL_GetDisplayDPI";
+
+   procedure Get_Display_DPI (Display : Display_Indices; Diagonal, Horizontal, Vertical : out Float) is
+      D, H, V : aliased Float;
+
+      Result : constant C.int := SDL_Get_Display_DPI (C.int (Display - 1), D'Access, H'Access, V'Access);
+   begin
+      if Result /= Success then
+         raise Video_Error with SDL.Error.Get;
+      end if;
+
+      Diagonal   := D;
+      Horizontal := H;
+      Vertical   := V;
+   end Get_Display_DPI;
+
+
+   procedure Get_Display_DPI (Display : Display_Indices; Horizontal, Vertical : out Float) is
+      H, V : aliased Float;
+
+      Result : constant C.int := SDL_Get_Display_DPI (C.int (Display - 1), null, H'Access, V'Access);
+   begin
+      if Result /= Success then
+         raise Video_Error with SDL.Error.Get;
+      end if;
+
+      Horizontal := H;
+      Vertical   := V;
+   end Get_Display_DPI;
+
+
+   function Get_Display_Horizontal_DPI (Display : Display_Indices) return Float is
+      H : aliased Float;
+
+      Result : constant C.int := SDL_Get_Display_DPI (C.int (Display - 1), null, H'Access, null);
+   begin
+      if Result /= Success then
+         raise Video_Error with SDL.Error.Get;
+      end if;
+
+      return H;
+   end Get_Display_Horizontal_DPI;
+
+
+   function Get_Display_Vertical_DPI (Display : Display_Indices) return Float is
+      V : aliased Float;
+
+      Result : constant C.int := SDL_Get_Display_DPI (C.int (Display - 1), null, null, V'Access);
+   begin
+      if Result /= Success then
+         raise Video_Error with SDL.Error.Get;
+      end if;
+
+      return V;
+   end Get_Display_Vertical_DPI;
 end SDL.Video.Displays;

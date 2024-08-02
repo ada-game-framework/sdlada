@@ -253,7 +253,7 @@ SDL_GetCurrentDisplayMode             |   y   |        |
 SDL_GetCurrentVideoDriver             |   y   |        |
 SDL_GetDesktopDisplayMode             |   y   |        |
 SDL_GetDisplayBounds                  |   y   |        |
-SDL_GetDisplayDPI                     |   n   | 2.0.4  |
+SDL_GetDisplayDPI                     |   y   | 2.0.4  |
 SDL_GetDisplayMode                    |   y   |        |
 SDL_GetDisplayName                    |   n   |        |
 SDL_GetDisplayOrientation             |   n   | 2.0.9  |
