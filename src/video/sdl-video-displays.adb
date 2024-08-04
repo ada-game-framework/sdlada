@@ -52,6 +52,23 @@ package body SDL.Video.Displays is
       return (Result = null);
    end Closest_Mode;
 
+
+   function Get_Display_Index_From_Point (Point : in Rectangles.Point) return Display_Indices is
+      function SDL_Get_Point_Display_Index (point : in Rectangles.Point) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GetPointDisplayIndex";
+
+      Display : constant C.int := SDL_Get_Point_Display_Index (Point);
+   begin
+      if Display < SDL.Success then
+         raise Video_Error with SDL.Error.Get;
+      end if;
+
+      return Display_Indices (Display + 1);
+   end Get_Display_Index_From_Point;
+
+
    function Current_Mode (Display : in Display_Indices; Target : out Mode) return Boolean is
       function SDL_Get_Current_Display_Mode (D : C.int; M : out Mode) return C.int with
         Import        => True,

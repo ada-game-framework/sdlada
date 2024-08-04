@@ -262,7 +262,7 @@ SDL_GetGrabbedWindow                  |   n   | 2.0.4  |
 SDL_GetNumDisplayModes                |   y   |        |
 SDL_GetNumVideoDisplays               |   y   |        |
 SDL_GetNumVideoDrivers                |   y   |        |
-SDL_GetPointDisplayIndex              |   n   | 2.24.0 |
+SDL_GetPointDisplayIndex              |   y   | 2.24.0 |
 SDL_GetRectDisplayIndex               |   n   | 2.24.0 |
 SDL_GetVideoDriver                    |   y   |        |
 SDL_GetWindowBordersSize              |   n   | 2.0.5  |

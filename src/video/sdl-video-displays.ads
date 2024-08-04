@@ -49,6 +49,8 @@ package SDL.Video.Displays is
 
    function Closest_Mode (Display : in Display_Indices; Wanted : in Mode; Target : out Mode) return Boolean;
 
+   function Get_Display_Index_From_Point (Point : in Rectangles.Point) return Display_Indices;
+
    function Current_Mode (Display : in Display_Indices; Target : out Mode) return Boolean;
 
    function Desktop_Mode (Display : in Display_Indices; Target : out Mode) return Boolean;
