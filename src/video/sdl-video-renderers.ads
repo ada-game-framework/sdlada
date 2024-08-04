@@ -79,6 +79,16 @@ package SDL.Video.Renderers is
 
    procedure Clear (Self : in out Renderer);
 
+   procedure Draw (Self : in out Renderer; Line : in SDL.Video.Rectangles.Line_Segment);
+   procedure Draw (Self : in out Renderer; Lines : in SDL.Video.Rectangles.Line_Arrays);
+   procedure Draw (Self : in out Renderer; Point : in SDL.Video.Rectangles.Point);
+   procedure Draw (Self : in out Renderer; Points : in SDL.Video.Rectangles.Point_Arrays);
+   procedure Draw (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle);
+   procedure Draw (Self : in out Renderer; Rectangles : in SDL.Video.Rectangles.Rectangle_Arrays);
+
+   procedure Fill (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle);
+   procedure Fill (Self : in out Renderer; Rectangles : in SDL.Video.Rectangles.Rectangle_Arrays);
+
    procedure Copy
      (Self      : in out Renderer;
       Copy_From : in SDL.Video.Textures.Texture);
@@ -102,16 +112,6 @@ package SDL.Video.Renderers is
       Angle     : in Long_Float;
       Centre    : in SDL.Video.Rectangles.Point;
       Flip      : in Renderer_Flip);
-
-   procedure Draw (Self : in out Renderer; Line : in SDL.Video.Rectangles.Line_Segment);
-   procedure Draw (Self : in out Renderer; Lines : in SDL.Video.Rectangles.Line_Arrays);
-   procedure Draw (Self : in out Renderer; Point : in SDL.Video.Rectangles.Point);
-   procedure Draw (Self : in out Renderer; Points : in SDL.Video.Rectangles.Point_Arrays);
-   procedure Draw (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle);
-   procedure Draw (Self : in out Renderer; Rectangles : in SDL.Video.Rectangles.Rectangle_Arrays);
-
-   procedure Fill (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle);
-   procedure Fill (Self : in out Renderer; Rectangles : in SDL.Video.Rectangles.Rectangle_Arrays);
 
    procedure Get_Clip (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle);
    procedure Set_Clip (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle);

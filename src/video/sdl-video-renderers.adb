@@ -90,6 +90,7 @@ package body SDL.Video.Renderers is
       return Mode;
    end Get_Blend_Mode;
 
+
    procedure Set_Blend_Mode (Self : in out Renderer; Mode : in Blend_Modes) is
       function SDL_Set_Render_Draw_Blend_Mode (R : in SDL.C_Pointers.Renderer_Pointer;
                                                M : in Blend_Modes) return C.int with
@@ -103,6 +104,7 @@ package body SDL.Video.Renderers is
          raise Renderer_Error with SDL.Error.Get;
       end if;
    end Set_Blend_Mode;
+
 
    function Get_Draw_Colour (Self : in Renderer) return SDL.Video.Palettes.Colour is
       function SDL_Get_Render_Draw_Color
@@ -125,6 +127,7 @@ package body SDL.Video.Renderers is
 
       return Colour;
    end Get_Draw_Colour;
+
 
    procedure Set_Draw_Colour (Self : in out Renderer; Colour : in SDL.Video.Palettes.Colour) is
       function SDL_Set_Render_Draw_Color
@@ -194,6 +197,136 @@ package body SDL.Video.Renderers is
       end if;
    end Clear;
 
+
+   procedure Draw (Self : in out Renderer; Line : in SDL.Video.Rectangles.Line_Segment) is
+      function SDL_Render_Draw_Line (R              : in SDL.C_Pointers.Renderer_Pointer;
+                                     X1, Y1, X2, Y2 : in C.int) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderDrawLine";
+
+      Result : constant C.int := SDL_Render_Draw_Line (Self.Internal,
+                                                       Line.Start.X,
+                                                       Line.Start.Y,
+                                                       Line.Finish.X,
+                                                       Line.Finish.Y);
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Draw;
+
+
+   --  TODO: Check this works!
+   procedure Draw (Self : in out Renderer; Lines : in SDL.Video.Rectangles.Line_Arrays) is
+      --  As the records and arrays are defined as C types, an array of lines is also an array of points.
+      function SDL_Render_Draw_Lines (R     : in SDL.C_Pointers.Renderer_Pointer;
+                                      P     : in SDL.Video.Rectangles.Line_Arrays;
+                                      Count : in C.int) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderDrawLines";
+
+      Result : constant C.int := SDL_Render_Draw_Lines (Self.Internal, Lines, C.int (Lines'Length * 2));
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Draw;
+
+
+   procedure Draw (Self : in out Renderer; Point : in SDL.Video.Rectangles.Point) is
+      function SDL_Render_Draw_Point (R : in SDL.C_Pointers.Renderer_Pointer; X, Y : in C.int) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderDrawPoint";
+
+      Result : constant C.int := SDL_Render_Draw_Point (Self.Internal, Point.X, Point.Y);
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Draw;
+
+
+   procedure Draw (Self : in out Renderer; Points : in SDL.Video.Rectangles.Point_Arrays) is
+      function SDL_Render_Draw_Points (R     : in SDL.C_Pointers.Renderer_Pointer;
+                                       P     : in SDL.Video.Rectangles.Point_Arrays;
+                                       Count : in C.int) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderDrawPoints";
+
+      Result : constant C.int := SDL_Render_Draw_Points (Self.Internal, Points, C.int (Points'Length));
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Draw;
+
+
+   procedure Draw (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle) is
+      function SDL_Render_Draw_Rect (R    : in SDL.C_Pointers.Renderer_Pointer;
+                                     Rect : in SDL.Video.Rectangles.Rectangle) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderDrawRect";
+
+      Result : constant C.int := SDL_Render_Draw_Rect (Self.Internal, Rectangle);
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Draw;
+
+
+   procedure Draw (Self : in out Renderer; Rectangles : in SDL.Video.Rectangles.Rectangle_Arrays) is
+      function SDL_Render_Draw_Rects (R     : in SDL.C_Pointers.Renderer_Pointer;
+                                      Rect  : in SDL.Video.Rectangles.Rectangle_Arrays;
+                                      Count : in C.int) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderDrawRects";
+
+      Result : constant C.int := SDL_Render_Draw_Rects (Self.Internal, Rectangles, C.int (Rectangles'Length));
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Draw;
+
+
+   procedure Fill (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle) is
+      function SDL_Render_Fill_Rect (R    : in SDL.C_Pointers.Renderer_Pointer;
+                                     Rect : in SDL.Video.Rectangles.Rectangle) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderFillRect";
+
+      Result : constant C.int := SDL_Render_Fill_Rect (Self.Internal, Rectangle);
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Fill;
+
+
+   procedure Fill (Self : in out Renderer; Rectangles : in SDL.Video.Rectangles.Rectangle_Arrays) is
+      function SDL_Render_Fill_Rects (R     : in SDL.C_Pointers.Renderer_Pointer;
+                                      Rect  : in SDL.Video.Rectangles.Rectangle_Arrays;
+                                      Count : in C.int) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderFillRects";
+
+      Result : constant C.int := SDL_Render_Fill_Rects (Self.Internal, Rectangles, C.int (Rectangles'Length));
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Fill;
+
+
    procedure Copy
      (Self      : in out Renderer;
       Copy_From : in SDL.Video.Textures.Texture) is
@@ -215,6 +348,7 @@ package body SDL.Video.Renderers is
          raise Renderer_Error with SDL.Error.Get;
       end if;
    end Copy;
+
 
    --  TODO: Check to make sure this works, if it does, apply the same logic to CopyEx, see below.
    procedure Copy
@@ -241,6 +375,7 @@ package body SDL.Video.Renderers is
       end if;
    end Copy;
 
+
    procedure Copy
      (Self      : in out Renderer;
       Copy_From : in SDL.Video.Textures.Texture;
@@ -264,6 +399,7 @@ package body SDL.Video.Renderers is
          raise Renderer_Error with SDL.Error.Get;
       end if;
    end Copy;
+
 
    --  TODO: See above, rearrange the params so that the rectangles are the last elements and make
    --  them default to null_rectangle.
@@ -300,126 +436,6 @@ package body SDL.Video.Renderers is
       end if;
    end Copy;
 
-   procedure Draw (Self : in out Renderer; Line : in SDL.Video.Rectangles.Line_Segment) is
-      function SDL_Render_Draw_Line (R              : in SDL.C_Pointers.Renderer_Pointer;
-                                     X1, Y1, X2, Y2 : in C.int) return C.int with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_RenderDrawLine";
-
-      Result : constant C.int := SDL_Render_Draw_Line (Self.Internal,
-                                                       Line.Start.X,
-                                                       Line.Start.Y,
-                                                       Line.Finish.X,
-                                                       Line.Finish.Y);
-   begin
-      if Result /= Success then
-         raise Renderer_Error with SDL.Error.Get;
-      end if;
-   end Draw;
-
-   --  TODO: Check this works!
-   procedure Draw (Self : in out Renderer; Lines : in SDL.Video.Rectangles.Line_Arrays) is
-      --  As the records and arrays are defined as C types, an array of lines is also an array of points.
-      function SDL_Render_Draw_Lines (R     : in SDL.C_Pointers.Renderer_Pointer;
-                                      P     : in SDL.Video.Rectangles.Line_Arrays;
-                                      Count : in C.int) return C.int with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_RenderDrawLines";
-
-      Result : constant C.int := SDL_Render_Draw_Lines (Self.Internal, Lines, C.int (Lines'Length * 2));
-   begin
-      if Result /= Success then
-         raise Renderer_Error with SDL.Error.Get;
-      end if;
-   end Draw;
-
-   procedure Draw (Self : in out Renderer; Point : in SDL.Video.Rectangles.Point) is
-      function SDL_Render_Draw_Point (R : in SDL.C_Pointers.Renderer_Pointer; X, Y : in C.int) return C.int with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_RenderDrawPoint";
-
-      Result : constant C.int := SDL_Render_Draw_Point (Self.Internal, Point.X, Point.Y);
-   begin
-      if Result /= Success then
-         raise Renderer_Error with SDL.Error.Get;
-      end if;
-   end Draw;
-
-   procedure Draw (Self : in out Renderer; Points : in SDL.Video.Rectangles.Point_Arrays) is
-      function SDL_Render_Draw_Points (R     : in SDL.C_Pointers.Renderer_Pointer;
-                                       P     : in SDL.Video.Rectangles.Point_Arrays;
-                                       Count : in C.int) return C.int with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_RenderDrawPoints";
-
-      Result : constant C.int := SDL_Render_Draw_Points (Self.Internal, Points, C.int (Points'Length));
-   begin
-      if Result /= Success then
-         raise Renderer_Error with SDL.Error.Get;
-      end if;
-   end Draw;
-
-   procedure Draw (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle) is
-      function SDL_Render_Draw_Rect (R    : in SDL.C_Pointers.Renderer_Pointer;
-                                     Rect : in SDL.Video.Rectangles.Rectangle) return C.int with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_RenderDrawRect";
-
-      Result : constant C.int := SDL_Render_Draw_Rect (Self.Internal, Rectangle);
-   begin
-      if Result /= Success then
-         raise Renderer_Error with SDL.Error.Get;
-      end if;
-   end Draw;
-
-   procedure Draw (Self : in out Renderer; Rectangles : in SDL.Video.Rectangles.Rectangle_Arrays) is
-      function SDL_Render_Draw_Rects (R     : in SDL.C_Pointers.Renderer_Pointer;
-                                      Rect  : in SDL.Video.Rectangles.Rectangle_Arrays;
-                                      Count : in C.int) return C.int with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_RenderDrawRects";
-
-      Result : constant C.int := SDL_Render_Draw_Rects (Self.Internal, Rectangles, C.int (Rectangles'Length));
-   begin
-      if Result /= Success then
-         raise Renderer_Error with SDL.Error.Get;
-      end if;
-   end Draw;
-
-   procedure Fill (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle) is
-      function SDL_Render_Fill_Rect (R    : in SDL.C_Pointers.Renderer_Pointer;
-                                     Rect : in SDL.Video.Rectangles.Rectangle) return C.int with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_RenderFillRect";
-
-      Result : constant C.int := SDL_Render_Fill_Rect (Self.Internal, Rectangle);
-   begin
-      if Result /= Success then
-         raise Renderer_Error with SDL.Error.Get;
-      end if;
-   end Fill;
-
-   procedure Fill (Self : in out Renderer; Rectangles : in SDL.Video.Rectangles.Rectangle_Arrays) is
-      function SDL_Render_Fill_Rects (R     : in SDL.C_Pointers.Renderer_Pointer;
-                                      Rect  : in SDL.Video.Rectangles.Rectangle_Arrays;
-                                      Count : in C.int) return C.int with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_RenderFillRects";
-
-      Result : constant C.int := SDL_Render_Fill_Rects (Self.Internal, Rectangles, C.int (Rectangles'Length));
-   begin
-      if Result /= Success then
-         raise Renderer_Error with SDL.Error.Get;
-      end if;
-   end Fill;
 
    procedure Get_Clip (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle) is
       procedure SDL_Render_Get_Clip_Rect (R    : in SDL.C_Pointers.Renderer_Pointer;
@@ -430,6 +446,7 @@ package body SDL.Video.Renderers is
    begin
       SDL_Render_Get_Clip_Rect (Self.Internal, Rectangle);
    end Get_Clip;
+
 
    procedure Set_Clip (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle) is
       function SDL_Render_Set_Clip_Rect (R    : in SDL.C_Pointers.Renderer_Pointer;
@@ -445,6 +462,7 @@ package body SDL.Video.Renderers is
       end if;
    end Set_Clip;
 
+
    procedure Get_Logical_Size (Self : in Renderer; Size : out SDL.Sizes) is
       procedure SDL_Render_Get_Logical_Size (R : in  SDL.C_Pointers.Renderer_Pointer;
                                              W : out SDL.Dimension;
@@ -455,6 +473,7 @@ package body SDL.Video.Renderers is
    begin
       SDL_Render_Get_Logical_Size (Self.Internal, Size.Width, Size.Height);
    end Get_Logical_Size;
+
 
    procedure Set_Logical_Size (Self : in out Renderer; Size : in SDL.Sizes) is
       function SDL_Render_Set_Logical_Size (R : in SDL.C_Pointers.Renderer_Pointer;
@@ -471,6 +490,7 @@ package body SDL.Video.Renderers is
       end if;
    end Set_Logical_Size;
 
+
    procedure Get_Scale (Self : in Renderer; X, Y : out Float) is
       procedure SDL_Render_Get_Scale (R : in SDL.C_Pointers.Renderer_Pointer; X, Y : out C.C_float) with
         Import        => True,
@@ -479,6 +499,7 @@ package body SDL.Video.Renderers is
    begin
       SDL_Render_Get_Scale (Self.Internal, C.C_float (X), C.C_float (Y));
    end Get_Scale;
+
 
    procedure Set_Scale (Self : in out Renderer; X, Y : in Float) is
       function SDL_Render_Set_Scale (R : in SDL.C_Pointers.Renderer_Pointer; X, Y : in C.C_float) return C.int with
@@ -493,6 +514,7 @@ package body SDL.Video.Renderers is
       end if;
    end Set_Scale;
 
+
    procedure Get_Viewport (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle) is
       procedure SDL_Render_Get_Viewport (R    : in SDL.C_Pointers.Renderer_Pointer;
                                          Rect : out SDL.Video.Rectangles.Rectangle) with
@@ -502,6 +524,7 @@ package body SDL.Video.Renderers is
    begin
       SDL_Render_Get_Viewport (Self.Internal, Rectangle);
    end Get_Viewport;
+
 
    procedure Set_Viewport (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle) is
       function SDL_Render_Set_Viewport (R    : in SDL.C_Pointers.Renderer_Pointer;
@@ -517,6 +540,7 @@ package body SDL.Video.Renderers is
       end if;
    end Set_Viewport;
 
+
    procedure Present (Self : in Renderer) is
       procedure SDL_Render_Present (R : in SDL.C_Pointers.Renderer_Pointer) with
         Import        => True,
@@ -526,6 +550,7 @@ package body SDL.Video.Renderers is
       SDL_Render_Present (Self.Internal);
    end Present;
 
+
    function Supports_Targets (Self : in Renderer) return Boolean is
       function SDL_Render_Target_Supported (R : in SDL.C_Pointers.Renderer_Pointer) return SDL_Bool with
         Import        => True,
@@ -534,6 +559,7 @@ package body SDL.Video.Renderers is
    begin
       return (if SDL_Render_Target_Supported (Self.Internal) = SDL_True then True else False);
    end Supports_Targets;
+
 
    procedure Set_Target (Self : in out Renderer; Target : in SDL.Video.Textures.Texture) is
       function SDL_Set_Render_Target (R : in SDL.C_Pointers.Renderer_Pointer;
@@ -549,6 +575,7 @@ package body SDL.Video.Renderers is
       end if;
    end Set_Target;
 
+
    function Get_Renderer (Window : in SDL.Video.Windows.Window) return Renderer is
       function SDL_Get_Renderer (W : in SDL.C_Pointers.Windows_Pointer) return SDL.C_Pointers.Renderer_Pointer with
         Import        => True,
@@ -561,6 +588,7 @@ package body SDL.Video.Renderers is
          null;
       end return;
    end Get_Renderer;
+
 
    function Get_Internal_Renderer (Self : in Renderer) return SDL.C_Pointers.Renderer_Pointer is
    begin
