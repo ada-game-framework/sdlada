@@ -361,7 +361,7 @@ SDL_GetRenderTarget                   |   n   |        |
 SDL_GetTextureAlphaMod                |   y   |        |
 SDL_GetTextureBlendMode               |   y   |        |
 SDL_GetTextureColorMod                |   y   |        |
-SDL_GetTextureScaleMode               |   n   | 2.0.12 |
+SDL_GetTextureScaleMode               |   y   | 2.0.12 |
 SDL_GetTextureUserData                |   n   | 2.0.18 |
 SDL_GL_BindTexture                    |   y   |        |
 SDL_GL_UnbindTexture                  |   y   |        |
@@ -418,7 +418,7 @@ SDL_SetRenderTarget                   |   y   |        |
 SDL_SetTextureAlphaMod                |   y   |        |
 SDL_SetTextureBlendMode               |   y   |        |
 SDL_SetTextureColorMod                |   y   |        |
-SDL_SetTextureScaleMode               |   n   | 2.0.12 |
+SDL_SetTextureScaleMode               |   y   | 2.0.12 |
 SDL_SetTextureUserData                |   n   | 2.0.18 |
 SDL_UnlockTexture                     |   y   |        |
 SDL_UpdateNVTexture                   |   n   | 2.0.16 |

@@ -21,6 +21,7 @@ package body SDL.Video.Textures is
       Self.Internal := null;
    end Destroy;
 
+
    function Get_Alpha (Self : in Texture) return SDL.Video.Palettes.Colour_Component is
       function SDL_Get_Texture_Alpha_Mod (T     : in SDL.C_Pointers.Texture_Pointer;
                                           Alpha : out SDL.Video.Palettes.Colour_Component) return C.int with
@@ -38,6 +39,7 @@ package body SDL.Video.Textures is
       return Data;
    end Get_Alpha;
 
+
    procedure Set_Alpha (Self : in out Texture; Alpha : in SDL.Video.Palettes.Colour_Component) is
       function SDL_Set_Texture_Alpha_Mod (T     : in SDL.C_Pointers.Texture_Pointer;
                                           Alpha : in SDL.Video.Palettes.Colour_Component) return C.int with
@@ -51,6 +53,7 @@ package body SDL.Video.Textures is
          raise Texture_Error with SDL.Error.Get;
       end if;
    end Set_Alpha;
+
 
    function Get_Blend_Mode (Self : in Texture) return Blend_Modes is
       function SDL_Get_Texture_Blend_Mode (T     : in SDL.C_Pointers.Texture_Pointer;
@@ -69,6 +72,7 @@ package body SDL.Video.Textures is
       return Data;
    end Get_Blend_Mode;
 
+
    procedure Set_Blend_Mode (Self : in out Texture; Mode : in Blend_Modes) is
       function SDL_Set_Texture_Blend_Mode (T    : in SDL.C_Pointers.Texture_Pointer;
                                            Mode : in Blend_Modes) return C.int with
@@ -82,6 +86,7 @@ package body SDL.Video.Textures is
          raise Texture_Error with SDL.Error.Get;
       end if;
    end Set_Blend_Mode;
+
 
    function Get_Modulate_Colour (Self : in Texture) return SDL.Video.Palettes.RGB_Colour is
       function SDL_Get_Texture_Color_Mod (T       : in SDL.C_Pointers.Texture_Pointer;
@@ -100,6 +105,7 @@ package body SDL.Video.Textures is
       return Data;
    end Get_Modulate_Colour;
 
+
    procedure Set_Modulate_Colour (Self : in out Texture; Colour : in SDL.Video.Palettes.RGB_Colour) is
       function SDL_Set_Texture_Color_Mod (T       : in SDL.C_Pointers.Texture_Pointer;
                                           R, G, B : in SDL.Video.Palettes.Colour_Component) return C.int with
@@ -113,6 +119,40 @@ package body SDL.Video.Textures is
          raise Texture_Error with SDL.Error.Get;
       end if;
    end Set_Modulate_Colour;
+
+
+   function Get_Scale_Mode (Self : in Texture) return Scale_Modes is
+      function SDL_Get_Texture_Scale_Mode (T          : in SDL.C_Pointers.Texture_Pointer;
+                                           Scale_Mode : out Scale_Modes) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GetTextureScaleMode";
+
+      Data   : Scale_Modes;
+      Result : constant C.int := SDL_Get_Texture_Scale_Mode (Self.Internal, Data);
+   begin
+      if Result /= Success then
+         raise Texture_Error with SDL.Error.Get;
+      end if;
+
+      return Data;
+   end Get_Scale_Mode;
+
+
+   procedure Set_Scale_Mode (Self : in out Texture; Scale_Mode : in Scale_Modes) is
+      function SDL_Set_Texture_Scale_Mode (T          : in SDL.C_Pointers.Texture_Pointer;
+                                           Scale_Mode : in Scale_Modes) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_SetTextureScaleMode";
+
+      Result : constant C.int := SDL_Set_Texture_Scale_Mode (Self.Internal, Scale_Mode);
+   begin
+      if Result /= Success then
+         raise Texture_Error with SDL.Error.Get;
+      end if;
+   end Set_Scale_Mode;
+
 
    --     procedure Lock_Texture (Self   : in out Texture;
    --                             Pixels : out SDL.Video.Pixels.Pixel_ARGB_8888_Array_Access) is

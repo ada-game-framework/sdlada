@@ -21,6 +21,9 @@ package SDL.Video.Textures is
    type Kinds is (Static, Streaming, Target) with
      Convention => C;
 
+   type Scale_Modes is (Nearest, Linear, Best) with
+     Convention => C;
+
    type Texture is new Ada.Finalization.Limited_Controlled with private;
 
    function Null_Texture return Texture;
@@ -36,6 +39,9 @@ package SDL.Video.Textures is
 
    function Get_Modulate_Colour (Self : in Texture) return SDL.Video.Palettes.RGB_Colour;
    procedure Set_Modulate_Colour (Self : in out Texture; Colour : in SDL.Video.Palettes.RGB_Colour);
+
+   function Get_Scale_Mode (Self : in Texture) return Scale_Modes;
+   procedure Set_Scale_Mode (Self : in out Texture; Scale_Mode : in Scale_Modes);
 
    --  TODO: Fix this.
    --  Lock returns access to pixel data as write-only.
