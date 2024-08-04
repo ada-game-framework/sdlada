@@ -448,23 +448,23 @@ SDL_SetPixelFormatPalette             |   n   |        |
 
 Name                                  | Bound | Since  | Won't bind
 --------------------------------------|-------|--------|-----------
-SDL_EncloseFPoints                    |   n   | 2.0.22 |
+SDL_EncloseFPoints                    |   y   | 2.0.22 |
 SDL_EnclosePoints                     |   y   |        |
-SDL_FRectEmpty                        |   n   | ?      |
-SDL_FRectEquals                       |   n   | 2.0.22 |
-SDL_FRectEqualsEpsilon                |   n   | 2.0.22 |
+SDL_FRectEmpty                        |   y   | ?      |
+SDL_FRectEquals                       |   y   | 2.0.22 |
+SDL_FRectEqualsEpsilon                |   y   | 2.0.22 |
 SDL_HasIntersection                   |   y   |        |
-SDL_HasIntersectionF                  |   n   | 2.0.22 |
-SDL_IntersectFRect                    |   n   | 2.0.22 |
-SDL_IntersectFRectAndLine             |   n   | 2.0.22 |
+SDL_HasIntersectionF                  |   y   | 2.0.22 |
+SDL_IntersectFRect                    |   y   | 2.0.22 |
+SDL_IntersectFRectAndLine             |   y   | 2.0.22 |
 SDL_IntersectRect                     |   y   |        |
 SDL_IntersectRectAndLine              |   y   |        |
-SDL_PointInFRect                      |   n   | ?      |
-SDL_PointInRect                       |   n   | ?      |
-SDL_RectEmpty                         |   n   | ?      |
-SDL_RectEquals                        |   n   | ?      |
-SDL_UnionFRect                        |   n   | 2.0.22 |
-SDL_UnionRect                         |   n   |        |
+SDL_PointInFRect                      |   y   | ?      |
+SDL_PointInRect                       |   y   | ?      |
+SDL_RectEmpty                         |   y   | ?      |
+SDL_RectEquals                        |   n   | ?      | *
+SDL_UnionFRect                        |   y   | 2.0.22 |
+SDL_UnionRect                         |   y   |        |
 
 #### Surface Creation and Simple Drawing
 
