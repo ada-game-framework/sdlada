@@ -46,7 +46,7 @@ package SDL is
          X : SDL.Coordinate;
          Y : SDL.Coordinate;
       end record with
-     Convention => C;
+     Convention => C_Pass_By_Copy;
 
    Zero_Coordinate : constant Coordinates := (others => 0);
 
@@ -68,7 +68,7 @@ package SDL is
          Width  : Dimension;
          Height : Dimension;
       end record with
-     Convention => C;
+     Convention => C_Pass_By_Copy;
 
    Zero_Size : constant Sizes := (others => Natural_Dimension'First);
 
