@@ -632,11 +632,11 @@ package body SDL.Video.GL is
         External_Name => "SDL_GL_ExtensionSupported";
 
       C_Name_Str : C.Strings.chars_ptr := C.Strings.New_String (Extension);
-      Result     : constant SDL_Bool   := SDL_GL_Extension_Supported (C_Name_Str);
+      Result     : constant Boolean    := To_Boolean (SDL_GL_Extension_Supported (C_Name_Str));
    begin
       C.Strings.Free (C_Name_Str);
 
-      return (Result = SDL_True);
+      return Result;
    end Supports;
 
    function Get_Swap_Interval return Swap_Intervals is

@@ -177,7 +177,7 @@ package body SDL.Inputs.Joysticks is
         Convention    => C,
         External_Name => "SDL_JoystickGetAttached";
    begin
-      return SDL_Joystick_Is_Attached (Self.Internal) = SDL_True;
+      return To_Boolean (SDL_Joystick_Is_Attached (Self.Internal));
    end Is_Attached;
 
    function GUID (Self : in Joystick) return GUIDs is

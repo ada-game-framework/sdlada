@@ -40,7 +40,7 @@ package body SDL.Clipboard is
    begin
       Check_For_Window;
 
-      return (if SDL_Has_Clipboard_Text = SDL_True then False else True);
+      return To_Boolean (SDL_Has_Clipboard_Text);
    end Is_Empty;
 
    procedure Set (Text : in Ada.Strings.UTF_Encoding.UTF_8_String) is

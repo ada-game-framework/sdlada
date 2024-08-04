@@ -9,10 +9,8 @@ package body SDL.Video.Rectangles is
         Import        => True,
         Convention    => C,
         External_Name => "SDL_HasIntersection";
-
-      Result : constant SDL_Bool := SDL_Has_Intersection (A, B);
    begin
-      return (Result = SDL_True);
+      return To_Boolean (SDL_Has_Intersection (A, B));
    end Has_Intersected;
 
 
@@ -21,10 +19,8 @@ package body SDL.Video.Rectangles is
         Import        => True,
         Convention    => C,
         External_Name => "SDL_IntersectRect";
-
-      Result : constant SDL_Bool := SDL_Intersect_Rect (A, B, R => Intersection);
    begin
-      return (Result = SDL_True);
+      return To_Boolean (SDL_Intersect_Rect (A, B, R => Intersection));
    end Intersects;
 
 
@@ -50,10 +46,8 @@ package body SDL.Video.Rectangles is
         Import        => True,
         Convention    => C,
         External_Name => "SDL_EnclosePoints";
-
-      Result : constant SDL_Bool := SDL_Enclose_Points (Points, C.int (Points'Length), Clip, Enclosed);
    begin
-      return (Result = SDL_True);
+      return To_Boolean (SDL_Enclose_Points (Points, C.int (Points'Length), Clip, Enclosed));
    end Enclose;
 
 
@@ -66,9 +60,9 @@ package body SDL.Video.Rectangles is
         Convention    => C,
         External_Name => "SDL_EnclosePoints";
 
-      Result : constant SDL_Bool := SDL_Enclose_Points (Points, C.int (Points'Length), null, Enclosed);
+      Result : constant Boolean := To_Boolean (SDL_Enclose_Points (Points, C.int (Points'Length), null, Enclosed));
    begin
-      if Result /= SDL_True then
+      if Result then
          raise Rectangle_Error with SDL.Error.Get;
       end if;
    end Enclose;
@@ -79,14 +73,13 @@ package body SDL.Video.Rectangles is
         Import        => True,
         Convention    => C,
         External_Name => "SDL_IntersectRectAndLine";
-
-      Result : constant SDL_Bool := SDL_Intersect_Rect_And_Line (Clip_Area,
-                                                                 Line.Start.X,
-                                                                 Line.Start.Y,
-                                                                 Line.Finish.X,
-                                                                 Line.Finish.Y);
    begin
-      return (Result = SDL_True);
+      return To_Boolean (SDL_Intersect_Rect_And_Line
+        (Clip_Area,
+         Line.Start.X,
+         Line.Start.Y,
+         Line.Finish.X,
+         Line.Finish.Y));
    end Clip_To;
 
 
@@ -95,10 +88,8 @@ package body SDL.Video.Rectangles is
         Import        => True,
         Convention    => C,
         External_Name => "SDL_HasIntersectionF";
-
-      Result : constant SDL_Bool := SDL_Has_Intersection_F (A, B);
    begin
-      return (Result = SDL_True);
+      return To_Boolean (SDL_Has_Intersection_F (A, B));
    end Has_Intersected;
 
 
@@ -107,10 +98,8 @@ package body SDL.Video.Rectangles is
         Import        => True,
         Convention    => C,
         External_Name => "SDL_IntersectFRect";
-
-      Result : constant SDL_Bool := SDL_Intersect_FRect (A, B, R => Intersection);
    begin
-      return (Result = SDL_True);
+      return To_Boolean (SDL_Intersect_FRect (A, B, R => Intersection));
    end Intersects;
 
 
@@ -137,10 +126,8 @@ package body SDL.Video.Rectangles is
         Import        => True,
         Convention    => C,
         External_Name => "SDL_EncloseFPoints";
-
-      Result : constant SDL_Bool := SDL_Enclose_FPoints (Points, C.int (Points'Length), Clip, Enclosed);
    begin
-      return (Result = SDL_True);
+      return To_Boolean (SDL_Enclose_FPoints (Points, C.int (Points'Length), Clip, Enclosed));
    end Enclose;
 
 
@@ -153,9 +140,9 @@ package body SDL.Video.Rectangles is
         Convention    => C,
         External_Name => "SDL_EncloseFPoints";
 
-      Result : constant SDL_Bool := SDL_Enclose_FPoints (Points, C.int (Points'Length), null, Enclosed);
+      Result : constant Boolean := To_Boolean (SDL_Enclose_FPoints (Points, C.int (Points'Length), null, Enclosed));
    begin
-      if Result /= SDL_True then
+      if Result then
          raise Rectangle_Error with SDL.Error.Get;
       end if;
    end Enclose;
@@ -166,13 +153,12 @@ package body SDL.Video.Rectangles is
         Import        => True,
         Convention    => C,
         External_Name => "SDL_IntersectFRectAndLine";
-
-      Result : constant SDL_Bool := SDL_Intersect_FRect_And_Line (Clip_Area,
-                                                                  Line.Start.X,
-                                                                  Line.Start.Y,
-                                                                  Line.Finish.X,
-                                                                  Line.Finish.Y);
    begin
-      return (Result = SDL_True);
+      return To_Boolean (SDL_Intersect_FRect_And_Line
+        (Clip_Area,
+         Line.Start.X,
+         Line.Start.Y,
+         Line.Finish.X,
+         Line.Finish.Y));
    end Clip_To;
 end SDL.Video.Rectangles;

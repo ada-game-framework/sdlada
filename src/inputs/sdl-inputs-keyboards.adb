@@ -35,7 +35,7 @@ package body SDL.Inputs.Keyboards is
         Convention    => C,
         External_Name => "SDL_HasScreenKeyboardSupport";
    begin
-      return SDL_Has_Screen_Keyboard_Support = SDL_True;
+      return To_Boolean (SDL_Has_Screen_Keyboard_Support);
    end Supports_Screen_Keyboard;
 
 
@@ -49,7 +49,7 @@ package body SDL.Inputs.Keyboards is
         Convention    => C,
         External_Name => "SDL_IsScreenKeyboardShown";
    begin
-      return SDL_Screen_Keyboard_Shown (Get_Internal_Window (Window)) = SDL_True;
+      return To_Boolean (SDL_Screen_Keyboard_Shown (Get_Internal_Window (Window)));
    end Is_Screen_Keyboard_Visible;
 
 
@@ -59,7 +59,7 @@ package body SDL.Inputs.Keyboards is
         Convention    => C,
         External_Name => "SDL_IsTextInputActive";
    begin
-      return SDL_Is_Text_Input_Active = SDL_True;
+      return To_Boolean (SDL_Is_Text_Input_Active);
    end Is_Text_Input_Enabled;
 
 
@@ -69,6 +69,6 @@ package body SDL.Inputs.Keyboards is
         Convention    => C,
         External_Name => "SDL_IsTextInputShown";
    begin
-      return Is_Text_Input_Shown = SDL_True;
+      return To_Boolean (Is_Text_Input_Shown);
    end Is_Text_Input_Shown;
 end SDL.Inputs.Keyboards;

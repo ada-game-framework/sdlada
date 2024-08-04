@@ -205,7 +205,7 @@ package body SDL.Video.Windows is
         Convention    => C,
         External_Name => "SDL_GetWindowGrab";
    begin
-      return (SDL_Get_Window_Grab (Self.Internal) = SDL_True);
+      return To_Boolean (SDL_Get_Window_Grab (Self.Internal));
    end Is_Grabbed;
 
    procedure Set_Grabbed (Self : in out Window; Grabbed : in Boolean := True) is
