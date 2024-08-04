@@ -114,6 +114,9 @@ package SDL.Video.Renderers is
       Centre    : in SDL.Video.Rectangles.Point;
       Flip      : in Renderer_Flip);
 
+   procedure Draw (Self : in out Renderer; Point : in SDL.Video.Rectangles.Float_Point);
+   procedure Draw (Self : in out Renderer; Points : in SDL.Video.Rectangles.Float_Point_Arrays);
+
    procedure Get_Clip (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle);
    procedure Set_Clip (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle);
 

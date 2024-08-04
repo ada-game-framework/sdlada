@@ -456,6 +456,36 @@ package body SDL.Video.Renderers is
    end Copy;
 
 
+   procedure Draw (Self : in out Renderer; Point : in SDL.Video.Rectangles.Float_Point) is
+      function SDL_Render_Draw_Point_F (R : in SDL.C_Pointers.Renderer_Pointer; X, Y : in C.C_float) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderDrawPointF";
+
+      Result : constant C.int := SDL_Render_Draw_Point_F (Self.Internal, C.C_float (Point.X), C.C_float (Point.Y));
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Draw;
+
+
+   procedure Draw (Self : in out Renderer; Points : in SDL.Video.Rectangles.Float_Point_Arrays) is
+      function SDL_Render_Draw_Points_F (R     : in SDL.C_Pointers.Renderer_Pointer;
+                                         P     : in SDL.Video.Rectangles.Float_Point_Arrays;
+                                         Count : in C.int) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderDrawPointsF";
+
+      Result : constant C.int := SDL_Render_Draw_Points_F (Self.Internal, Points, C.int (Points'Length));
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Draw;
+
+
    procedure Get_Clip (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle) is
       procedure SDL_Render_Get_Clip_Rect (R    : in SDL.C_Pointers.Renderer_Pointer;
                                           Rect : out SDL.Video.Rectangles.Rectangle) with

@@ -378,9 +378,9 @@ SDL_RenderDrawLineF                   |   n   | 2.0.10 |
 SDL_RenderDrawLines                   |   y   |        |
 SDL_RenderDrawLinesF                  |   n   | 2.0.10 |
 SDL_RenderDrawPoint                   |   y   |        |
-SDL_RenderDrawPointF                  |   n   | 2.0.10 |
+SDL_RenderDrawPointF                  |   y   | 2.0.10 |
 SDL_RenderDrawPoints                  |   y   |        |
-SDL_RenderDrawPointsF                 |   n   | 2.0.10 |
+SDL_RenderDrawPointsF                 |   y   | 2.0.10 |
 SDL_RenderDrawRect                    |   y   |        |
 SDL_RenderDrawRectF                   |   n   | 2.0.10 |
 SDL_RenderDrawRects                   |   y   |        |
