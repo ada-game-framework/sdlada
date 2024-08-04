@@ -7,3 +7,5 @@ wiki
 .gitignore
 thirdparty
 build/
+alire/
+config/
