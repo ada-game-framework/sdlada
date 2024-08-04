@@ -598,6 +598,67 @@ package body SDL.Video.Renderers is
    end Fill;
 
 
+   procedure Copy
+     (Self      : in out Renderer;
+      Copy_From : in SDL.Video.Textures.Texture;
+      From      : in SDL.Video.Rectangles.Rectangle;
+      To        : in SDL.Video.Rectangles.Float_Rectangle) is
+
+      function SDL_Render_Copy_F
+        (R    : in SDL.C_Pointers.Renderer_Pointer;
+         T    : in SDL.C_Pointers.Texture_Pointer;
+         Src  : in SDL.Video.Rectangles.Rectangle;
+         Dest : in SDL.Video.Rectangles.Float_Rectangle) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderCopyF";
+
+      Result : constant C.int := SDL_Render_Copy_F (Self.Internal,
+                                                    Get_Internal_Texture (Copy_From),
+                                                    From,
+                                                    To);
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Copy;
+
+
+   procedure Copy
+     (Self      : in out Renderer;
+      Copy_From : in SDL.Video.Textures.Texture;
+      From      : in SDL.Video.Rectangles.Rectangle;
+      To        : in SDL.Video.Rectangles.Float_Rectangle;
+      Angle     : in Long_Float;
+      Centre    : in SDL.Video.Rectangles.Float_Point;
+      Flip      : in Renderer_Flip) is
+
+      function SDL_Render_Copy_Ex_F
+        (R      : in SDL.C_Pointers.Renderer_Pointer;
+         T      : in SDL.C_Pointers.Texture_Pointer;
+         Src    : in SDL.Video.Rectangles.Rectangle;
+         Dest   : in SDL.Video.Rectangles.Float_Rectangle;
+         A      : in C.double;
+         Centre : in SDL.Video.Rectangles.Float_Point;
+         F      : in Internal_Flip) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderCopyExF";
+
+      Result : constant C.int := SDL_Render_Copy_Ex_F (Self.Internal,
+                                                       Get_Internal_Texture (Copy_From),
+                                                       From,
+                                                       To,
+                                                       C.double (Angle),
+                                                       Centre,
+                                                       Internal_Flips (Flip));
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Copy;
+
+
    procedure Get_Clip (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle) is
       procedure SDL_Render_Get_Clip_Rect (R    : in SDL.C_Pointers.Renderer_Pointer;
                                           Rect : out SDL.Video.Rectangles.Rectangle) with

@@ -125,6 +125,21 @@ package SDL.Video.Renderers is
    procedure Fill (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Float_Rectangle);
    procedure Fill (Self : in out Renderer; Rectangles : in SDL.Video.Rectangles.Float_Rectangle_Arrays);
 
+   procedure Copy
+     (Self      : in out Renderer;
+      Copy_From : in SDL.Video.Textures.Texture;
+      From      : in SDL.Video.Rectangles.Rectangle;
+      To        : in SDL.Video.Rectangles.Float_Rectangle);
+
+   procedure Copy
+     (Self      : in out Renderer;
+      Copy_From : in SDL.Video.Textures.Texture;
+      From      : in SDL.Video.Rectangles.Rectangle;
+      To        : in SDL.Video.Rectangles.Float_Rectangle;
+      Angle     : in Long_Float;
+      Centre    : in SDL.Video.Rectangles.Float_Point;
+      Flip      : in Renderer_Flip);
+
    procedure Get_Clip (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle);
    procedure Set_Clip (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle);
 

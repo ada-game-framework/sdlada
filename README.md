@@ -371,8 +371,8 @@ SDL_QueryTexture                      |   y   |        |
 SDL_RenderClear                       |   y   |        |
 SDL_RenderCopy                        |   y   |        |
 SDL_RenderCopyEx                      |   y   |        |
-SDL_RenderCopyExF                     |   n   | 2.0.10 |
-SDL_RenderCopyF                       |   n   | 2.0.10 |
+SDL_RenderCopyExF                     |   y   | 2.0.10 |
+SDL_RenderCopyF                       |   y   | 2.0.10 |
 SDL_RenderDrawLine                    |   y   |        |
 SDL_RenderDrawLineF                   |   y   | 2.0.10 |
 SDL_RenderDrawLines                   |   y   |        |
