@@ -171,6 +171,18 @@ package SDL.Video.Renderers is
                               Texture  : in SDL.Video.Textures.Texture;
                               Vertices : in Vertex_Arrays);
 
+   --  TODO: SDL_RenderGeometryRaw
+   --        Does this need to be a generic which can take in the user's own arrays and types? Yes, because each
+   --        pointer can be within a mixed array, which can't really be done in Ada.
+   --
+   --  int SDL_RenderGeometryRaw(SDL_Renderer *renderer,
+   --                         SDL_Texture *texture,
+   --                         const float *xy, int xy_stride,
+   --                         const SDL_Color *color, int color_stride,
+   --                         const float *uv, int uv_stride,
+   --                         int num_vertices,
+   --                         const void *indices, int num_indices, int size_indices);
+
    procedure Get_Clip (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle);
    procedure Set_Clip (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle);
 
