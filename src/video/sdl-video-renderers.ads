@@ -70,6 +70,8 @@ package SDL.Video.Renderers is
    function Get_Draw_Colour (Self : in Renderer) return SDL.Video.Palettes.Colour;
    procedure Set_Draw_Colour (Self : in out Renderer; Colour : in SDL.Video.Palettes.Colour);
 
+   procedure Get_Info (Self : Renderer; Info : out Renderer_Infos);
+
    --  SDL_GetRendererInfo
    procedure Get_Output_Size
      (Self   : in Renderer;

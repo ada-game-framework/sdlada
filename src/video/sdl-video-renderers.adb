@@ -146,6 +146,21 @@ package body SDL.Video.Renderers is
    end Set_Draw_Colour;
 
 
+   procedure Get_Info (Self : Renderer; Info : out Renderer_Infos) is
+      function SDL_Get_Renderer_Info
+        (Renderer : SDL.C_Pointers.Renderer_Pointer; Info : out Renderer_Infos) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GetRendererInfo";
+
+      Result : constant C.int := SDL_Get_Renderer_Info (Self.Internal, Info);
+   begin
+      if Result /= SDL.Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Get_Info;
+
+
    procedure Get_Output_Size
      (Self   : in Renderer;
       Width  : out SDL.Natural_Dimension;
