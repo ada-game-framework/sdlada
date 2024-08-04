@@ -13,8 +13,10 @@ package body SDL.Hints is
    Accelerometer_As_Joystick_Name                : aliased constant String := "SDL_ACCELEROMETER_AS_JOYSTICK";
    Allow_Alt_Tab_While_Grabbed_Name              : aliased constant String := "SDL_ALLOW_ALT_TAB_WHILE_GRABBED";
    Allow_Topmost_Name                            : aliased constant String := "SDL_ALLOW_TOPMOST";
-   Android_Apk_Expansion_Main_File_Version_Name  : aliased constant String := "SDL_ANDROID_APK_EXPANSION_MAIN_FILE_VERSION";
-   Android_Apk_Expansion_Patch_File_Version_Name : aliased constant String := "SDL_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION";
+   Android_Apk_Expansion_Main_File_Version_Name  : aliased constant String :=
+     "SDL_ANDROID_APK_EXPANSION_MAIN_FILE_VERSION";
+   Android_Apk_Expansion_Patch_File_Version_Name : aliased constant String :=
+     "SDL_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION";
    Android_Block_On_Pause_Name                   : aliased constant String := "SDL_ANDROID_BLOCK_ON_PAUSE";
    Android_Block_On_Pause_Pauseaudio_Name        : aliased constant String := "SDL_ANDROID_BLOCK_ON_PAUSE_PAUSEAUDIO";
    Android_Trap_Back_Button_Name                 : aliased constant String := "SDL_ANDROID_TRAP_BACK_BUTTON";
@@ -40,7 +42,8 @@ package body SDL.Hints is
    Game_Controller_Config_Name                   : aliased constant String := "SDL_GAMECONTROLLERCONFIG";
    Game_Controller_Config_File_Name              : aliased constant String := "SDL_GAMECONTROLLERCONFIG_FILE";
    Game_Controller_Ignore_Devices_Name           : aliased constant String := "SDL_GAMECONTROLLER_IGNORE_DEVICES";
-   Game_Controller_Ignore_Devices_Except_Name    : aliased constant String := "SDL_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT";
+   Game_Controller_Ignore_Devices_Except_Name    : aliased constant String :=
+     "SDL_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT";
    Game_Controller_Use_Button_Labels_Name        : aliased constant String := "SDL_GAMECONTROLLER_USE_BUTTON_LABELS";
    Grab_Keyboard_Name                            : aliased constant String := "SDL_GRAB_KEYBOARD";
    HID_API_Ignore_Devices_Name                   : aliased constant String := "SDL_HIDAPI_IGNORE_DEVICES";
@@ -51,11 +54,13 @@ package body SDL.Hints is
    IOS_Hide_Home_Indicator_Name                  : aliased constant String := "SDL_IOS_HIDE_HOME_INDICATOR";
    Joystick_Allow_Background_Events_Name         : aliased constant String := "SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS";
    Joystick_Arcade_Stick_Devices_Name            : aliased constant String := "SDL_JOYSTICK_ARCADESTICK_DEVICES";
-   Joystick_Arcade_Stick_Devices_Excluded_Name   : aliased constant String := "SDL_JOYSTICK_ARCADESTICK_DEVICES_EXCLUDED";
+   Joystick_Arcade_Stick_Devices_Excluded_Name   : aliased constant String :=
+     "SDL_JOYSTICK_ARCADESTICK_DEVICES_EXCLUDED";
    Joystick_Blacklist_Devices_Name               : aliased constant String := "SDL_JOYSTICK_BLACKLIST_DEVICES";
    Joystick_Blacklist_Devices_Excluded_Name      : aliased constant String := "SDL_JOYSTICK_BLACKLIST_DEVICES_EXCLUDED";
    Joystick_Flight_Stick_Devices_Name            : aliased constant String := "SDL_JOYSTICK_FLIGHTSTICK_DEVICES";
-   Joystick_Flight_Stick_Devices_Excluded_Name   : aliased constant String := "SDL_JOYSTICK_FLIGHTSTICK_DEVICES_EXCLUDED";
+   Joystick_Flight_Stick_Devices_Excluded_Name   : aliased constant String :=
+     "SDL_JOYSTICK_FLIGHTSTICK_DEVICES_EXCLUDED";
    Joystick_Gamecube_Devices_Name                : aliased constant String := "SDL_JOYSTICK_GAMECUBE_DEVICES";
    Joystick_Gamecube_Devices_Excluded_Name       : aliased constant String := "SDL_JOYSTICK_GAMECUBE_DEVICES_EXCLUDED";
    Joystick_HID_API_Name                         : aliased constant String := "SDL_JOYSTICK_HIDAPI";
@@ -140,7 +145,8 @@ package body SDL.Hints is
    Render_OpenGL_Shaders_Name                    : aliased constant String := "SDL_RENDER_OPENGL_SHADERS";
    Render_Scale_Quality_Name                     : aliased constant String := "SDL_RENDER_SCALE_QUALITY";
    Render_VSync_Name                             : aliased constant String := "SDL_RENDER_VSYNC";
-   Render_Metal_Prefer_Low_Power_Device_Name     : aliased constant String := "SDL_RENDER_METAL_PREFER_LOW_POWER_DEVICE";
+   Render_Metal_Prefer_Low_Power_Device_Name     : aliased constant String :=
+     "SDL_RENDER_METAL_PREFER_LOW_POWER_DEVICE";
    ROG_Gamepad_Mice_Name                         : aliased constant String := "SDL_ROG_GAMEPAD_MICE";
    ROG_Gamepad_Mice_Excluded_Name                : aliased constant String := "SDL_ROG_GAMEPAD_MICE_EXCLUDED";
    PS2_Dynamic_VSync_Name                        : aliased constant String := "SDL_PS2_DYNAMIC_VSYNC";
@@ -182,7 +188,8 @@ package body SDL.Hints is
    Windows_Disable_Thread_Naming_Name            : aliased constant String := "SDL_WINDOWS_DISABLE_THREAD_NAMING";
    Windows_Enable_Menu_Mnemonics_Name            : aliased constant String := "SDL_WINDOWS_ENABLE_MENU_MNEMONICS";
    Windows_Enable_Messageloop_Name               : aliased constant String := "SDL_WINDOWS_ENABLE_MESSAGELOOP";
-   Windows_Force_Mutex_Critical_Sections_Name    : aliased constant String := "SDL_WINDOWS_FORCE_MUTEX_CRITICAL_SECTIONS";
+   Windows_Force_Mutex_Critical_Sections_Name    : aliased constant String :=
+     "SDL_WINDOWS_FORCE_MUTEX_CRITICAL_SECTIONS";
    Windows_Force_Semaphore_Kernel_Name           : aliased constant String := "SDL_WINDOWS_FORCE_SEMAPHORE_KERNEL";
    Windows_Intresource_Icon_Name                 : aliased constant String := "SDL_WINDOWS_INTRESOURCE_ICON";
    Windows_Intresource_Icon_Small_Name           : aliased constant String := "SDL_WINDOWS_INTRESOURCE_ICON_SMALL";
