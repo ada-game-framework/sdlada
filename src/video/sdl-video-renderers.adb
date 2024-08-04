@@ -765,6 +765,31 @@ package body SDL.Video.Renderers is
    end Get_Logical_Size;
 
 
+   procedure Set_Integer_Scale (Self : in Renderer; Enable: Boolean) is
+      function SDL_Render_Set_Integer_Scale (renderer : SDL.C_Pointers.Renderer_Pointer;
+                                             enable   : SDL.SDL_Bool) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderSetIntegerScale";
+
+      Result : constant C.int := SDL_Render_Set_Integer_Scale (Self.Internal, SDL.To_Bool (Enable));
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Set_Integer_Scale;
+
+
+   function Get_Integer_Scale (Self : in Renderer) return Boolean is
+      function SDL_Render_Get_Integer_Scale (renderer : SDL.C_Pointers.Renderer_Pointer) return SDL.SDL_Bool with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderGetIntegerScale";
+   begin
+      return SDL.To_Boolean (SDL_Render_Get_Integer_Scale (Self.Internal));
+   end Get_Integer_Scale;
+
+
    procedure Get_Scale (Self : in Renderer; X, Y : out Float) is
       procedure SDL_Render_Get_Scale (R : in SDL.C_Pointers.Renderer_Pointer; X, Y : out C.C_float) with
         Import        => True,

@@ -393,7 +393,7 @@ SDL_RenderFlush                       |   y   | 2.0.10 |
 SDL_RenderGeometry                    |   y   | 2.0.18 |
 SDL_RenderGeometryRAW                 |   n   | 2.0.18 |
 SDL_RenderGetClipRect                 |   y   |        |
-SDL_RenderGetIntegerScale             |   n   | 2.0.5  |
+SDL_RenderGetIntegerScale             |   y   | 2.0.5  |
 SDL_RenderGetLogicalSize              |   y   |        |
 SDL_RenderGetMetalCommandEncoder      |   n   | 2.0.8  |
 SDL_RenderGetMetalLayer               |   n   | 2.0.8  |
@@ -405,7 +405,7 @@ SDL_RenderLogicalToWindow             |   n   | 2.0.18 |
 SDL_RenderPresent                     |   y   |        |
 SDL_RenderReadPixels                  |   n   |        |
 SDL_RenderSetClipRect                 |   y   |        |
-SDL_RenderSetIntegerScale             |   n   | 2.0.5  |
+SDL_RenderSetIntegerScale             |   y   | 2.0.5  |
 SDL_RenderSetLogicalSize              |   y   |        |
 SDL_RenderSetScale                    |   y   |        |
 SDL_RenderSetViewport                 |   y   |        |
