@@ -22,12 +22,22 @@ package SDL.Video.Rectangles is
    type Point_Arrays is array (C.size_t range <>) of aliased Point with
      Convention => C;
 
+   type Float_Point is
+      record
+         X : Float;
+         Y : Float;
+      end record with
+     Convention => C_Pass_By_Copy;
+
+   type Float_Point_Arrays is array (C.size_t range <>) of aliased Float_Point with
+     Convention => C;
+
    type Line_Segment is
       record
          Start  : SDL.Coordinates;
          Finish : SDL.Coordinates;
       end record with
-     Convention => C;
+     Convention => C_Pass_By_Copy;
 
    type Line_Arrays is array (C.size_t range <>) of aliased Line_Segment with
      Convention => C;
@@ -40,7 +50,7 @@ package SDL.Video.Rectangles is
          Width  : SDL.Natural_Dimension;
          Height : SDL.Natural_Dimension;
       end record with
-     Convention => C;
+     Convention => C_Pass_By_Copy;
 
    Null_Rectangle : constant Rectangle := (others => 0);
 
@@ -48,6 +58,21 @@ package SDL.Video.Rectangles is
      Convention => C;
 
    type Rectangle_Access is access all Rectangle with
+     Convention => C;
+
+   type Float_Rectangle is
+      record
+         X      : Float;
+         Y      : Float;
+         Width  : Float;
+         Height : Float;
+      end record with
+     Convention => C_Pass_By_Copy;
+
+   type Float_Rectangle_Arrays is array (C.size_t range <>) of aliased Float_Rectangle with
+     Convention => C;
+
+   type Float_Rectangle_Access is access all Float_Rectangle with
      Convention => C;
 
    function Enclose (Points : in Point_Arrays; Clip : in Rectangle; Enclosed : out Rectangle) return Boolean;
