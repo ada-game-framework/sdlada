@@ -198,6 +198,36 @@ package body SDL.Video.Renderers is
    end Clear;
 
 
+   procedure Draw (Self : in out Renderer; Point : in SDL.Video.Rectangles.Point) is
+      function SDL_Render_Draw_Point (R : in SDL.C_Pointers.Renderer_Pointer; X, Y : in C.int) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderDrawPoint";
+
+      Result : constant C.int := SDL_Render_Draw_Point (Self.Internal, Point.X, Point.Y);
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Draw;
+
+
+   procedure Draw (Self : in out Renderer; Points : in SDL.Video.Rectangles.Point_Arrays) is
+      function SDL_Render_Draw_Points (R     : in SDL.C_Pointers.Renderer_Pointer;
+                                       P     : in SDL.Video.Rectangles.Point_Arrays;
+                                       Count : in C.int) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderDrawPoints";
+
+      Result : constant C.int := SDL_Render_Draw_Points (Self.Internal, Points, C.int (Points'Length));
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Draw;
+
+
    procedure Draw (Self : in out Renderer; Line : in SDL.Video.Rectangles.Line_Segment) is
       function SDL_Render_Draw_Line (R              : in SDL.C_Pointers.Renderer_Pointer;
                                      X1, Y1, X2, Y2 : in C.int) return C.int with
@@ -228,36 +258,6 @@ package body SDL.Video.Renderers is
         External_Name => "SDL_RenderDrawLines";
 
       Result : constant C.int := SDL_Render_Draw_Lines (Self.Internal, Lines, C.int (Lines'Length * 2));
-   begin
-      if Result /= Success then
-         raise Renderer_Error with SDL.Error.Get;
-      end if;
-   end Draw;
-
-
-   procedure Draw (Self : in out Renderer; Point : in SDL.Video.Rectangles.Point) is
-      function SDL_Render_Draw_Point (R : in SDL.C_Pointers.Renderer_Pointer; X, Y : in C.int) return C.int with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_RenderDrawPoint";
-
-      Result : constant C.int := SDL_Render_Draw_Point (Self.Internal, Point.X, Point.Y);
-   begin
-      if Result /= Success then
-         raise Renderer_Error with SDL.Error.Get;
-      end if;
-   end Draw;
-
-
-   procedure Draw (Self : in out Renderer; Points : in SDL.Video.Rectangles.Point_Arrays) is
-      function SDL_Render_Draw_Points (R     : in SDL.C_Pointers.Renderer_Pointer;
-                                       P     : in SDL.Video.Rectangles.Point_Arrays;
-                                       Count : in C.int) return C.int with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_RenderDrawPoints";
-
-      Result : constant C.int := SDL_Render_Draw_Points (Self.Internal, Points, C.int (Points'Length));
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
