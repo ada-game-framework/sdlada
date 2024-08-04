@@ -356,7 +356,7 @@ SDL_GetRenderDrawColor                |   y   |        |
 SDL_GetRenderDriverInfo               |   y   |        |
 SDL_GetRenderer                       |   y   |        |
 SDL_GetRendererInfo                   |   y   |        |
-SDL_GetRendererOutputSize             |   n   |        |
+SDL_GetRendererOutputSize             |   y   |        |
 SDL_GetRenderTarget                   |   n   |        |
 SDL_GetTextureAlphaMod                |   y   |        |
 SDL_GetTextureBlendMode               |   y   |        |
