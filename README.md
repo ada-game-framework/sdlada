@@ -390,7 +390,7 @@ SDL_RenderFillRectF                   |   y   | 2.0.10 |
 SDL_RenderFillRects                   |   y   |        |
 SDL_RenderFillRectsF                  |   y   | 2.0.10 |
 SDL_RenderFlush                       |   y   | 2.0.10 |
-SDL_RenderGeometry                    |   n   | 2.0.18 |
+SDL_RenderGeometry                    |   y   | 2.0.18 |
 SDL_RenderGeometryRAW                 |   n   | 2.0.18 |
 SDL_RenderGetClipRect                 |   y   |        |
 SDL_RenderGetIntegerScale             |   n   | 2.0.5  |

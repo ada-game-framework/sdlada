@@ -55,6 +55,28 @@ package SDL.Video.Renderers is
    end record
      with Convention => C_Pass_By_Copy;
 
+   type Vertices is record
+      Position           : Rectangles.Float_Point;
+      Colour             : SDL.Video.Palettes.Colour;
+      Texture_Coordinate : Rectangles.Float_Point;
+   end record with
+     Convention => C_Pass_By_Copy;
+
+   type Vertex_Arrays is array (C.size_t range <>) of aliased Vertices with
+     Convention => C;
+
+   --  type Vertex_Array_Access is access all Vertex_Arrays with
+   --    Convention => C;
+
+   type Indices is new C.int range 0 .. C.int'Last with
+     Convention => C;
+
+   type Index_Arrays is array (C.size_t range <>) of aliased Indices with
+     Convention => C;
+
+   --  type Index_Array_Access is access Index_Arrays with
+   --    Convention => C;
+
    procedure Get_Driver_Info (Index : Positive; Info : out Renderer_Infos);
 
    type Renderer is new Ada.Finalization.Limited_Controlled with private;
@@ -139,6 +161,15 @@ package SDL.Video.Renderers is
       Angle     : in Long_Float;
       Centre    : in SDL.Video.Rectangles.Float_Point;
       Flip      : in Renderer_Flip);
+
+   procedure Render_Geometry (Self     : in out Renderer;
+                              Texture  : in SDL.Video.Textures.Texture;
+                              Vertices : in Vertex_Arrays;
+                              Indices  : in Index_Arrays);
+
+   procedure Render_Geometry (Self     : in out Renderer;
+                              Texture  : in SDL.Video.Textures.Texture;
+                              Vertices : in Vertex_Arrays);
 
    procedure Get_Clip (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle);
    procedure Set_Clip (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle);

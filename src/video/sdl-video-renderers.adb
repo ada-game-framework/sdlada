@@ -2,6 +2,7 @@
 --  This source code is subject to the Zlib license, see the LICENCE file in the root of this directory.
 --------------------------------------------------------------------------------------------------------------------
 with SDL.Error;
+with System;
 
 package body SDL.Video.Renderers is
    use type SDL.C_Pointers.Renderer_Pointer;
@@ -657,6 +658,57 @@ package body SDL.Video.Renderers is
          raise Renderer_Error with SDL.Error.Get;
       end if;
    end Copy;
+
+
+   procedure Render_Geometry (Self     : in out Renderer;
+                              Texture  : in SDL.Video.Textures.Texture;
+                              Vertices : in Vertex_Arrays;
+                              Indices  : in Index_Arrays) is
+      function SDL_Render_Geometry (R     : in SDL.C_Pointers.Renderer_Pointer;
+                                    T     : in SDL.C_Pointers.Texture_Pointer;
+                                    V     : in Vertex_Arrays;
+                                    Num_V : in C.int;
+                                    I     : in Index_Arrays;
+                                    Num_I : in C.int) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderGeometry";
+
+      Result : constant C.int := SDL_Render_Geometry (Self.Internal,
+                                                      Get_Internal_Texture (Texture),
+                                                      Vertices,
+                                                      Vertices'Length,
+                                                      Indices,
+                                                      Indices'Length);
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Render_Geometry;
+
+
+   procedure Render_Geometry (Self     : in out Renderer;
+                              Texture  : in SDL.Video.Textures.Texture;
+                              Vertices : in Vertex_Arrays) is
+      function SDL_Render_Geometry (R     : in SDL.C_Pointers.Renderer_Pointer;
+                                    T     : in SDL.C_Pointers.Texture_Pointer;
+                                    V     : in Vertex_Arrays;
+                                    Num_V : in C.int;
+                                    I     : System.Address := System.Null_Address;
+                                    Num_I : in C.int       := 0) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderGeometry";
+
+      Result : constant C.int := SDL_Render_Geometry (Self.Internal,
+                                                      Get_Internal_Texture (Texture),
+                                                      Vertices,
+                                                      Vertices'Length);
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Render_Geometry;
 
 
    procedure Get_Clip (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle) is
