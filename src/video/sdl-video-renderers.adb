@@ -773,6 +773,16 @@ package body SDL.Video.Renderers is
    end Present;
 
 
+   procedure Flush (Self : in Renderer) is
+      procedure SDL_Render_Flush (R : in SDL.C_Pointers.Renderer_Pointer) with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderFlush";
+   begin
+      SDL_Render_Flush (Self.Internal);
+   end Flush;
+
+
    function Supports_Targets (Self : in Renderer) return Boolean is
       function SDL_Render_Target_Supported (R : in SDL.C_Pointers.Renderer_Pointer) return SDL_Bool with
         Import        => True,

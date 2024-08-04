@@ -154,6 +154,8 @@ package SDL.Video.Renderers is
 
    procedure Present (Self : in Renderer);
 
+   procedure Flush (Self : in Renderer);
+
    --  TODO: SDL_RenderReadPixels
 
    function Supports_Targets (Self : in Renderer) return Boolean;
