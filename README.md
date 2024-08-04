@@ -374,17 +374,17 @@ SDL_RenderCopyEx                      |   y   |        |
 SDL_RenderCopyExF                     |   n   | 2.0.10 |
 SDL_RenderCopyF                       |   n   | 2.0.10 |
 SDL_RenderDrawLine                    |   y   |        |
-SDL_RenderDrawLineF                   |   n   | 2.0.10 |
+SDL_RenderDrawLineF                   |   y   | 2.0.10 |
 SDL_RenderDrawLines                   |   y   |        |
-SDL_RenderDrawLinesF                  |   n   | 2.0.10 |
+SDL_RenderDrawLinesF                  |   y   | 2.0.10 |
 SDL_RenderDrawPoint                   |   y   |        |
 SDL_RenderDrawPointF                  |   y   | 2.0.10 |
 SDL_RenderDrawPoints                  |   y   |        |
 SDL_RenderDrawPointsF                 |   y   | 2.0.10 |
 SDL_RenderDrawRect                    |   y   |        |
-SDL_RenderDrawRectF                   |   n   | 2.0.10 |
+SDL_RenderDrawRectF                   |   y   | 2.0.10 |
 SDL_RenderDrawRects                   |   y   |        |
-SDL_RenderDrawRectsF                  |   n   | 2.0.10 |
+SDL_RenderDrawRectsF                  |   y   | 2.0.10 |
 SDL_RenderFillRect                    |   y   |        |
 SDL_RenderFillRectF                   |   n   | 2.0.10 |
 SDL_RenderFillRects                   |   y   |        |

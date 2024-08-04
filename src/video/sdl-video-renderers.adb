@@ -486,6 +486,87 @@ package body SDL.Video.Renderers is
    end Draw;
 
 
+   function SDL_Render_Draw_Line_F (R              : in SDL.C_Pointers.Renderer_Pointer;
+                                    X1, Y1, X2, Y2 : in C.C_float) return C.int with
+     Import        => True,
+     Convention    => C,
+     External_Name => "SDL_RenderDrawLineF";
+
+
+   procedure Draw (Self : in out Renderer; Line : in SDL.Video.Rectangles.Float_Line_Segment) is
+      Result : constant C.int := SDL_Render_Draw_Line_F (Self.Internal,
+                                                         C.C_float (Line.Start.X),
+                                                         C.C_float (Line.Start.Y),
+                                                         C.C_float (Line.Finish.X),
+                                                         C.C_float (Line.Finish.Y));
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Draw;
+
+
+   procedure Draw (Self : in out Renderer; X1, Y1, X2, Y2 : in Float) is
+      Result : constant C.int := SDL_Render_Draw_Line_F (Self.Internal,
+                                                         C.C_float (X1),
+                                                         C.C_float (Y2),
+                                                         C.C_float (X1),
+                                                         C.C_float (Y2));
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Draw;
+
+
+   procedure Draw (Self : in out Renderer; Lines : in SDL.Video.Rectangles.Float_Line_Arrays) is
+      --  As the records and arrays are defined as C types, an array of lines is also an array of points.
+      function SDL_Render_Draw_Lines_F (R     : in SDL.C_Pointers.Renderer_Pointer;
+                                        P     : in SDL.Video.Rectangles.Float_Line_Arrays;
+                                        Count : in C.int) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderDrawLinesF";
+
+      Result : constant C.int := SDL_Render_Draw_Lines_F (Self.Internal, Lines, C.int (Lines'Length * 2));
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Draw;
+
+
+   procedure Draw (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Float_Rectangle) is
+      function SDL_Render_Draw_Rect_F (R    : in SDL.C_Pointers.Renderer_Pointer;
+                                       Rect : in SDL.Video.Rectangles.Float_Rectangle) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderDrawRectF";
+
+      Result : constant C.int := SDL_Render_Draw_Rect_F (Self.Internal, Rectangle);
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Draw;
+
+
+   procedure Draw (Self : in out Renderer; Rectangles : in SDL.Video.Rectangles.Float_Rectangle_Arrays) is
+      function SDL_Render_Draw_Rects_F (R     : in SDL.C_Pointers.Renderer_Pointer;
+                                        Rect  : in SDL.Video.Rectangles.Float_Rectangle_Arrays;
+                                        Count : in C.int) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderDrawRectsF";
+
+      Result : constant C.int := SDL_Render_Draw_Rects_F (Self.Internal, Rectangles, C.int (Rectangles'Length));
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Draw;
+
+
    procedure Get_Clip (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle) is
       procedure SDL_Render_Get_Clip_Rect (R    : in SDL.C_Pointers.Renderer_Pointer;
                                           Rect : out SDL.Video.Rectangles.Rectangle) with

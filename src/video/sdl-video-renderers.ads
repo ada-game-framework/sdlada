@@ -116,6 +116,11 @@ package SDL.Video.Renderers is
 
    procedure Draw (Self : in out Renderer; Point : in SDL.Video.Rectangles.Float_Point);
    procedure Draw (Self : in out Renderer; Points : in SDL.Video.Rectangles.Float_Point_Arrays);
+   procedure Draw (Self : in out Renderer; Line : in SDL.Video.Rectangles.Float_Line_Segment);
+   procedure Draw (Self : in out Renderer; X1, Y1, X2, Y2 : in Float);
+   procedure Draw (Self : in out Renderer; Lines : in SDL.Video.Rectangles.Float_Line_Arrays);
+   procedure Draw (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Float_Rectangle);
+   procedure Draw (Self : in out Renderer; Rectangles : in SDL.Video.Rectangles.Float_Rectangle_Arrays);
 
    procedure Get_Clip (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle);
    procedure Set_Clip (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle);
