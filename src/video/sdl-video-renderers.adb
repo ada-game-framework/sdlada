@@ -567,6 +567,37 @@ package body SDL.Video.Renderers is
    end Draw;
 
 
+   procedure Fill (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Float_Rectangle) is
+      function SDL_Render_Fill_Rect_F (R    : in SDL.C_Pointers.Renderer_Pointer;
+                                       Rect : in SDL.Video.Rectangles.Float_Rectangle) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderFillRectF";
+
+      Result : constant C.int := SDL_Render_Fill_Rect_F (Self.Internal, Rectangle);
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Fill;
+
+
+   procedure Fill (Self : in out Renderer; Rectangles : in SDL.Video.Rectangles.Float_Rectangle_Arrays) is
+      function SDL_Render_Fill_Rects_F (R     : in SDL.C_Pointers.Renderer_Pointer;
+                                        Rect  : in SDL.Video.Rectangles.Float_Rectangle_Arrays;
+                                        Count : in C.int) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderFillRectsF";
+
+      Result : constant C.int := SDL_Render_Fill_Rects_F (Self.Internal, Rectangles, C.int (Rectangles'Length));
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Fill;
+
+
    procedure Get_Clip (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle) is
       procedure SDL_Render_Get_Clip_Rect (R    : in SDL.C_Pointers.Renderer_Pointer;
                                           Rect : out SDL.Video.Rectangles.Rectangle) with

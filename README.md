@@ -386,9 +386,9 @@ SDL_RenderDrawRectF                   |   y   | 2.0.10 |
 SDL_RenderDrawRects                   |   y   |        |
 SDL_RenderDrawRectsF                  |   y   | 2.0.10 |
 SDL_RenderFillRect                    |   y   |        |
-SDL_RenderFillRectF                   |   n   | 2.0.10 |
+SDL_RenderFillRectF                   |   y   | 2.0.10 |
 SDL_RenderFillRects                   |   y   |        |
-SDL_RenderFillRectsF                  |   n   | 2.0.10 |
+SDL_RenderFillRectsF                  |   y   | 2.0.10 |
 SDL_RenderFlush                       |   n   | 2.0.10 |
 SDL_RenderGeometry                    |   n   | 2.0.18 |
 SDL_RenderGeometryRAW                 |   n   | 2.0.18 |
