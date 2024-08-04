@@ -72,7 +72,6 @@ package SDL.Video.Renderers is
 
    procedure Get_Info (Self : Renderer; Info : out Renderer_Infos);
 
-   --  SDL_GetRendererInfo
    procedure Get_Output_Size
      (Self   : in Renderer;
       Width  : out SDL.Natural_Dimension;
@@ -128,11 +127,12 @@ package SDL.Video.Renderers is
 
    procedure Present (Self : in Renderer);
 
-   --  SDL_RenderReadPixels
+   --  TODO: SDL_RenderReadPixels
 
    function Supports_Targets (Self : in Renderer) return Boolean;
 
    procedure Set_Target (Self : in out Renderer; Target : in SDL.Video.Textures.Texture);
+   --  TODO: SDL_GetRenderTarget
 
    function Get_Renderer (Window : in SDL.Video.Windows.Window) return Renderer;
 private

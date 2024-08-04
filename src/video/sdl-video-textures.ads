@@ -43,6 +43,8 @@ package SDL.Video.Textures is
    function Get_Scale_Mode (Self : in Texture) return Scale_Modes;
    procedure Set_Scale_Mode (Self : in out Texture; Scale_Mode : in Scale_Modes);
 
+   --  TODO: SDL_GetTextureUserData
+
    --  TODO: Fix this.
    --  Lock returns access to pixel data as write-only.
    --  function Lock (Self : in out Texture; Pixel_Data : out SDL.Video.Pixels.Pixel) return Boolean with
