@@ -42,6 +42,16 @@ package SDL.Video.Rectangles is
    type Line_Arrays is array (C.size_t range <>) of aliased Line_Segment with
      Convention => C;
 
+   type Float_Line_Segment is
+      record
+         Start  : Float_Point;
+         Finish : Float_Point;
+      end record with
+     Convention => C_Pass_By_Copy;
+
+   type Float_Line_Arrays is array (C.size_t range <>) of aliased Float_Line_Segment with
+     Convention => C;
+
    --  TODO: Replace with Point and Sizes?
    type Rectangle is
       record
