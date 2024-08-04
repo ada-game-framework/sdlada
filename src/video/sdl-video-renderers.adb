@@ -247,6 +247,25 @@ package body SDL.Video.Renderers is
    end Draw;
 
 
+   procedure Draw (Self : in out Renderer; X1, Y1, X2, Y2 : in SDL.Coordinate) is
+      function SDL_Render_Draw_Line (R              : in SDL.C_Pointers.Renderer_Pointer;
+                                     X1, Y1, X2, Y2 : in C.int) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderDrawLine";
+
+      Result : constant C.int := SDL_Render_Draw_Line (Self.Internal,
+                                                       X1,
+                                                       Y1,
+                                                       X2,
+                                                       Y2);
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Draw;
+
+
    --  TODO: Check this works!
    procedure Draw (Self : in out Renderer; Lines : in SDL.Video.Rectangles.Line_Arrays) is
       --  As the records and arrays are defined as C types, an array of lines is also an array of points.
