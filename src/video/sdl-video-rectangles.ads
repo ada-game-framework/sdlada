@@ -83,6 +83,7 @@ package SDL.Video.Rectangles is
    function Intersects (A, B : in Rectangle; Intersection : out Rectangle) return Boolean;
 
    function Clip_To (Clip_Area : in Rectangle; Line : in out Line_Segment) return Boolean;
+   function Intersects (Clip_Area : in Rectangle; Line : in out Line_Segment) return Boolean renames Clip_To;
 
    function Union (A, B : in Rectangle) return Rectangle;
 end SDL.Video.Rectangles;
