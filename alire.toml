@@ -1,6 +1,6 @@
 name = "sdlada"
 description = "Ada 2012 SDL 2.x bindings."
-version = "2.5.73"
+version = "2.5.124"
 
 authors = ["Luke A. Guest"]
 maintainers = ["Luke A. Guest <laguest@archeia.com>"]
