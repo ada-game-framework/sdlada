@@ -30,11 +30,6 @@ package SDL.Video.Palettes is
 
    Null_Colour : constant Colour := (others => <>);
 
-   --  Do not use this as a parameter type in externally visible subprograms,
-   --  this is get around C programmers being inconcistent. We may need more of these.
-   type Colour_By_Copy is new Colour with
-     Convention => C_Pass_by_Copy;
-
    pragma Warnings (Off, "8 bits of ""RGB_Colour"" unused"); --  Unused on purpose
    type RGB_Colour is
       record
