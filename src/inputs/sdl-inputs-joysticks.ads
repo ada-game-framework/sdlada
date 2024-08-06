@@ -37,7 +37,7 @@ package SDL.Inputs.Joysticks is
       record
          Data : GUID_Array;
       end record with
-     Convention => C_Pass_By_Copy;
+     Convention => C;
 
    --  Device specific information.
    function Total return All_Devices;

@@ -53,14 +53,14 @@ package SDL.Video.Renderers is
       Max_Texture_Width   : Natural_Dimension;
       Max_Texture_Height  : Natural_Dimension;
    end record
-     with Convention => C_Pass_By_Copy;
+     with Convention => C;
 
    type Vertices is record
       Position           : Rectangles.Float_Point;
       Colour             : SDL.Video.Palettes.Colour;
       Texture_Coordinate : Rectangles.Float_Point;
    end record with
-     Convention => C_Pass_By_Copy;
+     Convention => C;
 
    type Vertex_Arrays is array (C.size_t range <>) of aliased Vertices with
      Convention => C;

@@ -25,7 +25,7 @@ package SDL.Video.Palettes is
          Blue  : Colour_Component := Colour_Component'First;
          Alpha : Colour_Component := Colour_Component'First;
       end record with
-     Convention => C_Pass_by_Copy,
+     Convention => C,
      Size       => Colour_Component'Size * 4;
 
    Null_Colour : constant Colour := (others => <>);
@@ -37,7 +37,7 @@ package SDL.Video.Palettes is
          Green : Colour_Component := Colour_Component'First;
          Blue  : Colour_Component := Colour_Component'First;
       end record with
-     Convention => C_Pass_by_Copy,
+     Convention => C,
      Size       => Colour_Component'Size * 4;
    pragma Warnings (On, "8 bits of ""RGB_Colour"" unused");
 

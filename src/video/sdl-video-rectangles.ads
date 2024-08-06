@@ -27,7 +27,7 @@ package SDL.Video.Rectangles is
          X : Float;
          Y : Float;
       end record with
-     Convention => C_Pass_By_Copy;
+     Convention => C;
 
    type Float_Point_Arrays is array (C.size_t range <>) of aliased Float_Point with
      Convention => C;
@@ -37,7 +37,7 @@ package SDL.Video.Rectangles is
          Start  : SDL.Coordinates;
          Finish : SDL.Coordinates;
       end record with
-     Convention => C_Pass_By_Copy;
+     Convention => C;
 
    type Line_Arrays is array (C.size_t range <>) of aliased Line_Segment with
      Convention => C;
@@ -47,7 +47,7 @@ package SDL.Video.Rectangles is
          Start  : Float_Point;
          Finish : Float_Point;
       end record with
-     Convention => C_Pass_By_Copy;
+     Convention => C;
 
    type Float_Line_Arrays is array (C.size_t range <>) of aliased Float_Line_Segment with
      Convention => C;
@@ -60,7 +60,7 @@ package SDL.Video.Rectangles is
          Width  : SDL.Natural_Dimension;
          Height : SDL.Natural_Dimension;
       end record with
-     Convention => C_Pass_By_Copy;
+     Convention => C;
 
    Null_Rectangle : constant Rectangle := (others => 0);
 
@@ -77,7 +77,7 @@ package SDL.Video.Rectangles is
          Width  : Float;
          Height : Float;
       end record with
-     Convention => C_Pass_By_Copy;
+     Convention => C;
 
    type Float_Rectangle_Arrays is array (C.size_t range <>) of aliased Float_Rectangle with
      Convention => C;

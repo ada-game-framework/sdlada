@@ -162,7 +162,7 @@ private
          Stream_Type : Stream_Types;  --  When creating a RWops, this should always be set to Unknown_Stream.
          User_Data   : User_Datums;
       end record with
-     Convention => C_Pass_By_Copy;
+     Convention => C;
 
    type RWops_Pointer is access all SDL_RWops with
      Convention => C;
