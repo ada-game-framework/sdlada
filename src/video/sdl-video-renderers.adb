@@ -688,6 +688,55 @@ package body SDL.Video.Renderers is
 
 
    procedure Render_Geometry (Self     : in out Renderer;
+                              Vertices : in Vertex_Arrays;
+                              Indices  : in Index_Arrays) is
+      function SDL_Render_Geometry (R     : in SDL.C_Pointers.Renderer_Pointer;
+                                    T     : in SDL.C_Pointers.Texture_Pointer;
+                                    V     : in Vertex_Arrays;
+                                    Num_V : in C.int;
+                                    I     : in Index_Arrays;
+                                    Num_I : in C.int) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderGeometry";
+
+      Result : constant C.int := SDL_Render_Geometry (Self.Internal,
+                                                      null,
+                                                      Vertices,
+                                                      Vertices'Length,
+                                                      Indices,
+                                                      Indices'Length);
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Render_Geometry;
+
+
+   procedure Render_Geometry (Self     : in out Renderer;
+                              Vertices : in Vertex_Arrays) is
+      function SDL_Render_Geometry (R     : in SDL.C_Pointers.Renderer_Pointer;
+                                    T     : in SDL.C_Pointers.Texture_Pointer;
+                                    V     : in Vertex_Arrays;
+                                    Num_V : in C.int;
+                                    I     : System.Address := System.Null_Address;
+                                    Num_I : in C.int       := 0) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderGeometry";
+
+      Result : constant C.int := SDL_Render_Geometry (Self.Internal,
+                                                      null,
+                                                      Vertices,
+                                                      Vertices'Length);
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Render_Geometry;
+
+
+   procedure Render_Geometry (Self     : in out Renderer;
                               Texture  : in SDL.Video.Textures.Texture;
                               Vertices : in Vertex_Arrays) is
       function SDL_Render_Geometry (R     : in SDL.C_Pointers.Renderer_Pointer;

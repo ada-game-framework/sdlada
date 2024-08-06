@@ -168,7 +168,14 @@ package SDL.Video.Renderers is
                               Indices  : in Index_Arrays);
 
    procedure Render_Geometry (Self     : in out Renderer;
+                              Vertices : in Vertex_Arrays;
+                              Indices  : in Index_Arrays);
+
+   procedure Render_Geometry (Self     : in out Renderer;
                               Texture  : in SDL.Video.Textures.Texture;
+                              Vertices : in Vertex_Arrays);
+
+   procedure Render_Geometry (Self     : in out Renderer;
                               Vertices : in Vertex_Arrays);
 
    --  TODO: SDL_RenderGeometryRaw
