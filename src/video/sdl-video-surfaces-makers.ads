@@ -6,9 +6,12 @@
 --  Functions to create surface objects.
 --------------------------------------------------------------------------------------------------------------------
 with System.Storage_Elements;
+with Ada.Strings.UTF_Encoding;
 
 package SDL.Video.Surfaces.Makers is
    pragma Preelaborate;
+
+   package UTF_Strings renames Ada.Strings.UTF_Encoding;
 
    procedure Create (Self       : in out Surface;
                      Size       : in SDL.Sizes;
@@ -48,6 +51,9 @@ package SDL.Video.Surfaces.Makers is
 
    --  TODO: This is likely a temporary place for this. It's likely I will add a Streams package.
    --     procedure Create (Self : in out Surface; File_Name : in String);
+
+   procedure Create (Self      : in out Surface;
+                     File_Name : in UTF_Strings.UTF_String);
 private
    function Get_Internal_Surface (Self : in Surface) return Internal_Surface_Pointer with
      Export     => True,

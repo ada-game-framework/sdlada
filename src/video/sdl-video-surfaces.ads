@@ -148,7 +148,6 @@ package SDL.Video.Surfaces is
    procedure Set_Colour (Self : in out Surface; Now : in Palettes.RGB_Colour) with
      Inline => True;
 
-   --  TODO: SDL_LoadBMP_RW
    --  TODO: SDL_SaveBMP
    --  TODO: SDL_SaveBMP_RW
 
