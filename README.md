@@ -491,8 +491,8 @@ SDL_GetYUVConversionMode              |   n   | 2.0.8  |
 SDL_GetYUVConversionModeForResolution |   n   | 2.0.8  |
 SDL_HasColorKey                       |   n   | 2.0.9  |
 SDL_HasSurfaceRLE                     |   n   | 2.0.14 |
-SDL_LoadBMP                           |   n   |        |
-SDL_LoadBMP_RW                        |   n   |        |
+SDL_LoadBMP                           |   y   |        |
+SDL_LoadBMP_RW                        |   y   |        |
 SDL_LockSurface                       |   y   |        |
 SDL_LowerBlit                         |   y   |        |
 SDL_LowerBlitScaled                   |   y   |        |

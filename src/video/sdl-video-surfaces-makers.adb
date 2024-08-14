@@ -2,6 +2,7 @@
 --  This source code is subject to the Zlib license, see the LICENCE file in the root of this directory.
 --------------------------------------------------------------------------------------------------------------------
 with Ada.Finalization;
+with SDL.RWops;
 with System.Address_To_Access_Conversions;
 
 package body SDL.Video.Surfaces.Makers is
@@ -117,6 +118,17 @@ package body SDL.Video.Surfaces.Makers is
    --     begin
    --        Self.Internal := SDL_Load_BMP (C.To_C (File_Name));
    --     end Create;
+
+   procedure Create (Self      : in out Surface;
+                     File_Name : in UTF_Strings.UTF_String) is
+      function SDL_Load_BMP_RW (Src  : in SDL.RWops.RWops; freesrc : C.int) return Internal_Surface_Pointer with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_LoadBMP_RW";
+      Src : constant SDL.RWops.RWops := SDL.RWops.From_File (File_Name, SDL.RWops.Read_Binary);
+   begin
+      Self.Internal := SDL_Load_BMP_RW (Src, 1);
+   end Create;
 
    function Get_Internal_Surface (Self : in Surface) return Internal_Surface_Pointer is
    begin
