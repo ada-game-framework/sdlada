@@ -53,9 +53,15 @@ package SDL.RWops is
    Error_Or_EOF : constant Sizes := 0;
 
    function Base_Path return UTF_Strings.UTF_String;
+   pragma Obsolescent
+     (Entity  => Base_Path,
+      Message => "Moved to SDL.Filesystems, this one will be removed in the next release.");
 
    function Preferences_Path (Organisation : in UTF_Strings.UTF_String;
                               Application  : in UTF_Strings.UTF_String) return UTF_Strings.UTF_String;
+   pragma Obsolescent
+     (Entity  => Preferences_Path,
+      Message => "Moved to SDL.Filesystems, this one will be removed in the next release.");
 
    function Seek (Context : in RWops;
                   Offset  : in Offsets;
