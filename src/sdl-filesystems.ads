@@ -5,7 +5,13 @@
 --
 --  Read/Write operations, i.e. file related machinery.
 --------------------------------------------------------------------------------------------------------------------
+with Ada.Strings.UTF_Encoding;
+
 package SDL.Filesystems is
+   package UTF_Strings renames Ada.Strings.UTF_Encoding;
+
+   Filesystems_Error : exception;
+
    function Base_Path return UTF_Strings.UTF_String;
 
    function Preferences_Path (Organisation : in UTF_Strings.UTF_String;
