@@ -133,6 +133,7 @@ package SDL.Video.GL is
    procedure Finalize (Self : in out Contexts);
 
    function Get_Current return Contexts;
+   procedure Get_Drawable_Size (Window : in SDL.Video.Windows.Window; Width, Height : out SDL.Natural_Dimension);
    procedure Set_Current (Self : in Contexts; To : in SDL.Video.Windows.Window);
 
    procedure Bind_Texture (Texture : in SDL.Video.Textures.Texture);
