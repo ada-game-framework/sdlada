@@ -122,7 +122,7 @@ package body SDL.Video.Surfaces.Makers is
 
    procedure Create (Self      : in out Surface;
                      File_Name : in UTF_Strings.UTF_String) is
-      function SDL_Load_BMP_RW (Src  : in SDL.RWops.RWops; freesrc : C.int) return Internal_Surface_Pointer with
+      function SDL_Load_BMP_RW (Src : in SDL.RWops.RWops; freesrc : C.int) return Internal_Surface_Pointer with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_LoadBMP_RW";
@@ -140,6 +140,26 @@ package body SDL.Video.Surfaces.Makers is
       Self.Owns    := True;
    end Create;
 
+   procedure Convert (Self         : in out Surface;
+                      Src          : SDL.Video.Surfaces.Surface;
+                      Pixel_Format : SDL.Video.Pixel_Formats.Pixel_Format_Access) is
+      function SDL_ConvertSurface
+        (Src   : in SDL.Video.Surfaces.Internal_Surface_Pointer;
+         Fmt   : in SDL.Video.Pixel_Formats.Pixel_Format_Access;
+         Flags : in C.unsigned) return Internal_Surface_Pointer with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_ConvertSurface";
+      Surface : Internal_Surface_Pointer := null;
+   begin
+      Surface := SDL_ConvertSurface (Src.Internal, Pixel_Format, 0);
+      if Surface = null then
+         raise Surface_Error with SDL.Error.Get;
+      end if;
+
+      Self.Internal := Surface;
+      Self.Owns    := True;
+   end Convert;
 
    function Get_Internal_Surface (Self : in Surface) return Internal_Surface_Pointer is
    begin
