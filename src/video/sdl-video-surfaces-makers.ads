@@ -54,6 +54,10 @@ package SDL.Video.Surfaces.Makers is
 
    procedure Create (Self      : in out Surface;
                      File_Name : in UTF_Strings.UTF_String);
+
+   procedure Convert (Self         : in out Surface;
+                      Src          : SDL.Video.Surfaces.Surface;
+                      Pixel_Format : SDL.Video.Pixel_Formats.Pixel_Format_Access);
 private
    function Get_Internal_Surface (Self : in Surface) return Internal_Surface_Pointer with
      Export     => True,
@@ -64,7 +68,6 @@ private
      Export     => True,
      Convention => Ada;
 
-   --  TODO: SDL_ConvertSurface
    --  TODO: SDL_ConvertSurfaceFormat
    --  TODO: SDL_CreateRGBSurfaceFrom
 end SDL.Video.Surfaces.Makers;
