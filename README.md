@@ -473,7 +473,7 @@ Name                                  | Bound | Since  | Won't bind
 SDL_BlitScaled                        |   y   |        |
 SDL_BlitSurface                       |   y   |        |
 SDL_ConvertPixels                     |   n   | 2.0.0  |
-SDL_ConvertSurface                    |   n   | 2.0.0  |
+SDL_ConvertSurface                    |   y   | 2.0.0  |
 SDL_ConvertSurfaceFormat              |   n   | 2.0.0  |
 SDL_CreateRGBSurface                  |   y   | 2.0.0  |
 SDL_CreateRGBSurfaceFrom              |   n   | 2.0.0  |
