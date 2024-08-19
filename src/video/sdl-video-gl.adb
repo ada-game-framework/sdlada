@@ -557,6 +557,18 @@ package body SDL.Video.GL is
       end return;
    end Get_Current;
 
+
+   --  extern DECLSPEC void SDLCALL SDL_GL_GetDrawableSize(SDL_Window * window, int *w, int *h);
+   procedure Get_Drawable_Size (Window : in SDL.Video.Windows.Window; Width, Height : out SDL.Natural_Dimension) is
+      procedure SDL_GL_Get_Drawable_Size (Win : in SDL.C_Pointers.Windows_Pointer; W, H : out C.int) with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GL_GetDrawableSize";
+   begin
+      SDL_GL_Get_Drawable_Size (Get_Internal_Window (Window), Width, Height);
+   end Get_Drawable_Size;
+
+
    procedure Set_Current (Self : in Contexts; To : in SDL.Video.Windows.Window) is
       function SDL_GL_Make_Current (W       : in SDL.C_Pointers.Windows_Pointer;
                                     Context : in SDL.C_Pointers.GL_Context_Pointer) return C.int with
