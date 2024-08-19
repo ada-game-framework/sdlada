@@ -153,12 +153,13 @@ package body SDL.Video.Surfaces.Makers is
       Surface : Internal_Surface_Pointer := null;
    begin
       Surface := SDL_ConvertSurface (Src.Internal, Pixel_Format, 0);
+
       if Surface = null then
          raise Surface_Error with SDL.Error.Get;
       end if;
 
       Self.Internal := Surface;
-      Self.Owns    := True;
+      Self.Owns     := True;
    end Convert;
 
    function Get_Internal_Surface (Self : in Surface) return Internal_Surface_Pointer is
