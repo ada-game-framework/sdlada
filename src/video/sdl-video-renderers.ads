@@ -199,11 +199,11 @@ package SDL.Video.Renderers is
    procedure Set_Integer_Scale (Self : in Renderer; Enable : Boolean);
    function Get_Integer_Scale (Self : in Renderer) return Boolean;
 
-   procedure Get_Scale (Self : in Renderer; X, Y : out Float);
    procedure Set_Scale (Self : in out Renderer; X, Y : in Float);
+   procedure Get_Scale (Self : in Renderer; X, Y : out Float);
 
-   procedure Get_Viewport (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle);
    procedure Set_Viewport (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle);
+   procedure Get_Viewport (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle);
 
    procedure Present (Self : in Renderer);
 

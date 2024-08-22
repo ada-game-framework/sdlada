@@ -839,16 +839,6 @@ package body SDL.Video.Renderers is
    end Get_Integer_Scale;
 
 
-   procedure Get_Scale (Self : in Renderer; X, Y : out Float) is
-      procedure SDL_Render_Get_Scale (R : in SDL.C_Pointers.Renderer_Pointer; X, Y : out C.C_float) with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_RenderGetScale";
-   begin
-      SDL_Render_Get_Scale (Self.Internal, C.C_float (X), C.C_float (Y));
-   end Get_Scale;
-
-
    procedure Set_Scale (Self : in out Renderer; X, Y : in Float) is
       function SDL_Render_Set_Scale (R : in SDL.C_Pointers.Renderer_Pointer; X, Y : in C.C_float) return C.int with
         Import        => True,
@@ -863,15 +853,37 @@ package body SDL.Video.Renderers is
    end Set_Scale;
 
 
-   procedure Get_Viewport (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle) is
-      procedure SDL_Render_Get_Viewport (R    : in SDL.C_Pointers.Renderer_Pointer;
-                                         Rect : out SDL.Video.Rectangles.Rectangle) with
+   procedure Get_Scale (Self : in Renderer; X, Y : out Float) is
+      procedure SDL_Render_Get_Scale (R : in SDL.C_Pointers.Renderer_Pointer; X, Y : out C.C_float) with
         Import        => True,
         Convention    => C,
-        External_Name => "SDL_RenderGetViewport";
+        External_Name => "SDL_RenderGetScale";
    begin
-      SDL_Render_Get_Viewport (Self.Internal, Rectangle);
-   end Get_Viewport;
+      SDL_Render_Get_Scale (Self.Internal, C.C_float (X), C.C_float (Y));
+   end Get_Scale;
+
+
+   --  extern DECLSPEC void SDLCALL SDL_RenderWindowToLogical(SDL_Renderer * renderer,
+   --                                                           int windowX, int windowY,
+   --                                                           float *logicalX, float *logicalY);
+   procedure Window_To_Logical (Self       : in out Renderer;
+                                Window_X,
+                                Window_Y   : SDL.Natural_Coordinate;
+                                Logical_X,
+                                Logical_Y  : out SDL.Natural_Coordinate) is
+      procedure SDL_Render_Window_To_Logical
+        (Self       : in out Renderer;
+         Window_X,
+         Window_Y   : SDL.Natural_Coordinate;
+         Logical_X,
+         Logical_Y  : out SDL.Natural_Coordinate) with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderWindowToLogical";
+
+   begin
+
+   end Window_To_Logical;
 
 
    procedure Set_Viewport (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle) is
@@ -887,6 +899,17 @@ package body SDL.Video.Renderers is
          raise Renderer_Error with SDL.Error.Get;
       end if;
    end Set_Viewport;
+
+
+   procedure Get_Viewport (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle) is
+      procedure SDL_Render_Get_Viewport (R    : in SDL.C_Pointers.Renderer_Pointer;
+                                         Rect : out SDL.Video.Rectangles.Rectangle) with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderGetViewport";
+   begin
+      SDL_Render_Get_Viewport (Self.Internal, Rectangle);
+   end Get_Viewport;
 
 
    procedure Present (Self : in Renderer) is
