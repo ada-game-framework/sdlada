@@ -102,12 +102,13 @@ package body SDL.Video.Displays is
       return (Result = Success);
    end Display_Mode;
 
-   function Total_Display_Modes (Display : in Display_Indices; Total : out Positive) return Boolean is
-      function SDL_Get_Num_Display_Modes (I : in C.int) return C.int with
-        Import        => True,
-        Convention    => C,
-        External_Name => "SDL_GetNumDisplayModes";
 
+   function SDL_Get_Num_Display_Modes (I : in C.int) return C.int with
+     Import        => True,
+     Convention    => C,
+     External_Name => "SDL_GetNumDisplayModes";
+
+   function Total_Display_Modes (Display : in Display_Indices; Total : out Positive) return Boolean is
       Result : constant C.int := SDL_Get_Num_Display_Modes (C.int (Display - 1));
    begin
       if Result >= 1 then
@@ -117,6 +118,12 @@ package body SDL.Video.Displays is
       end if;
 
       return False;
+   end Total_Display_Modes;
+
+
+   function Total_Display_Modes (Display : in Display_Indices) return Positive is
+   begin
+      return Positive (SDL_Get_Num_Display_Modes (C.int (Display - 1)));
    end Total_Display_Modes;
 
 

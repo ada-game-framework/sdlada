@@ -58,6 +58,7 @@ package SDL.Video.Displays is
    function Display_Mode (Display : in Display_Indices; Index : in Natural; Target : out Mode) return Boolean;
 
    function Total_Display_Modes (Display : in Display_Indices; Total : out Positive) return Boolean;
+   function Total_Display_Modes (Display : in Display_Indices) return Positive;
 
    function Display_Bounds (Display : in Display_Indices; Bounds : out Rectangles.Rectangle) return Boolean with
      Obsolescent;
