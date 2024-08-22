@@ -401,7 +401,7 @@ SDL_RenderGetScale                    |   y   |        |
 SDL_RenderGetViewport                 |   y   |        |
 SDL_RenderGetWindow                   |   y   | 2.0.22 |
 SDL_RenderIsClipEnabled               |   n   |        |
-SDL_RenderLogicalToWindow             |   n   | 2.0.18 |
+SDL_RenderLogicalToWindow             |   y   | 2.0.18 |
 SDL_RenderPresent                     |   y   |        |
 SDL_RenderReadPixels                  |   n   |        |
 SDL_RenderSetClipRect                 |   y   |        |
@@ -411,7 +411,7 @@ SDL_RenderSetScale                    |   y   |        |
 SDL_RenderSetViewport                 |   y   |        |
 SDL_RenderSetVSync                    |   n   | 2.0.18 |
 SDL_RenderTargetSupported             |   y   |        |
-SDL_RenderWindowToLogical             |   n   | 2.0.18 |
+SDL_RenderWindowToLogical             |   y   | 2.0.18 |
 SDL_SetRenderDrawBlendMode            |   y   |        |
 SDL_SetRenderDrawColor                |   y   |        |
 SDL_SetRenderTarget                   |   y   |        |

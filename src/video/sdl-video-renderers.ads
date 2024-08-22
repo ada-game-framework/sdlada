@@ -202,6 +202,30 @@ package SDL.Video.Renderers is
    procedure Set_Scale (Self : in out Renderer; X, Y : in Float);
    procedure Get_Scale (Self : in Renderer; X, Y : out Float);
 
+   procedure Window_To_Logical (Self       : in out Renderer;
+                                Window_X,
+                                Window_Y   : SDL.Natural_Coordinate;
+                                Logical_X,
+                                Logical_Y  : out SDL.Natural_Coordinate) with
+     Inline;
+
+   procedure Window_To_Logical (Self           : in out Renderer;
+                                Window_Coords  : SDL.Natural_Coordinates;
+                                Logical_Coords : out SDL.Natural_Coordinates) with
+     Inline;
+
+   procedure Logical_To_Window (Self       : in out Renderer;
+                                Logical_X,
+                                Logical_Y  : SDL.Natural_Coordinate;
+                                Window_X,
+                                Window_Y   : out SDL.Natural_Coordinate) with
+     Inline;
+
+   procedure Logical_To_Window (Self           : in out Renderer;
+                                Logical_Coords : SDL.Natural_Coordinates;
+                                Window_Coords  : out SDL.Natural_Coordinates) with
+     Inline;
+
    procedure Set_Viewport (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle);
    procedure Get_Viewport (Self : in Renderer; Rectangle : out SDL.Video.Rectangles.Rectangle);
 

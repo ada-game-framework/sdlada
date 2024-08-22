@@ -863,16 +863,13 @@ package body SDL.Video.Renderers is
    end Get_Scale;
 
 
-   --  extern DECLSPEC void SDLCALL SDL_RenderWindowToLogical(SDL_Renderer * renderer,
-   --                                                           int windowX, int windowY,
-   --                                                           float *logicalX, float *logicalY);
    procedure Window_To_Logical (Self       : in out Renderer;
                                 Window_X,
                                 Window_Y   : SDL.Natural_Coordinate;
                                 Logical_X,
                                 Logical_Y  : out SDL.Natural_Coordinate) is
       procedure SDL_Render_Window_To_Logical
-        (Self       : in out Renderer;
+        (Self       : in out SDL.C_Pointers.Renderer_Pointer;
          Window_X,
          Window_Y   : SDL.Natural_Coordinate;
          Logical_X,
@@ -880,10 +877,44 @@ package body SDL.Video.Renderers is
         Import        => True,
         Convention    => C,
         External_Name => "SDL_RenderWindowToLogical";
-
    begin
-
+      SDL_Render_Window_To_Logical (Self.Internal, Window_X, Window_Y, Logical_X, Logical_Y);
    end Window_To_Logical;
+
+
+   procedure Window_To_Logical (Self           : in out Renderer;
+                                Window_Coords  : SDL.Natural_Coordinates;
+                                Logical_Coords : out SDL.Natural_Coordinates) is
+   begin
+      Window_To_Logical (Self, Window_Coords.X, Window_Coords.Y, Logical_Coords.X, Logical_Coords.Y);
+   end Window_To_Logical;
+
+
+   procedure Logical_To_Window (Self       : in out Renderer;
+                                Logical_X,
+                                Logical_Y  : SDL.Natural_Coordinate;
+                                Window_X,
+                                Window_Y   : out SDL.Natural_Coordinate) is
+      procedure SDL_Render_Logical_ToWindow
+        (Self       : in out SDL.C_Pointers.Renderer_Pointer;
+         Window_X,
+         Window_Y   : SDL.Natural_Coordinate;
+         Logical_X,
+         Logical_Y  : out SDL.Natural_Coordinate) with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderLogicalToWindow";
+   begin
+      SDL_Render_Logical_ToWindow (Self.Internal, Logical_X, Logical_Y, Window_X, Window_Y);
+   end Logical_To_Window;
+
+
+   procedure Logical_To_Window (Self           : in out Renderer;
+                                Logical_Coords : SDL.Natural_Coordinates;
+                                Window_Coords  : out SDL.Natural_Coordinates) is
+   begin
+      Logical_To_Window (Self, Logical_Coords.X, Logical_Coords.Y, Window_Coords.X, Window_Coords.Y);
+   end Logical_To_Window;
 
 
    procedure Set_Viewport (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle) is
