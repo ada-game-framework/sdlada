@@ -1,0 +1,19 @@
+name = "test"
+description = "Test suite for SDLAda."
+version = "0.1.0-dev"
+
+authors = ["Luke A. Guest"]
+maintainers = ["Luke A. Guest <laguest@archeia.com>"]
+maintainers-logins = ["Lucretia"]
+licenses = "Zlib"
+website = "https://github.com/ada-game-framework"
+tags = ["tests", "sdl"]
+
+executables = ["test"]
+
+[[depends-on]]
+aunit = "^24.0.0"
+sdlada = "^2.3.1"
+
+[[pins]]
+sdlada = { path='..' }
