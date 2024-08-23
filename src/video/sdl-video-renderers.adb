@@ -853,6 +853,12 @@ package body SDL.Video.Renderers is
    end Set_Scale;
 
 
+   procedure Set_Scale (Self : in out Renderer; Size : in Positive_Sizes) is
+   begin
+      Set_Scale (Self, X => Float (Size.Width), Y => Float (Size.Height));
+   end Set_Scale;
+
+
    procedure Get_Scale (Self : in Renderer; X, Y : out Float) is
       procedure SDL_Render_Get_Scale (R : in SDL.C_Pointers.Renderer_Pointer; X, Y : out C.C_float) with
         Import        => True,

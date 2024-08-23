@@ -200,6 +200,9 @@ package SDL.Video.Renderers is
    function Get_Integer_Scale (Self : in Renderer) return Boolean;
 
    procedure Set_Scale (Self : in out Renderer; X, Y : in Float);
+   procedure Set_Scale (Self : in out Renderer; Size : in Positive_Sizes) with
+     Inline;
+
    procedure Get_Scale (Self : in Renderer; X, Y : out Float);
 
    procedure Window_To_Logical (Self       : in out Renderer;
