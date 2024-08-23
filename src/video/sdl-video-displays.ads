@@ -16,6 +16,7 @@ package SDL.Video.Displays is
    package C renames Interfaces.C;
 
    type Refresh_Rates is range 0 .. 400 with
+     Size       => C.int'Size,
      Convention => C;
 
    type Mode is
