@@ -174,7 +174,7 @@ package SDL.Video.Pixel_Formats is
       end record with
      Unchecked_Union => True,
      Size            => 32,
-     Convention      => C;
+     Convention      => C_Pass_By_Copy;
 
    Pixel_Format_Unknown     : constant Pixel_Format_Names :=
      Pixel_Format_Names'(Planar        => True,

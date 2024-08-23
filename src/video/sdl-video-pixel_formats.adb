@@ -1,23 +1,17 @@
 --------------------------------------------------------------------------------------------------------------------
 --  This source code is subject to the Zlib license, see the LICENCE file in the root of this directory.
 --------------------------------------------------------------------------------------------------------------------
-with Ada.Unchecked_Conversion;
 with Interfaces.C.Strings;
 
 package body SDL.Video.Pixel_Formats is
+   --  TODO: SDL_SetPixelFormatPalette Check this as the first parameter is a pointer.
    function Image (Format : in Pixel_Format_Names) return String is
-      function Convert is new Ada.Unchecked_Conversion (Source => Pixel_Format_Names, Target => Interfaces.Unsigned_32);
-
-      --  Format was Pixel_Format_Names, but it returning the unknown value EVERY time.
-      function SDL_Get_Pixel_Format_Name (Format : in Interfaces.Unsigned_32) return C.Strings.chars_ptr with
+      function SDL_Get_Pixel_Format_Name (Format : in Pixel_Format_Names) return C.Strings.chars_ptr with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_GetPixelFormatName";
-
-      --  TODO: Now, it's not, don't know why.
-      Converted : Interfaces.Unsigned_32 := Convert (Format);
    begin
-      return C.Strings.Value (SDL_Get_Pixel_Format_Name (Converted));
+      return C.Strings.Value (SDL_Get_Pixel_Format_Name (Format));
    end Image;
 
 
