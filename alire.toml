@@ -6,11 +6,11 @@ authors = ["Luke A. Guest"]
 maintainers = ["Luke A. Guest <laguest@archeia.com>"]
 maintainers-logins = ["Lucretia"]
 licenses = "Zlib"
-website = "https://github.com/Lucretia/sdlada"
+website = "https://github.com/ada-game-framework"
 tags = ["gamedev", "games", "portable", "cross-platform"]
 
 # project-files = ["build/gnat/tools.gpr", "build/gnat/sdlada.gpr"] #, "build/gnat/"]
-project-files = ["build/gnat/sdlada.gpr"] #, "build/gnat/"]
+project-files = ["build/gnat/sdlada.gpr", "build/gnat/unit_tests.gpr"] #, "build/gnat/"]
 
 [gpr-externals]
   SDL_PLATFORM = ["linux", "bsd", "windows", "macosx", "macos_homebrew", "macos_ports", "ios", "android"]
