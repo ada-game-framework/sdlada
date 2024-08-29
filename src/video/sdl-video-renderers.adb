@@ -348,8 +348,8 @@ package body SDL.Video.Renderers is
 
 
    procedure Copy
-     (Self      : in out Renderer;
-      Copy_From : in SDL.Video.Textures.Texture) is
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture) is
 
       function SDL_Render_Copy
         (R         : in SDL.C_Pointers.Renderer_Pointer;
@@ -360,7 +360,7 @@ package body SDL.Video.Renderers is
         External_Name => "SDL_RenderCopy";
 
       Result : constant C.int := SDL_Render_Copy (Self.Internal,
-                                                  Get_Internal_Texture (Copy_From),
+                                                  Get_Internal_Texture (Texture),
                                                   null,
                                                   null);
    begin
@@ -372,10 +372,10 @@ package body SDL.Video.Renderers is
 
    --  TODO: Check to make sure this works, if it does, apply the same logic to CopyEx, see below.
    procedure Copy
-     (Self      : in out Renderer;
-      Copy_From : in SDL.Video.Textures.Texture;
-      From      : in SDL.Video.Rectangles.Rectangle;
-      To        : in SDL.Video.Rectangles.Rectangle) is
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      From    : in SDL.Video.Rectangles.Rectangle;
+      To      : in SDL.Video.Rectangles.Rectangle) is
 
       function SDL_Render_Copy
         (R         : in SDL.C_Pointers.Renderer_Pointer;
@@ -386,7 +386,7 @@ package body SDL.Video.Renderers is
         External_Name => "SDL_RenderCopy";
 
       Result : constant C.int := SDL_Render_Copy (Self.Internal,
-                                                  Get_Internal_Texture (Copy_From),
+                                                  Get_Internal_Texture (Texture),
                                                   From,
                                                   To);
    begin
@@ -396,10 +396,35 @@ package body SDL.Video.Renderers is
    end Copy;
 
 
-   procedure Copy
-     (Self      : in out Renderer;
-      Copy_From : in SDL.Video.Textures.Texture;
-      To        : in SDL.Video.Rectangles.Rectangle) is
+   procedure Copy_From
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      From    : in SDL.Video.Rectangles.Rectangle) is
+
+      function SDL_Render_Copy
+        (R    : in SDL.C_Pointers.Renderer_Pointer;
+         T    : in SDL.C_Pointers.Texture_Pointer;
+         Src  : in SDL.Video.Rectangles.Rectangle;
+         Dest : in SDL.Video.Rectangles.Rectangle_Access) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderCopy";
+
+      Result : constant C.int := SDL_Render_Copy (Self.Internal,
+                                                  Get_Internal_Texture (Texture),
+                                                  From,
+                                                  null);
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Copy_From;
+
+
+   procedure Copy_To
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      To      : in SDL.Video.Rectangles.Rectangle) is
 
       function SDL_Render_Copy
         (R    : in SDL.C_Pointers.Renderer_Pointer;
@@ -411,9 +436,41 @@ package body SDL.Video.Renderers is
         External_Name => "SDL_RenderCopy";
 
       Result : constant C.int := SDL_Render_Copy (Self.Internal,
-                                                  Get_Internal_Texture (Copy_From),
+                                                  Get_Internal_Texture (Texture),
                                                   null,
                                                   To);
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Copy_To;
+
+
+   procedure Copy
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      Angle   : in Long_Float;
+      Centre  : in SDL.Video.Rectangles.Point;
+      Flip    : in Renderer_Flip) is
+
+      function SDL_Render_Copy_Ex
+        (R         : in SDL.C_Pointers.Renderer_Pointer;
+         T         : in SDL.C_Pointers.Texture_Pointer;
+         Src, Dest : in SDL.Video.Rectangles.Rectangle_Access;
+         A         : in C.double;
+         Centre    : in SDL.Video.Rectangles.Point;
+         F         : in Internal_Flip) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderCopyEx";
+
+      Result : constant C.int := SDL_Render_Copy_Ex (Self.Internal,
+                                                     Get_Internal_Texture (Texture),
+                                                     null,
+                                                     null,
+                                                     C.double (Angle),
+                                                     Centre,
+                                                     Internal_Flips (Flip));
    begin
       if Result /= Success then
          raise Renderer_Error with SDL.Error.Get;
@@ -421,16 +478,14 @@ package body SDL.Video.Renderers is
    end Copy;
 
 
-   --  TODO: See above, rearrange the params so that the rectangles are the last elements and make
-   --  them default to null_rectangle.
    procedure Copy
-     (Self      : in out Renderer;
-      Copy_From : in SDL.Video.Textures.Texture;
-      From      : in SDL.Video.Rectangles.Rectangle;
-      To        : in SDL.Video.Rectangles.Rectangle;
-      Angle     : in Long_Float;
-      Centre    : in SDL.Video.Rectangles.Point;
-      Flip      : in Renderer_Flip) is
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      From    : in SDL.Video.Rectangles.Rectangle;
+      To      : in SDL.Video.Rectangles.Rectangle;
+      Angle   : in Long_Float;
+      Centre  : in SDL.Video.Rectangles.Point;
+      Flip    : in Renderer_Flip) is
 
       function SDL_Render_Copy_Ex
         (R         : in SDL.C_Pointers.Renderer_Pointer;
@@ -444,7 +499,7 @@ package body SDL.Video.Renderers is
         External_Name => "SDL_RenderCopyEx";
 
       Result : constant C.int := SDL_Render_Copy_Ex (Self.Internal,
-                                                     Get_Internal_Texture (Copy_From),
+                                                     Get_Internal_Texture (Texture),
                                                      From,
                                                      To,
                                                      C.double (Angle),
@@ -455,6 +510,74 @@ package body SDL.Video.Renderers is
          raise Renderer_Error with SDL.Error.Get;
       end if;
    end Copy;
+
+
+   procedure Copy_From
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      From    : in SDL.Video.Rectangles.Rectangle;
+      Angle   : in Long_Float;
+      Centre  : in SDL.Video.Rectangles.Point;
+      Flip    : in Renderer_Flip) is
+
+      function SDL_Render_Copy_Ex
+        (R      : in SDL.C_Pointers.Renderer_Pointer;
+         T      : in SDL.C_Pointers.Texture_Pointer;
+         Src    : in SDL.Video.Rectangles.Rectangle;
+         Dest   : in SDL.Video.Rectangles.Rectangle_Access;
+         A      : in C.double;
+         Centre : in SDL.Video.Rectangles.Point;
+         F      : in Internal_Flip) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderCopyEx";
+
+      Result : constant C.int := SDL_Render_Copy_Ex (Self.Internal,
+                                                     Get_Internal_Texture (Texture),
+                                                     From,
+                                                     null,
+                                                     C.double (Angle),
+                                                     Centre,
+                                                     Internal_Flips (Flip));
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Copy_From;
+
+
+   procedure Copy_To
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      To      : in SDL.Video.Rectangles.Rectangle;
+      Angle   : in Long_Float;
+      Centre  : in SDL.Video.Rectangles.Point;
+      Flip    : in Renderer_Flip) is
+
+      function SDL_Render_Copy_Ex
+        (R      : in SDL.C_Pointers.Renderer_Pointer;
+         T      : in SDL.C_Pointers.Texture_Pointer;
+         Src    : in SDL.Video.Rectangles.Rectangle_Access;
+         Dest   : in SDL.Video.Rectangles.Rectangle;
+         A      : in C.double;
+         Centre : in SDL.Video.Rectangles.Point;
+         F      : in Internal_Flip) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderCopyEx";
+
+      Result : constant C.int := SDL_Render_Copy_Ex (Self.Internal,
+                                                     Get_Internal_Texture (Texture),
+                                                     null,
+                                                     To,
+                                                     C.double (Angle),
+                                                     Centre,
+                                                     Internal_Flips (Flip));
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Copy_To;
 
 
    procedure Draw (Self : in out Renderer; Point : in SDL.Video.Rectangles.Float_Point) is
@@ -599,11 +722,35 @@ package body SDL.Video.Renderers is
    end Fill;
 
 
+   procedure Copy_F
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture) is
+
+      function SDL_Render_Copy_F
+        (R    : in SDL.C_Pointers.Renderer_Pointer;
+         T    : in SDL.C_Pointers.Texture_Pointer;
+         Src  : in SDL.Video.Rectangles.Rectangle_Access;
+         Dest : in SDL.Video.Rectangles.Float_Rectangle_Access) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderCopyF";
+
+      Result : constant C.int := SDL_Render_Copy_F (Self.Internal,
+                                                    Get_Internal_Texture (Texture),
+                                                    null,
+                                                    null);
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Copy_F;
+
+
    procedure Copy
-     (Self      : in out Renderer;
-      Copy_From : in SDL.Video.Textures.Texture;
-      From      : in SDL.Video.Rectangles.Rectangle;
-      To        : in SDL.Video.Rectangles.Float_Rectangle) is
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      From    : in SDL.Video.Rectangles.Rectangle;
+      To      : in SDL.Video.Rectangles.Float_Rectangle) is
 
       function SDL_Render_Copy_F
         (R    : in SDL.C_Pointers.Renderer_Pointer;
@@ -615,7 +762,7 @@ package body SDL.Video.Renderers is
         External_Name => "SDL_RenderCopyF";
 
       Result : constant C.int := SDL_Render_Copy_F (Self.Internal,
-                                                    Get_Internal_Texture (Copy_From),
+                                                    Get_Internal_Texture (Texture),
                                                     From,
                                                     To);
    begin
@@ -626,13 +773,71 @@ package body SDL.Video.Renderers is
 
 
    procedure Copy
-     (Self      : in out Renderer;
-      Copy_From : in SDL.Video.Textures.Texture;
-      From      : in SDL.Video.Rectangles.Rectangle;
-      To        : in SDL.Video.Rectangles.Float_Rectangle;
-      Angle     : in Long_Float;
-      Centre    : in SDL.Video.Rectangles.Float_Point;
-      Flip      : in Renderer_Flip) is
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      To      : in SDL.Video.Rectangles.Float_Rectangle) is
+
+      function SDL_Render_Copy_F
+        (R    : in SDL.C_Pointers.Renderer_Pointer;
+         T    : in SDL.C_Pointers.Texture_Pointer;
+         Src  : in SDL.Video.Rectangles.Rectangle_Access;
+         Dest : in SDL.Video.Rectangles.Float_Rectangle) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderCopyF";
+
+      Result : constant C.int := SDL_Render_Copy_F (Self.Internal,
+                                                    Get_Internal_Texture (Texture),
+                                                    null,
+                                                    To);
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Copy;
+
+
+   procedure Copy
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      Angle   : in Long_Float;
+      Centre  : in SDL.Video.Rectangles.Float_Point;
+      Flip    : in Renderer_Flip) is
+
+      function SDL_Render_Copy_Ex_F
+        (R      : in SDL.C_Pointers.Renderer_Pointer;
+         T      : in SDL.C_Pointers.Texture_Pointer;
+         Src    : in SDL.Video.Rectangles.Rectangle_Access;
+         Dest   : in SDL.Video.Rectangles.Float_Rectangle_Access;
+         A      : in C.double;
+         Centre : in SDL.Video.Rectangles.Float_Point;
+         F      : in Internal_Flip) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderCopyExF";
+
+      Result : constant C.int := SDL_Render_Copy_Ex_F (Self.Internal,
+                                                       Get_Internal_Texture (Texture),
+                                                       null,
+                                                       null,
+                                                       C.double (Angle),
+                                                       Centre,
+                                                       Internal_Flips (Flip));
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Copy;
+
+
+   procedure Copy
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      From    : in SDL.Video.Rectangles.Rectangle;
+      To      : in SDL.Video.Rectangles.Float_Rectangle;
+      Angle   : in Long_Float;
+      Centre  : in SDL.Video.Rectangles.Float_Point;
+      Flip    : in Renderer_Flip) is
 
       function SDL_Render_Copy_Ex_F
         (R      : in SDL.C_Pointers.Renderer_Pointer;
@@ -647,8 +852,42 @@ package body SDL.Video.Renderers is
         External_Name => "SDL_RenderCopyExF";
 
       Result : constant C.int := SDL_Render_Copy_Ex_F (Self.Internal,
-                                                       Get_Internal_Texture (Copy_From),
+                                                       Get_Internal_Texture (Texture),
                                                        From,
+                                                       To,
+                                                       C.double (Angle),
+                                                       Centre,
+                                                       Internal_Flips (Flip));
+   begin
+      if Result /= Success then
+         raise Renderer_Error with SDL.Error.Get;
+      end if;
+   end Copy;
+
+
+   procedure Copy
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      To      : in SDL.Video.Rectangles.Float_Rectangle;
+      Angle   : in Long_Float;
+      Centre  : in SDL.Video.Rectangles.Float_Point;
+      Flip    : in Renderer_Flip) is
+
+      function SDL_Render_Copy_Ex_F
+        (R      : in SDL.C_Pointers.Renderer_Pointer;
+         T      : in SDL.C_Pointers.Texture_Pointer;
+         Src    : in SDL.Video.Rectangles.Rectangle_Access;
+         Dest   : in SDL.Video.Rectangles.Float_Rectangle;
+         A      : in C.double;
+         Centre : in SDL.Video.Rectangles.Float_Point;
+         F      : in Internal_Flip) return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_RenderCopyExF";
+
+      Result : constant C.int := SDL_Render_Copy_Ex_F (Self.Internal,
+                                                       Get_Internal_Texture (Texture),
+                                                       null,
                                                        To,
                                                        C.double (Angle),
                                                        Centre,

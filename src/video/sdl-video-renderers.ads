@@ -112,29 +112,59 @@ package SDL.Video.Renderers is
    procedure Fill (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Rectangle);
    procedure Fill (Self : in out Renderer; Rectangles : in SDL.Video.Rectangles.Rectangle_Arrays);
 
+   --  SDL_RenderCopy.
    procedure Copy
-     (Self      : in out Renderer;
-      Copy_From : in SDL.Video.Textures.Texture);
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture);
 
    procedure Copy
-     (Self      : in out Renderer;
-      Copy_From : in SDL.Video.Textures.Texture;
-      From      : in SDL.Video.Rectangles.Rectangle;
-      To        : in SDL.Video.Rectangles.Rectangle);
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      From    : in SDL.Video.Rectangles.Rectangle;
+      To      : in SDL.Video.Rectangles.Rectangle);
+
+   procedure Copy_From
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      From    : in SDL.Video.Rectangles.Rectangle);
+
+   procedure Copy_To
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      To      : in SDL.Video.Rectangles.Rectangle);
+
+   --  SDL_RenderCopyEx
+   procedure Copy
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      Angle   : in Long_Float;
+      Centre  : in SDL.Video.Rectangles.Point;
+      Flip    : in Renderer_Flip);
 
    procedure Copy
-     (Self      : in out Renderer;
-      Copy_From : in SDL.Video.Textures.Texture;
-      To        : in SDL.Video.Rectangles.Rectangle);
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      From    : in SDL.Video.Rectangles.Rectangle;
+      To      : in SDL.Video.Rectangles.Rectangle;
+      Angle   : in Long_Float;
+      Centre  : in SDL.Video.Rectangles.Point;
+      Flip    : in Renderer_Flip);
 
-   procedure Copy
-     (Self      : in out Renderer;
-      Copy_From : in SDL.Video.Textures.Texture;
-      From      : in SDL.Video.Rectangles.Rectangle;
-      To        : in SDL.Video.Rectangles.Rectangle;
-      Angle     : in Long_Float;
-      Centre    : in SDL.Video.Rectangles.Point;
-      Flip      : in Renderer_Flip);
+   procedure Copy_From
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      From    : in SDL.Video.Rectangles.Rectangle;
+      Angle   : in Long_Float;
+      Centre  : in SDL.Video.Rectangles.Point;
+      Flip    : in Renderer_Flip);
+
+   procedure Copy_To
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      To      : in SDL.Video.Rectangles.Rectangle;
+      Angle   : in Long_Float;
+      Centre  : in SDL.Video.Rectangles.Point;
+      Flip    : in Renderer_Flip);
 
    procedure Draw (Self : in out Renderer; Point : in SDL.Video.Rectangles.Float_Point);
    procedure Draw (Self : in out Renderer; Points : in SDL.Video.Rectangles.Float_Point_Arrays);
@@ -147,20 +177,49 @@ package SDL.Video.Renderers is
    procedure Fill (Self : in out Renderer; Rectangle : in SDL.Video.Rectangles.Float_Rectangle);
    procedure Fill (Self : in out Renderer; Rectangles : in SDL.Video.Rectangles.Float_Rectangle_Arrays);
 
-   procedure Copy
-     (Self      : in out Renderer;
-      Copy_From : in SDL.Video.Textures.Texture;
-      From      : in SDL.Video.Rectangles.Rectangle;
-      To        : in SDL.Video.Rectangles.Float_Rectangle);
+   --  SDL_RenderCopyF.
+   --
+   --  TODO: Renamed due to conflict, would this work any differently?
+   --        Should this even be here?
+   procedure Copy_F
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture);
 
    procedure Copy
-     (Self      : in out Renderer;
-      Copy_From : in SDL.Video.Textures.Texture;
-      From      : in SDL.Video.Rectangles.Rectangle;
-      To        : in SDL.Video.Rectangles.Float_Rectangle;
-      Angle     : in Long_Float;
-      Centre    : in SDL.Video.Rectangles.Float_Point;
-      Flip      : in Renderer_Flip);
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      From    : in SDL.Video.Rectangles.Rectangle;
+      To      : in SDL.Video.Rectangles.Float_Rectangle);
+
+   procedure Copy
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      To      : in SDL.Video.Rectangles.Float_Rectangle);
+
+   --  SDL_RenderCopyExF.
+   procedure Copy
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      Angle   : in Long_Float;
+      Centre  : in SDL.Video.Rectangles.Float_Point;
+      Flip    : in Renderer_Flip);
+
+   procedure Copy
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      From    : in SDL.Video.Rectangles.Rectangle;
+      To      : in SDL.Video.Rectangles.Float_Rectangle;
+      Angle   : in Long_Float;
+      Centre  : in SDL.Video.Rectangles.Float_Point;
+      Flip    : in Renderer_Flip);
+
+   procedure Copy
+     (Self    : in out Renderer;
+      Texture : in SDL.Video.Textures.Texture;
+      To      : in SDL.Video.Rectangles.Float_Rectangle;
+      Angle   : in Long_Float;
+      Centre  : in SDL.Video.Rectangles.Float_Point;
+      Flip    : in Renderer_Flip);
 
    procedure Render_Geometry (Self     : in out Renderer;
                               Texture  : in SDL.Video.Textures.Texture;
