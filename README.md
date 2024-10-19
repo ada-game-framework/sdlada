@@ -57,6 +57,14 @@ $ sdl2-config --libs
 
 These options will differ depending on operating system. SDL3 seems like it might operate in a bit more of a portable way.
 
+#### Get the latest verion with Alire
+
+As the source is going through changes right now, they are not in the Alire index, yet, so grab it with:
+
+```bash
+alr with sdlada --use=https://github.com/ada-game-framework/sdlada.git
+```
+
 #### Linking
 
 To link an application with sdlada, you will need to add ```-largs $(sdl2-config --libs)``` to command line:
