@@ -271,4 +271,33 @@ package body SDL.Inputs.Joysticks.Game_Controllers is
    begin
       return To_Boolean (SDL_Is_Game_Controller (C.int (Device) - 1));
    end Is_Game_Controller;
+
+   function Has_Rumble (Self : in Game_Controller) return Boolean is
+      function SDL_Game_Controller_Has_Rumble (Controller : in SDL.C_Pointers.Game_Controller_Pointer)
+                                               return SDL_Bool with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GameControllerHasRumble";
+   begin
+      return To_Boolean (SDL_Game_Controller_Has_Rumble (Self.Internal));
+   end Has_Rumble;
+
+   function Rumble (Self           : in Game_Controller;
+                    Low_Frequency  : in Uint16;
+                    High_Frequency : in Uint16;
+                    Duration       : in Uint32) return Integer is
+      function SDL_Game_Controller_Rumble (Controller     : in SDL.C_Pointers.Game_Controller_Pointer;
+                                           Low_Frequency  : in Uint16;
+                                           High_Frequency : in Uint16;
+                                           Duration       : in Uint32)
+                                           return C.int with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_GameControllerRumble";
+   begin
+      return Integer (SDL_Game_Controller_Rumble (Self.Internal,
+                      Low_Frequency,
+                      High_Frequency,
+                      Duration));
+   end Rumble;
 end SDL.Inputs.Joysticks.Game_Controllers;
