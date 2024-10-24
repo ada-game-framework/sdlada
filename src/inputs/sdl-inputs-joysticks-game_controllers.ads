@@ -49,6 +49,9 @@ package SDL.Inputs.Joysticks.Game_Controllers is
 
    Null_Game_Controller : constant Game_Controller;
 
+   subtype Uint16 is Interfaces.Unsigned_16;
+   subtype Uint32 is Interfaces.Unsigned_32;
+
    procedure Add_Mapping (Data : in String; Updated_Existing : out Boolean);
    procedure Add_Mappings_From_File (Database_Filename : in String; Number_Added : out Natural);
 
@@ -91,6 +94,15 @@ package SDL.Inputs.Joysticks.Game_Controllers is
      Inline => True;
 
    function Is_Game_Controller (Device : in Devices) return Boolean with
+     Inline => True;
+
+   function Has_Rumble (Self : in Game_Controller) return Boolean with
+     Inline => True;
+
+   function Rumble (Self           : in Game_Controller;
+                    Low_Frequency  : in Uint16;
+                    High_Frequency : in Uint16;
+                    Duration       : in Uint32) return Integer with
      Inline => True;
 private
    type Game_Controller is new Ada.Finalization.Limited_Controlled with
