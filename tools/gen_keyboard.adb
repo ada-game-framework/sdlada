@@ -621,7 +621,7 @@ begin
    Put_Line ("   Key_Down                         : constant Event_Types := 16#0000_0300#;");
    Put_Line ("   Key_Up                           : constant Event_Types := Key_Down + 1;");
    Put_Line ("   Text_Editing                     : constant Event_Types := Key_Down + 2;");
-   --  Put_Line ("   Text_Input                       : constant Event_Types := Key_Down + 3;");
+   Put_Line ("   Text_Input                       : constant Event_Types := Key_Down + 3;");
    New_Line;
 
    --  Output the scan codes.
