@@ -6,8 +6,12 @@
 --  Vulkan functionality.
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C;
-with System;
 
+generic
+   --  These need to be the base C types from your Vulkan bindings.
+   type Instance_Address_Type is private;
+
+   Instance_Null : Instance_Address_Type;
 package SDL.Video.Vulkan is
    pragma Preelaborate;
 
@@ -15,10 +19,7 @@ package SDL.Video.Vulkan is
 
    SDL_Vulkan_Error : exception;
 
-   --  Warning: This *may* change.
-   --  You will need to convert this to the required type using whatever the bindings you are using provides with
-   --  System.Address_To_Access_Conversions package.
-   function Get_Instance_Procedure_Address return System.Address;
+   function Get_Instance_Procedure_Address return Instance_Address_Type;
 
    procedure Load_Library;
    procedure Load_Library (Path : in String);
