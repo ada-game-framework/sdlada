@@ -27,7 +27,7 @@ package body SDL.Video.Vulkan is
 
 
    function Get_Instance_Extensions (Window          : in SDL.Video.Windows.Window) return Extension_Name_Arrays is
-      function SDL_Vulkan_GetInstanceExtensions
+      function SDL_Vulkan_Get_Instance_Extensions
         (Window : SDL.C_Pointers.Windows_Pointer;
          Count  : access C.unsigned;
          Names  : System.Address) return SDL_Bool
@@ -35,7 +35,7 @@ package body SDL.Video.Vulkan is
            Convention => C,
            External_Name => "SDL_Vulkan_GetInstanceExtensions";
 
-      function SDL_Vulkan_GetInstanceExtensions
+      function SDL_Vulkan_Get_Instance_Extensions
         (Window : SDL.C_Pointers.Windows_Pointer;
          Count  : access C.unsigned;
          Names  : C.Strings.chars_ptr_array) return SDL_Bool
@@ -46,7 +46,7 @@ package body SDL.Video.Vulkan is
 
       Count : aliased C.unsigned;
 
-      Result : constant Boolean := To_Boolean (SDL_Vulkan_GetInstanceExtensions
+      Result : constant Boolean := To_Boolean (SDL_Vulkan_Get_Instance_Extensions
         (Get_Internal_Window (Window),
          Count => Count'Access,
          Names => System.Null_Address));
@@ -57,7 +57,7 @@ package body SDL.Video.Vulkan is
 
             Total_Extensions : constant Natural := Natural (Count) - 1;
             Extensions       : C.Strings.chars_ptr_array (0 .. C.size_t (Total_Extensions));
-            Result           : constant Boolean := To_Boolean (SDL_Vulkan_GetInstanceExtensions
+            Result           : constant Boolean := To_Boolean (SDL_Vulkan_Get_Instance_Extensions
               (Get_Internal_Window (Window),
                Count => Count'Access,  --  Dummy, no longer care about this.
                Names => Extensions));
@@ -90,12 +90,12 @@ package body SDL.Video.Vulkan is
 
 
    function Get_Instance_Procedure_Address return Instance_Address_Type is
-      function SDL_Vulkan_GetVkGetInstanceProcAddr return Instance_Address_Type with
+      function SDL_Vulkan_Get_Vk_Get_Instance_Proc_Addr return Instance_Address_Type with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_Vulkan_GetVkGetInstanceProcAddr";
 
-      Result : constant Instance_Address_Type := SDL_Vulkan_GetVkGetInstanceProcAddr;
+      Result : constant Instance_Address_Type := SDL_Vulkan_Get_Vk_Get_Instance_Proc_Addr;
    begin
       if Result = Instance_Null then
          raise SDL_Vulkan_Error with SDL.Error.Get;
@@ -107,37 +107,35 @@ package body SDL.Video.Vulkan is
 
    --  Load the default Vulkan library.
    procedure Load_Library is
-      function SDL_Vulkan_LoadLibrary (path : C.Strings.chars_ptr) return C.int with
+      function SDL_Vulkan_Load_Library (path : C.Strings.chars_ptr) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_Vulkan_LoadLibrary";
-
-      Result : constant C.int := SDL_Vulkan_LoadLibrary (C.Strings.Null_Ptr);
    begin
-      if Result /= SDL.Success then
+      if SDL_Vulkan_Load_Library (C.Strings.Null_Ptr) /= SDL.Success then
          raise SDL_Vulkan_Error with "Unable to load the default Vulkan library";
       end if;
    end Load_Library;
 
 
    procedure Load_Library (Path : in String) is
-      function SDL_Vulkan_LoadLibrary (path : C.char_array) return C.int with
+      function SDL_Vulkan_Load_Library (path : C.char_array) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_Vulkan_LoadLibrary";
    begin
-      if SDL_Vulkan_LoadLibrary (C.To_C (Path)) /= SDL.Success then
+      if SDL_Vulkan_Load_Library (C.To_C (Path)) /= SDL.Success then
          raise SDL_Vulkan_Error with "Unable to load Vulkan library """ & Path & '"';
       end if;
    end Load_Library;
 
 
    procedure Unload_Library is
-      procedure SDL_Vulkan_UnloadLibrary with
+      procedure SDL_Vulkan_Unload_Library with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_Vulkan_UnloadLibrary";
    begin
-      SDL_Vulkan_UnloadLibrary;
+      SDL_Vulkan_Unload_Library;
    end Unload_Library;
 end SDL.Video.Vulkan;
