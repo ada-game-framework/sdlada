@@ -545,7 +545,7 @@ SDL_SetPrimarySelectionText           |   n   | 2.26.0 |
 
 Name                                  | Bound | Since  | Won't bind
 --------------------------------------|-------|--------|-----------
-SDL_Vulkan_CreateSurface              |   n   | 2.0.6  |
+SDL_Vulkan_CreateSurface              |   y   | 2.0.6  |
 SDL_Vulkan_GetDrawableSize            |   y   | 2.0.6  |
 SDL_Vulkan_GetInstanceExtensions      |   y   | 2.0.6  |
 SDL_Vulkan_GetVkGetInstanceProcAddr   |   y   | 2.0.6  |

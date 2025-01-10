@@ -16,8 +16,25 @@ package body SDL.Video.Vulkan is
      Convention => Ada;
 
 
+   procedure Create_Surface (Window   : in SDL.Video.Windows.Window;
+                             Instance : in Instance_Address_Type;
+                             Surface  : out Surface_Type) is
+      function SDL_Vulkan_Create_Surface
+        (Window   : in SDL.C_Pointers.Windows_Pointer;
+         Instance : in Instance_Address_Type;
+         Surface  : out Surface_Type) return SDL_Bool with
+           Import        => True,
+           Convention    => C,
+           External_Name => "SDL_Vulkan_CreateSurface";
+   begin
+      if SDL_Vulkan_Create_Surface (Get_Internal_Window (Window), Instance, Surface) = SDL_False then
+         raise SDL_Vulkan_Error with SDL.Error.Get;
+      end if;
+   end Create_Surface;
+
+
    procedure Get_Drawable_Size (Window : in SDL.Video.Windows.Window; Width, Height : out SDL.Natural_Dimension) is
-      procedure SDL_Vulkan_Get_Drawable_Size (window : in SDL.C_Pointers.Windows_Pointer; W, H : out C.int) with
+      procedure SDL_Vulkan_Get_Drawable_Size (Window : in SDL.C_Pointers.Windows_Pointer; W, H : out C.int) with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_Vulkan_GetDrawableSize";
@@ -26,7 +43,7 @@ package body SDL.Video.Vulkan is
    end Get_Drawable_Size;
 
 
-   function Get_Instance_Extensions (Window          : in SDL.Video.Windows.Window) return Extension_Name_Arrays is
+   function Get_Instance_Extensions (Window : in SDL.Video.Windows.Window) return Extension_Name_Arrays is
       function SDL_Vulkan_Get_Instance_Extensions
         (Window : SDL.C_Pointers.Windows_Pointer;
          Count  : access C.unsigned;
@@ -107,7 +124,7 @@ package body SDL.Video.Vulkan is
 
    --  Load the default Vulkan library.
    procedure Load_Library is
-      function SDL_Vulkan_Load_Library (path : C.Strings.chars_ptr) return C.int with
+      function SDL_Vulkan_Load_Library (Path : C.Strings.chars_ptr) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_Vulkan_LoadLibrary";
@@ -119,7 +136,7 @@ package body SDL.Video.Vulkan is
 
 
    procedure Load_Library (Path : in String) is
-      function SDL_Vulkan_Load_Library (path : C.char_array) return C.int with
+      function SDL_Vulkan_Load_Library (Path : C.char_array) return C.int with
         Import        => True,
         Convention    => C,
         External_Name => "SDL_Vulkan_LoadLibrary";

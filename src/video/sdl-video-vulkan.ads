@@ -15,6 +15,8 @@ generic
    type Instance_Address_Type is private;
 
    Instance_Null : Instance_Address_Type;
+
+   type Surface_Type is private;
 package SDL.Video.Vulkan is
    pragma Preelaborate;
 
@@ -26,6 +28,10 @@ package SDL.Video.Vulkan is
 
    Null_Extension_Name_Array : constant Extension_Name_Arrays (1 .. 1) :=
      (others => Ada.Strings.Unbounded.Null_Unbounded_String);
+
+   procedure Create_Surface (Window   : in SDL.Video.Windows.Window;
+                             Instance : in Instance_Address_Type;
+                             Surface  : out Surface_Type);
 
    procedure Get_Drawable_Size (Window : in SDL.Video.Windows.Window; Width, Height : out SDL.Natural_Dimension);
 
