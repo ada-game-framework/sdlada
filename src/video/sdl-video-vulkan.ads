@@ -6,6 +6,7 @@
 --  Vulkan functionality.
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C;
+with System;
 
 package SDL.Video.Vulkan is
    pragma Preelaborate;
@@ -13,6 +14,8 @@ package SDL.Video.Vulkan is
    package C renames Interfaces.C;
 
    SDL_Vulkan_Error : exception;
+
+   function Get_Instance_Procedure_Address return System.Address;
 
    procedure Load_Library;
    procedure Load_Library (Path : in String);

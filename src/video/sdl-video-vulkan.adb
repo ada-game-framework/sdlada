@@ -3,7 +3,27 @@
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C.Strings;
 
+with SDL.Error;
+
 package body SDL.Video.Vulkan is
+   function Get_Instance_Procedure_Address return System.Address is
+      function SDL_Vulkan_GetVkGetInstanceProcAddr return System.Address with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_Vulkan_GetVkGetInstanceProcAddr";
+
+      use type System.Address;
+
+      Result : constant System.Address := SDL_Vulkan_GetVkGetInstanceProcAddr;
+   begin
+      if Result = System.Null_Address then
+         raise SDL_Vulkan_Error with SDL.Error.Get;
+      end if;
+
+      return Result;
+   end Get_Instance_Procedure_Address;
+
+
    --  Load the default Vulkan library.
    procedure Load_Library is
       function SDL_Vulkan_LoadLibrary (path : C.Strings.chars_ptr) return C.int with
