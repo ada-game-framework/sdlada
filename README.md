@@ -549,8 +549,8 @@ SDL_Vulkan_CreateSurface              |   n   | 2.0.6  |
 SDL_Vulkan_GetDrawableSize            |   n   | 2.0.6  |
 SDL_Vulkan_GetInstanceExtensions      |   n   | 2.0.6  |
 SDL_Vulkan_GetInstanceExtensions      |   n   | 2.0.6  |
-SDL_Vulkan_LoadLibrary                |   n   | 2.0.6  |
-SDL_Vulkan_UnloadLibrary              |   n   | 2.0.6  |
+SDL_Vulkan_LoadLibrary                |   y   | 2.0.6  |
+SDL_Vulkan_UnloadLibrary              |   y   | 2.0.6  |
 
 #### Metal Support
 
