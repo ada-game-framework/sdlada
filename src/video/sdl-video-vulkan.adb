@@ -2,10 +2,83 @@
 --  This source code is subject to the Zlib license, see the LICENCE file in the root of this directory.
 --------------------------------------------------------------------------------------------------------------------
 with Interfaces.C.Strings;
+--  with Interfaces.C.Pointers;
+with System;
 
+with SDL.C_Pointers;
 with SDL.Error;
 
 package body SDL.Video.Vulkan is
+   package C renames Interfaces.C;
+
+   function Get_Internal_Window (Self : in SDL.Video.Windows.Window) return SDL.C_Pointers.Windows_Pointer with
+     Import     => True,
+     Convention => Ada;
+
+
+   function Get_Instance_Extensions (Window          : in SDL.Video.Windows.Window) return Extension_Name_Arrays is
+      function SDL_Vulkan_GetInstanceExtensions
+        (Window : SDL.C_Pointers.Windows_Pointer;
+         Count  : access C.unsigned;
+         Names  : System.Address) return SDL_Bool
+      with Import => True,
+           Convention => C,
+           External_Name => "SDL_Vulkan_GetInstanceExtensions";
+
+      function SDL_Vulkan_GetInstanceExtensions
+        (Window : SDL.C_Pointers.Windows_Pointer;
+         Count  : access C.unsigned;
+         Names  : C.Strings.chars_ptr_array) return SDL_Bool
+      with Import => True,
+           Convention => C,
+           External_Name => "SDL_Vulkan_GetInstanceExtensions";
+
+
+      Count : aliased C.unsigned;
+
+      Result : constant Boolean := To_Boolean (SDL_Vulkan_GetInstanceExtensions
+        (Get_Internal_Window (Window),
+         Count => Count'Access,
+         Names => System.Null_Address));
+   begin
+      if Result then
+         declare
+            use type C.unsigned;
+
+            Total_Extensions : constant Natural := Natural (Count) - 1;
+            Extensions       : C.Strings.chars_ptr_array (0 .. C.size_t (Total_Extensions));
+            Result           : constant Boolean := To_Boolean (SDL_Vulkan_GetInstanceExtensions
+              (Get_Internal_Window (Window),
+               Count => Count'Access,  --  Dummy, no longer care about this.
+               Names => Extensions));
+            Names            : Vulkan.Extension_Name_Arrays (1 .. Positive (Count));
+
+            use Ada.Strings.Unbounded;
+         begin
+            if Result then
+               for Index in Names'Range loop
+                  declare
+                     use type C.Strings.chars_ptr;
+                     use type C.size_t;
+
+                     Real_Index : constant C.size_t            := C.size_t (Index) - 1;
+                     C_String   : constant C.Strings.chars_ptr := Extensions (Real_Index);
+                  begin
+                     if C_String /= C.Strings.Null_Ptr then
+                        Names (Index) := To_Unbounded_String (C.Strings.Value (C_String));
+                     end if;
+                  end;
+               end loop;
+            end if;
+
+            return Names;
+         end;
+      end if;
+
+      return Null_Extension_Name_Array;
+   end Get_Instance_Extensions;
+
+
    function Get_Instance_Procedure_Address return Instance_Address_Type is
       function SDL_Vulkan_GetVkGetInstanceProcAddr return Instance_Address_Type with
         Import        => True,

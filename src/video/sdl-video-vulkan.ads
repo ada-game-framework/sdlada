@@ -5,7 +5,10 @@
 --
 --  Vulkan functionality.
 --------------------------------------------------------------------------------------------------------------------
-with Interfaces.C;
+with Ada.Strings.Unbounded;
+--  with Interfaces.C;
+
+with SDL.Video.Windows;
 
 generic
    --  These need to be the base C types from your Vulkan bindings.
@@ -15,9 +18,16 @@ generic
 package SDL.Video.Vulkan is
    pragma Preelaborate;
 
-   package C renames Interfaces.C;
+   --  package C renames Interfaces.C;
 
    SDL_Vulkan_Error : exception;
+
+   type Extension_Name_Arrays is array (Positive range <>) of Ada.Strings.Unbounded.Unbounded_String;
+
+   Null_Extension_Name_Array : constant Extension_Name_Arrays (1 .. 1) :=
+     (others => Ada.Strings.Unbounded.Null_Unbounded_String);
+
+   function Get_Instance_Extensions (Window : in SDL.Video.Windows.Window) return Extension_Name_Arrays;
 
    function Get_Instance_Procedure_Address return Instance_Address_Type;
 
