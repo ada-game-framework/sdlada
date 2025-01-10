@@ -16,6 +16,16 @@ package body SDL.Video.Vulkan is
      Convention => Ada;
 
 
+   procedure Get_Drawable_Size (Window : in SDL.Video.Windows.Window; Width, Height : out SDL.Natural_Dimension) is
+      procedure SDL_Vulkan_Get_Drawable_Size (window : in SDL.C_Pointers.Windows_Pointer; W, H : out C.int) with
+        Import        => True,
+        Convention    => C,
+        External_Name => "SDL_Vulkan_GetDrawableSize";
+   begin
+      SDL_Vulkan_Get_Drawable_Size (Get_Internal_Window (Window), Width, Height);
+   end Get_Drawable_Size;
+
+
    function Get_Instance_Extensions (Window          : in SDL.Video.Windows.Window) return Extension_Name_Arrays is
       function SDL_Vulkan_GetInstanceExtensions
         (Window : SDL.C_Pointers.Windows_Pointer;

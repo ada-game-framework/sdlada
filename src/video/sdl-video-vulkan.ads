@@ -27,6 +27,8 @@ package SDL.Video.Vulkan is
    Null_Extension_Name_Array : constant Extension_Name_Arrays (1 .. 1) :=
      (others => Ada.Strings.Unbounded.Null_Unbounded_String);
 
+   procedure Get_Drawable_Size (Window : in SDL.Video.Windows.Window; Width, Height : out SDL.Natural_Dimension);
+
    function Get_Instance_Extensions (Window : in SDL.Video.Windows.Window) return Extension_Name_Arrays;
 
    function Get_Instance_Procedure_Address return Instance_Address_Type;
