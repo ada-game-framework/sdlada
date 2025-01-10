@@ -666,7 +666,7 @@ package body SDL.Video.GL is
         Convention    => C,
         External_Name => "SDL_GL_SetSwapInterval";
 
-      Result : C.int := SDL_GL_Set_Swap_Interval (Interval);
+      Result : constant C.int := SDL_GL_Set_Swap_Interval (Interval);
    begin
       if Result /= SDL.Success then
          raise SDL_GL_Error with SDL.Error.Get;

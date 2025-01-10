@@ -70,8 +70,6 @@ package body SDL.Video.Vulkan is
    begin
       if Result then
          declare
-            use type C.unsigned;
-
             Total_Extensions : constant Natural := Natural (Count) - 1;
             Extensions       : C.Strings.chars_ptr_array (0 .. C.size_t (Total_Extensions));
             Result           : constant Boolean := To_Boolean (SDL_Vulkan_Get_Instance_Extensions
