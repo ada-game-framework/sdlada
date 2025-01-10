@@ -15,6 +15,9 @@ package SDL.Video.Vulkan is
 
    SDL_Vulkan_Error : exception;
 
+   --  Warning: This *may* change.
+   --  You will need to convert this to the required type using whatever the bindings you are using provides with
+   --  System.Address_To_Access_Conversions package.
    function Get_Instance_Procedure_Address return System.Address;
 
    procedure Load_Library;
