@@ -337,7 +337,8 @@ package body SDL.Video.Windows is
 
       S : constant SDL.Video.Surfaces.Internal_Surface_Pointer := SDL_Get_Window_Surface (Self.Internal);
 
-      function Make_Surface_From_Pointer (S : in SDL.Video.Surfaces.Internal_Surface_Pointer)
+      function Make_Surface_From_Pointer (S    : in SDL.Video.Surfaces.Internal_Surface_Pointer;
+                                          Owns : in Boolean := False)
                                           return SDL.Video.Surfaces.Surface with
         Convention    => Ada,
         Import        => True;
