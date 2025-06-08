@@ -53,6 +53,7 @@ package SDL.Inputs.Joysticks is
 
    Null_Joystick : constant Joystick;
 
+   overriding
    function "=" (Left, Right : in Joystick) return Boolean with
      Inline => True;
 
