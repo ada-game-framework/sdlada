@@ -66,7 +66,7 @@ package body SDL.Inputs.Joysticks is
       return SDL_Joystick_Get_GUID_From_String (C.To_C (GUID));
    end Value;
 
-   overriding
+   not overriding
    function "=" (Left, Right : in Joystick) return Boolean is
       use type SDL.C_Pointers.Joystick_Pointer;
    begin
