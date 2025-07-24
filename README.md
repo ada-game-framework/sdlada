@@ -111,7 +111,7 @@ make SDL_PLATFORM=linux SDL_MODE=release DESTDIR=$HOME/opt/sdlada install
 ## Windows issues
 
 If you get an error about an entry point which cannot be found within the DLL, make sure you don't have 
-any other SDL installations somewhere messing with the installed by MSYS' pacman via Alire.
+any other SDL installations somewhere in your PATH messing with the libs installed by MSYS' pacman (via Alire).
 
 ## Examples
 
