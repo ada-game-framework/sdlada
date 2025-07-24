@@ -108,6 +108,11 @@ sudo port install libsdl2_mixer
 make SDL_PLATFORM=linux SDL_MODE=release DESTDIR=$HOME/opt/sdlada install
 ```
 
+## Windows issues
+
+If you get an error about an entry point which cannot be found within the DLL, make sure you don't have 
+any other SDL installations somewhere messing with the installed by MSYS' pacman via Alire.
+
 ## Examples
 
 You can find more examples hosted on [Rosetta Code](http://www.rosettacode.org/wiki/Category:SDLAda).
